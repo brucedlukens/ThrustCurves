@@ -11,7 +11,7 @@ Your job is to run the full CI suite and report results clearly.
 
 ## Working Directory
 
-All commands run from the project root (`C:/Users/Bruce/workspace/ThrustCurves`).
+Run all commands from the path specified in the prompt (e.g., a worktree directory like `C:/Users/Bruce/workspace/ThrustCurves-phase2-physics`). If no path is specified, default to `C:/Users/Bruce/workspace/ThrustCurves`.
 
 ## CI Steps to Run (in order)
 

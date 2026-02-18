@@ -15,11 +15,11 @@ allowed_tools:
 
 # Implement Feature Skill
 
-This skill automates the complete feature implementation workflow, from branch creation through PR merge, with CI validation and error recovery.
+This skill automates the complete feature implementation workflow, from worktree creation through PR merge, with CI validation and error recovery.
 
 ## Workflow Overview
 
-1. Branch setup (pull main, create feature branch)
+1. Worktree + branch setup (pull main, create worktree)
 2. Implementation (TDD - tests first, then code)
 3. Local CI validation
 4. Fix errors and re-validate
@@ -41,22 +41,56 @@ This project uses **custom agents** defined in `.claude/agents/` directory.
 
 ## Detailed Instructions
 
-### Phase 1: Branch Setup
+### Phase 1: Worktree Setup
 
-1. **Check current state**:
-   ```bash
-   git status
-   git rev-parse --abbrev-ref HEAD
-   ```
+**All feature work must happen inside a git worktree, never on a branch in the main working directory.**
 
-2. **Update main and create feature branch**:
+1. **Update main** (run from main repo root):
    ```bash
    git fetch origin main:main
-   git checkout -b feature/[phase-name]-[feature-name] main
    ```
 
-   Branch naming: `feature/[phase]-[short-description]`
-   Example: `feature/phase2-physics-engine`
+2. **Create a worktree with a new feature branch**:
+   ```bash
+   git worktree add ../ThrustCurves-[short-name] -b feature/[phase]-[feature-name] main
+   ```
+
+   - Worktrees live as **sibling directories** to the main repo: `../ThrustCurves-[short-name]`
+   - Branch naming: `feature/[phase]-[short-description]`
+   - Short name should match the branch suffix for clarity
+
+   Example:
+   ```bash
+   git worktree add ../ThrustCurves-phase2-physics -b feature/phase2-physics-engine main
+   # Creates: C:/Users/Bruce/workspace/ThrustCurves-phase2-physics/
+   ```
+
+3. **Install dependencies in the worktree** (worktrees do not share node_modules):
+   ```bash
+   cd ../ThrustCurves-[short-name] && npm install
+   ```
+
+4. **All subsequent phases run from the worktree directory**, not the main repo.
+
+5. **After PR is merged, clean up**:
+   ```bash
+   git worktree remove ../ThrustCurves-[short-name]
+   git branch -d feature/[phase]-[feature-name]
+   ```
+
+### Phase 1.5: Pre-Implementation Checklist ⚠️
+
+Before writing any code:
+
+1. **Review PLAN.md structure** — Verify all planned files/components for this phase
+2. **Search for similar patterns** — Find existing code to follow conventions:
+   ```bash
+   grep -r "pattern-name" src/ --include="*.ts" --include="*.tsx"
+   ```
+3. **Verify TypeScript types** — Ensure types match PLAN.md documentation
+4. **Check existing fixtures** — Review Phase 1+ test fixtures/examples as reference
+
+**Why?** This prevents rework and ensures consistency across phases. Phase 1 achieved 0 linting commits by catching patterns early.
 
 ### Phase 2: Implementation
 
@@ -86,10 +120,13 @@ Implement the feature following TDD principles:
 
 ### Phase 3: Local CI Validation
 
-Run the frontend-ci agent:
+Run the frontend-ci agent, passing the **worktree path**:
 
 ```
-Task(subagent_type="frontend-ci", ...)
+Task(
+  subagent_type="frontend-ci",
+  prompt="Run the full CI suite for the ThrustCurves project at [worktree-path]. Follow the frontend-ci agent instructions exactly."
+)
 ```
 
 Wait for results.
@@ -119,7 +156,7 @@ If anything fails: fix violations, commit the fixes, re-run to verify.
 
 ### Phase 6: Create PR and Monitor CI
 
-1. **Commit all changes**:
+1. **Commit all changes** (from inside the worktree):
    ```bash
    git add .
    git commit -m "feat: implement [feature description]
@@ -153,7 +190,7 @@ If remote CI fails but local passed:
 
 Skip if only: test files, type definitions, config files, or documentation changed.
 
-If manual testing is needed:
+If manual testing is needed, run from the worktree directory:
 ```bash
 npm run dev
 ```
@@ -190,7 +227,7 @@ Task(
 
 **Do NOT report completion until ALL are checked:**
 
-- [ ] Phase 1: Branch created from main
+- [ ] Phase 1: Worktree created, branch off main, `npm install` run
 - [ ] Phase 2: Code written, quality checks run
 - [ ] Phase 3: frontend-ci agent passed
 - [ ] Phase 4: All errors fixed (or N/A)
@@ -202,7 +239,9 @@ Task(
 
 ## Notes
 
-- All commands run from the project root (no `frontend/` subdirectory)
+- **All implementation work runs inside the worktree directory** — never in the main repo
+- Worktrees are sibling directories: `../ThrustCurves-[short-name]`
+- The main repo stays on `main` and is never directly modified during feature work
 - Use Sonnet model for this skill
 - Only frontend-ci agent exists (no backend-ci or e2e-ci)
 - Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>

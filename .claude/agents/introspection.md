@@ -13,12 +13,12 @@ The orchestrator must provide these metrics:
 ```markdown
 **Feature**: [Phase X.Y - Feature Name]
 **Metrics**:
-- Total Time: ~X minutes (estimated)
-- Total Tokens: ~Xk
-- Test Iterations: X
-- Linting Commits: X
-- CI Runs: X local, X remote
-- Remote CI Failures: X
+- Total Time: ~X minutes (estimated or actual clock time)
+- Total Tokens: ~Xk (measure from Claude usage output - MANDATORY)
+- Test Iterations: X (number of test re-runs)
+- Linting Commits: X (separate commits for lint fixes - target: 0)
+- CI Runs: X local passes, X local failures, X remote failures
+- Remote CI Failures: X (separate counter for parity issues)
 
 **Notable Events** (optional):
 - [Any significant blockers, rework, or discoveries]
@@ -57,7 +57,21 @@ For each metric, determine if it met targets:
 - Identify which phases consumed the most resources
 - Look for inefficiencies (redundant file reads, unnecessary iterations)
 
-### Step 3: Identify Root Causes
+### Step 3: Capture New Patterns Discovered
+
+If implementation discovered patterns not in MEMORY.md:
+1. List each new pattern found (config, testing, typing, etc.)
+2. Document why it works (not just that it works)
+3. Note any gotchas or prerequisites
+4. Propose adding to MEMORY.md with phase reference
+
+**Examples**:
+- Config pattern (e.g., "Vitest needs separate config file from Vite")
+- Typing pattern (e.g., "Use union types for status fields")
+- Testing pattern (e.g., "Schema validation tests for JSON data")
+- Performance insight (e.g., "Early linting prevents 10+ min rework")
+
+### Step 4: Identify Root Causes
 
 For each issue found, determine the root cause:
 
@@ -82,7 +96,7 @@ For each issue found, determine the root cause:
    - Symptom: Multiple test iterations to get thresholds right
    - Fix: Add calibration strategy to MEMORY.md
 
-### Step 4: Propose Changes
+### Step 5: Propose Changes
 
 Create a structured analysis with proposed improvements:
 
@@ -124,7 +138,7 @@ Create a structured analysis with proposed improvements:
 - Iterations: Reduce from X to Y
 ```
 
-### Step 5: Ask User for Approval
+### Step 6: Ask User for Approval
 
 Present the analysis and ask:
 
@@ -138,7 +152,7 @@ Present the analysis and ask:
 >
 > What would you prefer?
 
-### Step 6: Apply Approved Changes
+### Step 7: Apply Approved Changes
 
 Based on user response:
 
