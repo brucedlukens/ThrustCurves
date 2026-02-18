@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Edit",
+      "Write",
+      "Bash",
+      "Glob",
+      "Grep",
+      "Task",
+      "WebFetch(domain:github.com)"
+    ]
+  },
+  "additionalDirectories": [
+    "../worktrees/*"
+  ],
+  "defaultMode": "Plan"
+}
