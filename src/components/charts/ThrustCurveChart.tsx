@@ -105,7 +105,7 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
             stroke={GEAR_COLORS[i % GEAR_COLORS.length]}
             dot={false}
             strokeWidth={1.5}
-            connectNulls={false}
+            connectNulls={true}
           />
         ))}
         <Line
@@ -115,7 +115,7 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
           dot={false}
           strokeWidth={2}
           strokeDasharray="5 3"
-          connectNulls={false}
+          connectNulls={true}
         />
       </LineChart>
     </ResponsiveContainer>
