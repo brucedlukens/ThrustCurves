@@ -9,7 +9,8 @@ import {
   Line,
 } from 'recharts'
 import type { GearThrustCurve, EnvelopePoint } from '@/types/simulation'
-import { MS_TO_MPH, N_TO_LBF } from '@/utils/units'
+import { MS_TO_MPH, MS_TO_KMH, N_TO_LBF } from '@/utils/units'
+import { useUnitStore } from '@/store/unitStore'
 
 // Intentional gear color palette: low→high speed progression
 const GEAR_COLORS = [
@@ -29,7 +30,7 @@ interface ThrustCurveChartProps {
 }
 
 interface ChartRow {
-  speedMph: number
+  speed: number
   envelope: number | undefined
   [key: string]: number | undefined
 }
@@ -45,6 +46,11 @@ const AXIS_TICK = { fill: '#8888a0', fontSize: 10, fontFamily: '"JetBrains Mono"
 const AXIS_LABEL_STYLE = { fill: '#55556a', fontSize: 11, fontFamily: '"Barlow Condensed", sans-serif' }
 
 export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveChartProps) {
+  const units = useUnitStore(state => state.units)
+  const speedFactor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
+  const speedLabel = units === 'imperial' ? 'MPH' : 'KM/H'
+  const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
+
   const gearMaps = gearCurves.map(gc => {
     const m = new Map<number, number>()
     gc.points.forEach(p => m.set(Math.round(p.speedMs * 1000), p.forceN))
@@ -62,7 +68,7 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
     .map(key => {
       const speedMs = key / 1000
       const row: ChartRow = {
-        speedMph: parseFloat((speedMs * MS_TO_MPH).toFixed(2)),
+        speed: parseFloat((speedMs * speedFactor).toFixed(2)),
         envelope: undefined,
       }
       gearCurves.forEach((_, i) => {
@@ -79,11 +85,11 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
       <LineChart data={data} margin={{ top: 8, right: 28, bottom: 28, left: 20 }}>
         <CartesianGrid strokeDasharray="2 4" stroke="#1a1a22" vertical={false} />
         <XAxis
-          dataKey="speedMph"
+          dataKey="speed"
           type="number"
           domain={['auto', 'auto']}
           label={{
-            value: 'SPEED (MPH)',
+            value: `SPEED (${speedLabel})`,
             position: 'insideBottom',
             offset: -14,
             style: AXIS_LABEL_STYLE,
@@ -115,7 +121,7 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
             typeof value === 'number' && isFinite(value) ? [`${value.toFixed(0)} lbf`] : ['—']
           }
           labelFormatter={(label: unknown) =>
-            typeof label === 'number' && isFinite(label) ? `${label.toFixed(1)} mph` : '—'
+            typeof label === 'number' && isFinite(label) ? `${label.toFixed(1)} ${speedUnit}` : '—'
           }
         />
         <Legend

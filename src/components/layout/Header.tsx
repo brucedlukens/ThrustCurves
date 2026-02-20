@@ -1,8 +1,12 @@
+import { useUnitStore } from '@/store/unitStore'
+
 interface HeaderProps {
   onMenuClick: () => void
 }
 
 export default function Header({ onMenuClick }: HeaderProps) {
+  const { units, toggleUnits } = useUnitStore()
+
   return (
     <header className="shrink-0 bg-panel border-b border-line relative z-30">
       <div className="flex items-center gap-4 px-4 lg:px-6 py-3">
@@ -27,10 +31,30 @@ export default function Header({ onMenuClick }: HeaderProps) {
           </span>
         </div>
 
-        {/* Right — decorative accent bar */}
-        <div className="ml-auto hidden lg:flex items-center gap-2">
-          <div className="w-2 h-2 rounded-full bg-signal animate-pulse" />
-          <span className="font-data text-xs text-muted-txt tracking-wider">LIVE</span>
+        {/* Right — unit toggle + live indicator */}
+        <div className="ml-auto flex items-center gap-3">
+          <button
+            type="button"
+            onClick={toggleUnits}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-line bg-lift hover:bg-raised transition-colors"
+            aria-label={`Switch to ${units === 'imperial' ? 'metric' : 'imperial'} units`}
+          >
+            <span
+              className={`font-data text-xs font-semibold tracking-wider tabular-nums transition-colors ${units === 'imperial' ? 'text-signal-hi' : 'text-muted-txt'}`}
+            >
+              MPH
+            </span>
+            <span className="font-data text-xs text-muted-txt">/</span>
+            <span
+              className={`font-data text-xs font-semibold tracking-wider tabular-nums transition-colors ${units === 'metric' ? 'text-signal-hi' : 'text-muted-txt'}`}
+            >
+              KMH
+            </span>
+          </button>
+          <div className="hidden lg:flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-signal animate-pulse" />
+            <span className="font-data text-xs text-muted-txt tracking-wider">LIVE</span>
+          </div>
         </div>
       </div>
 

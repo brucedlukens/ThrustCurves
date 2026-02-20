@@ -1,11 +1,17 @@
 import type { ShiftPoint } from '@/types/simulation'
-import { msToMph } from '@/utils/units'
+import { useUnitStore } from '@/store/unitStore'
+import { msToMph, msToKmh } from '@/utils/units'
 
 interface ShiftPointsTableProps {
   shiftPoints: ShiftPoint[]
 }
 
 export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps) {
+  const units = useUnitStore(state => state.units)
+  const fmtSpeed = (ms: number) =>
+    units === 'imperial' ? msToMph(ms).toFixed(1) : msToKmh(ms).toFixed(1)
+  const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
+
   return (
     <div className="rounded-xl border border-line overflow-hidden">
       <table className="w-full">
@@ -18,7 +24,7 @@ export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps)
             </th>
             <th className="px-4 py-2.5 text-right">
               <span className="font-display text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-txt">
-                Speed (mph)
+                Speed ({speedUnit})
               </span>
             </th>
             <th className="px-4 py-2.5 text-right">
@@ -41,9 +47,9 @@ export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps)
               </td>
               <td className="px-4 py-2.5 text-right">
                 <span className="font-data text-sm text-data tabular-nums">
-                  {msToMph(sp.speedMs).toFixed(1)}
+                  {fmtSpeed(sp.speedMs)}
                 </span>
-                <span className="font-data text-xs text-label ml-1">mph</span>
+                <span className="font-data text-xs text-label ml-1">{speedUnit}</span>
               </td>
               <td className="px-4 py-2.5 text-right">
                 <span className="font-data text-sm text-data tabular-nums">
