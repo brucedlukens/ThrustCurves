@@ -612,5 +612,143 @@
     },
     "tireSize": { "widthMm": 235, "aspectRatio": 35, "rimDiameterIn": 19 },
     "aero": { "cd": 0.28, "frontalAreaM2": 2.12 }
+  },
+  {
+    "id": "scion-frs-2013",
+    "make": "Scion",
+    "model": "FR-S",
+    "year": 2013,
+    "trim": "Base",
+    "curbWeightKg": 1213,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000,95], [1500,125], [2000,150], [2500,168], [3000,178],
+        [3500,185], [4000,190], [4500,193], [5000,196], [5500,199],
+        [6000,202], [6400,205], [7000,196], [7200,185], [7400,170], [7500,155]
+      ],
+      "powerCurve": [
+        [1000,10], [1500,20], [2000,31], [2500,44], [3000,56],
+        [3500,68], [4000,80], [4500,91], [5000,103], [5500,115],
+        [6000,127], [6400,138], [7000,144], [7200,140], [7400,132], [7500,122]
+      ],
+      "redlineRpm": 7500,
+      "idleRpm": 700,
+      "displacementL": 2.0,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.626, 2.188, 1.541, 1.213, 1.000, 0.767],
+      "finalDriveRatio": 4.100,
+      "shiftTimeMs": 180,
+      "drivetrainLoss": 0.13,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 215, "aspectRatio": 45, "rimDiameterIn": 17 },
+    "aero": { "cd": 0.29, "frontalAreaM2": 1.95 }
+  },
+  {
+    "id": "subaru-brz-2018",
+    "make": "Subaru",
+    "model": "BRZ",
+    "year": 2018,
+    "trim": "Limited",
+    "curbWeightKg": 1232,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000,98], [1500,130], [2000,155], [2500,172], [3000,182],
+        [3500,188], [4000,193], [4500,197], [5000,200], [5500,203],
+        [6000,206], [6400,212], [7000,200], [7200,190], [7400,175], [7500,160]
+      ],
+      "powerCurve": [
+        [1000,10], [1500,21], [2000,32], [2500,45], [3000,57],
+        [3500,70], [4000,82], [4500,93], [5000,105], [5500,118],
+        [6000,130], [6400,142], [7000,147], [7200,143], [7400,136], [7500,126]
+      ],
+      "redlineRpm": 7500,
+      "idleRpm": 700,
+      "displacementL": 2.0,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.636, 2.375, 1.761, 1.346, 1.000, 0.767],
+      "finalDriveRatio": 3.900,
+      "shiftTimeMs": 180,
+      "drivetrainLoss": 0.13,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 215, "aspectRatio": 45, "rimDiameterIn": 17 },
+    "aero": { "cd": 0.27, "frontalAreaM2": 1.92 }
+  },
+  {
+    "id": "toyota-gr86-2022",
+    "make": "Toyota",
+    "model": "GR86",
+    "year": 2022,
+    "trim": "Premium",
+    "curbWeightKg": 1270,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000,140], [1500,190], [2000,220], [2500,240], [3000,248],
+        [3500,250], [4000,248], [4500,243], [5000,238], [5500,230],
+        [6000,220], [6500,205], [7000,185], [7400,165], [7500,150]
+      ],
+      "powerCurve": [
+        [1000,15], [1500,30], [2000,46], [2500,63], [3000,78],
+        [3500,92], [4000,104], [4500,115], [5000,125], [5500,133],
+        [6000,138], [6500,140], [7000,136], [7400,128], [7500,118]
+      ],
+      "redlineRpm": 7500,
+      "idleRpm": 700,
+      "displacementL": 2.4,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.540, 2.130, 1.517, 1.183, 1.000, 0.767],
+      "finalDriveRatio": 4.300,
+      "shiftTimeMs": 180,
+      "drivetrainLoss": 0.13,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 215, "aspectRatio": 40, "rimDiameterIn": 18 },
+    "aero": { "cd": 0.27, "frontalAreaM2": 1.90 }
+  },
+  {
+    "id": "ford-f350-diesel-2025",
+    "make": "Ford",
+    "model": "F-350",
+    "year": 2025,
+    "trim": "Platinum 6.7L Diesel",
+    "curbWeightKg": 3628,
+    "drivetrain": "AWD",
+    "engine": {
+      "torqueCurve": [
+        [600,400], [800,700], [1000,1050], [1200,1270], [1400,1370],
+        [1600,1410], [1800,1424], [2000,1424], [2200,1420], [2400,1395],
+        [2600,1320], [2800,1272], [3000,1082], [3200,952], [3400,813],
+        [3600,680], [3800,562]
+      ],
+      "powerCurve": [
+        [600,25], [800,59], [1000,110], [1200,159], [1400,201],
+        [1600,236], [1800,268], [2000,298], [2200,328], [2400,351],
+        [2600,360], [2800,373], [3000,340], [3200,319], [3400,289],
+        [3600,256], [3800,224]
+      ],
+      "redlineRpm": 3800,
+      "idleRpm": 600,
+      "displacementL": 6.7,
+      "forcedInduction": true
+    },
+    "transmission": {
+      "gearRatios": [4.69, 2.99, 2.14, 1.76, 1.52, 1.27, 1.00, 0.85, 0.69, 0.64],
+      "finalDriveRatio": 3.55,
+      "shiftTimeMs": 200,
+      "drivetrainLoss": 0.10,
+      "type": "automatic"
+    },
+    "tireSize": { "widthMm": 275, "aspectRatio": 65, "rimDiameterIn": 20 },
+    "aero": { "cd": 0.42, "frontalAreaM2": 3.80 }
   }
 ]

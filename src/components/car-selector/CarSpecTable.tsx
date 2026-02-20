@@ -1,11 +1,14 @@
 import type { CarSpec } from '@/types/car'
 import { kwToHp, nmToLbft } from '@/utils/units'
+import { useUnitStore } from '@/store/unitStore'
 
 interface CarSpecTableProps {
   car: CarSpec
 }
 
 export default function CarSpecTable({ car }: CarSpecTableProps) {
+  const units = useUnitStore(state => state.units)
+
   const maxPowerKw = Math.max(...car.engine.powerCurve.map(([, p]) => p))
   const maxTorqueNm = Math.max(...car.engine.torqueCurve.map(([, t]) => t))
 
@@ -19,6 +22,14 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
     { rpm: 0, t: 0 },
   ).rpm
 
+  const torqueStr = units === 'imperial'
+    ? `${nmToLbft(maxTorqueNm).toFixed(0)} lb·ft @ ${maxTorqueRpm} RPM`
+    : `${maxTorqueNm.toFixed(0)} Nm @ ${maxTorqueRpm} RPM`
+
+  const weightStr = units === 'imperial'
+    ? `${(car.curbWeightKg * 2.20462).toFixed(0)} lbs`
+    : `${car.curbWeightKg} kg`
+
   const rows: [string, string][] = [
     ['Make / Model', `${car.year} ${car.make} ${car.model} ${car.trim}`],
     ['Drivetrain', car.drivetrain],
@@ -27,12 +38,9 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
       `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'Naturally Aspirated'}`,
     ],
     ['Peak Power', `${kwToHp(maxPowerKw).toFixed(0)} hp @ ${maxPowerRpm} RPM`],
-    ['Peak Torque', `${nmToLbft(maxTorqueNm).toFixed(0)} lb·ft @ ${maxTorqueRpm} RPM`],
+    ['Peak Torque', torqueStr],
     ['Redline', `${car.engine.redlineRpm} RPM`],
-    [
-      'Curb Weight',
-      `${car.curbWeightKg} kg (${(car.curbWeightKg * 2.20462).toFixed(0)} lbs)`,
-    ],
+    ['Curb Weight', weightStr],
     [
       'Transmission',
       `${car.transmission.gearRatios.length}-speed ${car.transmission.type}`,

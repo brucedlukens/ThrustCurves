@@ -72,9 +72,16 @@ export function runIntegration(params: IntegrationParams): {
   const trace: TimeStep[] = []
   const performance: PerformanceMetrics = {}
 
-  // Determine top speed: last point in envelope (where thrust still > 0)
-  const lastEnvPoint = params.envelope[params.envelope.length - 1]
-  performance.topSpeedMs = lastEnvPoint ? lastEnvPoint.speedMs : 0
+  // Determine top speed: highest speed where envelope thrust exceeds drag + rolling resistance.
+  // This gives the realistic drag-limited equilibrium speed rather than the gearing ceiling.
+  let topSpeedMs = 0
+  for (const pt of params.envelope) {
+    const drag = dragForceN(cd, frontalAreaM2, airDensityKgM3, pt.speedMs)
+    if (pt.forceN > drag + rrN) {
+      topSpeedMs = pt.speedMs
+    }
+  }
+  performance.topSpeedMs = topSpeedMs
 
   while (time < MAX_TIME) {
     let thrustN = 0
