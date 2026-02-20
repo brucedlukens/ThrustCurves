@@ -93,8 +93,12 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
           }}
           labelStyle={{ color: '#9ca3af', fontSize: 11 }}
           itemStyle={{ color: '#e5e7eb', fontSize: 11 }}
-          formatter={(value: number) => [`${value.toFixed(0)} lbf`]}
-          labelFormatter={(label: number) => `${label.toFixed(1)} mph`}
+          formatter={(value: unknown) =>
+            typeof value === 'number' && isFinite(value) ? [`${value.toFixed(0)} lbf`] : ['—']
+          }
+          labelFormatter={(label: unknown) =>
+            typeof label === 'number' && isFinite(label) ? `${label.toFixed(1)} mph` : '—'
+          }
         />
         <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12, paddingTop: 8 }} />
         {gearCurves.map((gc, i) => (

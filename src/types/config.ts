@@ -20,6 +20,12 @@ export interface CarModifications {
   drivetrainLossOverride?: number
   /** Altitude in meters for air density calculation */
   altitudeM: number
+  /**
+   * Longitudinal tire friction coefficient (μ).
+   * Caps thrust at μ × mass × g. undefined = no limit.
+   * Typical values: drag slick ~1.7, track ~1.4, street ~1.0, eco ~0.7
+   */
+  tractionCoefficientMu?: number
 }
 
 /** A named, saved simulation configuration */

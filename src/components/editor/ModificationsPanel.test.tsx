@@ -43,12 +43,13 @@ describe('ModificationsPanel', () => {
 
   test('renders section headings', () => {
     render(<ModificationsPanel car={mockCar} />)
-    expect(screen.getByText(/environment/i)).toBeInTheDocument()
-    expect(screen.getByText(/performance/i)).toBeInTheDocument()
-    expect(screen.getByText(/engine/i)).toBeInTheDocument()
-    expect(screen.getByText(/drivetrain/i)).toBeInTheDocument()
-    expect(screen.getByText(/tires/i)).toBeInTheDocument()
-    expect(screen.getByText(/aerodynamics/i)).toBeInTheDocument()
+    // Exact string matches avoid ambiguity with longer dropdown option texts
+    expect(screen.getByText('Environment')).toBeInTheDocument()
+    expect(screen.getByText('Performance')).toBeInTheDocument()
+    expect(screen.getByText('Engine')).toBeInTheDocument()
+    expect(screen.getByText('Drivetrain')).toBeInTheDocument()
+    expect(screen.getByText('Tires')).toBeInTheDocument()
+    expect(screen.getByText('Aerodynamics')).toBeInTheDocument()
   })
 
   test('does not show Reset All when no modifications are active', () => {
@@ -81,5 +82,11 @@ describe('ModificationsPanel', () => {
     })
     render(<ModificationsPanel car={mockCar} />)
     expect(screen.getByText(/2 active/i)).toBeInTheDocument()
+  })
+
+  test('renders traction section label', () => {
+    render(<ModificationsPanel car={mockCar} />)
+    // Exact match on the label text; dropdown options are longer strings that won't match exactly
+    expect(screen.getByText('Traction Limit')).toBeInTheDocument()
   })
 })

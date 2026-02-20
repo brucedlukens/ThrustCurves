@@ -7,6 +7,7 @@ import GearRatioEditor from './GearRatioEditor'
 import AeroEditor from './AeroEditor'
 import TireSizeEditor from './TireSizeEditor'
 import ForcedInductionToggle from './ForcedInductionToggle'
+import TractionEditor from './TractionEditor'
 
 interface ModificationsPanelProps {
   car: CarSpec
@@ -37,11 +38,13 @@ export default function ModificationsPanel({ car }: ModificationsPanelProps) {
     modifications.customTorqueCurve !== undefined,
     modifications.gearRatioOverrides.some(r => r !== undefined),
     modifications.finalDriveOverride !== undefined,
+    modifications.shiftTimeOverride !== undefined,
     modifications.tireSizeOverride !== undefined,
     modifications.cdOverride !== undefined,
     modifications.frontalAreaOverride !== undefined,
     modifications.forcedInductionOverride !== undefined,
     modifications.altitudeM !== 0,
+    modifications.tractionCoefficientMu !== undefined,
   ].filter(Boolean).length
 
   return (
@@ -70,13 +73,14 @@ export default function ModificationsPanel({ car }: ModificationsPanelProps) {
       </Section>
 
       <Section title="Performance">
-        <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Torque Multiplier</label>
-          <TorqueCurveEditor />
-        </div>
-        <div className="flex flex-col gap-1">
+        <TorqueCurveEditor stockTorqueCurve={car.engine.torqueCurve} />
+        <div className="flex flex-col gap-1 mt-2">
           <label className="text-xs text-gray-500">Weight Delta</label>
           <WeightEditor stockWeightKg={car.curbWeightKg} />
+        </div>
+        <div className="flex flex-col gap-1 mt-2">
+          <label className="text-xs text-gray-500">Traction Limit</label>
+          <TractionEditor />
         </div>
       </Section>
 
@@ -88,6 +92,7 @@ export default function ModificationsPanel({ car }: ModificationsPanelProps) {
         <GearRatioEditor
           stockGearRatios={car.transmission.gearRatios}
           stockFinalDrive={car.transmission.finalDriveRatio}
+          stockShiftTimeMs={car.transmission.shiftTimeMs}
         />
       </Section>
 

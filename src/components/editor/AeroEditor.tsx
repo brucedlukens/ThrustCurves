@@ -2,7 +2,7 @@ import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
   'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder:text-gray-500'
+  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
 
 interface AeroEditorProps {
   stockCd: number
@@ -34,9 +34,8 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
         <label className="text-xs text-gray-500">Drag Coefficient (Cd)</label>
         <input
           type="number"
-          value={cdOverride ?? ''}
+          value={cdOverride ?? stockCd}
           onChange={e => handleCdChange(e.target.value)}
-          placeholder={stockCd.toFixed(2)}
           min={0.1}
           max={2.0}
           step={0.01}
@@ -48,9 +47,8 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
         <label className="text-xs text-gray-500">Frontal Area (m²)</label>
         <input
           type="number"
-          value={frontalAreaOverride ?? ''}
+          value={frontalAreaOverride ?? stockFrontalAreaM2}
           onChange={e => handleFrontalAreaChange(e.target.value)}
-          placeholder={stockFrontalAreaM2.toFixed(2)}
           min={0.5}
           max={6.0}
           step={0.01}
@@ -58,7 +56,7 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
           aria-label="Frontal area in square meters"
         />
       </div>
-      <p className="text-xs text-gray-500">Leave blank to use stock values</p>
+      <p className="text-xs text-gray-500">Clear any field to revert to stock value</p>
     </div>
   )
 }
