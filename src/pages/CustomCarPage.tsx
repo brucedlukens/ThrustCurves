@@ -387,7 +387,6 @@ export default function CustomCarPage() {
     setSaving(true)
     try {
       const id = editId ?? `custom-${uuidv4()}`
-      const powerCurve = torqueToPowerCurve(torqueCurve)
       const sortedTorque = [...torqueCurve].sort((a, b) => a[0] - b[0])
       const sortedPower = torqueToPowerCurve(sortedTorque)
 
