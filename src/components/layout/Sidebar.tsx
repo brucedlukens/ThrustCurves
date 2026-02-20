@@ -17,7 +17,7 @@ export default function Sidebar() {
           end={end}
           className={({ isActive }) =>
             [
-              'px-4 py-2 text-sm rounded-md mx-2 transition-colors',
+              'px-4 py-2 text-base rounded-md mx-2 transition-colors',
               isActive
                 ? 'bg-indigo-600 text-white font-medium'
                 : 'text-gray-400 hover:text-gray-100 hover:bg-gray-800',
