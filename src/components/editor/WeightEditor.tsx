@@ -2,11 +2,10 @@ import { useEffect, useState } from 'react'
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
+  'focus:outline-none focus:ring-1 focus:ring-signal focus:border-signal transition-colors placeholder:text-muted-txt'
 
 interface WeightEditorProps {
-  /** Stock curb weight in kg (shown as reference) */
   stockWeightKg: number
 }
 
@@ -14,10 +13,8 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
   const weightDeltaKg = useCarStore(state => state.modifications.weightDeltaKg)
   const updateModifications = useCarStore(state => state.updateModifications)
 
-  // Local string state allows clearing/typing negatives without being overwritten by the store
   const [rawValue, setRawValue] = useState(() => String(weightDeltaKg))
 
-  // Sync display when store changes externally (Reset All, load saved setup)
   useEffect(() => {
     setRawValue(String(weightDeltaKg))
   }, [weightDeltaKg])
@@ -30,7 +27,6 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
     }
   }
 
-  // On blur, sync display back to the last valid store value
   const handleBlur = () => {
     setRawValue(String(weightDeltaKg))
   }
@@ -49,10 +45,12 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
           className={INPUT_CLS}
           aria-label="Weight delta in kg"
         />
-        <span className="text-gray-400 text-sm shrink-0">kg</span>
+        <span className="font-data text-xs text-label shrink-0">kg</span>
       </div>
-      <p className="text-xs text-gray-500">
-        Stock: {stockWeightKg} kg → Effective: {effectiveWeight.toFixed(0)} kg
+      <p className="font-data text-[11px] text-muted-txt">
+        Stock <span className="text-label">{stockWeightKg}</span> kg
+        {' → '}
+        Eff. <span className={effectiveWeight < stockWeightKg ? 'text-green-400' : effectiveWeight > stockWeightKg ? 'text-signal-hi' : 'text-label'}>{effectiveWeight.toFixed(0)}</span> kg
       </p>
     </div>
   )

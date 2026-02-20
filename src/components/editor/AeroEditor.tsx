@@ -1,8 +1,8 @@
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
+  'focus:outline-none focus:ring-1 focus:ring-signal focus:border-signal transition-colors'
 
 interface AeroEditorProps {
   stockCd: number
@@ -30,8 +30,10 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
 
   return (
     <div className="flex flex-col gap-3">
-      <div className="flex flex-col gap-1">
-        <label className="text-xs text-gray-500">Drag Coefficient (Cd)</label>
+      <div className="flex flex-col gap-0.5">
+        <label className="font-display text-[10px] font-semibold tracking-widest uppercase text-muted-txt">
+          Drag Coefficient (Cd)
+        </label>
         <input
           type="number"
           value={cdOverride ?? stockCd}
@@ -43,8 +45,10 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
           aria-label="Drag coefficient"
         />
       </div>
-      <div className="flex flex-col gap-1">
-        <label className="text-xs text-gray-500">Frontal Area (m²)</label>
+      <div className="flex flex-col gap-0.5">
+        <label className="font-display text-[10px] font-semibold tracking-widest uppercase text-muted-txt">
+          Frontal Area (m²)
+        </label>
         <input
           type="number"
           value={frontalAreaOverride ?? stockFrontalAreaM2}
@@ -56,7 +60,7 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
           aria-label="Frontal area in square meters"
         />
       </div>
-      <p className="text-xs text-gray-500">Clear any field to revert to stock value</p>
+      <p className="font-data text-[10px] text-muted-txt">Clear field to revert to stock</p>
     </div>
   )
 }

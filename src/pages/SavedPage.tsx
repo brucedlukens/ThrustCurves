@@ -28,30 +28,44 @@ export default function SavedPage() {
 
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
+      {/* Page header */}
       <div>
-        <h2 className="text-2xl font-semibold text-gray-100">Saved Configurations</h2>
-        <p className="text-gray-400 mt-1 text-sm">
+        <h1 className="font-display text-3xl font-bold tracking-tight uppercase text-gray-100">
+          Saved Configurations
+        </h1>
+        <p className="font-data text-sm text-muted-txt mt-1.5">
           Load a saved setup into the simulator, or delete configurations you no longer need.
         </p>
+        <div className="mt-3 h-px bg-gradient-to-r from-signal/40 to-transparent" />
       </div>
 
       {isLoading && (
-        <p className="text-gray-500 text-sm">Loading…</p>
+        <div className="flex items-center gap-2">
+          <div className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+          <span className="font-data text-sm text-muted-txt">Loading…</span>
+        </div>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-700 bg-red-900/20 p-4 text-red-400 text-sm">
-          {error}
+        <div className="rounded-lg border border-signal/40 bg-signal-dim p-4">
+          <p className="font-data text-sm text-signal-hi">{error}</p>
         </div>
       )}
 
       {!isLoading && (
-        <SavedConfigsList
-          setups={savedSetups}
-          cars={cars}
-          onLoad={handleLoad}
-          onDelete={handleDelete}
-        />
+        <>
+          {savedSetups.length > 0 && (
+            <div className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
+              {savedSetups.length} saved setup{savedSetups.length !== 1 ? 's' : ''}
+            </div>
+          )}
+          <SavedConfigsList
+            setups={savedSetups}
+            cars={cars}
+            onLoad={handleLoad}
+            onDelete={handleDelete}
+          />
+        </>
       )}
     </div>
   )

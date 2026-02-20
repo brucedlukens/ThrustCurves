@@ -1,7 +1,6 @@
 import { useCarStore } from '@/store/carStore'
 
 interface ForcedInductionToggleProps {
-  /** Stock forced induction setting */
   stockForcedInduction: boolean
 }
 
@@ -9,13 +8,11 @@ export default function ForcedInductionToggle({ stockForcedInduction }: ForcedIn
   const forcedInductionOverride = useCarStore(state => state.modifications.forcedInductionOverride)
   const updateModifications = useCarStore(state => state.updateModifications)
 
-  // Effective value: override if set, else stock
   const effective = forcedInductionOverride !== undefined ? forcedInductionOverride : stockForcedInduction
   const isOverridden = forcedInductionOverride !== undefined
 
   const handleToggle = () => {
     const newValue = !effective
-    // If new value equals stock, clear the override
     if (newValue === stockForcedInduction) {
       updateModifications({ forcedInductionOverride: undefined })
     } else {
@@ -30,28 +27,40 @@ export default function ForcedInductionToggle({ stockForcedInduction }: ForcedIn
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-3">
+        {/* Premium toggle switch */}
         <button
+          type="button"
           role="switch"
           aria-checked={effective}
           onClick={handleToggle}
-          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 focus:ring-offset-gray-800 ${
-            effective ? 'bg-indigo-600' : 'bg-gray-600'
-          }`}
+          className={[
+            'relative inline-flex h-6 w-11 items-center rounded-full',
+            'transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-signal/50 focus:ring-offset-1 focus:ring-offset-panel',
+            effective ? 'bg-signal' : 'bg-lift border border-line',
+          ].join(' ')}
         >
           <span
-            className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
-              effective ? 'translate-x-5' : 'translate-x-1'
-            }`}
+            className={[
+              'inline-block h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200',
+              effective ? 'translate-x-6' : 'translate-x-1',
+            ].join(' ')}
           />
         </button>
-        <span className="text-sm text-gray-300">
-          {effective ? 'Turbocharged / Supercharged' : 'Naturally Aspirated'}
-        </span>
+
+        <div className="flex flex-col gap-0.5">
+          <span className="font-display text-[11px] font-semibold tracking-[0.15em] uppercase text-gray-300">
+            {effective ? 'Forced Induction' : 'Naturally Aspirated'}
+          </span>
+          <span className="font-data text-[10px] text-muted-txt">
+            {effective ? 'Turbo / Supercharged' : 'No boost'}
+          </span>
+        </div>
       </div>
+
       {isOverridden && (
         <button
           onClick={handleReset}
-          className="text-xs text-gray-500 hover:text-gray-300 underline"
+          className="text-xs text-muted-txt hover:text-gray-300 underline underline-offset-2 transition-colors"
           aria-label="Reset forced induction to stock"
         >
           Reset

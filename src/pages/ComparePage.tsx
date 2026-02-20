@@ -6,6 +6,17 @@ import SavedConfigsList from '@/components/saved/SavedConfigsList'
 import ComparisonChart from '@/components/charts/ComparisonChart'
 import ComparisonTable from '@/components/results/ComparisonTable'
 
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <div className="w-1 h-3.5 rounded-full bg-signal/60" />
+      <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
+        {children}
+      </span>
+    </div>
+  )
+}
+
 export default function ComparePage() {
   const { savedSetups, isLoading, loadSetups } = usePersistenceStore()
   const cars = useCarStore(state => state.cars)
@@ -16,62 +27,72 @@ export default function ComparePage() {
   }, [loadSetups])
 
   return (
-    <div className="flex gap-6 min-h-0 h-full">
-      {/* Left: Setup selector */}
-      <div className="w-72 shrink-0 flex flex-col gap-4 overflow-y-auto">
+    <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 min-h-0 h-full">
+
+      {/* ── Left: Setup selector ────────────────────────── */}
+      <div className="lg:w-72 shrink-0 flex flex-col gap-4 lg:overflow-y-auto">
         <div>
-          <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-1">
-            Select Setups
-          </h2>
-          <p className="text-xs text-gray-500 mb-3">
-            Toggle setups to overlay their thrust envelopes
+          <h1 className="font-display text-2xl font-bold tracking-tight text-gray-100 uppercase mb-0.5">
+            Compare
+          </h1>
+          <p className="font-data text-xs text-muted-txt">
+            Select saved setups to overlay thrust envelopes
           </p>
         </div>
 
-        {isLoading && <p className="text-gray-500 text-sm">Loading…</p>}
+        <div className="border-t border-faint pt-4">
+          <SectionLabel>Saved Setups</SectionLabel>
 
-        {!isLoading && (
-          <SavedConfigsList
-            setups={savedSetups}
-            cars={cars}
-            selectedIds={selectedIds}
-            onToggleCompare={toggleSetup}
-          />
-        )}
+          {isLoading && (
+            <div className="flex items-center gap-2 py-3">
+              <div className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+              <span className="font-data text-xs text-muted-txt">Loading…</span>
+            </div>
+          )}
+
+          {!isLoading && (
+            <SavedConfigsList
+              setups={savedSetups}
+              cars={cars}
+              selectedIds={selectedIds}
+              onToggleCompare={toggleSetup}
+            />
+          )}
+        </div>
 
         {selectedIds.length > 0 && (
           <button
             onClick={clearSelection}
-            className="text-xs text-gray-500 hover:text-gray-300 underline self-start"
+            className="font-data text-xs text-muted-txt hover:text-gray-300 underline underline-offset-2 self-start transition-colors"
           >
             Clear selection
           </button>
         )}
       </div>
 
-      {/* Right: Charts + Table */}
-      <div className="flex-1 min-w-0 flex flex-col gap-6 overflow-y-auto">
-        <div>
-          <h2 className="text-2xl font-semibold text-gray-100">Compare</h2>
-          {entries.length > 0 && (
-            <p className="text-gray-400 text-sm mt-1">
-              Comparing {entries.length} setup{entries.length !== 1 ? 's' : ''}
-            </p>
-          )}
-        </div>
+      {/* ── Right: Charts + Table ───────────────────────── */}
+      <div className="flex-1 min-w-0 flex flex-col gap-5 lg:overflow-y-auto">
 
-        <div className="bg-gray-800/50 rounded-lg border border-gray-700 p-4">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-            Thrust Envelope Comparison
-          </h3>
-          <ComparisonChart entries={entries} />
+        {entries.length > 0 && (
+          <div className="flex items-center gap-2">
+            <div className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
+            <span className="font-display text-xs font-medium tracking-widest uppercase text-label">
+              Comparing {entries.length} setup{entries.length !== 1 ? 's' : ''}
+            </span>
+          </div>
+        )}
+
+        {/* Comparison chart */}
+        <div>
+          <SectionLabel>Thrust Envelope Comparison</SectionLabel>
+          <div className="chart-frame p-4 h-[280px] lg:h-[340px]">
+            <ComparisonChart entries={entries} />
+          </div>
         </div>
 
         {entries.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-              Performance Metrics
-            </h3>
+            <SectionLabel>Performance Metrics</SectionLabel>
             <ComparisonTable entries={entries} />
           </div>
         )}
