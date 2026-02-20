@@ -20,23 +20,25 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
   ).rpm
 
   const rows: [string, string][] = [
+    ['Make / Model', `${car.year} ${car.make} ${car.model} ${car.trim}`],
     ['Drivetrain', car.drivetrain],
     [
       'Engine',
-      `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'NA'}`,
+      `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'Naturally Aspirated'}`,
     ],
     ['Peak Power', `${kwToHp(maxPowerKw).toFixed(0)} hp @ ${maxPowerRpm} RPM`],
     ['Peak Torque', `${nmToLbft(maxTorqueNm).toFixed(0)} lb·ft @ ${maxTorqueRpm} RPM`],
     ['Redline', `${car.engine.redlineRpm} RPM`],
     [
       'Curb Weight',
-      `${car.curbWeightKg} kg  /  ${(car.curbWeightKg * 2.20462).toFixed(0)} lbs`,
+      `${car.curbWeightKg} kg (${(car.curbWeightKg * 2.20462).toFixed(0)} lbs)`,
     ],
     [
-      'Gearbox',
+      'Transmission',
       `${car.transmission.gearRatios.length}-speed ${car.transmission.type}`,
     ],
-    ['Cd / Frontal', `${car.aero.cd.toFixed(3)}  /  ${car.aero.frontalAreaM2.toFixed(2)} m²`],
+    ['Drag Coefficient', car.aero.cd.toFixed(3)],
+    ['Frontal Area', `${car.aero.frontalAreaM2.toFixed(2)} m²`],
   ]
 
   return (

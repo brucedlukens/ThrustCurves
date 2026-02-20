@@ -18,7 +18,7 @@ export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps)
             </th>
             <th className="px-4 py-2.5 text-right">
               <span className="font-display text-[10px] font-semibold tracking-[0.2em] uppercase text-muted-txt">
-                Speed
+                Speed (mph)
               </span>
             </th>
             <th className="px-4 py-2.5 text-right">
@@ -35,12 +35,8 @@ export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps)
               className={`border-t border-faint hover:bg-raised transition-colors ${idx % 2 === 0 ? 'bg-panel' : 'bg-lift/40'}`}
             >
               <td className="px-4 py-2.5">
-                <span className="font-display text-sm font-medium tracking-wide text-gray-300">
-                  G{sp.fromGear}
-                </span>
-                <span className="text-muted-txt mx-1.5">→</span>
-                <span className="font-display text-sm font-semibold text-gray-100">
-                  G{sp.toGear}
+                <span className="font-display text-sm font-semibold text-gray-100 tracking-wide">
+                  Gear {sp.fromGear} → {sp.toGear}
                 </span>
               </td>
               <td className="px-4 py-2.5 text-right">

@@ -48,9 +48,7 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
         <span className="font-data text-xs text-label shrink-0">kg</span>
       </div>
       <p className="font-data text-[11px] text-muted-txt">
-        Stock <span className="text-label">{stockWeightKg}</span> kg
-        {' → '}
-        Eff. <span className={effectiveWeight < stockWeightKg ? 'text-green-400' : effectiveWeight > stockWeightKg ? 'text-signal-hi' : 'text-label'}>{effectiveWeight.toFixed(0)}</span> kg
+        Stock: {stockWeightKg} kg → Effective: {effectiveWeight.toFixed(0)} kg
       </p>
     </div>
   )

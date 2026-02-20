@@ -86,7 +86,7 @@ export default function SavedConfigsList({
                     className="font-display text-[10px] font-semibold tracking-wider uppercase px-2 py-1 rounded border border-faint text-muted-txt hover:border-signal/50 hover:text-signal-hi transition-all"
                     aria-label={`Delete ${setup.name}`}
                   >
-                    Del
+                    Delete
                   </button>
                 )}
               </div>
