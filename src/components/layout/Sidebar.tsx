@@ -46,6 +46,16 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    to: '/custom-car',
+    label: 'Custom Car',
+    end: false,
+    icon: (
+      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+      </svg>
+    ),
+  },
 ]
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {

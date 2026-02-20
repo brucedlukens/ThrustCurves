@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import type { CarSpec } from '@/types/car'
 import { kwToHp, nmToLbft } from '@/utils/units'
 import { useUnitStore } from '@/store/unitStore'
@@ -49,8 +50,26 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
     ['Frontal Area', `${car.aero.frontalAreaM2.toFixed(2)} m²`],
   ]
 
+  const isCustom = car.id.startsWith('custom-')
+
   return (
     <div className="rounded-lg border border-line overflow-hidden">
+      {isCustom && (
+        <div className="flex items-center justify-between px-3 py-1.5 bg-lift border-b border-line">
+          <span className="font-display text-[9px] font-semibold tracking-[0.2em] uppercase text-signal">
+            Custom Car
+          </span>
+          <Link
+            to={`/custom-car/${car.id}`}
+            className="font-display text-[9px] font-semibold tracking-[0.15em] uppercase text-muted-txt hover:text-signal transition-colors flex items-center gap-1"
+          >
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" />
+            </svg>
+            Edit
+          </Link>
+        </div>
+      )}
       <table className="w-full">
         <tbody>
           {rows.map(([label, value]) => (
