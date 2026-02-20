@@ -37,13 +37,13 @@ export default function SaveLoadControls({ carId }: SaveLoadControlsProps) {
 
   if (!isOpen) {
     return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-3">
         {savedMsg && (
-          <span className="text-xs text-green-400">{savedMsg}</span>
+          <span className="font-data text-xs text-green-400">{savedMsg}</span>
         )}
         <button
           onClick={() => setIsOpen(true)}
-          className="text-xs px-3 py-1 rounded border border-indigo-600 text-indigo-400 hover:bg-indigo-600 hover:text-white transition-colors"
+          className="font-display text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded border border-signal/50 text-signal-hi hover:bg-signal hover:text-white hover:border-signal transition-all"
           aria-label="Save setup"
         >
           Save Setup
@@ -61,19 +61,19 @@ export default function SaveLoadControls({ carId }: SaveLoadControlsProps) {
         onKeyDown={handleKeyDown}
         placeholder="Setup name…"
         autoFocus
-        className="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder:text-gray-500 w-40"
+        className="bg-lift border border-line rounded px-2.5 py-1.5 font-data text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-signal focus:border-signal placeholder:text-muted-txt w-44 transition-colors"
         aria-label="Setup name"
       />
       <button
         onClick={handleSave}
         disabled={isSaving || !name.trim()}
-        className="text-xs px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="font-display text-xs font-semibold tracking-wider uppercase px-3 py-1.5 rounded bg-signal text-white hover:bg-signal-hi disabled:opacity-40 disabled:cursor-not-allowed transition-all"
       >
         {isSaving ? 'Saving…' : 'Save'}
       </button>
       <button
         onClick={() => setIsOpen(false)}
-        className="text-xs text-gray-500 hover:text-gray-300"
+        className="font-data text-xs text-muted-txt hover:text-gray-300 transition-colors"
       >
         Cancel
       </button>

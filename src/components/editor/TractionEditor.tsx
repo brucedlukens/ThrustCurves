@@ -1,8 +1,8 @@
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
+  'focus:outline-none focus:ring-1 focus:ring-signal focus:border-signal transition-colors'
 
 interface TractionPreset {
   name: string
@@ -79,13 +79,13 @@ export default function TractionEditor() {
             className={INPUT_CLS}
             aria-label="Traction coefficient mu"
           />
-          <span className="text-gray-400 text-sm shrink-0">μ</span>
+          <span className="font-data text-xs text-label shrink-0">μ</span>
         </div>
       )}
 
       {mu !== undefined && (
-        <p className="text-xs text-gray-500">
-          Max thrust limited to μ × weight = {mu} × mass × 9.81 N
+        <p className="font-data text-[10px] text-muted-txt">
+          Max thrust capped at μ × weight × g
         </p>
       )}
     </div>

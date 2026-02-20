@@ -2,8 +2,8 @@ import { useCarStore } from '@/store/carStore'
 import { ALTITUDE_PRESETS } from '@/data/presets'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
+  'focus:outline-none focus:ring-1 focus:ring-signal focus:border-signal transition-colors'
 
 export default function AltitudeSelector() {
   const altitudeM = useCarStore(state => state.modifications.altitudeM)
@@ -49,7 +49,7 @@ export default function AltitudeSelector() {
           className={INPUT_CLS}
           aria-label="Altitude in meters"
         />
-        <span className="text-gray-400 text-sm shrink-0">m</span>
+        <span className="font-data text-xs text-label shrink-0">m</span>
       </div>
     </div>
   )

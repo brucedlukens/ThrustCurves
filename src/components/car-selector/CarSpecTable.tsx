@@ -26,8 +26,8 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
       'Engine',
       `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'Naturally Aspirated'}`,
     ],
-    ['Max Power', `${kwToHp(maxPowerKw).toFixed(0)} hp @ ${maxPowerRpm} RPM`],
-    ['Max Torque', `${nmToLbft(maxTorqueNm).toFixed(0)} lb·ft @ ${maxTorqueRpm} RPM`],
+    ['Peak Power', `${kwToHp(maxPowerKw).toFixed(0)} hp @ ${maxPowerRpm} RPM`],
+    ['Peak Torque', `${nmToLbft(maxTorqueNm).toFixed(0)} lb·ft @ ${maxTorqueRpm} RPM`],
     ['Redline', `${car.engine.redlineRpm} RPM`],
     [
       'Curb Weight',
@@ -42,15 +42,19 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
   ]
 
   return (
-    <div className="rounded-lg border border-gray-700 overflow-hidden">
-      <table className="w-full text-sm">
+    <div className="rounded-lg border border-line overflow-hidden">
+      <table className="w-full">
         <tbody>
           {rows.map(([label, value]) => (
-            <tr key={label} className="border-b border-gray-700 last:border-0">
-              <td className="px-3 py-2 text-gray-400 font-medium bg-gray-800/50 w-36 align-top">
-                {label}
+            <tr key={label} className="border-b border-faint last:border-0">
+              <td className="px-3 py-2 bg-lift align-top w-28">
+                <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-label">
+                  {label}
+                </span>
               </td>
-              <td className="px-3 py-2 text-gray-100">{value}</td>
+              <td className="px-3 py-2 bg-panel">
+                <span className="font-data text-xs text-gray-200">{value}</span>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -21,8 +21,17 @@ interface ChartRow {
   powerHp: number | undefined
 }
 
+const CHART_STYLE = {
+  backgroundColor: 'transparent',
+  border: '1px solid #2a2a35',
+  borderRadius: '6px',
+  fontFamily: '"JetBrains Mono", monospace',
+}
+
+const AXIS_TICK = { fill: '#8888a0', fontSize: 10, fontFamily: '"JetBrains Mono", monospace' }
+const AXIS_LABEL_STYLE = { fill: '#55556a', fontSize: 11, fontFamily: '"Barlow Condensed", sans-serif' }
+
 export default function PowerTorqueChart({ car }: PowerTorqueChartProps) {
-  // Collect all unique RPM values from both curves
   const allRpms = new Set<number>()
   car.engine.torqueCurve.forEach(([rpm]) => allRpms.add(rpm))
   car.engine.powerCurve.forEach(([rpm]) => allRpms.add(rpm))
@@ -41,9 +50,9 @@ export default function PowerTorqueChart({ car }: PowerTorqueChartProps) {
   })
 
   return (
-    <ResponsiveContainer width="100%" height={280}>
-      <ComposedChart data={data} margin={{ top: 8, right: 56, bottom: 24, left: 16 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+    <ResponsiveContainer width="100%" height="100%">
+      <ComposedChart data={data} margin={{ top: 8, right: 60, bottom: 28, left: 20 }}>
+        <CartesianGrid strokeDasharray="2 4" stroke="#1a1a22" vertical={false} />
         <XAxis
           dataKey="rpm"
           type="number"
@@ -51,56 +60,66 @@ export default function PowerTorqueChart({ car }: PowerTorqueChartProps) {
           label={{
             value: 'RPM',
             position: 'insideBottom',
-            offset: -12,
-            fill: '#9ca3af',
-            fontSize: 12,
+            offset: -14,
+            style: AXIS_LABEL_STYLE,
+            letterSpacing: '0.15em',
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={AXIS_TICK}
+          axisLine={{ stroke: '#2a2a35' }}
+          tickLine={{ stroke: '#2a2a35' }}
         />
         <YAxis
           yAxisId="torque"
           orientation="left"
           label={{
-            value: 'Torque (lb·ft)',
+            value: 'TORQUE (LB·FT)',
             angle: -90,
             position: 'insideLeft',
-            offset: 8,
-            fill: '#fb923c',
-            fontSize: 12,
+            offset: 12,
+            style: { ...AXIS_LABEL_STYLE, fill: '#f97316' },
+            letterSpacing: '0.1em',
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
-          width={60}
+          tick={AXIS_TICK}
+          axisLine={{ stroke: '#2a2a35' }}
+          tickLine={{ stroke: '#2a2a35' }}
+          width={64}
         />
         <YAxis
           yAxisId="power"
           orientation="right"
           label={{
-            value: 'Power (hp)',
+            value: 'POWER (HP)',
             angle: 90,
             position: 'insideRight',
-            offset: 8,
-            fill: '#60a5fa',
-            fontSize: 12,
+            offset: 12,
+            style: { ...AXIS_LABEL_STYLE, fill: '#06b6d4' },
+            letterSpacing: '0.1em',
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
-          width={52}
+          tick={AXIS_TICK}
+          axisLine={{ stroke: '#2a2a35' }}
+          tickLine={{ stroke: '#2a2a35' }}
+          width={56}
         />
         <Tooltip
-          contentStyle={{
-            backgroundColor: '#1f2937',
-            border: '1px solid #374151',
-            borderRadius: '6px',
-          }}
-          labelStyle={{ color: '#9ca3af', fontSize: 11 }}
-          itemStyle={{ color: '#e5e7eb', fontSize: 11 }}
+          contentStyle={CHART_STYLE}
+          labelStyle={{ color: '#8888a0', fontSize: 11 }}
+          itemStyle={{ color: '#eeeef2', fontSize: 11 }}
           labelFormatter={(rpm: number) => `${rpm} RPM`}
         />
-        <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12, paddingTop: 8 }} />
+        <Legend
+          wrapperStyle={{
+            color: '#8888a0',
+            fontSize: 11,
+            paddingTop: 12,
+            fontFamily: '"Barlow Condensed", sans-serif',
+            letterSpacing: '0.05em',
+          }}
+        />
         <Line
           yAxisId="torque"
           dataKey="torqueLbft"
           name="Torque (lb·ft)"
-          stroke="#fb923c"
+          stroke="#f97316"
           dot={false}
           strokeWidth={2}
           connectNulls={false}
@@ -109,7 +128,7 @@ export default function PowerTorqueChart({ car }: PowerTorqueChartProps) {
           yAxisId="power"
           dataKey="powerHp"
           name="Power (hp)"
-          stroke="#60a5fa"
+          stroke="#06b6d4"
           dot={false}
           strokeWidth={2}
           connectNulls={false}

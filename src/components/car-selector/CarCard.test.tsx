@@ -70,12 +70,12 @@ describe('CarCard', () => {
   test('applies selected border class when isSelected is true', () => {
     render(<CarCard car={mockCar} isSelected={true} onSelect={vi.fn()} />)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('border-indigo-500')
+    expect(button.className).toContain('border-signal')
   })
 
   test('applies unselected border class when isSelected is false', () => {
     render(<CarCard car={mockCar} isSelected={false} onSelect={vi.fn()} />)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('border-gray-700')
+    expect(button.className).toContain('border-line')
   })
 })
