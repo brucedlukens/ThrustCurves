@@ -47,17 +47,27 @@ export function runSimulation(
   const altitude = mods.altitudeM
   const airDensity = airDensityAtAltitude(altitude)
 
+  // Effective mass with weight modification (needed for traction limit)
+  const massKg = car.curbWeightKg + mods.weightDeltaKg
+
   // Build gear thrust curves (applies mods + altitude correction)
   const gearCurves = computeAllGearCurves(car, mods)
+
+  // Apply traction limit: cap thrust at μ × mass × g
+  if (mods.tractionCoefficientMu !== undefined) {
+    const maxThrustN = mods.tractionCoefficientMu * massKg * gravity
+    for (const gc of gearCurves) {
+      for (const pt of gc.points) {
+        pt.forceN = Math.min(pt.forceN, maxThrustN)
+      }
+    }
+  }
 
   // Build thrust envelope (max thrust at each speed across all gears)
   const envelope = computeEnvelope(gearCurves)
 
   // Find optimal shift points
   const shiftPoints = findShiftPoints(car, mods, gearCurves, envelope)
-
-  // Effective mass with weight modification
-  const massKg = car.curbWeightKg + mods.weightDeltaKg
 
   // Aerodynamics
   const cd = mods.cdOverride ?? car.aero.cd

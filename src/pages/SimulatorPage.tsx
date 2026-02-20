@@ -7,6 +7,8 @@ import ThrustCurveChart from '@/components/charts/ThrustCurveChart'
 import PowerTorqueChart from '@/components/charts/PowerTorqueChart'
 import PerformanceCard from '@/components/results/PerformanceCard'
 import ShiftPointsTable from '@/components/results/ShiftPointsTable'
+import ModificationsPanel from '@/components/editor/ModificationsPanel'
+import SaveLoadControls from '@/components/saved/SaveLoadControls'
 
 export default function SimulatorPage() {
   useSimulation()
@@ -18,7 +20,7 @@ export default function SimulatorPage() {
 
   return (
     <div className="flex gap-6 min-h-0 h-full">
-      {/* Left: Car Selection */}
+      {/* Left: Car Selection + Modifications */}
       <div className="w-72 shrink-0 flex flex-col gap-5 overflow-y-auto">
         <div>
           <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
@@ -27,12 +29,17 @@ export default function SimulatorPage() {
           <CarSearch />
         </div>
         {selectedCar && (
-          <div>
-            <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-              Specifications
-            </h2>
-            <CarSpecTable car={selectedCar} />
-          </div>
+          <>
+            <div>
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
+                Specifications
+              </h2>
+              <CarSpecTable car={selectedCar} />
+            </div>
+            <div className="border-t border-gray-700 pt-4">
+              <ModificationsPanel car={selectedCar} />
+            </div>
+          </>
         )}
       </div>
 
@@ -58,6 +65,13 @@ export default function SimulatorPage() {
 
         {result && selectedCar && !isRunning && (
           <>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                Simulation Results
+              </h2>
+              <SaveLoadControls carId={selectedCar.id} />
+            </div>
+
             <div>
               <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
                 Thrust Curves
