@@ -7,28 +7,57 @@ interface ShiftPointsTableProps {
 
 export default function ShiftPointsTable({ shiftPoints }: ShiftPointsTableProps) {
   return (
-    <div className="rounded-lg border border-gray-700 overflow-hidden">
-      <table className="w-full text-sm">
+    <div
+      className="rounded-lg overflow-hidden text-sm"
+      style={{ border: '1px solid var(--color-border)' }}
+    >
+      <table className="w-full">
         <thead>
-          <tr className="bg-gray-800">
-            <th className="px-4 py-2 text-left text-gray-400 font-medium">Shift</th>
-            <th className="px-4 py-2 text-right text-gray-400 font-medium">Speed (mph)</th>
-            <th className="px-4 py-2 text-right text-gray-400 font-medium">RPM</th>
+          <tr style={{ backgroundColor: 'var(--color-surface)' }}>
+            <th
+              className="px-4 py-2.5 text-left text-[10px] font-medium uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
+              Shift
+            </th>
+            <th
+              className="px-4 py-2.5 text-right text-[10px] font-medium uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
+              Speed (mph)
+            </th>
+            <th
+              className="px-4 py-2.5 text-right text-[10px] font-medium uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
+              RPM
+            </th>
           </tr>
         </thead>
         <tbody>
-          {shiftPoints.map(sp => (
+          {shiftPoints.map((sp, idx) => (
             <tr
               key={`${sp.fromGear}-${sp.toGear}`}
-              className="border-t border-gray-700 hover:bg-gray-800/50"
+              style={{
+                borderTop: '1px solid var(--color-border)',
+                backgroundColor: idx % 2 === 1 ? 'rgba(26,26,36,0.3)' : 'transparent',
+              }}
             >
-              <td className="px-4 py-2 text-gray-100">
+              <td className="px-4 py-2" style={{ color: 'var(--color-accent)', fontFamily: 'var(--font-mono)' }}>
                 Gear {sp.fromGear} → {sp.toGear}
               </td>
-              <td className="px-4 py-2 text-right text-gray-100">
+              <td
+                className="px-4 py-2 text-right"
+                style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-1)' }}
+              >
                 {msToMph(sp.speedMs).toFixed(1)}
               </td>
-              <td className="px-4 py-2 text-right text-gray-100">{sp.rpm.toFixed(0)}</td>
+              <td
+                className="px-4 py-2 text-right"
+                style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-1)' }}
+              >
+                {sp.rpm.toFixed(0)}
+              </td>
             </tr>
           ))}
         </tbody>

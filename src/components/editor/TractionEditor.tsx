@@ -1,8 +1,11 @@
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
 
 interface TractionPreset {
   name: string
@@ -55,6 +58,7 @@ export default function TractionEditor() {
         value={selectValue}
         onChange={handlePresetChange}
         className={INPUT_CLS}
+        style={MONO_STYLE}
         aria-label="Traction limit preset"
       >
         {PRESETS.map(p => (
@@ -77,14 +81,15 @@ export default function TractionEditor() {
             max={3.0}
             step={0.1}
             className={INPUT_CLS}
+            style={MONO_STYLE}
             aria-label="Traction coefficient mu"
           />
-          <span className="text-gray-400 text-sm shrink-0">μ</span>
+          <span className="text-sm shrink-0" style={{ color: 'var(--color-text-2)', fontFamily: 'var(--font-mono)' }}>μ</span>
         </div>
       )}
 
       {mu !== undefined && (
-        <p className="text-xs text-gray-500">
+        <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>
           Max thrust limited to μ × weight = {mu} × mass × 9.81 N
         </p>
       )}

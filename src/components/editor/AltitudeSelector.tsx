@@ -2,8 +2,11 @@ import { useCarStore } from '@/store/carStore'
 import { ALTITUDE_PRESETS } from '@/data/presets'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
 
 export default function AltitudeSelector() {
   const altitudeM = useCarStore(state => state.modifications.altitudeM)
@@ -29,6 +32,7 @@ export default function AltitudeSelector() {
         value={matchedPreset ? String(altitudeM) : 'custom'}
         onChange={handlePresetChange}
         className={INPUT_CLS}
+        style={MONO_STYLE}
         aria-label="Altitude preset"
       >
         {ALTITUDE_PRESETS.map(preset => (
@@ -47,9 +51,10 @@ export default function AltitudeSelector() {
           max={8848}
           step={100}
           className={INPUT_CLS}
+          style={MONO_STYLE}
           aria-label="Altitude in meters"
         />
-        <span className="text-gray-400 text-sm shrink-0">m</span>
+        <span className="text-sm shrink-0" style={{ color: 'var(--color-text-2)', fontFamily: 'var(--font-mono)' }}>m</span>
       </div>
     </div>
   )

@@ -67,15 +67,19 @@ describe('CarCard', () => {
     expect(onSelect).toHaveBeenCalledOnce()
   })
 
-  test('applies selected border class when isSelected is true', () => {
+  test('applies selected border style when isSelected is true', () => {
     render(<CarCard car={mockCar} isSelected={true} onSelect={vi.fn()} />)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('border-indigo-500')
+    const style = button.getAttribute('style')
+    // Check for color-accent in the style attribute (inline styles use CSS variables)
+    expect(style).toContain('var(--color-accent)')
   })
 
-  test('applies unselected border class when isSelected is false', () => {
+  test('applies unselected border style when isSelected is false', () => {
     render(<CarCard car={mockCar} isSelected={false} onSelect={vi.fn()} />)
     const button = screen.getByRole('button')
-    expect(button.className).toContain('border-gray-700')
+    const style = button.getAttribute('style')
+    // Check for color-border in the style attribute (inline styles use CSS variables)
+    expect(style).toContain('var(--color-border)')
   })
 })

@@ -3,8 +3,11 @@ import { useCarStore } from '@/store/carStore'
 import type { CurvePoint } from '@/types/car'
 
 const INPUT_CLS =
-  'bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2] placeholder:text-[--color-text-3]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
 
 interface TorqueCurveEditorProps {
   stockTorqueCurve: CurvePoint[]
@@ -34,7 +37,6 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
 
   const isCustom = customTorqueCurve !== undefined
 
-  // Lazy initializer: populate rows from store at mount time (handles loading saved setups)
   const [rows, setRows] = useState<TorqueRow[]>(() =>
     customTorqueCurve
       ? customTorqueCurve.map(([rpm, nm]) => ({
@@ -81,7 +83,6 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
     updateModifications({ customTorqueCurve: parsed })
   }
 
-  // --- Multiplier handlers ---
   const handleSlider = (e: React.ChangeEvent<HTMLInputElement>) => {
     updateModifications({ torqueMultiplier: parseFloat(parseFloat(e.target.value).toFixed(2)) })
   }
@@ -100,7 +101,12 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
     <div className="flex flex-col gap-4">
       {/* Multiplier section */}
       <div className="flex flex-col gap-2">
-        <label className="text-xs text-gray-500">Torque Multiplier</label>
+        <label
+          className="text-[10px] uppercase tracking-widest"
+          style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+        >
+          Torque Multiplier
+        </label>
         <div className="flex items-center gap-3">
           <input
             type="range"
@@ -109,10 +115,16 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
             step={0.01}
             value={torqueMultiplier}
             onChange={handleSlider}
-            className="flex-1 accent-indigo-500"
+            className="flex-1"
+            style={{ accentColor: 'var(--color-accent)' }}
             aria-label="Torque multiplier slider"
           />
-          <span className="text-sm text-indigo-400 w-12 text-right">{pctLabel}</span>
+          <span
+            className="text-base w-14 text-right"
+            style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-accent)' }}
+          >
+            {pctLabel}
+          </span>
         </div>
         <div className="flex items-center gap-2">
           <input
@@ -123,30 +135,40 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
             max={2.0}
             step={0.01}
             className={`${INPUT_CLS} flex-1`}
+            style={MONO_STYLE}
             aria-label="Torque multiplier"
           />
-          <span className="text-gray-400 text-sm shrink-0">× stock</span>
+          <span className="text-sm shrink-0" style={{ color: 'var(--color-text-2)' }}>× stock</span>
         </div>
         {isCustom && (
-          <p className="text-xs text-gray-500">Multiplier also applies to custom curve</p>
+          <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>
+            Multiplier also applies to custom curve
+          </p>
         )}
       </div>
 
       {/* Custom curve section */}
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <label className="text-xs text-gray-500">Custom Torque Curve</label>
+          <label
+            className="text-[10px] uppercase tracking-widest"
+            style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+          >
+            Custom Torque Curve
+          </label>
           {isCustom ? (
             <button
               onClick={handleDisableCustom}
-              className="text-xs text-gray-500 hover:text-gray-300 underline"
+              className="text-xs underline"
+              style={{ color: 'var(--color-text-3)' }}
             >
               Use stock curve
             </button>
           ) : (
             <button
               onClick={handleEnableCustom}
-              className="text-xs text-indigo-400 hover:text-indigo-300 underline"
+              className="text-xs underline"
+              style={{ color: 'var(--color-accent)' }}
             >
               Enter custom values
             </button>
@@ -157,16 +179,29 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
           <div className="flex flex-col gap-2">
             <div className="max-h-48 overflow-y-auto">
               <table className="w-full text-xs">
-                <thead className="sticky top-0 bg-gray-800">
-                  <tr className="border-b border-gray-700">
-                    <th className="text-left px-1 py-1 text-gray-500 font-medium">RPM</th>
-                    <th className="text-left px-1 py-1 text-gray-500 font-medium">Torque (Nm)</th>
+                <thead
+                  className="sticky top-0"
+                  style={{ backgroundColor: 'var(--color-surface-2)' }}
+                >
+                  <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
+                    <th
+                      className="text-left px-1 py-1 font-medium uppercase tracking-wider text-[10px]"
+                      style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+                    >
+                      RPM
+                    </th>
+                    <th
+                      className="text-left px-1 py-1 font-medium uppercase tracking-wider text-[10px]"
+                      style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+                    >
+                      Torque (Nm)
+                    </th>
                     <th className="w-6" />
                   </tr>
                 </thead>
                 <tbody>
                   {rows.map((row, i) => (
-                    <tr key={row.key} className="border-b border-gray-700/40">
+                    <tr key={row.key} style={{ borderBottom: '1px solid rgba(42,42,56,0.4)' }}>
                       <td className="px-1 py-0.5">
                         <input
                           type="number"
@@ -176,6 +211,7 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
                           max={20000}
                           step={100}
                           className={`${INPUT_CLS} w-full`}
+                          style={MONO_STYLE}
                           aria-label={`Row ${i + 1} RPM`}
                         />
                       </td>
@@ -188,13 +224,15 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
                           max={5000}
                           step={1}
                           className={`${INPUT_CLS} w-full`}
+                          style={MONO_STYLE}
                           aria-label={`Row ${i + 1} torque`}
                         />
                       </td>
                       <td className="px-1 py-0.5">
                         <button
                           onClick={() => handleRemoveRow(i)}
-                          className="text-gray-600 hover:text-red-400 text-xs leading-none"
+                          className="text-xs leading-none hover:text-red-400 transition-colors"
+                          style={{ color: 'var(--color-text-3)' }}
                           aria-label={`Remove row ${i + 1}`}
                         >
                           ✕
@@ -207,11 +245,12 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
             </div>
             <button
               onClick={handleAddRow}
-              className="text-xs text-indigo-400 hover:text-indigo-300 self-start"
+              className="text-xs self-start"
+              style={{ color: 'var(--color-accent)' }}
             >
               + Add row
             </button>
-            <p className="text-xs text-gray-600">
+            <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>
               Minimum 2 valid rows required. Sorted by RPM automatically.
             </p>
           </div>

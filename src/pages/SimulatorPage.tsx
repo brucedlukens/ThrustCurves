@@ -10,6 +10,34 @@ import ShiftPointsTable from '@/components/results/ShiftPointsTable'
 import ModificationsPanel from '@/components/editor/ModificationsPanel'
 import SaveLoadControls from '@/components/saved/SaveLoadControls'
 
+function SectionHeader({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-2 mb-3">
+      <div className="w-0.5 h-4 shrink-0" style={{ backgroundColor: 'var(--color-accent)' }} />
+      <h2
+        className="text-[10px] uppercase tracking-widest"
+        style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+      >
+        {children}
+      </h2>
+    </div>
+  )
+}
+
+function ChartContainer({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="rounded-lg p-3 md:p-4"
+      style={{
+        backgroundColor: 'var(--color-surface)',
+        border: '1px solid var(--color-border)',
+      }}
+    >
+      {children}
+    </div>
+  )
+}
+
 export default function SimulatorPage() {
   useSimulation()
 
@@ -19,24 +47,20 @@ export default function SimulatorPage() {
   const error = useSimulationStore(state => state.error)
 
   return (
-    <div className="flex gap-6 min-h-0 h-full">
+    <div className="flex flex-col md:flex-row gap-4 md:gap-6 min-h-0 h-full">
       {/* Left: Car Selection + Modifications */}
-      <div className="w-72 shrink-0 flex flex-col gap-5 overflow-y-auto">
+      <div className="md:w-72 md:shrink-0 flex flex-col gap-5 md:overflow-y-auto">
         <div>
-          <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-            Select Car
-          </h2>
+          <SectionHeader>Select Car</SectionHeader>
           <CarSearch />
         </div>
         {selectedCar && (
           <>
             <div>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Specifications
-              </h2>
+              <SectionHeader>Specifications</SectionHeader>
               <CarSpecTable car={selectedCar} />
             </div>
-            <div className="border-t border-gray-700 pt-4">
+            <div style={{ borderTop: '1px solid var(--color-border)', paddingTop: '1rem' }}>
               <ModificationsPanel car={selectedCar} />
             </div>
           </>
@@ -44,21 +68,34 @@ export default function SimulatorPage() {
       </div>
 
       {/* Right: Charts + Results */}
-      <div className="flex-1 min-w-0 flex flex-col gap-6 overflow-y-auto">
+      <div className="flex-1 min-w-0 flex flex-col gap-5 md:gap-6 overflow-y-auto">
         {!selectedCar && (
-          <div className="flex-1 flex items-center justify-center text-gray-500">
+          <div
+            className="flex-1 flex items-center justify-center text-sm py-12"
+            style={{ color: 'var(--color-text-3)' }}
+          >
             Select a car to begin simulation
           </div>
         )}
 
         {selectedCar && isRunning && (
-          <div className="flex items-center justify-center py-12 text-gray-500">
+          <div
+            className="flex items-center justify-center py-12 text-sm"
+            style={{ color: 'var(--color-text-3)' }}
+          >
             Running simulation…
           </div>
         )}
 
         {error && (
-          <div className="rounded-lg border border-red-700 bg-red-900/20 p-4 text-red-400 text-sm">
+          <div
+            className="rounded-lg p-4 text-sm"
+            style={{
+              border: '1px solid var(--color-danger)',
+              backgroundColor: 'rgba(239,68,68,0.1)',
+              color: 'var(--color-danger)',
+            }}
+          >
             {error}
           </div>
         )}
@@ -66,36 +103,28 @@ export default function SimulatorPage() {
         {result && selectedCar && !isRunning && (
           <>
             <div className="flex items-center justify-between">
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Simulation Results
-              </h2>
+              <SectionHeader>Simulation Results</SectionHeader>
               <SaveLoadControls carId={selectedCar.id} />
             </div>
 
             <div>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Thrust Curves
-              </h2>
-              <div className="bg-gray-800/50 rounded-lg border border-gray-700 p-4">
+              <SectionHeader>Thrust Curves</SectionHeader>
+              <ChartContainer>
                 <ThrustCurveChart gearCurves={result.gearCurves} envelope={result.envelope} />
-              </div>
+              </ChartContainer>
             </div>
 
             <div>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Power &amp; Torque
-              </h2>
-              <div className="bg-gray-800/50 rounded-lg border border-gray-700 p-4">
+              <SectionHeader>Power &amp; Torque</SectionHeader>
+              <ChartContainer>
                 <PowerTorqueChart car={selectedCar} />
-              </div>
+              </ChartContainer>
             </div>
 
             <PerformanceCard performance={result.performance} />
 
             <div>
-              <h2 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-                Optimal Shift Points
-              </h2>
+              <SectionHeader>Optimal Shift Points</SectionHeader>
               <ShiftPointsTable shiftPoints={result.shiftPoints} />
             </div>
           </>

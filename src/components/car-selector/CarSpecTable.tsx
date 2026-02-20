@@ -5,6 +5,8 @@ interface CarSpecTableProps {
   car: CarSpec
 }
 
+const NUMERIC_ROWS = new Set(['Max Power', 'Max Torque', 'Redline', 'Curb Weight', 'Drag Coefficient', 'Frontal Area'])
+
 export default function CarSpecTable({ car }: CarSpecTableProps) {
   const maxPowerKw = Math.max(...car.engine.powerCurve.map(([, p]) => p))
   const maxTorqueNm = Math.max(...car.engine.torqueCurve.map(([, t]) => t))
@@ -41,16 +43,42 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
     ['Frontal Area', `${car.aero.frontalAreaM2.toFixed(2)} m²`],
   ]
 
+  const isHighlight = (label: string) => label === 'Max Power' || label === 'Max Torque'
+
   return (
-    <div className="rounded-lg border border-gray-700 overflow-hidden">
-      <table className="w-full text-sm">
+    <div
+      className="rounded-lg overflow-hidden text-xs"
+      style={{ border: '1px solid var(--color-border)' }}
+    >
+      <table className="w-full">
         <tbody>
           {rows.map(([label, value]) => (
-            <tr key={label} className="border-b border-gray-700 last:border-0">
-              <td className="px-3 py-2 text-gray-400 font-medium bg-gray-800/50 w-36 align-top">
+            <tr
+              key={label}
+              style={{ borderBottom: '1px solid var(--color-border)' }}
+              className="last:border-0"
+            >
+              <td
+                className="px-3 py-1.5 w-28 align-top uppercase tracking-wider text-[10px]"
+                style={{
+                  fontFamily: 'var(--font-display)',
+                  color: isHighlight(label) ? 'var(--color-accent)' : 'var(--color-text-3)',
+                  backgroundColor: 'rgba(26,26,36,0.5)',
+                  borderLeft: isHighlight(label) ? '2px solid var(--color-accent)' : '2px solid transparent',
+                }}
+              >
                 {label}
               </td>
-              <td className="px-3 py-2 text-gray-100">{value}</td>
+              <td
+                className="px-3 py-1.5"
+                style={{
+                  fontFamily: NUMERIC_ROWS.has(label) ? 'var(--font-mono)' : 'var(--font-ui)',
+                  color: 'var(--color-text-1)',
+                  fontSize: NUMERIC_ROWS.has(label) ? '12px' : '12px',
+                }}
+              >
+                {value}
+              </td>
             </tr>
           ))}
         </tbody>

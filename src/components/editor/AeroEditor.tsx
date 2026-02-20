@@ -1,8 +1,12 @@
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
+const LABEL_STYLE = { fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }
 
 interface AeroEditorProps {
   stockCd: number
@@ -31,7 +35,9 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
   return (
     <div className="flex flex-col gap-3">
       <div className="flex flex-col gap-1">
-        <label className="text-xs text-gray-500">Drag Coefficient (Cd)</label>
+        <label className="text-[10px] uppercase tracking-widest" style={LABEL_STYLE}>
+          Drag Coefficient (Cd)
+        </label>
         <input
           type="number"
           value={cdOverride ?? stockCd}
@@ -40,11 +46,14 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
           max={2.0}
           step={0.01}
           className={INPUT_CLS}
+          style={MONO_STYLE}
           aria-label="Drag coefficient"
         />
       </div>
       <div className="flex flex-col gap-1">
-        <label className="text-xs text-gray-500">Frontal Area (m²)</label>
+        <label className="text-[10px] uppercase tracking-widest" style={LABEL_STYLE}>
+          Frontal Area (m²)
+        </label>
         <input
           type="number"
           value={frontalAreaOverride ?? stockFrontalAreaM2}
@@ -53,10 +62,13 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
           max={6.0}
           step={0.01}
           className={INPUT_CLS}
+          style={MONO_STYLE}
           aria-label="Frontal area in square meters"
         />
       </div>
-      <p className="text-xs text-gray-500">Clear any field to revert to stock value</p>
+      <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>
+        Clear any field to revert to stock value
+      </p>
     </div>
   )
 }

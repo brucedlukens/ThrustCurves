@@ -15,15 +15,71 @@ export default function PerformanceCard({ performance }: PerformanceCardProps) {
   ]
 
   return (
-    <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-4">
-      <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">
-        Performance Metrics
-      </h3>
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
+    <div
+      className="rounded-lg overflow-hidden"
+      style={{
+        backgroundColor: 'var(--color-surface)',
+        border: '1px solid var(--color-border)',
+        borderTop: '2px solid var(--color-accent)',
+      }}
+    >
+      {/* Header */}
+      <div
+        className="px-4 py-2"
+        style={{ borderBottom: '1px solid var(--color-border)' }}
+      >
+        <h3
+          className="text-[10px] uppercase tracking-widest"
+          style={{ fontFamily: 'var(--font-display)', color: 'var(--color-accent)' }}
+        >
+          Performance Metrics
+        </h3>
+      </div>
+
+      {/* Mobile: horizontal scroll row */}
+      <div className="flex overflow-x-auto snap-x md:hidden divide-x" style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}>
         {metrics.map(({ label, value }) => (
-          <div key={label} className="flex flex-col gap-0.5">
-            <span className="text-xs text-gray-500">{label}</span>
-            <span className="text-lg font-bold text-gray-100">{value}</span>
+          <div
+            key={label}
+            className="min-w-[120px] shrink-0 snap-start flex flex-col gap-1 p-4"
+            style={{ borderRightColor: 'var(--color-border)' }}
+          >
+            <span
+              className="text-[10px] uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
+              {label}
+            </span>
+            <span
+              className="text-2xl font-medium leading-none"
+              style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-1)' }}
+            >
+              {value}
+            </span>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: 5-column grid */}
+      <div className="hidden md:grid grid-cols-5 divide-x" style={{ '--tw-divide-opacity': '1' } as React.CSSProperties}>
+        {metrics.map(({ label, value }) => (
+          <div
+            key={label}
+            className="flex flex-col gap-2 p-4"
+            style={{ borderRightColor: 'var(--color-border)' }}
+          >
+            <span
+              className="text-[10px] uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
+              {label}
+            </span>
+            <span
+              className="text-3xl font-medium leading-none"
+              style={{ fontFamily: 'var(--font-mono)', color: 'var(--color-text-1)' }}
+            >
+              {value}
+            </span>
           </div>
         ))}
       </div>

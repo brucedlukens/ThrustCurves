@@ -10,6 +10,10 @@ interface MetricRow {
   values: string[]
   /** Delta string relative to first entry (e.g. "+0.6s") */
   deltas: (string | null)[]
+  /** Index of best-performing value in this row */
+  bestIndex: number
+  /** True if lower is better (time metrics) */
+  lowerIsBetter: boolean
 }
 
 function parseSeconds(s: string): number | null {
@@ -37,104 +41,116 @@ function calcDelta(
   return `${sign}${diff.toFixed(2)}${unit}`
 }
 
+function findBestIndex(values: string[], parser: (s: string) => number | null, lowerIsBetter: boolean): number {
+  let bestIdx = 0
+  let bestVal = parser(values[0])
+  for (let i = 1; i < values.length; i++) {
+    const v = parser(values[i])
+    if (v === null) continue
+    if (bestVal === null || (lowerIsBetter ? v < bestVal : v > bestVal)) {
+      bestVal = v
+      bestIdx = i
+    }
+  }
+  return bestIdx
+}
+
 export default function ComparisonTable({ entries }: ComparisonTableProps) {
   if (entries.length === 0) {
     return null
   }
 
+  const buildRow = (
+    label: string,
+    valuesFn: (e: ComparisonEntry) => string,
+    parser: (s: string) => number | null,
+    unit: string,
+    lowerIsBetter: boolean,
+  ): MetricRow => {
+    const values = entries.map(valuesFn)
+    return {
+      label,
+      values,
+      deltas: entries.map((_, i) => calcDelta(values, i, parser, unit)),
+      bestIndex: findBestIndex(values, parser, lowerIsBetter),
+      lowerIsBetter,
+    }
+  }
+
   const metrics: MetricRow[] = [
-    {
-      label: '0–60 mph',
-      values: entries.map(e => fmtTime(e.result.performance.zeroTo60Mph)),
-      deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.zeroTo60Mph)),
-          i,
-          parseSeconds,
-          's',
-        )
-      ),
-    },
-    {
-      label: '0–100 km/h',
-      values: entries.map(e => fmtTime(e.result.performance.zeroTo100Kmh)),
-      deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.zeroTo100Kmh)),
-          i,
-          parseSeconds,
-          's',
-        )
-      ),
-    },
-    {
-      label: '¼ Mile',
-      values: entries.map(e => fmtTime(e.result.performance.quarterMileS)),
-      deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.quarterMileS)),
-          i,
-          parseSeconds,
-          's',
-        )
-      ),
-    },
-    {
-      label: '¼ Mile Trap',
-      values: entries.map(e => fmtSpeed(e.result.performance.quarterMileSpeedMs)),
-      deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtSpeed(e.result.performance.quarterMileSpeedMs)),
-          i,
-          parseMph,
-          ' mph',
-        )
-      ),
-    },
-    {
-      label: 'Top Speed',
-      values: entries.map(e => fmtSpeed(e.result.performance.topSpeedMs)),
-      deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtSpeed(e.result.performance.topSpeedMs)),
-          i,
-          parseMph,
-          ' mph',
-        )
-      ),
-    },
+    buildRow('0–60 mph', e => fmtTime(e.result.performance.zeroTo60Mph), parseSeconds, 's', true),
+    buildRow('0–100 km/h', e => fmtTime(e.result.performance.zeroTo100Kmh), parseSeconds, 's', true),
+    buildRow('¼ Mile', e => fmtTime(e.result.performance.quarterMileS), parseSeconds, 's', true),
+    buildRow('¼ Mile Trap', e => fmtSpeed(e.result.performance.quarterMileSpeedMs), parseMph, ' mph', false),
+    buildRow('Top Speed', e => fmtSpeed(e.result.performance.topSpeedMs), parseMph, ' mph', false),
   ]
 
   return (
-    <div className="rounded-lg border border-gray-700 bg-gray-800/50 overflow-x-auto">
+    <div
+      className="rounded-lg overflow-x-auto"
+      style={{
+        border: '1px solid var(--color-border)',
+        backgroundColor: 'var(--color-surface)',
+      }}
+    >
       <table className="w-full text-sm">
         <thead>
-          <tr className="border-b border-gray-700">
-            <th className="text-left px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
+            <th
+              className="text-left px-4 py-2.5 text-[10px] font-medium uppercase tracking-widest"
+              style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+            >
               Metric
             </th>
             {entries.map((entry, i) => (
               <th
                 key={entry.setup.id}
-                className="text-right px-4 py-2 text-xs font-semibold text-gray-300 truncate max-w-32"
+                className="text-right px-4 py-2.5 text-xs font-medium truncate max-w-32"
+                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-2)' }}
               >
-                {i === 0 ? `${entry.setup.name} (base)` : entry.setup.name}
+                {i === 0 ? `${entry.setup.name}` : entry.setup.name}
+                {i === 0 && (
+                  <span className="ml-1 text-[10px]" style={{ color: 'var(--color-text-3)' }}>
+                    (BASE)
+                  </span>
+                )}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
           {metrics.map(row => (
-            <tr key={row.label} className="border-b border-gray-700/50 last:border-0">
-              <td className="px-4 py-2 text-gray-400">{row.label}</td>
+            <tr
+              key={row.label}
+              className="last:border-0"
+              style={{ borderBottom: '1px solid rgba(42,42,56,0.5)' }}
+            >
+              <td
+                className="px-4 py-2.5 text-[10px] uppercase tracking-widest"
+                style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }}
+              >
+                {row.label}
+              </td>
               {row.values.map((val, i) => (
-                <td key={i} className="px-4 py-2 text-right">
-                  <span className="text-gray-100 font-medium">{val}</span>
+                <td key={i} className="px-4 py-2.5 text-right">
+                  <span
+                    className="font-medium"
+                    style={{
+                      fontFamily: 'var(--font-mono)',
+                      color: i === row.bestIndex && entries.length > 1 ? 'var(--color-accent)' : 'var(--color-text-1)',
+                    }}
+                  >
+                    {val}
+                  </span>
                   {row.deltas[i] && (
                     <span
-                      className={`ml-2 text-xs ${
-                        row.deltas[i]!.startsWith('+') ? 'text-red-400' : 'text-green-400'
-                      }`}
+                      className="ml-2 text-xs"
+                      style={{
+                        fontFamily: 'var(--font-mono)',
+                        color: row.deltas[i]!.startsWith('+')
+                          ? (row.lowerIsBetter ? 'var(--color-danger)' : 'var(--color-success)')
+                          : (row.lowerIsBetter ? 'var(--color-success)' : 'var(--color-danger)'),
+                      }}
                     >
                       {row.deltas[i]}
                     </span>

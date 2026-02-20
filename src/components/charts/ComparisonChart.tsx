@@ -11,17 +11,14 @@ import {
 import type { ComparisonEntry } from '@/hooks/useComparison'
 import { MS_TO_MPH, N_TO_LBF } from '@/utils/units'
 
-const COMPARISON_COLORS = [
-  '#60a5fa', // blue
-  '#34d399', // green
-  '#fb923c', // orange
-  '#f87171', // red
-  '#a78bfa', // purple
-  '#fbbf24', // yellow
-]
+const COMPARISON_COLORS = ['#f59e0b', '#06b6d4', '#10b981', '#8b5cf6', '#f43f5e', '#fb923c']
+
+const CHART_FONT = "'Chakra Petch', system-ui, sans-serif"
+const MONO_FONT = "'JetBrains Mono', monospace"
 
 interface ComparisonChartProps {
   entries: ComparisonEntry[]
+  height?: number
 }
 
 interface ChartRow {
@@ -29,10 +26,13 @@ interface ChartRow {
   [key: string]: number | undefined
 }
 
-export default function ComparisonChart({ entries }: ComparisonChartProps) {
+export default function ComparisonChart({ entries, height = 340 }: ComparisonChartProps) {
   if (entries.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500 text-sm">
+      <div
+        className="flex items-center justify-center h-64 text-sm"
+        style={{ fontFamily: CHART_FONT, color: '#55556a' }}
+      >
         Select setups to compare
       </div>
     )
@@ -65,10 +65,12 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
       return row
     })
 
+  const tickStyle = { fontFamily: CHART_FONT, fontSize: 10, fill: '#8888aa' }
+
   return (
-    <ResponsiveContainer width="100%" height={320}>
-      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 24, left: 16 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+    <ResponsiveContainer width="100%" height={height}>
+      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 28, left: 16 }}>
+        <CartesianGrid strokeDasharray="2 6" stroke="#1e1e2e" />
         <XAxis
           dataKey="speedMph"
           type="number"
@@ -76,11 +78,12 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
           label={{
             value: 'Speed (mph)',
             position: 'insideBottom',
-            offset: -12,
-            fill: '#9ca3af',
-            fontSize: 12,
+            offset: -14,
+            fill: '#8888aa',
+            fontSize: 11,
+            fontFamily: CHART_FONT,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={tickStyle}
         />
         <YAxis
           label={{
@@ -88,24 +91,27 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
             angle: -90,
             position: 'insideLeft',
             offset: 8,
-            fill: '#9ca3af',
-            fontSize: 12,
+            fill: '#8888aa',
+            fontSize: 11,
+            fontFamily: CHART_FONT,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={tickStyle}
           width={60}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: '#1f2937',
-            border: '1px solid #374151',
+            backgroundColor: '#111118',
+            border: '1px solid #3a3a50',
             borderRadius: '6px',
+            fontFamily: MONO_FONT,
+            fontSize: 11,
           }}
-          labelStyle={{ color: '#9ca3af', fontSize: 11 }}
-          itemStyle={{ color: '#e5e7eb', fontSize: 11 }}
+          labelStyle={{ fontFamily: CHART_FONT, color: '#f59e0b', fontSize: 11, marginBottom: 4 }}
+          itemStyle={{ color: '#f0f0f8', fontSize: 11 }}
           formatter={(value: number) => [`${value.toFixed(0)} lbf`]}
           labelFormatter={(label: number) => `${label.toFixed(1)} mph`}
         />
-        <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12, paddingTop: 8 }} />
+        <Legend wrapperStyle={{ fontFamily: CHART_FONT, fontSize: 11, color: '#8888aa', paddingTop: 8 }} />
         {entries.map((entry, i) => (
           <Line
             key={entry.setup.id}

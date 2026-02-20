@@ -9,13 +9,11 @@ export default function ForcedInductionToggle({ stockForcedInduction }: ForcedIn
   const forcedInductionOverride = useCarStore(state => state.modifications.forcedInductionOverride)
   const updateModifications = useCarStore(state => state.updateModifications)
 
-  // Effective value: override if set, else stock
   const effective = forcedInductionOverride !== undefined ? forcedInductionOverride : stockForcedInduction
   const isOverridden = forcedInductionOverride !== undefined
 
   const handleToggle = () => {
     const newValue = !effective
-    // If new value equals stock, clear the override
     if (newValue === stockForcedInduction) {
       updateModifications({ forcedInductionOverride: undefined })
     } else {
@@ -34,24 +32,43 @@ export default function ForcedInductionToggle({ stockForcedInduction }: ForcedIn
           role="switch"
           aria-checked={effective}
           onClick={handleToggle}
-          className={`relative inline-flex h-5 w-9 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-1 focus:ring-offset-gray-800 ${
-            effective ? 'bg-indigo-600' : 'bg-gray-600'
-          }`}
+          className="relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-offset-1"
+          style={{
+            backgroundColor: effective ? 'var(--color-accent)' : 'var(--color-surface-2)',
+            border: effective ? 'none' : '1px solid var(--color-border-2)',
+            focusRingColor: 'var(--color-accent)',
+            focusRingOffsetColor: 'var(--color-bg)',
+          } as React.CSSProperties}
         >
           <span
-            className={`inline-block h-3 w-3 transform rounded-full bg-white transition-transform ${
-              effective ? 'translate-x-5' : 'translate-x-1'
-            }`}
+            className="inline-block h-4 w-4 transform rounded-full bg-white transition-transform"
+            style={{ transform: effective ? 'translateX(1.4rem)' : 'translateX(0.2rem)' }}
           />
         </button>
-        <span className="text-sm text-gray-300">
+        <span
+          className="text-sm"
+          style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-text-1)' }}
+        >
           {effective ? 'Turbocharged / Supercharged' : 'Naturally Aspirated'}
         </span>
+        {!isOverridden && (
+          <span
+            className="text-[10px] px-1.5 py-0.5 rounded uppercase tracking-wider"
+            style={{
+              fontFamily: 'var(--font-display)',
+              backgroundColor: 'var(--color-surface-2)',
+              color: 'var(--color-text-3)',
+            }}
+          >
+            Stock
+          </span>
+        )}
       </div>
       {isOverridden && (
         <button
           onClick={handleReset}
-          className="text-xs text-gray-500 hover:text-gray-300 underline"
+          className="text-xs underline"
+          style={{ color: 'var(--color-text-3)' }}
           aria-label="Reset forced induction to stock"
         >
           Reset

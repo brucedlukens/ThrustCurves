@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import { useCarStore } from '@/store/carStore'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
 
 interface WeightEditorProps {
   /** Stock curb weight in kg (shown as reference) */
@@ -47,12 +50,19 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
           onBlur={handleBlur}
           step={5}
           className={INPUT_CLS}
+          style={MONO_STYLE}
           aria-label="Weight delta in kg"
         />
-        <span className="text-gray-400 text-sm shrink-0">kg</span>
+        <span className="text-sm shrink-0" style={{ color: 'var(--color-text-2)' }}>kg</span>
       </div>
-      <p className="text-xs text-gray-500">
-        Stock: {stockWeightKg} kg → Effective: {effectiveWeight.toFixed(0)} kg
+      <p
+        className="text-xs"
+        style={{ color: 'var(--color-text-3)', fontFamily: 'var(--font-mono)' }}
+      >
+        Stock: {stockWeightKg} kg → Effective:{' '}
+        <span style={{ color: 'var(--color-text-1)' }}>
+          {effectiveWeight.toFixed(0)} kg
+        </span>
       </p>
     </div>
   )

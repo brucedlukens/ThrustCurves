@@ -2,8 +2,12 @@ import { useCarStore } from '@/store/carStore'
 import type { TireSize } from '@/types/car'
 
 const INPUT_CLS =
-  'w-full bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 ' +
-  'focus:outline-none focus:ring-1 focus:ring-indigo-500'
+  'w-full bg-[--color-surface-2] border border-[--color-border] rounded px-2 py-1.5 text-sm ' +
+  'text-[--color-text-1] focus:outline-none focus:ring-1 focus:ring-amber-500/50 ' +
+  'focus:border-[--color-border-2]'
+
+const MONO_STYLE = { fontFamily: 'var(--font-mono)' }
+const LABEL_STYLE = { fontFamily: 'var(--font-display)', color: 'var(--color-text-3)' }
 
 interface TireSizeEditorProps {
   stockTireSize: TireSize
@@ -18,7 +22,6 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
   const tireSizeOverride = useCarStore(state => state.modifications.tireSizeOverride)
   const updateModifications = useCarStore(state => state.updateModifications)
 
-  // Effective values — always have all three from either override or stock
   const effective: TireSize = {
     widthMm: tireSizeOverride?.widthMm ?? stockTireSize.widthMm,
     aspectRatio: tireSizeOverride?.aspectRatio ?? stockTireSize.aspectRatio,
@@ -28,7 +31,6 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
   const handleChange = (field: keyof TireSize, rawValue: string) => {
     const val = parseFloat(rawValue)
     if (rawValue === '' || isNaN(val) || val <= 0) {
-      // Revert this field to stock; if all match stock, clear override entirely
       const next: TireSize = { ...effective, [field]: stockTireSize[field] }
       const matchesStock =
         next.widthMm === stockTireSize.widthMm &&
@@ -38,7 +40,6 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
       return
     }
 
-    // Always write all three fields — prevents partial TireSize state
     const next: TireSize = { ...effective, [field]: val }
     const matchesStock =
       next.widthMm === stockTireSize.widthMm &&
@@ -53,7 +54,9 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
     <div className="flex flex-col gap-3">
       <div className="grid grid-cols-3 gap-2">
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Width (mm)</label>
+          <label className="text-[10px] uppercase tracking-widest" style={LABEL_STYLE}>
+            Width (mm)
+          </label>
           <input
             type="number"
             value={effective.widthMm}
@@ -62,11 +65,14 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
             max={400}
             step={5}
             className={INPUT_CLS}
+            style={MONO_STYLE}
             aria-label="Tire width in millimeters"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Aspect (%)</label>
+          <label className="text-[10px] uppercase tracking-widest" style={LABEL_STYLE}>
+            Aspect (%)
+          </label>
           <input
             type="number"
             value={effective.aspectRatio}
@@ -75,11 +81,14 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
             max={80}
             step={5}
             className={INPUT_CLS}
+            style={MONO_STYLE}
             aria-label="Tire aspect ratio"
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className="text-xs text-gray-500">Rim (in)</label>
+          <label className="text-[10px] uppercase tracking-widest" style={LABEL_STYLE}>
+            Rim (in)
+          </label>
           <input
             type="number"
             value={effective.rimDiameterIn}
@@ -88,12 +97,16 @@ export default function TireSizeEditor({ stockTireSize }: TireSizeEditorProps) {
             max={26}
             step={1}
             className={INPUT_CLS}
+            style={MONO_STYLE}
             aria-label="Rim diameter in inches"
           />
         </div>
       </div>
-      <p className="text-xs text-gray-500">
-        Outer diameter: <span className="text-gray-300">{diam.toFixed(2)} in</span>
+      <p className="text-xs" style={{ color: 'var(--color-text-3)' }}>
+        Outer diameter:{' '}
+        <span style={{ color: 'var(--color-accent)', fontFamily: 'var(--font-mono)' }}>
+          {diam.toFixed(2)} in
+        </span>
         {' '}({(diam * 25.4).toFixed(0)} mm)
       </p>
     </div>

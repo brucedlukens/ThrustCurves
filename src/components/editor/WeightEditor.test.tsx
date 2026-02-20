@@ -21,7 +21,10 @@ describe('WeightEditor', () => {
   test('shows stock and effective weight', () => {
     render(<WeightEditor stockWeightKg={1565} />)
     expect(screen.getByText(/stock: 1565 kg/i)).toBeInTheDocument()
-    expect(screen.getByText(/effective: 1565 kg/i)).toBeInTheDocument()
+    // The effective weight is split across elements due to span styling
+    const weightText = screen.getByText(/effective:/i)
+    expect(weightText).toBeInTheDocument()
+    expect(weightText.textContent).toContain('1565')
   })
 
   test('shows updated effective weight when delta is set', () => {
@@ -29,7 +32,9 @@ describe('WeightEditor', () => {
       modifications: { ...DEFAULT_MODIFICATIONS, weightDeltaKg: -50 },
     })
     render(<WeightEditor stockWeightKg={1565} />)
-    expect(screen.getByText(/effective: 1515 kg/i)).toBeInTheDocument()
+    // Check that the text content includes the effective weight
+    const weightText = screen.getByText(/effective:/i)
+    expect(weightText.textContent).toContain('1515')
   })
 
   test('changing delta updates the store', () => {

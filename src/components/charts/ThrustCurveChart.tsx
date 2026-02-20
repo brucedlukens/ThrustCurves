@@ -11,20 +11,25 @@ import {
 import type { GearThrustCurve, EnvelopePoint } from '@/types/simulation'
 import { MS_TO_MPH, N_TO_LBF } from '@/utils/units'
 
-const GEAR_COLORS = ['#60a5fa', '#34d399', '#fb923c', '#f87171', '#a78bfa', '#fbbf24']
+const GEAR_COLORS = ['#f59e0b', '#06b6d4', '#10b981', '#8b5cf6', '#f43f5e', '#fb923c']
+
+const CHART_FONT = "'Chakra Petch', system-ui, sans-serif"
+const MONO_FONT = "'JetBrains Mono', monospace"
 
 interface ThrustCurveChartProps {
   gearCurves: GearThrustCurve[]
   envelope: EnvelopePoint[]
+  height?: number
 }
 
 interface ChartRow {
   speedMph: number
   envelope: number | undefined
+  envelopeGlow: number | undefined
   [key: string]: number | undefined
 }
 
-export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveChartProps) {
+export default function ThrustCurveChart({ gearCurves, envelope, height = 340 }: ThrustCurveChartProps) {
   // Build a speed → force map for each gear for O(1) lookup
   const gearMaps = gearCurves.map(gc => {
     const m = new Map<number, number>()
@@ -46,20 +51,27 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
       const row: ChartRow = {
         speedMph: parseFloat((speedMs * MS_TO_MPH).toFixed(2)),
         envelope: undefined,
+        envelopeGlow: undefined,
       }
       gearCurves.forEach((_, i) => {
         const forceN = gearMaps[i].get(key)
         row[`gear${i + 1}`] = forceN !== undefined ? parseFloat((forceN * N_TO_LBF).toFixed(1)) : undefined
       })
       const envForce = envelopeMap.get(key)
-      row.envelope = envForce !== undefined ? parseFloat((envForce * N_TO_LBF).toFixed(1)) : undefined
+      if (envForce !== undefined) {
+        const lbf = parseFloat((envForce * N_TO_LBF).toFixed(1))
+        row.envelope = lbf
+        row.envelopeGlow = lbf
+      }
       return row
     })
 
+  const tickStyle = { fontFamily: CHART_FONT, fontSize: 10, fill: '#8888aa' }
+
   return (
-    <ResponsiveContainer width="100%" height={320}>
-      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 24, left: 16 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+    <ResponsiveContainer width="100%" height={height}>
+      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 28, left: 16 }}>
+        <CartesianGrid strokeDasharray="2 6" stroke="#1e1e2e" />
         <XAxis
           dataKey="speedMph"
           type="number"
@@ -67,11 +79,12 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
           label={{
             value: 'Speed (mph)',
             position: 'insideBottom',
-            offset: -12,
-            fill: '#9ca3af',
-            fontSize: 12,
+            offset: -14,
+            fill: '#8888aa',
+            fontSize: 11,
+            fontFamily: CHART_FONT,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={tickStyle}
         />
         <YAxis
           label={{
@@ -79,20 +92,23 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
             angle: -90,
             position: 'insideLeft',
             offset: 8,
-            fill: '#9ca3af',
-            fontSize: 12,
+            fill: '#8888aa',
+            fontSize: 11,
+            fontFamily: CHART_FONT,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={tickStyle}
           width={60}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: '#1f2937',
-            border: '1px solid #374151',
+            backgroundColor: '#111118',
+            border: '1px solid #3a3a50',
             borderRadius: '6px',
+            fontFamily: MONO_FONT,
+            fontSize: 11,
           }}
-          labelStyle={{ color: '#9ca3af', fontSize: 11 }}
-          itemStyle={{ color: '#e5e7eb', fontSize: 11 }}
+          labelStyle={{ fontFamily: CHART_FONT, color: '#f59e0b', fontSize: 11, marginBottom: 4 }}
+          itemStyle={{ color: '#f0f0f8', fontSize: 11 }}
           formatter={(value: unknown) =>
             typeof value === 'number' && isFinite(value) ? [`${value.toFixed(0)} lbf`] : ['—']
           }
@@ -100,7 +116,9 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
             typeof label === 'number' && isFinite(label) ? `${label.toFixed(1)} mph` : '—'
           }
         />
-        <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12, paddingTop: 8 }} />
+        <Legend wrapperStyle={{ fontFamily: CHART_FONT, fontSize: 11, color: '#8888aa', paddingTop: 8 }} />
+
+        {/* Gear lines */}
         {gearCurves.map((gc, i) => (
           <Line
             key={`gear${gc.gear}`}
@@ -112,13 +130,26 @@ export default function ThrustCurveChart({ gearCurves, envelope }: ThrustCurveCh
             connectNulls={true}
           />
         ))}
+
+        {/* Envelope glow layer (wide, low opacity) */}
+        <Line
+          dataKey="envelopeGlow"
+          stroke="rgba(255,255,255,0.12)"
+          strokeWidth={10}
+          dot={false}
+          connectNulls={true}
+          legendType="none"
+          name="_glow"
+        />
+
+        {/* Envelope main line */}
         <Line
           dataKey="envelope"
           name="Envelope"
-          stroke="#f9fafb"
+          stroke="#ffffff"
           dot={false}
-          strokeWidth={2}
-          strokeDasharray="5 3"
+          strokeWidth={2.5}
+          strokeDasharray="4 3"
           connectNulls={true}
         />
       </LineChart>

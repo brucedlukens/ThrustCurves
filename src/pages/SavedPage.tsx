@@ -29,18 +29,33 @@ export default function SavedPage() {
   return (
     <div className="flex flex-col gap-6 max-w-3xl">
       <div>
-        <h2 className="text-2xl font-semibold text-gray-100">Saved Configurations</h2>
-        <p className="text-gray-400 mt-1 text-sm">
+        <h2
+          className="text-2xl font-bold uppercase tracking-widest"
+          style={{ fontFamily: 'var(--font-display)', color: 'var(--color-text-1)' }}
+        >
+          Saved Configurations
+        </h2>
+        <p
+          className="mt-1 text-sm"
+          style={{ fontFamily: 'var(--font-ui)', color: 'var(--color-text-2)' }}
+        >
           Load a saved setup into the simulator, or delete configurations you no longer need.
         </p>
       </div>
 
       {isLoading && (
-        <p className="text-gray-500 text-sm">Loading…</p>
+        <p className="text-sm" style={{ color: 'var(--color-text-3)' }}>Loading…</p>
       )}
 
       {error && (
-        <div className="rounded-lg border border-red-700 bg-red-900/20 p-4 text-red-400 text-sm">
+        <div
+          className="rounded-lg p-4 text-sm"
+          style={{
+            border: '1px solid var(--color-danger)',
+            backgroundColor: 'rgba(239,68,68,0.1)',
+            color: 'var(--color-danger)',
+          }}
+        >
           {error}
         </div>
       )}
