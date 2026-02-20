@@ -35,3 +35,4 @@ Thumbs.db
 
 # Temporary files
 .pr-body.md
+.commit-msg.txt
