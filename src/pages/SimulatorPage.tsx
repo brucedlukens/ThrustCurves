@@ -1,11 +1,15 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import { useSimulation } from '@/hooks/useSimulation'
 import { useCarStore } from '@/store/carStore'
 import { useSimulationStore } from '@/store/simulationStore'
+import { useUnitStore } from '@/store/unitStore'
+import { mphToMs, msToMph, msToKmh } from '@/utils/units'
+import type { TimeStep } from '@/types/simulation'
 import CarSearch from '@/components/car-selector/CarSearch'
 import CarSpecTable from '@/components/car-selector/CarSpecTable'
 import ThrustCurveChart from '@/components/charts/ThrustCurveChart'
 import PowerTorqueChart from '@/components/charts/PowerTorqueChart'
+import AccelerationChart from '@/components/charts/AccelerationChart'
 import PerformanceCard from '@/components/results/PerformanceCard'
 import ShiftPointsTable from '@/components/results/ShiftPointsTable'
 import ModificationsPanel from '@/components/editor/ModificationsPanel'
@@ -52,6 +56,108 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
         {children}
       </span>
+    </div>
+  )
+}
+
+/** Find the elapsed time between two speed thresholds in the trace */
+function computeRangeTime(
+  trace: TimeStep[],
+  fromMs: number,
+  toMs: number,
+): number | null {
+  if (fromMs >= toMs || trace.length === 0) return null
+  let startTime: number | null = null
+  let endTime: number | null = null
+  for (const step of trace) {
+    if (startTime === null && step.speedMs >= fromMs) {
+      startTime = step.timeS
+    }
+    if (startTime !== null && step.speedMs >= toMs) {
+      endTime = step.timeS
+      break
+    }
+  }
+  if (startTime === null || endTime === null) return null
+  return endTime - startTime
+}
+
+interface CustomRangePanelProps {
+  trace: TimeStep[]
+}
+
+function CustomRangePanel({ trace }: CustomRangePanelProps) {
+  const units = useUnitStore(state => state.units)
+  const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
+
+  const [fromSpeed, setFromSpeed] = useState(0)
+  const [toSpeed, setToSpeed] = useState(units === 'imperial' ? 60 : 100)
+
+  const maxTraceSpeed = useMemo(() => {
+    if (trace.length === 0) return 0
+    const maxMs = Math.max(...trace.map(s => s.speedMs))
+    return units === 'imperial' ? msToMph(maxMs) : msToKmh(maxMs)
+  }, [trace, units])
+
+  const rangeTimeS = useMemo(() => {
+    const fromMs = units === 'imperial' ? mphToMs(fromSpeed) : fromSpeed / 3.6
+    const toMs = units === 'imperial' ? mphToMs(toSpeed) : toSpeed / 3.6
+    return computeRangeTime(trace, fromMs, toMs)
+  }, [trace, fromSpeed, toSpeed, units])
+
+  const exceedsTrace = toSpeed > maxTraceSpeed && maxTraceSpeed > 0
+
+  return (
+    <div className="rounded-xl border border-line bg-panel p-4 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+      <div className="flex items-center gap-2 mb-4">
+        <div className="w-1 h-4 rounded-full bg-signal/60" />
+        <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
+          Custom Range
+        </span>
+      </div>
+
+      <div className="flex flex-wrap items-end gap-4">
+        <div className="flex flex-col gap-1.5">
+          <label className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+            From ({speedUnit})
+          </label>
+          <input
+            type="number"
+            min={0}
+            max={toSpeed - 1}
+            value={fromSpeed}
+            onChange={e => setFromSpeed(Math.max(0, Number(e.target.value)))}
+            className="w-24 px-3 py-2 rounded-lg border border-line bg-lift font-data text-sm text-data text-right tabular-nums focus:outline-none focus:border-signal/60 transition-colors"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1.5">
+          <label className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+            To ({speedUnit})
+          </label>
+          <input
+            type="number"
+            min={fromSpeed + 1}
+            value={toSpeed}
+            onChange={e => setToSpeed(Math.max(fromSpeed + 1, Number(e.target.value)))}
+            className="w-24 px-3 py-2 rounded-lg border border-line bg-lift font-data text-sm text-data text-right tabular-nums focus:outline-none focus:border-signal/60 transition-colors"
+          />
+        </div>
+
+        <div className="flex flex-col gap-1">
+          <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+            Result
+          </span>
+          <span className="font-data text-3xl font-semibold text-data leading-none tabular-nums">
+            {rangeTimeS !== null ? `${rangeTimeS.toFixed(2)}s` : '—'}
+          </span>
+          {exceedsTrace && (
+            <span className="font-data text-xs text-muted-txt mt-0.5">
+              trace ends at {maxTraceSpeed.toFixed(0)} {speedUnit}
+            </span>
+          )}
+        </div>
+      </div>
     </div>
   )
 }
@@ -145,6 +251,9 @@ export default function SimulatorPage() {
             {/* Performance metrics — hero section */}
             <PerformanceCard performance={result.performance} />
 
+            {/* Custom speed range */}
+            <CustomRangePanel trace={result.trace} />
+
             {/* Thrust Curve Chart */}
             <div>
               <SectionLabel>Thrust Curves</SectionLabel>
@@ -160,6 +269,16 @@ export default function SimulatorPage() {
                 <PowerTorqueChart car={selectedCar} />
               </div>
             </div>
+
+            {/* Acceleration (G-Force) Chart */}
+            {result.trace.length > 0 && (
+              <div>
+                <SectionLabel>Acceleration (G-Force)</SectionLabel>
+                <div className="chart-frame p-4 h-[240px] lg:h-[280px]">
+                  <AccelerationChart trace={result.trace} />
+                </div>
+              </div>
+            )}
 
             {/* Shift Points */}
             <div>

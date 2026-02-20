@@ -9,7 +9,8 @@ import {
   Line,
 } from 'recharts'
 import type { ComparisonEntry } from '@/hooks/useComparison'
-import { MS_TO_MPH, N_TO_LBF } from '@/utils/units'
+import { MS_TO_MPH, MS_TO_KMH, N_TO_LBF } from '@/utils/units'
+import { useUnitStore } from '@/store/unitStore'
 
 // Distinct, intentional comparison colors
 const COMPARISON_COLORS = [
@@ -26,7 +27,7 @@ interface ComparisonChartProps {
 }
 
 interface ChartRow {
-  speedMph: number
+  speed: number
   [key: string]: number | undefined
 }
 
@@ -41,6 +42,11 @@ const AXIS_TICK = { fill: '#8888a0', fontSize: 10, fontFamily: '"JetBrains Mono"
 const AXIS_LABEL_STYLE = { fill: '#55556a', fontSize: 11, fontFamily: '"Barlow Condensed", sans-serif' }
 
 export default function ComparisonChart({ entries }: ComparisonChartProps) {
+  const units = useUnitStore(state => state.units)
+  const speedFactor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
+  const speedLabel = units === 'imperial' ? 'MPH' : 'KM/H'
+  const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
+
   if (entries.length === 0) {
     return (
       <div className="flex items-center justify-center h-64 text-muted-txt text-sm font-display tracking-wider uppercase">
@@ -64,7 +70,7 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
     .sort((a, b) => a - b)
     .map(key => {
       const speedMs = key / 1000
-      const row: ChartRow = { speedMph: parseFloat((speedMs * MS_TO_MPH).toFixed(2)) }
+      const row: ChartRow = { speed: parseFloat((speedMs * speedFactor).toFixed(2)) }
       entries.forEach((_entry, i) => {
         const forceN = envelopeMaps[i].get(key)
         row[`setup${i}`] = forceN !== undefined
@@ -79,11 +85,11 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
       <LineChart data={data} margin={{ top: 8, right: 28, bottom: 28, left: 20 }}>
         <CartesianGrid strokeDasharray="2 4" stroke="#1a1a22" vertical={false} />
         <XAxis
-          dataKey="speedMph"
+          dataKey="speed"
           type="number"
           domain={['auto', 'auto']}
           label={{
-            value: 'SPEED (MPH)',
+            value: `SPEED (${speedLabel})`,
             position: 'insideBottom',
             offset: -14,
             style: AXIS_LABEL_STYLE,
@@ -112,7 +118,7 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
           labelStyle={{ color: '#8888a0', fontSize: 11 }}
           itemStyle={{ color: '#eeeef2', fontSize: 11 }}
           formatter={(value: number) => [`${value.toFixed(0)} lbf`]}
-          labelFormatter={(label: number) => `${label.toFixed(1)} mph`}
+          labelFormatter={(label: number) => `${label.toFixed(1)} ${speedUnit}`}
         />
         <Legend
           wrapperStyle={{

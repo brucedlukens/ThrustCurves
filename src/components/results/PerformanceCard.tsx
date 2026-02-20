@@ -1,5 +1,7 @@
 import type { PerformanceMetrics } from '@/types/simulation'
-import { fmtTime, fmtSpeed } from '@/utils/formatting'
+import { useUnitStore } from '@/store/unitStore'
+import { msToMph, msToKmh } from '@/utils/units'
+import { fmtTime } from '@/utils/formatting'
 
 interface PerformanceCardProps {
   performance: PerformanceMetrics
@@ -11,6 +13,15 @@ interface MetricDef {
 }
 
 export default function PerformanceCard({ performance }: PerformanceCardProps) {
+  const units = useUnitStore(state => state.units)
+
+  const fmtSpeed = (ms: number | undefined): string => {
+    if (ms === undefined) return '—'
+    return units === 'imperial'
+      ? `${msToMph(ms).toFixed(1)} mph`
+      : `${msToKmh(ms).toFixed(1)} km/h`
+  }
+
   const metrics: MetricDef[] = [
     { label: '0–60 mph', value: fmtTime(performance.zeroTo60Mph) },
     { label: '0–100 km/h', value: fmtTime(performance.zeroTo100Kmh) },
