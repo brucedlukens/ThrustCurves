@@ -2,6 +2,8 @@ import { useState, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import { useCarStore } from '@/store/carStore'
+import { useUnitStore } from '@/store/unitStore'
+import { nmToLbft, lbftToNm, kwToHp } from '@/utils/units'
 import type { CarSpec, CurvePoint, DrivetrainType, TransmissionType } from '@/types/car'
 
 // ── Shared input style ──────────────────────────────────────────────────────
@@ -206,15 +208,19 @@ function TorqueCurveEditor({
   onChange: (c: CurvePoint[]) => void
   error?: string
 }) {
+  const { units } = useUnitStore()
+  const imperial = units === 'imperial'
+
   const handleRpm = (i: number, val: string) => {
     const updated = curve.map((p, idx) =>
       idx === i ? ([Number(val) || 0, p[1]] as CurvePoint) : p,
     )
     onChange(updated)
   }
-  const handleNm = (i: number, val: string) => {
+  const handleTorque = (i: number, val: string) => {
+    const nm = imperial ? lbftToNm(Number(val) || 0) : Number(val) || 0
     const updated = curve.map((p, idx) =>
-      idx === i ? ([p[0], Number(val) || 0] as CurvePoint) : p,
+      idx === i ? ([p[0], nm] as CurvePoint) : p,
     )
     onChange(updated)
   }
@@ -226,6 +232,9 @@ function TorqueCurveEditor({
     onChange(curve.filter((_, idx) => idx !== i))
   }
 
+  const torqueLabel = imperial ? 'Torque (lb·ft)' : 'Torque (Nm)'
+  const powerLabel = imperial ? 'Power (hp)' : 'Power (kW)'
+
   return (
     <div className="flex flex-col gap-2">
       <div className="overflow-x-auto">
@@ -233,14 +242,18 @@ function TorqueCurveEditor({
           <thead>
             <tr className="border-b border-faint">
               <th className="text-left text-muted-txt font-semibold pb-1.5 pr-3">RPM</th>
-              <th className="text-left text-muted-txt font-semibold pb-1.5 pr-3">Torque (Nm)</th>
-              <th className="text-left text-muted-txt font-semibold pb-1.5 pr-3">Power (kW)</th>
+              <th className="text-left text-muted-txt font-semibold pb-1.5 pr-3">{torqueLabel}</th>
+              <th className="text-left text-muted-txt font-semibold pb-1.5 pr-3">{powerLabel}</th>
               <th className="pb-1.5" />
             </tr>
           </thead>
           <tbody>
             {curve.map((pt, i) => {
-              const power = Math.round((pt[1] * pt[0]) / 9549)
+              const powerKw = Math.round((pt[1] * pt[0]) / 9549)
+              const powerDisplay = imperial ? Math.round(kwToHp(powerKw)) : powerKw
+              const torqueDisplay = imperial
+                ? Math.round(nmToLbft(pt[1]) * 10) / 10
+                : pt[1]
               return (
                 <tr key={i} className="border-b border-faint/40">
                   <td className="pr-2 py-1">
@@ -256,15 +269,15 @@ function TorqueCurveEditor({
                   <td className="pr-2 py-1">
                     <input
                       type="number"
-                      value={pt[1]}
-                      onChange={e => handleNm(i, e.target.value)}
+                      value={torqueDisplay}
+                      onChange={e => handleTorque(i, e.target.value)}
                       min={0}
-                      step={5}
+                      step={imperial ? 0.5 : 5}
                       className="w-20 bg-lift border border-line rounded px-2 py-1 text-xs text-gray-100 font-data focus:outline-none focus:ring-1 focus:ring-signal"
                     />
                   </td>
                   <td className="pr-2 py-1">
-                    <span className="text-muted-txt tabular-nums">{power}</span>
+                    <span className="text-muted-txt tabular-nums">{powerDisplay}</span>
                   </td>
                   <td className="py-1">
                     <button
