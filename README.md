@@ -19,7 +19,6 @@ The app is currently self-hosted at [curves.blukens.com](https://curves.blukens.
 - `nginx.conf` — configures nginx inside the container with React Router SPA fallback
 - `deploy.sh` — pulls latest from GitHub and rebuilds the container
 
-> These files are not committed to git. If lost, they need to be recreated manually.
 
 ### Deploying updates
 
