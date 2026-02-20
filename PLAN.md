@@ -237,6 +237,35 @@ This avoids needing to re-enter common specs from scratch for known vehicles.
 
 ---
 
+### Simulation Trace Truncation — AccelerationChart & CustomRangePanel
+
+**Root cause:** `src/engine/performance.ts` has an early exit that breaks out of the Euler integration loop the moment all three key metrics (0–60 mph, 0–100 km/h, and ¼ mile) are captured:
+
+```typescript
+// Early exit once all key metrics are captured
+if (zeroTo60Mph && zeroTo100Kmh && quarterMileS) break
+```
+
+This typically stops the trace at ~¼ mile trap speed (e.g. ~50 m/s / 113 mph for the Supra), well short of the car's actual top speed.
+
+**Impact:**
+- **AccelerationChart** (g-force vs speed) only shows data up to ~¼ mile trap speed — the full acceleration curve to top speed is missing
+- **CustomRangePanel** (simulator) and **CompareRangePanel** (compare) can't compute elapsed times for speed ranges beyond the trace end — any `To` value above trap speed returns `—`
+- Both look like the car "tops out" at quarter mile, which confuses users
+
+**Proposed fix:**
+Continue the integration until net acceleration drops to near zero (speed has plateaued at drag-limited top speed), rather than stopping as soon as the three checkpoint metrics are hit. The `topSpeedMs` computed from the envelope can serve as a target — stop when `speed >= topSpeedMs * 0.99` or when `netForceN` is effectively zero and speed is no longer increasing.
+
+**Performance consideration:**
+The current early exit was an optimization — removing it means the loop runs until drag equilibrium is reached, which could be 30–90 seconds of simulated time (3,000–9,000 loop iterations at DT=0.01s). Each iteration is cheap arithmetic, so this should still be imperceptible in the browser, but should be verified for diesel trucks and other slow-to-top-out vehicles.
+
+**Files to change:**
+- `src/engine/performance.ts` — modify the early exit condition
+- Tests: verify AccelerationChart test trace covers a meaningful speed range
+- Verify CustomRangePanel can reach user-specified speeds above ¼ mile trap
+
+---
+
 ### Car Spec Audit & Source Documentation
 
 The current car data in `src/data/cars.json` was generated from approximate/recalled values and may contain inaccuracies in torque curves, gear ratios, aero coefficients, or weights. Each entry needs to be audited against authoritative sources.
