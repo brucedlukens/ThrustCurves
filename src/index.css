@@ -1,13 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@400;600;700&family=Barlow+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap');
 @import "tailwindcss";
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-  color-scheme: dark light;
+  /* Backgrounds */
+  --bg: #080c10;
+  --surface-1: #0d1117;
+  --surface-2: #111820;
+  --surface-3: #162030;
+
+  /* Borders */
+  --border: #1e2d3d;
+  --border-bright: #2a3f55;
+
+  /* Accent — electric teal */
+  --accent: #00D4C8;
+  --accent-dim: #009990;
+  --accent-glow: rgba(0, 212, 200, 0.12);
+  --accent-glow-strong: rgba(0, 212, 200, 0.22);
+  --accent-text: #4EEAE3;
+
+  /* Text */
+  --text-primary: #E8EFF5;
+  --text-secondary: #6B8BA4;
+  --text-tertiary: #3D5568;
+
+  /* Semantic */
+  --success: #22d3a0;
+  --warning: #F59E0B;
+  --danger: #EF4444;
+
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  background-color: var(--bg);
+  color: var(--text-primary);
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+/* Typography utility classes */
+.font-display {
+  font-family: 'Chakra Petch', monospace;
+}
+
+.font-ui {
+  font-family: 'Barlow Condensed', system-ui, sans-serif;
+}
+
+.font-data {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Thin teal scrollbars */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-1);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent-dim);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
+
+/* Remove number input arrows */
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number'] {
+  -moz-appearance: textfield;
+}
+
+/* Custom range slider */
+input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--surface-3);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--surface-1);
+  box-shadow: 0 0 0 2px var(--accent-glow-strong);
+  transition: box-shadow 0.15s;
+}
+
+input[type='range']::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 0 4px var(--accent-glow-strong);
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent);
+  cursor: pointer;
+  border: 2px solid var(--surface-1);
+}
+
+/* Mobile drawer transition */
+.sidebar-drawer {
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Accordion section body */
+.section-body-enter {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.2s ease-out;
+}
+
+.section-body-open {
+  max-height: 800px;
+  transition: max-height 0.3s ease-in;
 }

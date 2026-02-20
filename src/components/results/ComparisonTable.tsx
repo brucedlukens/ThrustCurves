@@ -8,8 +8,9 @@ interface ComparisonTableProps {
 interface MetricRow {
   label: string
   values: string[]
-  /** Delta string relative to first entry (e.g. "+0.6s") */
   deltas: (string | null)[]
+  /** Lower is better (time) vs higher is better (speed) */
+  lowerIsBetter: boolean
 }
 
 function parseSeconds(s: string): number | null {
@@ -38,85 +39,70 @@ function calcDelta(
 }
 
 export default function ComparisonTable({ entries }: ComparisonTableProps) {
-  if (entries.length === 0) {
-    return null
-  }
+  if (entries.length === 0) return null
 
   const metrics: MetricRow[] = [
     {
       label: '0–60 mph',
+      lowerIsBetter: true,
       values: entries.map(e => fmtTime(e.result.performance.zeroTo60Mph)),
       deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.zeroTo60Mph)),
-          i,
-          parseSeconds,
-          's',
-        )
+        calcDelta(entries.map(e => fmtTime(e.result.performance.zeroTo60Mph)), i, parseSeconds, 's')
       ),
     },
     {
       label: '0–100 km/h',
+      lowerIsBetter: true,
       values: entries.map(e => fmtTime(e.result.performance.zeroTo100Kmh)),
       deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.zeroTo100Kmh)),
-          i,
-          parseSeconds,
-          's',
-        )
+        calcDelta(entries.map(e => fmtTime(e.result.performance.zeroTo100Kmh)), i, parseSeconds, 's')
       ),
     },
     {
       label: '¼ Mile',
+      lowerIsBetter: true,
       values: entries.map(e => fmtTime(e.result.performance.quarterMileS)),
       deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtTime(e.result.performance.quarterMileS)),
-          i,
-          parseSeconds,
-          's',
-        )
+        calcDelta(entries.map(e => fmtTime(e.result.performance.quarterMileS)), i, parseSeconds, 's')
       ),
     },
     {
       label: '¼ Mile Trap',
+      lowerIsBetter: false,
       values: entries.map(e => fmtSpeed(e.result.performance.quarterMileSpeedMs)),
       deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtSpeed(e.result.performance.quarterMileSpeedMs)),
-          i,
-          parseMph,
-          ' mph',
-        )
+        calcDelta(entries.map(e => fmtSpeed(e.result.performance.quarterMileSpeedMs)), i, parseMph, ' mph')
       ),
     },
     {
       label: 'Top Speed',
+      lowerIsBetter: false,
       values: entries.map(e => fmtSpeed(e.result.performance.topSpeedMs)),
       deltas: entries.map((_, i) =>
-        calcDelta(
-          entries.map(e => fmtSpeed(e.result.performance.topSpeedMs)),
-          i,
-          parseMph,
-          ' mph',
-        )
+        calcDelta(entries.map(e => fmtSpeed(e.result.performance.topSpeedMs)), i, parseMph, ' mph')
       ),
     },
   ]
 
   return (
-    <div className="rounded-lg border border-gray-700 bg-gray-800/50 overflow-x-auto">
-      <table className="w-full text-sm">
+    <div
+      className="rounded-xl overflow-x-auto"
+      style={{ border: '1px solid var(--border)' }}
+    >
+      <table className="w-full">
         <thead>
-          <tr className="border-b border-gray-700">
-            <th className="text-left px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+          <tr style={{ background: 'var(--surface-3)', borderBottom: '1px solid var(--border)' }}>
+            <th
+              className="text-left px-4 py-2.5 font-ui text-xs font-semibold tracking-widest uppercase"
+              style={{ color: 'var(--text-tertiary)' }}
+            >
               Metric
             </th>
             {entries.map((entry, i) => (
               <th
                 key={entry.setup.id}
-                className="text-right px-4 py-2 text-xs font-semibold text-gray-300 truncate max-w-32"
+                className="text-right px-4 py-2.5 font-ui text-xs font-semibold truncate max-w-32"
+                style={{ color: i === 0 ? 'var(--accent-text)' : 'var(--text-secondary)' }}
               >
                 {i === 0 ? `${entry.setup.name} (base)` : entry.setup.name}
               </th>
@@ -124,23 +110,46 @@ export default function ComparisonTable({ entries }: ComparisonTableProps) {
           </tr>
         </thead>
         <tbody>
-          {metrics.map(row => (
-            <tr key={row.label} className="border-b border-gray-700/50 last:border-0">
-              <td className="px-4 py-2 text-gray-400">{row.label}</td>
-              {row.values.map((val, i) => (
-                <td key={i} className="px-4 py-2 text-right">
-                  <span className="text-gray-100 font-medium">{val}</span>
-                  {row.deltas[i] && (
+          {metrics.map((row, rowIdx) => (
+            <tr
+              key={row.label}
+              style={{
+                background: rowIdx % 2 === 0 ? 'var(--surface-2)' : 'transparent',
+                borderTop: '1px solid var(--border)',
+              }}
+            >
+              <td
+                className="px-4 py-2.5 font-ui text-sm"
+                style={{ color: 'var(--text-secondary)' }}
+              >
+                {row.label}
+              </td>
+              {row.values.map((val, i) => {
+                const delta = row.deltas[i]
+                // Positive delta = worse for time metrics, better for speed metrics
+                const isPositiveDelta = delta ? delta.startsWith('+') : false
+                const deltaIsBetter = row.lowerIsBetter ? !isPositiveDelta : isPositiveDelta
+                const deltaColor = deltaIsBetter ? 'var(--success)' : 'var(--danger)'
+
+                return (
+                  <td key={i} className="px-4 py-2.5 text-right">
                     <span
-                      className={`ml-2 text-xs ${
-                        row.deltas[i]!.startsWith('+') ? 'text-red-400' : 'text-green-400'
-                      }`}
+                      className="font-data text-sm font-semibold"
+                      style={{ color: 'var(--text-primary)' }}
                     >
-                      {row.deltas[i]}
+                      {val}
                     </span>
-                  )}
-                </td>
-              ))}
+                    {delta && (
+                      <span
+                        className="ml-2 font-data text-xs"
+                        style={{ color: deltaColor }}
+                      >
+                        {delta}
+                      </span>
+                    )}
+                  </td>
+                )
+              })}
             </tr>
           ))}
         </tbody>

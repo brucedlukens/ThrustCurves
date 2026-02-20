@@ -11,13 +11,14 @@ import {
 import type { ComparisonEntry } from '@/hooks/useComparison'
 import { MS_TO_MPH, N_TO_LBF } from '@/utils/units'
 
+// Distinctive palette for comparison overlays
 const COMPARISON_COLORS = [
-  '#60a5fa', // blue
-  '#34d399', // green
-  '#fb923c', // orange
-  '#f87171', // red
-  '#a78bfa', // purple
-  '#fbbf24', // yellow
+  '#00D4C8', // teal
+  '#F59E0B', // amber
+  '#8B5CF6', // violet
+  '#EF4444', // red
+  '#3B82F6', // blue
+  '#10B981', // emerald
 ]
 
 interface ComparisonChartProps {
@@ -32,20 +33,21 @@ interface ChartRow {
 export default function ComparisonChart({ entries }: ComparisonChartProps) {
   if (entries.length === 0) {
     return (
-      <div className="flex items-center justify-center h-64 text-gray-500 text-sm">
-        Select setups to compare
+      <div
+        className="flex items-center justify-center h-64 font-ui text-sm"
+        style={{ color: 'var(--text-tertiary)' }}
+      >
+        Select setups from the panel to overlay their thrust envelopes
       </div>
     )
   }
 
-  // Build per-entry envelope maps
   const envelopeMaps = entries.map(entry => {
     const m = new Map<number, number>()
     entry.result.envelope.forEach(p => m.set(Math.round(p.speedMs * 1000), p.forceN))
     return m
   })
 
-  // Collect all unique speed keys
   const speedKeys = new Set<number>()
   entries.forEach(entry =>
     entry.result.envelope.forEach(p => speedKeys.add(Math.round(p.speedMs * 1000)))
@@ -65,10 +67,17 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
       return row
     })
 
+  const tickStyle = { fill: '#6B8BA4', fontSize: 11, fontFamily: "'JetBrains Mono', monospace" }
+  const axisLabelBase = {
+    fontSize: 11,
+    fontFamily: "'Barlow Condensed', sans-serif",
+    letterSpacing: '0.08em',
+  }
+
   return (
     <ResponsiveContainer width="100%" height={320}>
-      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 24, left: 16 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+      <LineChart data={data} margin={{ top: 8, right: 24, bottom: 28, left: 16 }}>
+        <CartesianGrid strokeDasharray="4 4" stroke="#1e2d3d" />
         <XAxis
           dataKey="speedMph"
           type="number"
@@ -76,11 +85,11 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
           label={{
             value: 'Speed (mph)',
             position: 'insideBottom',
-            offset: -12,
-            fill: '#9ca3af',
-            fontSize: 12,
+            offset: -14,
+            fill: '#3D5568',
+            ...axisLabelBase,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
+          tick={tickStyle}
         />
         <YAxis
           label={{
@@ -88,24 +97,42 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
             angle: -90,
             position: 'insideLeft',
             offset: 8,
-            fill: '#9ca3af',
-            fontSize: 12,
+            fill: '#3D5568',
+            ...axisLabelBase,
           }}
-          tick={{ fill: '#9ca3af', fontSize: 11 }}
-          width={60}
+          tick={tickStyle}
+          width={64}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: '#1f2937',
-            border: '1px solid #374151',
-            borderRadius: '6px',
+            backgroundColor: '#111820',
+            border: '1px solid #1e2d3d',
+            borderRadius: '8px',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.6)',
           }}
-          labelStyle={{ color: '#9ca3af', fontSize: 11 }}
-          itemStyle={{ color: '#e5e7eb', fontSize: 11 }}
+          labelStyle={{
+            color: '#6B8BA4',
+            fontSize: 11,
+            fontFamily: "'JetBrains Mono', monospace",
+            marginBottom: 4,
+          }}
+          itemStyle={{
+            color: '#E8EFF5',
+            fontSize: 11,
+            fontFamily: "'JetBrains Mono', monospace",
+          }}
           formatter={(value: number) => [`${value.toFixed(0)} lbf`]}
           labelFormatter={(label: number) => `${label.toFixed(1)} mph`}
         />
-        <Legend wrapperStyle={{ color: '#9ca3af', fontSize: 12, paddingTop: 8 }} />
+        <Legend
+          wrapperStyle={{
+            color: '#6B8BA4',
+            fontSize: 11,
+            fontFamily: "'Barlow Condensed', sans-serif",
+            paddingTop: 12,
+            letterSpacing: '0.04em',
+          }}
+        />
         {entries.map((entry, i) => (
           <Line
             key={entry.setup.id}

@@ -39,11 +39,29 @@ export default function SaveLoadControls({ carId }: SaveLoadControlsProps) {
     return (
       <div className="flex items-center gap-2">
         {savedMsg && (
-          <span className="text-xs text-green-400">{savedMsg}</span>
+          <span
+            className="font-data text-xs"
+            style={{ color: 'var(--success)' }}
+          >
+            {savedMsg}
+          </span>
         )}
         <button
           onClick={() => setIsOpen(true)}
-          className="text-xs px-3 py-1 rounded border border-indigo-600 text-indigo-400 hover:bg-indigo-600 hover:text-white transition-colors"
+          className="font-ui text-xs px-3 py-1.5 rounded transition-all duration-150"
+          style={{
+            border: '1px solid var(--accent-dim)',
+            color: 'var(--accent-text)',
+            background: 'transparent',
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.background = 'var(--accent-glow)'
+            e.currentTarget.style.borderColor = 'var(--accent)'
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.background = 'transparent'
+            e.currentTarget.style.borderColor = 'var(--accent-dim)'
+          }}
           aria-label="Save setup"
         >
           Save Setup
@@ -61,19 +79,41 @@ export default function SaveLoadControls({ carId }: SaveLoadControlsProps) {
         onKeyDown={handleKeyDown}
         placeholder="Setup name…"
         autoFocus
-        className="bg-gray-700 border border-gray-600 rounded px-2 py-1 text-sm text-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 placeholder:text-gray-500 w-40"
+        className="font-data text-sm px-2.5 py-1.5 rounded focus:outline-none transition-all w-40"
+        style={{
+          background: 'var(--surface-3)',
+          border: '1px solid var(--border)',
+          color: 'var(--text-primary)',
+        }}
+        onFocus={e => {
+          e.currentTarget.style.borderColor = 'var(--accent)'
+          e.currentTarget.style.boxShadow = '0 0 0 3px var(--accent-glow)'
+        }}
+        onBlur={e => {
+          e.currentTarget.style.borderColor = 'var(--border)'
+          e.currentTarget.style.boxShadow = 'none'
+        }}
         aria-label="Setup name"
       />
       <button
         onClick={handleSave}
         disabled={isSaving || !name.trim()}
-        className="text-xs px-3 py-1 rounded bg-indigo-600 text-white hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+        className="font-ui text-xs px-3 py-1.5 rounded transition-all"
+        style={{
+          background: 'var(--accent)',
+          color: 'var(--bg)',
+          opacity: isSaving || !name.trim() ? 0.5 : 1,
+          cursor: isSaving || !name.trim() ? 'not-allowed' : 'pointer',
+        }}
       >
         {isSaving ? 'Saving…' : 'Save'}
       </button>
       <button
         onClick={() => setIsOpen(false)}
-        className="text-xs text-gray-500 hover:text-gray-300"
+        className="font-ui text-xs transition-colors"
+        style={{ color: 'var(--text-tertiary)' }}
+        onMouseEnter={e => { e.currentTarget.style.color = 'var(--text-primary)' }}
+        onMouseLeave={e => { e.currentTarget.style.color = 'var(--text-tertiary)' }}
       >
         Cancel
       </button>

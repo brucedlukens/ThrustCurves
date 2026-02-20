@@ -4,7 +4,6 @@ import type { CarSpec } from '@/types/car'
 interface SavedConfigsListProps {
   setups: SavedSetup[]
   cars: CarSpec[]
-  /** IDs of setups currently selected for comparison */
   selectedIds?: string[]
   onLoad?: (setup: SavedSetup) => void
   onDelete?: (id: string) => void
@@ -21,7 +20,7 @@ export default function SavedConfigsList({
 }: SavedConfigsListProps) {
   if (setups.length === 0) {
     return (
-      <p className="text-gray-500 text-sm">
+      <p className="font-ui text-sm" style={{ color: 'var(--text-tertiary)' }}>
         No saved setups yet. Use the Simulator to save a configuration.
       </p>
     )
@@ -40,36 +39,76 @@ export default function SavedConfigsList({
         return (
           <div
             key={setup.id}
-            className={`rounded-lg border p-3 flex flex-col gap-1 transition-colors ${
-              isSelected
-                ? 'border-indigo-500 bg-indigo-900/20'
-                : 'border-gray-700 bg-gray-800/50'
-            }`}
+            className="rounded-lg p-3 flex flex-col gap-1 transition-all duration-150"
+            style={{
+              background: isSelected ? 'var(--surface-3)' : 'var(--surface-2)',
+              border: isSelected ? '1px solid var(--accent)' : '1px solid var(--border)',
+              boxShadow: isSelected ? '0 0 0 1px var(--accent-glow)' : undefined,
+            }}
           >
+            {/* Selected indicator */}
+            {isSelected && (
+              <div
+                className="h-0.5 w-full -mt-3 mb-2 rounded-t"
+                style={{ background: 'linear-gradient(90deg, var(--accent), transparent)' }}
+              />
+            )}
+
             <div className="flex items-start justify-between gap-2">
               <div className="flex flex-col gap-0.5 min-w-0">
-                <span className="text-sm font-medium text-gray-100 truncate">{setup.name}</span>
-                <span className="text-xs text-gray-400">{carLabel}</span>
-                <span className="text-xs text-gray-600">{date}</span>
+                <span
+                  className="font-display text-sm font-semibold truncate"
+                  style={{ color: isSelected ? 'var(--accent-text)' : 'var(--text-primary)' }}
+                >
+                  {setup.name}
+                </span>
+                <span
+                  className="font-ui text-xs"
+                  style={{ color: 'var(--text-secondary)' }}
+                >
+                  {carLabel}
+                </span>
+                <span
+                  className="font-data text-xs"
+                  style={{ color: 'var(--text-tertiary)' }}
+                >
+                  {date}
+                </span>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
+
+              <div className="flex items-center gap-1.5 shrink-0">
                 {onToggleCompare && (
                   <button
                     onClick={() => onToggleCompare(setup.id)}
-                    className={`text-xs px-2 py-0.5 rounded border transition-colors ${
-                      isSelected
-                        ? 'border-indigo-500 text-indigo-300 bg-indigo-900/30'
-                        : 'border-gray-600 text-gray-400 hover:border-indigo-500 hover:text-indigo-300'
-                    }`}
+                    className="font-ui text-xs px-2 py-0.5 rounded transition-all"
+                    style={{
+                      border: isSelected
+                        ? '1px solid var(--accent)'
+                        : '1px solid var(--border-bright)',
+                      color: isSelected ? 'var(--accent-text)' : 'var(--text-secondary)',
+                      background: isSelected ? 'var(--accent-glow)' : 'transparent',
+                    }}
                     aria-label={isSelected ? 'Remove from comparison' : 'Add to comparison'}
                   >
-                    {isSelected ? '✓ Compare' : '+ Compare'}
+                    {isSelected ? '✓ In' : '+ Add'}
                   </button>
                 )}
                 {onLoad && (
                   <button
                     onClick={() => onLoad(setup)}
-                    className="text-xs px-2 py-0.5 rounded border border-gray-600 text-gray-400 hover:border-gray-400 hover:text-gray-200 transition-colors"
+                    className="font-ui text-xs px-2 py-0.5 rounded transition-all"
+                    style={{
+                      border: '1px solid var(--border-bright)',
+                      color: 'var(--text-secondary)',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = 'var(--accent-dim)'
+                      e.currentTarget.style.color = 'var(--accent-text)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'var(--border-bright)'
+                      e.currentTarget.style.color = 'var(--text-secondary)'
+                    }}
                     aria-label={`Load ${setup.name}`}
                   >
                     Load
@@ -78,10 +117,22 @@ export default function SavedConfigsList({
                 {onDelete && (
                   <button
                     onClick={() => onDelete(setup.id)}
-                    className="text-xs px-2 py-0.5 rounded border border-gray-700 text-gray-500 hover:border-red-600 hover:text-red-400 transition-colors"
+                    className="font-ui text-xs px-2 py-0.5 rounded transition-all"
+                    style={{
+                      border: '1px solid var(--border)',
+                      color: 'var(--text-tertiary)',
+                    }}
+                    onMouseEnter={e => {
+                      e.currentTarget.style.borderColor = 'rgba(239,68,68,0.5)'
+                      e.currentTarget.style.color = 'var(--danger)'
+                    }}
+                    onMouseLeave={e => {
+                      e.currentTarget.style.borderColor = 'var(--border)'
+                      e.currentTarget.style.color = 'var(--text-tertiary)'
+                    }}
                     aria-label={`Delete ${setup.name}`}
                   >
-                    Delete
+                    ×
                   </button>
                 )}
               </div>
