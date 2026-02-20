@@ -195,3 +195,42 @@ All calculations use **SI units internally** (m, s, N, kg). Display conversion h
 - Test save/load/compare flow end-to-end in the browser
 - Test altitude corrections produce reasonable power loss percentages
 - Visual QA: thrust curves should show expected shapes (decreasing thrust per gear at higher speeds, gear crossover points)
+
+---
+
+## Future Work / Backlog
+
+### Custom Car Builder
+
+Allow users to create fully custom car entries by inputting all parameters themselves. This supports:
+- Wild custom builds that don't map to any OEM template
+- Hypothetical / fictional vehicles
+- Tuner builds with exotic gear sets, swapped engines, etc.
+
+**Phase A — Fully Custom Car (MVP)**
+
+A "Create Custom Car" flow in the UI where the user inputs every field from scratch:
+- Basic info: make, model, year, trim (free text), drivetrain (FWD/RWD/AWD)
+- Engine: displacement, forced induction toggle, redline RPM, idle RPM, torque curve (editable table of [rpm, Nm] pairs), power curve (or derive from torque)
+- Transmission: number of gears, individual gear ratios, final drive ratio, drivetrain loss %, shift time (ms), type (manual/automatic/dct)
+- Tires: width (mm), aspect ratio, rim diameter (in)
+- Aero: Cd, frontal area (m²)
+- Curb weight (kg)
+
+The custom car is stored in the same `CarSpec` shape as OEM cars and persisted to IndexedDB alongside saved setups. It appears in the car selector alongside OEM cars, clearly labeled "(Custom)".
+
+**Phase B — Pre-loaded OEM Library with Full Coverage (Long-term)**
+
+Pre-load a much larger OEM database (hundreds of cars across makes/years) so users can:
+1. Browse and select any real car as a starting point
+2. Simulate stock, then apply the Modifications panel to tune it
+3. Optionally "fork" a car to save as a custom variant
+
+This avoids needing to re-enter common specs from scratch for known vehicles.
+
+**Implementation Notes**
+- Custom cars need a distinct ID prefix (e.g., `custom-{uuid}`) to avoid collisions with OEM IDs
+- The existing `CarSpec` type already has all needed fields — no schema changes required
+- The Modifications panel already handles overrides on top of a base `CarSpec`, so custom cars work with the full mod/save/compare pipeline out of the box
+- Torque curve editor: an add/remove row table with RPM and Nm columns; optionally auto-compute a power curve from torque × RPM / 9549
+- Consider validation: redline must be >= max RPM in torque curve, gear ratios must be positive, etc.
