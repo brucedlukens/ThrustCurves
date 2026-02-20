@@ -234,3 +234,36 @@ This avoids needing to re-enter common specs from scratch for known vehicles.
 - The Modifications panel already handles overrides on top of a base `CarSpec`, so custom cars work with the full mod/save/compare pipeline out of the box
 - Torque curve editor: an add/remove row table with RPM and Nm columns; optionally auto-compute a power curve from torque × RPM / 9549
 - Consider validation: redline must be >= max RPM in torque curve, gear ratios must be positive, etc.
+
+---
+
+### Car Spec Audit & Source Documentation
+
+The current car data in `src/data/cars.json` was generated from approximate/recalled values and may contain inaccuracies in torque curves, gear ratios, aero coefficients, or weights. Each entry needs to be audited against authoritative sources.
+
+**What to do:**
+
+1. **Document sources** — For every car, identify and record where each spec came from:
+   - Manufacturer press kits / owner's manuals (gear ratios, final drive, redline, weight)
+   - Dynamometer data (torque/power curves — these are wheel numbers; ours are crank, so note which)
+   - Published road tests (Car and Driver, Motor Trend, etc. for sanity-checking 0-60 times)
+   - Aero coefficients: manufacturer Cd specs; frontal area often estimated from vehicle dimensions
+
+2. **Audit each car** — Cross-check the following fields in particular:
+   - Torque/power curve shape and peak values vs published specs
+   - Gear ratios and final drive (these are easy to verify from service manuals)
+   - Curb weight (trim level matters — use the specific trim listed)
+   - Aero: Cd is often publicly available; frontal area less so and may need estimation
+
+3. **Correct and commit** — Update any inaccurate entries with a comment citing the source in
+   a companion `src/data/SOURCES.md` file (not inline in JSON).
+
+**Known concerns (to investigate):**
+- Some torque curves may be overly smooth / simplified rather than matching real dyno shapes
+- A90 Supra top speed figure was reported as suspicious during testing
+- Newly added cars (FR-S, BRZ, GR86, F-350) used approximated data and haven't been validated
+
+**Suggested source priority:**
+1. OEM service manuals and spec sheets (most authoritative for gearing/weight)
+2. Published dyno pulls from reputable tuner shops for curve shapes
+3. Car and Driver / Motor Trend specs for sanity-checking performance numbers
