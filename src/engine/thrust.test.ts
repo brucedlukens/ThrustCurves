@@ -115,6 +115,21 @@ describe('computeGearThrustCurve', () => {
     // Higher ratio → lower speed, higher thrust at same RPM
     expect(gear2Override.speedRangeMs[1]).toBeLessThan(gear2Stock.speedRangeMs[1])
   })
+
+  it('includes custom torque curve rows above stock redline', () => {
+    // Custom curve extends 1500 RPM above the stock redlineRpm (6000)
+    const customCurve: [number, number][] = [
+      [1000, 200],
+      [3000, 350],
+      [6000, 250],
+      [7500, 180], // above stock redlineRpm — must NOT be filtered out
+    ]
+    const gear = computeGearThrustCurve(testCar, stockMods, 0, customCurve, 0.32)
+    expect(gear.points.length).toBe(4)
+    // The 7500 RPM point should be the highest-speed point in gear 1
+    const maxSpeedRpm = gear.points[gear.points.length - 1].rpm
+    expect(maxSpeedRpm).toBe(7500)
+  })
 })
 
 describe('interpolateGearThrust', () => {

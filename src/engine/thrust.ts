@@ -57,9 +57,13 @@ export function computeGearThrustCurve(
   const finalDrive = mods.finalDriveOverride ?? car.transmission.finalDriveRatio
   const drivetrainLoss = mods.drivetrainLossOverride ?? car.transmission.drivetrainLoss
   const { idleRpm, redlineRpm } = car.engine
+  // For custom torque curves, honor the curve's own max RPM rather than the stock redline
+  const effectiveRedlineRpm = torqueCurve.length > 0
+    ? torqueCurve[torqueCurve.length - 1][0]
+    : redlineRpm
 
   const points: ThrustPoint[] = torqueCurve
-    .filter(([rpm]) => rpm >= idleRpm && rpm <= redlineRpm)
+    .filter(([rpm]) => rpm >= idleRpm && rpm <= effectiveRedlineRpm)
     .map(([rpm, engineTorque]): ThrustPoint => {
       const speedMs = rpmToSpeedMs(rpm, gearRatio, finalDrive, radius)
       const wTorque = wheelTorqueNm(engineTorque, gearRatio, finalDrive, drivetrainLoss)
