@@ -141,12 +141,10 @@ export function runIntegration(params: IntegrationParams): {
       performance.quarterMileSpeedMs = speed
     }
 
-    // Early exit once all key metrics are captured
-    if (
-      performance.zeroTo60Mph !== undefined &&
-      performance.zeroTo100Kmh !== undefined &&
-      performance.quarterMileS !== undefined
-    ) {
+    // Continue until speed plateaus within 1% of drag-limited top speed.
+    // This ensures the trace covers the full acceleration run to top speed,
+    // which is needed for AccelerationChart and CustomRangePanel above quarter-mile speeds.
+    if (topSpeedMs > 0 && speed >= topSpeedMs * 0.99) {
       break
     }
 
