@@ -10,6 +10,8 @@ import type { ComparisonEntry } from '@/hooks/useComparison'
 import type { TimeStep } from '@/types/simulation'
 import SavedConfigsList from '@/components/saved/SavedConfigsList'
 import ComparisonChart from '@/components/charts/ComparisonChart'
+import ComparisonAccelerationChart from '@/components/charts/ComparisonAccelerationChart'
+import ComparisonDynoChart from '@/components/charts/ComparisonDynoChart'
 import ComparisonTable from '@/components/results/ComparisonTable'
 
 /** Find elapsed time between two speed thresholds in a trace */
@@ -258,6 +260,26 @@ export default function ComparePage() {
           </SectionLabel>
           <div className="chart-frame p-4 h-[280px] lg:h-[340px]">
             <ComparisonChart entries={allEntries} />
+          </div>
+        </div>
+
+        {/* Acceleration G comparison */}
+        <div>
+          <SectionLabel hint="G-force across speed for each setup. Higher values indicate stronger acceleration at that speed.">
+            Acceleration (G)
+          </SectionLabel>
+          <div className="chart-frame p-4 h-[280px] lg:h-[340px]">
+            <ComparisonAccelerationChart entries={allEntries} />
+          </div>
+        </div>
+
+        {/* Dyno comparison */}
+        <div>
+          <SectionLabel hint="Engine torque curve by RPM for each selected car. Reflects the OEM engine spec — modifications do not alter the engine curve.">
+            Engine Torque (Dyno)
+          </SectionLabel>
+          <div className="chart-frame p-4 h-[280px] lg:h-[340px]">
+            <ComparisonDynoChart entries={allEntries} />
           </div>
         </div>
 
