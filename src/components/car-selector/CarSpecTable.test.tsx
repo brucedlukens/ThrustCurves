@@ -1,6 +1,7 @@
-import { describe, test, expect } from 'vitest'
+import { describe, test, expect, afterEach } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import CarSpecTable from './CarSpecTable'
+import { useUnitStore } from '@/store/unitStore'
 import type { CarSpec } from '@/types/car'
 
 const mockCar: CarSpec = {
@@ -57,7 +58,17 @@ describe('CarSpecTable', () => {
     expect(screen.getByText('7500 RPM')).toBeInTheDocument()
   })
 
-  test('renders curb weight in kg', () => {
+  afterEach(() => {
+    useUnitStore.setState({ units: 'imperial' })
+  })
+
+  test('renders curb weight in lbs when imperial (default)', () => {
+    render(<CarSpecTable car={mockCar} />)
+    expect(screen.getByText(/3836 lbs/)).toBeInTheDocument()
+  })
+
+  test('renders curb weight in kg when metric', () => {
+    useUnitStore.setState({ units: 'metric' })
     render(<CarSpecTable car={mockCar} />)
     expect(screen.getByText(/1740 kg/)).toBeInTheDocument()
   })

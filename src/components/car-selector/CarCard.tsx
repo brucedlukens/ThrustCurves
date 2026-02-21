@@ -49,6 +49,11 @@ export default function CarCard({ car, isSelected, onSelect }: CarCardProps) {
 
       {/* Tags row */}
       <div className="mt-2 flex gap-2 flex-wrap">
+        {car.id.startsWith('custom-') && (
+          <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase px-1.5 py-0.5 rounded bg-signal-dim text-signal border border-signal/30">
+            Custom
+          </span>
+        )}
         <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase px-1.5 py-0.5 rounded bg-raised text-label border border-faint">
           {car.drivetrain}
         </span>

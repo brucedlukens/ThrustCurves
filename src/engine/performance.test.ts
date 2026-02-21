@@ -85,9 +85,18 @@ describe('runIntegration', () => {
     expect(performance.quarterMileSpeedMs!).toBeGreaterThan(0)
   })
 
-  it('sets topSpeedMs from last envelope point', () => {
+  it('sets topSpeedMs from drag-equilibrium speed', () => {
     const { performance } = runIntegration(makeSimpleParams())
-    expect(performance.topSpeedMs).toBe(50) // last envelope point is at 50 m/s
+    expect(performance.topSpeedMs).toBe(50) // last envelope point is at 50 m/s (no drag in test)
+  })
+
+  it('trace extends beyond quarter-mile speed to near top speed', () => {
+    // With no drag or rolling resistance, topSpeedMs = 50 m/s.
+    // The trace should now continue until speed >= 49.5 m/s (99% of 50),
+    // well past the quarter-mile trap speed.
+    const { trace, performance } = runIntegration(makeSimpleParams())
+    const maxTraceSpeed = Math.max(...trace.map(t => t.speedMs))
+    expect(maxTraceSpeed).toBeGreaterThanOrEqual(performance.topSpeedMs! * 0.99)
   })
 
   it('gear number increases monotonically when shift points are defined', () => {

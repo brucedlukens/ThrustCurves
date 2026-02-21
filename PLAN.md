@@ -195,3 +195,104 @@ All calculations use **SI units internally** (m, s, N, kg). Display conversion h
 - Test save/load/compare flow end-to-end in the browser
 - Test altitude corrections produce reasonable power loss percentages
 - Visual QA: thrust curves should show expected shapes (decreasing thrust per gear at higher speeds, gear crossover points)
+
+---
+
+## Future Work / Backlog
+
+### Custom Car Builder
+
+Allow users to create fully custom car entries by inputting all parameters themselves. This supports:
+- Wild custom builds that don't map to any OEM template
+- Hypothetical / fictional vehicles
+- Tuner builds with exotic gear sets, swapped engines, etc.
+
+**Phase A — Fully Custom Car (MVP)**
+
+A "Create Custom Car" flow in the UI where the user inputs every field from scratch:
+- Basic info: make, model, year, trim (free text), drivetrain (FWD/RWD/AWD)
+- Engine: displacement, forced induction toggle, redline RPM, idle RPM, torque curve (editable table of [rpm, Nm] pairs), power curve (or derive from torque)
+- Transmission: number of gears, individual gear ratios, final drive ratio, drivetrain loss %, shift time (ms), type (manual/automatic/dct)
+- Tires: width (mm), aspect ratio, rim diameter (in)
+- Aero: Cd, frontal area (m²)
+- Curb weight (kg)
+
+The custom car is stored in the same `CarSpec` shape as OEM cars and persisted to IndexedDB alongside saved setups. It appears in the car selector alongside OEM cars, clearly labeled "(Custom)".
+
+**Phase B — Pre-loaded OEM Library with Full Coverage (Long-term)**
+
+Pre-load a much larger OEM database (hundreds of cars across makes/years) so users can:
+1. Browse and select any real car as a starting point
+2. Simulate stock, then apply the Modifications panel to tune it
+3. Optionally "fork" a car to save as a custom variant
+
+This avoids needing to re-enter common specs from scratch for known vehicles.
+
+**Implementation Notes**
+- Custom cars need a distinct ID prefix (e.g., `custom-{uuid}`) to avoid collisions with OEM IDs
+- The existing `CarSpec` type already has all needed fields — no schema changes required
+- The Modifications panel already handles overrides on top of a base `CarSpec`, so custom cars work with the full mod/save/compare pipeline out of the box
+- Torque curve editor: an add/remove row table with RPM and Nm columns; optionally auto-compute a power curve from torque × RPM / 9549
+- Consider validation: redline must be >= max RPM in torque curve, gear ratios must be positive, etc.
+
+---
+
+### Simulation Trace Truncation — AccelerationChart & CustomRangePanel
+
+**Root cause:** `src/engine/performance.ts` has an early exit that breaks out of the Euler integration loop the moment all three key metrics (0–60 mph, 0–100 km/h, and ¼ mile) are captured:
+
+```typescript
+// Early exit once all key metrics are captured
+if (zeroTo60Mph && zeroTo100Kmh && quarterMileS) break
+```
+
+This typically stops the trace at ~¼ mile trap speed (e.g. ~50 m/s / 113 mph for the Supra), well short of the car's actual top speed.
+
+**Impact:**
+- **AccelerationChart** (g-force vs speed) only shows data up to ~¼ mile trap speed — the full acceleration curve to top speed is missing
+- **CustomRangePanel** (simulator) and **CompareRangePanel** (compare) can't compute elapsed times for speed ranges beyond the trace end — any `To` value above trap speed returns `—`
+- Both look like the car "tops out" at quarter mile, which confuses users
+
+**Proposed fix:**
+Continue the integration until net acceleration drops to near zero (speed has plateaued at drag-limited top speed), rather than stopping as soon as the three checkpoint metrics are hit. The `topSpeedMs` computed from the envelope can serve as a target — stop when `speed >= topSpeedMs * 0.99` or when `netForceN` is effectively zero and speed is no longer increasing.
+
+**Performance consideration:**
+The current early exit was an optimization — removing it means the loop runs until drag equilibrium is reached, which could be 30–90 seconds of simulated time (3,000–9,000 loop iterations at DT=0.01s). Each iteration is cheap arithmetic, so this should still be imperceptible in the browser, but should be verified for diesel trucks and other slow-to-top-out vehicles.
+
+**Files to change:**
+- `src/engine/performance.ts` — modify the early exit condition
+- Tests: verify AccelerationChart test trace covers a meaningful speed range
+- Verify CustomRangePanel can reach user-specified speeds above ¼ mile trap
+
+---
+
+### Car Spec Audit & Source Documentation
+
+The current car data in `src/data/cars.json` was generated from approximate/recalled values and may contain inaccuracies in torque curves, gear ratios, aero coefficients, or weights. Each entry needs to be audited against authoritative sources.
+
+**What to do:**
+
+1. **Document sources** — For every car, identify and record where each spec came from:
+   - Manufacturer press kits / owner's manuals (gear ratios, final drive, redline, weight)
+   - Dynamometer data (torque/power curves — these are wheel numbers; ours are crank, so note which)
+   - Published road tests (Car and Driver, Motor Trend, etc. for sanity-checking 0-60 times)
+   - Aero coefficients: manufacturer Cd specs; frontal area often estimated from vehicle dimensions
+
+2. **Audit each car** — Cross-check the following fields in particular:
+   - Torque/power curve shape and peak values vs published specs
+   - Gear ratios and final drive (these are easy to verify from service manuals)
+   - Curb weight (trim level matters — use the specific trim listed)
+   - Aero: Cd is often publicly available; frontal area less so and may need estimation
+
+3. **Correct and commit** — Update any inaccurate entries with a comment citing the source in
+   a companion `src/data/SOURCES.md` file (not inline in JSON).
+
+**Known concerns (to investigate):**
+- Some torque curves may be overly smooth / simplified rather than matching real dyno shapes
+- A90 Supra top speed figure was reported as suspicious during testing
+- Newly added cars (FR-S, BRZ, GR86, F-350) used approximated data and haven't been validated
+
+**Suggested source priority:**
+1. OEM service manuals and spec sheets (most authoritative for gearing/weight)
+2. Published dyno pulls from reputable tuner shops for curve shapes
+3. Car and Driver / Motor Trend specs for sanity-checking performance numbers

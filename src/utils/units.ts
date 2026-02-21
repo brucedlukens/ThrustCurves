@@ -32,6 +32,10 @@ export function nmToLbft(nm: number): number {
   return nm * NM_TO_LBFT
 }
 
+export function lbftToNm(lbft: number): number {
+  return lbft / NM_TO_LBFT
+}
+
 export function kwToHp(kw: number): number {
   return kw * KW_TO_HP
 }

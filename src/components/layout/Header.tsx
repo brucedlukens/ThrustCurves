@@ -42,13 +42,13 @@ export default function Header({ onMenuClick }: HeaderProps) {
             <span
               className={`font-data text-xs font-semibold tracking-wider tabular-nums transition-colors ${units === 'imperial' ? 'text-signal-hi' : 'text-muted-txt'}`}
             >
-              MPH
+              Imperial
             </span>
             <span className="font-data text-xs text-muted-txt">/</span>
             <span
               className={`font-data text-xs font-semibold tracking-wider tabular-nums transition-colors ${units === 'metric' ? 'text-signal-hi' : 'text-muted-txt'}`}
             >
-              KMH
+              Metric
             </span>
           </button>
           <div className="hidden lg:flex items-center gap-2">

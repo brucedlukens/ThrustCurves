@@ -19,23 +19,33 @@ interface CollapsibleSectionProps {
   title: string
   children: React.ReactNode
   defaultOpen?: boolean
+  open?: boolean
+  onOpenChange?: (open: boolean) => void
 }
 
-function CollapsibleSection({ title, children, defaultOpen = true }: CollapsibleSectionProps) {
-  const [open, setOpen] = useState(defaultOpen)
+function CollapsibleSection({ title, children, defaultOpen = true, open: controlledOpen, onOpenChange }: CollapsibleSectionProps) {
+  const [internalOpen, setInternalOpen] = useState(defaultOpen)
+  const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen
+  const toggle = () => {
+    if (onOpenChange) {
+      onOpenChange(!isOpen)
+    } else {
+      setInternalOpen(o => !o)
+    }
+  }
 
   return (
     <div>
       <button
         type="button"
-        onClick={() => setOpen(o => !o)}
+        onClick={toggle}
         className="flex w-full items-center justify-between py-2"
       >
         <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
           {title}
         </span>
         <svg
-          className={`w-3.5 h-3.5 text-label transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
+          className={`w-3.5 h-3.5 text-label transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
@@ -44,18 +54,28 @@ function CollapsibleSection({ title, children, defaultOpen = true }: Collapsible
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {open && children}
+      {isOpen && children}
     </div>
   )
 }
 
-function SectionLabel({ children }: { children: React.ReactNode }) {
+interface SectionLabelProps {
+  children: React.ReactNode
+  hint?: string
+}
+
+function SectionLabel({ children, hint }: SectionLabelProps) {
   return (
-    <div className="flex items-center gap-2 mb-3">
-      <div className="w-1 h-3.5 rounded-full bg-signal/60" />
-      <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
-        {children}
-      </span>
+    <div className="mb-3">
+      <div className="flex items-center gap-2">
+        <div className="w-1 h-3.5 rounded-full bg-signal/60" />
+        <span className="font-display text-[11px] font-semibold tracking-[0.2em] uppercase text-label">
+          {children}
+        </span>
+      </div>
+      {hint && (
+        <p className="font-data text-[11px] text-muted-txt mt-1 ml-3 leading-snug">{hint}</p>
+      )}
     </div>
   )
 }
@@ -124,7 +144,6 @@ function CustomRangePanel({ trace }: CustomRangePanelProps) {
           <input
             type="number"
             min={0}
-            max={toSpeed - 1}
             value={fromSpeed}
             onChange={e => setFromSpeed(Math.max(0, Number(e.target.value)))}
             className="w-24 px-3 py-2 rounded-lg border border-line bg-lift font-data text-sm text-data text-right tabular-nums focus:outline-none focus:border-signal/60 transition-colors"
@@ -137,7 +156,6 @@ function CustomRangePanel({ trace }: CustomRangePanelProps) {
           </label>
           <input
             type="number"
-            min={fromSpeed + 1}
             value={toSpeed}
             onChange={e => setToSpeed(Math.max(fromSpeed + 1, Number(e.target.value)))}
             className="w-24 px-3 py-2 rounded-lg border border-line bg-lift font-data text-sm text-data text-right tabular-nums focus:outline-none focus:border-signal/60 transition-colors"
@@ -166,9 +184,22 @@ export default function SimulatorPage() {
   useSimulation()
 
   const selectedCar = useCarStore(state => state.cars.find(c => c.id === state.selectedCarId))
+  const selectedCarId = useCarStore(state => state.selectedCarId)
   const result = useSimulationStore(state => state.result)
   const isRunning = useSimulationStore(state => state.isRunning)
   const error = useSimulationStore(state => state.error)
+
+  const [selectorOpen, setSelectorOpen] = useState(true)
+  // Track previous car ID to detect selection changes without an effect
+  const [prevCarIdForSelector, setPrevCarIdForSelector] = useState<string | null | undefined>(selectedCarId)
+
+  // React-canonical render-time state adjustment: auto-close selector when a car is selected
+  if (selectedCarId !== prevCarIdForSelector) {
+    setPrevCarIdForSelector(selectedCarId)
+    if (selectedCarId) {
+      setSelectorOpen(false)
+    }
+  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 lg:gap-6 min-h-0 h-full">
@@ -176,11 +207,14 @@ export default function SimulatorPage() {
       {/* ── Left Column: Controls ─────────────────────────── */}
       <div className="lg:w-80 shrink-0 flex flex-col gap-4 lg:overflow-y-auto">
 
-        {/* Car Selection */}
-        <div>
-          <SectionLabel>Select Car</SectionLabel>
+        {/* Car Selection — collapsible, auto-closes after selection */}
+        <CollapsibleSection
+          title="Select Car"
+          open={selectorOpen}
+          onOpenChange={setSelectorOpen}
+        >
           <CarSearch />
-        </div>
+        </CollapsibleSection>
 
         {selectedCar && (
           <>
@@ -256,7 +290,9 @@ export default function SimulatorPage() {
 
             {/* Thrust Curve Chart */}
             <div>
-              <SectionLabel>Thrust Curves</SectionLabel>
+              <SectionLabel hint="Maximum wheel force per gear across vehicle speed. Taller, wider curves mean stronger acceleration throughout the rev range.">
+                Thrust Curves
+              </SectionLabel>
               <div className="chart-frame p-4 h-[280px] lg:h-[320px]">
                 <ThrustCurveChart gearCurves={result.gearCurves} envelope={result.envelope} />
               </div>
@@ -264,7 +300,9 @@ export default function SimulatorPage() {
 
             {/* Power & Torque Chart */}
             <div>
-              <SectionLabel>Power &amp; Torque</SectionLabel>
+              <SectionLabel hint="Engine output at the crankshaft across the RPM range. Peak torque drives acceleration; peak power sets top-end performance.">
+                Power &amp; Torque
+              </SectionLabel>
               <div className="chart-frame p-4 h-[240px] lg:h-[280px]">
                 <PowerTorqueChart car={selectedCar} />
               </div>
@@ -273,7 +311,9 @@ export default function SimulatorPage() {
             {/* Acceleration (G-Force) Chart */}
             {result.trace.length > 0 && (
               <div>
-                <SectionLabel>Acceleration (G-Force)</SectionLabel>
+                <SectionLabel hint="Longitudinal g-force felt by the driver during the run. Values above 1g mean harder acceleration than free fall.">
+                  Acceleration (G-Force)
+                </SectionLabel>
                 <div className="chart-frame p-4 h-[240px] lg:h-[280px]">
                   <AccelerationChart trace={result.trace} />
                 </div>
@@ -282,7 +322,9 @@ export default function SimulatorPage() {
 
             {/* Shift Points */}
             <div>
-              <SectionLabel>Optimal Shift Points</SectionLabel>
+              <SectionLabel hint="Optimal RPM to upshift for maximum acceleration — the crossover where the next gear produces more thrust than the current one.">
+                Optimal Shift Points
+              </SectionLabel>
               <ShiftPointsTable shiftPoints={result.shiftPoints} />
             </div>
           </>
