@@ -8,7 +8,8 @@
       "Glob",
       "Grep",
       "Task",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "WebSearch"
     ]
   },
   "additionalDirectories": [
