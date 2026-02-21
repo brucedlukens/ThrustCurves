@@ -6,6 +6,7 @@ import SimulatorPage from './pages/SimulatorPage'
 import ComparePage from './pages/ComparePage'
 import SavedPage from './pages/SavedPage'
 import CustomCarPage from './pages/CustomCarPage'
+import DynoReaderPage from './pages/DynoReaderPage'
 import ErrorBoundary from './components/layout/ErrorBoundary'
 import { useCarStore } from './store/carStore'
 
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="saved" element={<ErrorBoundary><SavedPage /></ErrorBoundary>} />
             <Route path="custom-car" element={<ErrorBoundary><CustomCarPage /></ErrorBoundary>} />
             <Route path="custom-car/:id" element={<ErrorBoundary><CustomCarPage /></ErrorBoundary>} />
+            <Route path="dyno-reader" element={<ErrorBoundary><DynoReaderPage /></ErrorBoundary>} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Route>
         </Routes>

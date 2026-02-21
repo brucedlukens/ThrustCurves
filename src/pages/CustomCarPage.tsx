@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import { useCarStore } from '@/store/carStore'
 import { useUnitStore } from '@/store/unitStore'
@@ -317,6 +317,9 @@ function TorqueCurveEditor({
 export default function CustomCarPage() {
   const navigate = useNavigate()
   const { id: editId } = useParams<{ id?: string }>()
+  const location = useLocation()
+  const importedCurve = (location.state as { importedTorqueCurve?: CurvePoint[] } | null)
+    ?.importedTorqueCurve
 
   const cars = useCarStore(state => state.cars)
   const saveCustomCar = useCarStore(state => state.saveCustomCar)
@@ -363,6 +366,7 @@ export default function CustomCarPage() {
 
   const [torqueCurve, setTorqueCurve] = useState<CurvePoint[]>(() => {
     if (existingCar) return existingCar.engine.torqueCurve
+    if (importedCurve && importedCurve.length >= 2) return importedCurve
     return defaultTorqueCurve(7000)
   })
 
@@ -478,6 +482,18 @@ export default function CustomCarPage() {
           Back
         </button>
       </div>
+
+      {/* ── Dyno import banner ────────────────────────────────────── */}
+      {!isEditing && importedCurve && importedCurve.length >= 2 && (
+        <div className="flex items-center gap-2 p-3 rounded-lg bg-signal-dim border border-signal/30">
+          <svg className="w-4 h-4 text-signal-hi shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span className="font-data text-sm text-signal-hi">
+            Torque curve imported from Dyno Reader ({importedCurve.length} points)
+          </span>
+        </div>
+      )}
 
       {/* ── Basic Info ────────────────────────────────────────────── */}
       <Section title="Basic Info">
