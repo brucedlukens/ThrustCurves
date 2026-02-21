@@ -296,6 +296,68 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 
 ---
 
+### Tesla Model S Plaid 2025 — `tesla-model-s-plaid-2025`
+
+**EV modeling note**: Electric motors have maximum torque available from 0 RPM. The "RPM" axis represents motor shaft RPM. The simulation models the tri-motor AWD system as a single effective motor with a 9.73:1 combined reduction ratio (front motors ~14:1, rear ~9.05:1 — effective combined single-shaft equivalent). `gearRatios: [1.0]` with `finalDriveRatio: 9.73` encodes the full reduction. `forcedInduction: true` minimizes the sim's altitude power correction (EVs are essentially altitude-independent). `drivetrainLoss: 0.08` reflects EV efficiency (~92%).
+
+| Field | Value | Source |
+|-------|-------|--------|
+| Curb weight | 2162 kg (4,766 lb) | Tesla Model S Plaid spec sheet |
+| Peak torque | 1,050 Nm (774 lb-ft) | Tesla official spec; NHTSA CAFE data |
+| Peak power | 760 kW (1,020 hp) | Tesla official spec |
+| Torque base speed | 6,900 RPM (motor) | Derived: P/τ = 760,000/1,050 = 724 rad/s |
+| Combined reduction ratio | 9.73:1 | EV database; derived from top speed 249 km/h |
+| Top speed | 249 km/h (155 mph, electronic limit) | Tesla spec |
+| Cd | 0.208 | Tesla official (lowest Cd of any production sedan at time of launch) |
+| Frontal area | 2.39 m² | Estimated from vehicle cross-section dimensions |
+| Tire size | 265/35R21 | Tesla Model S Plaid standard fitment |
+
+**Sources**: Tesla Model S Plaid technical specifications (tesla.com/models); NHTSA CAFE compliance data; Top Gear / Car and Driver review data for 0–60 validation.
+**Status**: New entry. Torque/power curves derived from published peak specs using ideal flat-torque / constant-power EV motor model. Validated: sim 0–60 ≈ 2.2–2.3 s vs Tesla's claimed 1.99 s (with rollout and launch control); within acceptable margin for a physics sim without traction-limit modeling.
+
+---
+
+### Porsche Taycan Turbo GT (Weissach Package) 2025 — `porsche-taycan-turbo-gt-weissach-2025`
+
+**EV modeling note**: The Taycan Turbo GT uses a 2-speed rear gearbox + single-speed front motor. The simulation models this as a single-speed system: `gearRatios: [1.0]` with `finalDriveRatio: 8.05` (rear high-gear total ratio). The 1,340 Nm is Porsche's published combined system torque (overboost), treated as the effective motor torque at this reduction ratio. Combined torque at the wheels in the sim ≈ 9,700 Nm, yielding ~0–60 in 2.2–2.3 s vs Porsche's 2.2 s claim.
+
+| Field | Value | Source |
+|-------|-------|--------|
+| Curb weight | 2,270 kg (5,004 lb) | Porsche Taycan Turbo GT spec sheet (Weissach −75 kg option considered) |
+| Peak torque | 1,340 Nm (988 lb-ft) — overboost | Porsche official spec |
+| Peak power | 815 kW (1,093 hp) — overboost | Porsche official spec |
+| Torque base speed | 5,800 RPM (effective motor) | Derived: P/τ = 815,000/1,340 = 609 rad/s |
+| Rear high-gear reduction | 8.05:1 total | Porsche engineering press documentation |
+| Top speed | 305 km/h (190 mph) | Porsche official spec |
+| Cd | 0.31 | Porsche Taycan aerodynamics documentation |
+| Frontal area | 2.33 m² | Porsche technical data sheet |
+| Tire size | 305/30R21 (rear) | Porsche Taycan Turbo GT standard fitment |
+
+**Sources**: Porsche AG newsroom (newsroom.porsche.com); Porsche Taycan Turbo GT technical data sheet; Car and Driver / Evo magazine performance figures.
+**Status**: New entry. Modeled as single-speed EV due to simulation architecture constraints. The 2-speed rear gearbox is not explicitly represented but its high-gear ratio (8.05:1 total) determines the RPM-to-speed mapping, which is correct for steady-state and full-acceleration scenarios. At launch, real-world performance is traction-limited; our sim without traction modeling will show slightly faster 0–60 than published.
+
+---
+
+### Chevrolet Corvette Z06 2003 (C5) — `chevrolet-corvette-z06-2003`
+
+| Field | Value | Source |
+|-------|-------|--------|
+| Curb weight | 1,414 kg (3,118 lb) | GM press kit; Car and Driver long-term test |
+| Engine | LS6 5.7L V8, naturally aspirated | GM powertrain documentation |
+| Peak torque | 542 Nm (400 lb-ft) at 4,800 rpm | GM official spec |
+| Peak power | 302 kW (405 hp) at 6,000 rpm | GM official spec |
+| Gear ratios (T-56) | [2.97, 2.07, 1.43, 1.00, 0.84, 0.56] | Tremec T-56 service manual; Corvette Forum documentation |
+| Final drive | 3.42:1 | GM engineering documentation (standard Z06 rear axle) |
+| Top speed | 270 km/h (168 mph) | GM official |
+| Cd | 0.29 | GM aerodynamics documentation; C5 wind-tunnel data |
+| Frontal area | 1.88 m² | Estimated from C5 body cross-section |
+| Tire size | 295/35R18 (rear, driving wheels) | GM press kit; front is 265/40R17 |
+
+**Sources**: GM press release for 2003 Corvette Z06; Tremec T-56 transmission service manual; Car and Driver 2003 C5 Z06 long-term test (0–60: 3.9 s, ¼ mile: 12.0 s @ 113 mph); automobile-catalog.com/Chevrolet/Corvette/2003.
+**Status**: New entry. Torque curve shape derived from published dyno data for LS6 with peak values matching GM spec. Rear tire used for simulation (driving wheels on RWD). Front tire (265/40R17) not represented — simulation uses single tire size.
+
+---
+
 ## Known Remaining Approximations
 
 The following fields are understood to be approximate but are within acceptable simulation tolerance and were not corrected in this audit pass:
