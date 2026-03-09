@@ -1012,6 +1012,82 @@
     "aero": { "cd": 0.36, "frontalAreaM2": 3.20 }
   },
   {
+    "id": "nissan-370z-2009",
+    "make": "Nissan",
+    "model": "370Z",
+    "year": 2009,
+    "trim": "Sport Touring 6MT",
+    "curbWeightKg": 1488,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [750, 100], [1000, 155], [1200, 200], [1400, 240], [1600, 275],
+        [1800, 305], [2000, 325], [2200, 340], [2400, 350], [2600, 356],
+        [2800, 360], [3000, 362], [3200, 363], [3400, 364], [3600, 365],
+        [3800, 365], [4000, 366], [4200, 366], [4400, 366], [4600, 366],
+        [4800, 366], [5000, 366], [5200, 366], [5400, 363], [5600, 358],
+        [5800, 352], [6000, 347], [6200, 343], [6400, 340], [6600, 338],
+        [6800, 337], [7000, 338], [7200, 327], [7500, 305]
+      ],
+      "powerCurve": [
+        [750, 8], [1000, 16], [1200, 25], [1400, 35], [1600, 46],
+        [1800, 57], [2000, 68], [2200, 78], [2400, 88], [2600, 97],
+        [2800, 106], [3000, 114], [3200, 122], [3400, 130], [3600, 138],
+        [3800, 145], [4000, 153], [4200, 161], [4400, 169], [4600, 176],
+        [4800, 184], [5000, 192], [5200, 199], [5400, 205], [5600, 210],
+        [5800, 214], [6000, 218], [6200, 223], [6400, 228], [6600, 234],
+        [6800, 240], [7000, 248], [7200, 247], [7500, 240]
+      ],
+      "redlineRpm": 7500,
+      "idleRpm": 650,
+      "displacementL": 3.7,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.794, 2.324, 1.624, 1.271, 1.000, 0.794],
+      "finalDriveRatio": 3.692,
+      "shiftTimeMs": 200,
+      "drivetrainLoss": 0.12,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 275, "aspectRatio": 35, "rimDiameterIn": 19 },
+    "aero": { "cd": 0.29, "frontalAreaM2": 1.96 }
+  },
+  {
+    "id": "honda-crx-si-1988",
+    "make": "Honda",
+    "model": "CRX",
+    "year": 1988,
+    "trim": "Si (D16A6)",
+    "curbWeightKg": 912,
+    "drivetrain": "FWD",
+    "engine": {
+      "torqueCurve": [
+        [750, 50], [1000, 65], [1500, 82], [2000, 96], [2500, 108],
+        [3000, 117], [3500, 124], [4000, 129], [4500, 133], [5000, 135],
+        [5200, 136], [5500, 135], [6000, 130], [6500, 118]
+      ],
+      "powerCurve": [
+        [750, 4], [1000, 7], [1500, 13], [2000, 20], [2500, 28],
+        [3000, 37], [3500, 45], [4000, 54], [4500, 63], [5000, 71],
+        [5200, 74], [5500, 78], [6000, 82], [6500, 80]
+      ],
+      "redlineRpm": 6500,
+      "idleRpm": 750,
+      "displacementL": 1.6,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.250, 1.894, 1.259, 0.937, 0.771],
+      "finalDriveRatio": 4.250,
+      "shiftTimeMs": 250,
+      "drivetrainLoss": 0.10,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 185, "aspectRatio": 60, "rimDiameterIn": 14 },
+    "aero": { "cd": 0.30, "frontalAreaM2": 1.81 }
+  },
+  {
     "id": "ram-1500-hemi-2019",
     "make": "Ram",
     "model": "1500",
@@ -1048,5 +1124,73 @@
     },
     "tireSize": { "widthMm": 275, "aspectRatio": 55, "rimDiameterIn": 20 },
     "aero": { "cd": 0.37, "frontalAreaM2": 3.50 }
+  },
+  {
+    "id": "ford-mustang-gt-2015",
+    "make": "Ford",
+    "model": "Mustang",
+    "year": 2015,
+    "trim": "GT Performance Pack (6MT Coyote)",
+    "curbWeightKg": 1681,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000, 270], [1500, 350], [2000, 410], [2500, 455], [3000, 490],
+        [3500, 515], [4000, 535], [4250, 542], [4500, 538], [5000, 525],
+        [5500, 505], [6000, 478], [6500, 476], [7000, 370]
+      ],
+      "powerCurve": [
+        [1000, 28], [1500, 55], [2000, 86], [2500, 119], [3000, 154],
+        [3500, 189], [4000, 224], [4250, 241], [4500, 254], [5000, 275],
+        [5500, 291], [6000, 300], [6500, 324], [7000, 271]
+      ],
+      "redlineRpm": 7000,
+      "idleRpm": 650,
+      "displacementL": 5.0,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.66, 2.43, 1.69, 1.32, 1.00, 0.65],
+      "finalDriveRatio": 3.73,
+      "shiftTimeMs": 250,
+      "drivetrainLoss": 0.13,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 255, "aspectRatio": 40, "rimDiameterIn": 19 },
+    "aero": { "cd": 0.35, "frontalAreaM2": 2.32 }
+  },
+  {
+    "id": "mazda-mx5-miata-nb-1999",
+    "make": "Mazda",
+    "model": "MX-5 Miata",
+    "year": 1999,
+    "trim": "Base (NB1)",
+    "curbWeightKg": 1032,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000, 65], [1500, 90], [2000, 110], [2500, 125], [3000, 136],
+        [3500, 145], [4000, 152], [4500, 157], [5000, 160], [5500, 161],
+        [6000, 157], [6500, 153], [7000, 135]
+      ],
+      "powerCurve": [
+        [1000, 7], [1500, 14], [2000, 23], [2500, 33], [3000, 43],
+        [3500, 53], [4000, 64], [4500, 74], [5000, 84], [5500, 93],
+        [6000, 99], [6500, 104], [7000, 99]
+      ],
+      "redlineRpm": 7000,
+      "idleRpm": 800,
+      "displacementL": 1.8,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.163, 1.888, 1.333, 1.000, 0.814],
+      "finalDriveRatio": 4.30,
+      "shiftTimeMs": 200,
+      "drivetrainLoss": 0.10,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 185, "aspectRatio": 60, "rimDiameterIn": 14 },
+    "aero": { "cd": 0.36, "frontalAreaM2": 1.71 }
   }
 ]
