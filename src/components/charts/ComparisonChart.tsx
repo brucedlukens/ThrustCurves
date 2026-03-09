@@ -55,16 +55,19 @@ export default function ComparisonChart({ entries }: ComparisonChartProps) {
     )
   }
 
+  // Clip each entry's envelope at its drag-limited top speed so the chart
+  // reflects the realistic equilibrium speed rather than the gearing ceiling.
   const envelopeMaps = entries.map(entry => {
+    const topSpeed = entry.result.performance.topSpeedMs ?? Infinity
     const m = new Map<number, number>()
-    entry.result.envelope.forEach(p => m.set(Math.round(p.speedMs * 1000), p.forceN))
+    entry.result.envelope
+      .filter(p => p.speedMs <= topSpeed)
+      .forEach(p => m.set(Math.round(p.speedMs * 1000), p.forceN))
     return m
   })
 
   const speedKeys = new Set<number>()
-  entries.forEach(entry =>
-    entry.result.envelope.forEach(p => speedKeys.add(Math.round(p.speedMs * 1000)))
-  )
+  envelopeMaps.forEach(m => m.forEach((_, key) => speedKeys.add(key)))
 
   const data: ChartRow[] = [...speedKeys]
     .sort((a, b) => a - b)
