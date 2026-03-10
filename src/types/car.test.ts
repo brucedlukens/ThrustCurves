@@ -5,8 +5,8 @@ import carsJson from '../data/cars.json'
 describe('cars.json schema', () => {
   const cars = carsJson as CarSpec[]
 
-  it('contains 31 cars', () => {
-    expect(cars).toHaveLength(31)
+  it('contains 35 cars', () => {
+    expect(cars).toHaveLength(35)
   })
 
   it('every car has required top-level fields', () => {
