@@ -14,6 +14,7 @@ import PerformanceCard from '@/components/results/PerformanceCard'
 import ShiftPointsTable from '@/components/results/ShiftPointsTable'
 import ModificationsPanel from '@/components/editor/ModificationsPanel'
 import SaveLoadControls from '@/components/saved/SaveLoadControls'
+import SuspensionFrequencyCard from '@/components/results/SuspensionFrequencyCard'
 
 interface CollapsibleSectionProps {
   title: string
@@ -185,6 +186,7 @@ export default function SimulatorPage() {
 
   const selectedCar = useCarStore(state => state.cars.find(c => c.id === state.selectedCarId))
   const selectedCarId = useCarStore(state => state.selectedCarId)
+  const weightDeltaKg = useCarStore(state => state.modifications.weightDeltaKg)
   const result = useSimulationStore(state => state.result)
   const isRunning = useSimulationStore(state => state.isRunning)
   const error = useSimulationStore(state => state.error)
@@ -328,6 +330,16 @@ export default function SimulatorPage() {
               <ShiftPointsTable shiftPoints={result.shiftPoints} />
             </div>
           </>
+        )}
+
+        {/* Suspension Frequency Calculator — always visible when car selected */}
+        {selectedCar && (
+          <div>
+            <SectionLabel hint="Natural frequency of the suspension at each corner. A rear frequency 10–20% higher than front produces a 'flat ride.'">
+              Suspension Frequency
+            </SectionLabel>
+            <SuspensionFrequencyCard totalWeightKg={selectedCar.curbWeightKg + weightDeltaKg} />
+          </div>
         )}
       </div>
     </div>
