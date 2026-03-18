@@ -47,3 +47,33 @@ export function nToLbf(n: number): number {
 export function mToFt(m: number): number {
   return m * M_TO_FT
 }
+
+/** Conversion factor: lb/in → N/m */
+export const LB_PER_IN_TO_N_PER_M = 175.1268
+
+/** Conversion factor: kg → lb */
+export const KG_TO_LB = 2.20462
+
+export function lbPerInToNPerM(lbPerIn: number): number {
+  return lbPerIn * LB_PER_IN_TO_N_PER_M
+}
+
+export function nPerMToLbPerIn(nPerM: number): number {
+  return nPerM / LB_PER_IN_TO_N_PER_M
+}
+
+export function nPerMmToNPerM(nPerMm: number): number {
+  return nPerMm * 1000
+}
+
+export function nPerMToNPerMm(nPerM: number): number {
+  return nPerM / 1000
+}
+
+export function kgToLb(kg: number): number {
+  return kg * KG_TO_LB
+}
+
+export function lbToKg(lb: number): number {
+  return lb / KG_TO_LB
+}
