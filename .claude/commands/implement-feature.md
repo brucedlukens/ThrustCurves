@@ -62,7 +62,9 @@ This project uses **custom agents** defined in `.claude/agents/` directory.
    Example:
    ```bash
    git worktree add ../ThrustCurves-phase2-physics -b feature/phase2-physics-engine main
-   # Creates: C:/Users/Bruce/workspace/ThrustCurves-phase2-physics/
+   # Creates a sibling directory next to the main repo checkout, e.g.
+   # /home/bruce/workspace/ThrustCurves-phase2-physics/ (path prefix depends on
+   # where the main repo lives on the current machine — don't hardcode an OS/user path)
    ```
 
 3. **Install dependencies in the worktree** (worktrees do not share node_modules):
@@ -82,13 +84,17 @@ This project uses **custom agents** defined in `.claude/agents/` directory.
 
 Before writing any code:
 
-1. **Review PLAN.md structure** — Verify all planned files/components for this phase
-2. **Search for similar patterns** — Find existing code to follow conventions:
+1. **Read `.claude/memory/MEMORY.md`** — Check for patterns, gotchas, or process gaps
+   logged by introspection on prior features before starting new work. If the file
+   doesn't exist yet, create it (see the structure in `.claude/agents/introspection.md`
+   Step 5) rather than skipping this step — its absence is itself a process gap.
+2. **Review PLAN.md structure** — Verify all planned files/components for this phase
+3. **Search for similar patterns** — Find existing code to follow conventions:
    ```bash
    grep -r "pattern-name" src/ --include="*.ts" --include="*.tsx"
    ```
-3. **Verify TypeScript types** — Ensure types match PLAN.md documentation
-4. **Check existing fixtures** — Review Phase 1+ test fixtures/examples as reference
+4. **Verify TypeScript types** — Ensure types match PLAN.md documentation
+5. **Check existing fixtures** — Review Phase 1+ test fixtures/examples as reference
 
 **Why?** This prevents rework and ensures consistency across phases. Phase 1 achieved 0 linting commits by catching patterns early.
 
@@ -161,8 +167,11 @@ If anything fails: fix violations, commit the fixes, re-run to verify.
    git add .
    git commit -m "feat: implement [feature description]
 
-Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+Co-Authored-By: Claude <current model name> <noreply@anthropic.com>"
    ```
+   Use the **current session's actual model name** (check what recent commits in
+   `git log` use, or your own model identity) — don't copy a hardcoded name from this
+   doc, it goes stale every time the underlying model changes.
 
 2. **Push branch**:
    ```bash
@@ -221,6 +230,12 @@ Task(
 )
 ```
 
+**Step 3**: Confirm findings were actually persisted to `.claude/memory/MEMORY.md`
+(not just shown in the transcript) before treating this phase as complete — an
+introspection that only displays analysis without writing it to disk does not close
+the loop for the next feature. Verify with `git diff` or `git log` in the worktree
+that `.claude/memory/MEMORY.md` changed.
+
 ---
 
 ## Mandatory Completion Checklist
@@ -235,7 +250,7 @@ Task(
 - [ ] Phase 6: PR created, remote CI monitored
 - [ ] Phase 7: CI parity resolved (or N/A)
 - [ ] Phase 8: Manual testing done (or skipped per criteria)
-- [ ] **Phase 9: Introspection agent spawned and completed**
+- [ ] **Phase 9: Introspection agent spawned, completed, and findings applied to `.claude/memory/MEMORY.md`**
 
 ## Notes
 
@@ -244,4 +259,5 @@ Task(
 - The main repo stays on `main` and is never directly modified during feature work
 - Use Sonnet model for this skill
 - Only frontend-ci agent exists (no backend-ci or e2e-ci)
-- Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+- Co-Authored-By: Claude <current session's actual model name> <noreply@anthropic.com>
+  — don't hardcode a specific model name here, it will go stale (see Phase 6)
