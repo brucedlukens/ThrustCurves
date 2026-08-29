@@ -138,6 +138,74 @@ describe('runIntegration', () => {
     }
   })
 
+  it('applies grade force as extra resistance', () => {
+    // 10% grade: θ = atan(0.1), sinθ = 0.09950
+    // net = 3000 − 1500·9.81·0.09950 = 1535.6 N → a = 1.0237 m/s²
+    const { trace } = runIntegration(makeSimpleParams({ gradePercent: 10 }))
+    expect(trace[0].accelerationMs2).toBeCloseTo(1.0237, 3)
+  })
+
+  it('grade reduces the drag-limited top speed', () => {
+    // cd 0.9 × 2.5 m² makes drag at 50 m/s (3445 N) exceed the 3000 N thrust,
+    // so top speed is drag-limited rather than envelope-capped in both runs
+    const flat = runIntegration(makeSimpleParams({ airDensityKgM3: 1.225, cd: 0.9, frontalAreaM2: 2.5 }))
+    const hill = runIntegration(
+      makeSimpleParams({ airDensityKgM3: 1.225, cd: 0.9, frontalAreaM2: 2.5, gradePercent: 8 }),
+    )
+    expect(hill.performance.topSpeedMs!).toBeLessThan(flat.performance.topSpeedMs!)
+  })
+
+  it('starts from initialSpeedMs when provided', () => {
+    const { trace } = runIntegration(makeSimpleParams({ initialSpeedMs: 17.8816 }))
+    expect(trace[0].speedMs).toBeCloseTo(17.8816, 4)
+    expect(trace[0].timeS).toBe(0)
+  })
+
+  it('starts in the correct gear for the initial speed without a shift penalty', () => {
+    const shiftPoints: ShiftPoint[] = [
+      { fromGear: 1, toGear: 2, speedMs: 10, rpm: 4000 },
+    ]
+    const gearCurves: GearThrustCurve[] = [
+      {
+        gear: 1,
+        points: [
+          { speedMs: 0, forceN: 5000, rpm: 1000 },
+          { speedMs: 15, forceN: 5000, rpm: 6000 },
+        ],
+        speedRangeMs: [0, 15],
+      },
+      {
+        gear: 2,
+        points: [
+          { speedMs: 5, forceN: 3000, rpm: 1000 },
+          { speedMs: 50, forceN: 3000, rpm: 6000 },
+        ],
+        speedRangeMs: [5, 50],
+      },
+    ]
+    const { trace } = runIntegration(
+      makeSimpleParams({
+        gearCurves,
+        shiftPoints,
+        gearEffectiveRatios: [17.3, 9.0],
+        initialSpeedMs: 12,
+        shiftTimeMs: 500,
+      }),
+    )
+    expect(trace[0].gear).toBe(2)
+    expect(trace[0].thrustN).toBeCloseTo(3000, 4)
+  })
+
+  it('stops once stopAtSpeedMs is reached', () => {
+    // a = 2 m/s²: 17.8816 → 26.8224 m/s takes 4.47 s
+    const { trace } = runIntegration(
+      makeSimpleParams({ initialSpeedMs: 17.8816, stopAtSpeedMs: 26.8224 }),
+    )
+    const last = trace[trace.length - 1]
+    expect(last.speedMs).toBeGreaterThanOrEqual(26.8224)
+    expect(last.timeS).toBeCloseTo(4.47, 1)
+  })
+
   it('thrust is 0 during gear change period', () => {
     const shiftPoints: ShiftPoint[] = [
       { fromGear: 1, toGear: 2, speedMs: 5, rpm: 3000 },

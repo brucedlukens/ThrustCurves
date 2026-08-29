@@ -33,6 +33,12 @@ export interface IntegrationParams {
   /** Effective ratio (gearRatio * finalDriveRatio) for each gear, index 0 = 1st gear */
   gearEffectiveRatios: number[]
   tireRadiusM: number
+  /** Road grade in percent (rise/run × 100). Default 0 (flat). */
+  gradePercent?: number
+  /** Starting speed in m/s (e.g. for passing-time runs). Default 0. */
+  initialSpeedMs?: number
+  /** End the run once this speed is reached. Default: run to top speed. */
+  stopAtSpeedMs?: number
 }
 
 /**
@@ -55,19 +61,30 @@ export function runIntegration(params: IntegrationParams): {
     gravityMs2,
     gearEffectiveRatios,
     tireRadiusM,
+    gradePercent = 0,
+    initialSpeedMs = 0,
+    stopAtSpeedMs,
   } = params
 
-  const rrN = rollingResistanceN(massKg, crr, gravityMs2)
+  const gradeAngle = Math.atan(gradePercent / 100)
+  const rrN = rollingResistanceN(massKg, crr, gravityMs2) * Math.cos(gradeAngle)
+  const gradeForceN = massKg * gravityMs2 * Math.sin(gradeAngle)
 
   // Sort shift points by speed ascending
   const sortedShifts = [...shiftPoints].sort((a, b) => a.speedMs - b.speedMs)
 
   let time = 0
-  let speed = 0
+  let speed = initialSpeedMs
   let distance = 0
   let gear = 1
   let shiftTimeRemaining = 0
   let shiftIndex = 0
+
+  // Skip shifts below the starting speed and enter the matching gear directly
+  while (shiftIndex < sortedShifts.length && sortedShifts[shiftIndex].speedMs <= speed) {
+    gear = sortedShifts[shiftIndex].toGear
+    shiftIndex++
+  }
 
   const trace: TimeStep[] = []
   const performance: PerformanceMetrics = {}
@@ -77,7 +94,7 @@ export function runIntegration(params: IntegrationParams): {
   let topSpeedMs = 0
   for (const pt of params.envelope) {
     const drag = dragForceN(cd, frontalAreaM2, airDensityKgM3, pt.speedMs)
-    if (pt.forceN > drag + rrN) {
+    if (pt.forceN > drag + rrN + gradeForceN) {
       topSpeedMs = pt.speedMs
     }
   }
@@ -109,7 +126,7 @@ export function runIntegration(params: IntegrationParams): {
     }
 
     const dragN = dragForceN(cd, frontalAreaM2, airDensityKgM3, speed)
-    const netForceN = thrustN - dragN - rrN
+    const netForceN = thrustN - dragN - rrN - gradeForceN
     const acc = netForceN / massKg
 
     // Current engine RPM
@@ -141,10 +158,23 @@ export function runIntegration(params: IntegrationParams): {
       performance.quarterMileSpeedMs = speed
     }
 
+    // Stop once the requested target speed is reached (passing-time runs)
+    if (stopAtSpeedMs !== undefined && speed >= stopAtSpeedMs) {
+      break
+    }
+
     // Continue until speed plateaus within 1% of drag-limited top speed.
     // This ensures the trace covers the full acceleration run to top speed,
     // which is needed for AccelerationChart and CustomRangePanel above quarter-mile speeds.
+    // With a stop target at or below top speed, keep going until the target is reached.
     if (topSpeedMs > 0 && speed >= topSpeedMs * 0.99) {
+      if (stopAtSpeedMs === undefined || stopAtSpeedMs > topSpeedMs) {
+        break
+      }
+    }
+
+    // A vehicle that cannot move (or has decelerated to a stop) will never progress
+    if (speed === 0 && netForceN <= 0) {
       break
     }
 

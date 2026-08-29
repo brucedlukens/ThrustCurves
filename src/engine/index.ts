@@ -18,6 +18,16 @@ export {
 } from './thrust'
 export { runIntegration } from './performance'
 export type { IntegrationParams } from './performance'
+export {
+  towingRoadLoadN,
+  maxGradePercentAtSpeed,
+  maxSustainableSpeed,
+  analyzeGearsAtSpeed,
+  runTowingAnalysis,
+  MIN_LOAD_RPM_DIESEL,
+  MIN_LOAD_RPM_GAS,
+} from './towing'
+export type { TowingMasses, GearAtSpeed, GearMaxGrade, TowingAnalysis } from './towing'
 
 import type { CarSpec } from '@/types/car'
 import type { CarModifications } from '@/types/config'
