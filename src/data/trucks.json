@@ -1,0 +1,3094 @@
+[
+  {
+    "id": "ford-f250-2023",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "2023+",
+    "yearStart": 2023,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "68-gas-v8",
+        "engineName": "6.8L PFI Gas V8",
+        "fuel": "gas",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            600,
+            300
+          ],
+          [
+            800,
+            380
+          ],
+          [
+            1200,
+            470
+          ],
+          [
+            1600,
+            530
+          ],
+          [
+            2000,
+            565
+          ],
+          [
+            2400,
+            588
+          ],
+          [
+            2800,
+            599
+          ],
+          [
+            3200,
+            603
+          ],
+          [
+            3600,
+            603
+          ],
+          [
+            4000,
+            603
+          ],
+          [
+            4400,
+            598
+          ],
+          [
+            4800,
+            585
+          ],
+          [
+            5000,
+            576
+          ],
+          [
+            5200,
+            550
+          ],
+          [
+            5400,
+            525
+          ],
+          [
+            5700,
+            480
+          ]
+        ],
+        "redlineRpm": 5700,
+        "idleRpm": 600,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R100 TorqShift-G 10-Speed",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2901,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "73-godzilla-v8",
+        "engineName": "7.3L PFI Gas V8 (Godzilla)",
+        "fuel": "gas",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            600,
+            320
+          ],
+          [
+            800,
+            400
+          ],
+          [
+            1200,
+            490
+          ],
+          [
+            1600,
+            555
+          ],
+          [
+            2000,
+            600
+          ],
+          [
+            2400,
+            630
+          ],
+          [
+            2800,
+            648
+          ],
+          [
+            3200,
+            655
+          ],
+          [
+            3600,
+            657
+          ],
+          [
+            4000,
+            657
+          ],
+          [
+            4400,
+            645
+          ],
+          [
+            4800,
+            620
+          ],
+          [
+            5200,
+            580
+          ],
+          [
+            5500,
+            557
+          ],
+          [
+            5800,
+            500
+          ],
+          [
+            6000,
+            460
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 7.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2889,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-powerstroke",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            700,
+            550
+          ],
+          [
+            900,
+            850
+          ],
+          [
+            1100,
+            1100
+          ],
+          [
+            1300,
+            1300
+          ],
+          [
+            1600,
+            1424
+          ],
+          [
+            1800,
+            1410
+          ],
+          [
+            2000,
+            1380
+          ],
+          [
+            2200,
+            1340
+          ],
+          [
+            2400,
+            1320
+          ],
+          [
+            2600,
+            1301
+          ],
+          [
+            2800,
+            1200
+          ],
+          [
+            3000,
+            1100
+          ],
+          [
+            3200,
+            1000
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3256,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-powerstroke-ho",
+        "engineName": "High-Output 6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            700,
+            630
+          ],
+          [
+            900,
+            980
+          ],
+          [
+            1100,
+            1260
+          ],
+          [
+            1300,
+            1480
+          ],
+          [
+            1600,
+            1627
+          ],
+          [
+            1800,
+            1610
+          ],
+          [
+            2000,
+            1570
+          ],
+          [
+            2200,
+            1520
+          ],
+          [
+            2400,
+            1470
+          ],
+          [
+            2600,
+            1370
+          ],
+          [
+            2800,
+            1250
+          ],
+          [
+            3000,
+            1150
+          ],
+          [
+            3200,
+            1050
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3321,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      }
+    ]
+  },
+  {
+    "id": "ford-f350-srw-2023",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "2023+",
+    "yearStart": 2023,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.55
+    },
+    "powertrains": [
+      {
+        "id": "68-gas-v8",
+        "engineName": "6.8L PFI Gas V8",
+        "fuel": "gas",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            600,
+            300
+          ],
+          [
+            800,
+            380
+          ],
+          [
+            1200,
+            470
+          ],
+          [
+            1600,
+            530
+          ],
+          [
+            2000,
+            565
+          ],
+          [
+            2400,
+            588
+          ],
+          [
+            2800,
+            599
+          ],
+          [
+            3200,
+            603
+          ],
+          [
+            3600,
+            603
+          ],
+          [
+            4000,
+            603
+          ],
+          [
+            4400,
+            598
+          ],
+          [
+            4800,
+            585
+          ],
+          [
+            5000,
+            576
+          ],
+          [
+            5200,
+            550
+          ],
+          [
+            5400,
+            525
+          ],
+          [
+            5700,
+            480
+          ]
+        ],
+        "redlineRpm": 5700,
+        "idleRpm": 600,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R100 TorqShift-G 10-Speed",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2978,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "73-godzilla-v8",
+        "engineName": "7.3L PFI Gas V8 (Godzilla)",
+        "fuel": "gas",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            600,
+            320
+          ],
+          [
+            800,
+            400
+          ],
+          [
+            1200,
+            490
+          ],
+          [
+            1600,
+            555
+          ],
+          [
+            2000,
+            600
+          ],
+          [
+            2400,
+            630
+          ],
+          [
+            2800,
+            648
+          ],
+          [
+            3200,
+            655
+          ],
+          [
+            3600,
+            657
+          ],
+          [
+            4000,
+            657
+          ],
+          [
+            4400,
+            645
+          ],
+          [
+            4800,
+            620
+          ],
+          [
+            5200,
+            580
+          ],
+          [
+            5500,
+            557
+          ],
+          [
+            5800,
+            500
+          ],
+          [
+            6000,
+            460
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 7.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3075,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-powerstroke",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            700,
+            550
+          ],
+          [
+            900,
+            850
+          ],
+          [
+            1100,
+            1100
+          ],
+          [
+            1300,
+            1300
+          ],
+          [
+            1600,
+            1424
+          ],
+          [
+            1800,
+            1410
+          ],
+          [
+            2000,
+            1380
+          ],
+          [
+            2200,
+            1340
+          ],
+          [
+            2400,
+            1320
+          ],
+          [
+            2600,
+            1301
+          ],
+          [
+            2800,
+            1200
+          ],
+          [
+            3000,
+            1100
+          ],
+          [
+            3200,
+            1000
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3370,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-powerstroke-ho",
+        "engineName": "High-Output 6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            700,
+            630
+          ],
+          [
+            900,
+            980
+          ],
+          [
+            1100,
+            1260
+          ],
+          [
+            1300,
+            1480
+          ],
+          [
+            1600,
+            1627
+          ],
+          [
+            1800,
+            1610
+          ],
+          [
+            2000,
+            1570
+          ],
+          [
+            2200,
+            1520
+          ],
+          [
+            2400,
+            1470
+          ],
+          [
+            2600,
+            1370
+          ],
+          [
+            2800,
+            1250
+          ],
+          [
+            3000,
+            1150
+          ],
+          [
+            3200,
+            1050
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3377,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        }
+      }
+    ]
+  },
+  {
+    "id": "gm-1500-2019",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "T1",
+    "yearStart": 2019,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.41,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "27-turbomax",
+        "engineName": "2.7L Turbo I4 (L3B / TurboMax)",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            460
+          ],
+          [
+            1400,
+            520
+          ],
+          [
+            1600,
+            560
+          ],
+          [
+            1800,
+            578
+          ],
+          [
+            2000,
+            583
+          ],
+          [
+            2200,
+            583
+          ],
+          [
+            2400,
+            583
+          ],
+          [
+            2600,
+            583
+          ],
+          [
+            2800,
+            583
+          ],
+          [
+            3000,
+            583
+          ],
+          [
+            3200,
+            580
+          ],
+          [
+            3400,
+            570
+          ],
+          [
+            3600,
+            555
+          ],
+          [
+            3800,
+            535
+          ],
+          [
+            4000,
+            510
+          ],
+          [
+            4200,
+            469
+          ],
+          [
+            4400,
+            459
+          ],
+          [
+            4600,
+            448
+          ],
+          [
+            4800,
+            437
+          ],
+          [
+            5000,
+            426
+          ],
+          [
+            5200,
+            416
+          ],
+          [
+            5400,
+            405
+          ],
+          [
+            5600,
+            394
+          ],
+          [
+            5800,
+            370
+          ],
+          [
+            6000,
+            350
+          ],
+          [
+            6100,
+            335
+          ]
+        ],
+        "redlineRpm": 6100,
+        "idleRpm": 650,
+        "displacementL": 2.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Hydra-Matic 8L80 8-speed automatic (current, 2024+)",
+          "gearRatios": [
+            4.56,
+            2.97,
+            2.08,
+            1.69,
+            1.27,
+            1.0,
+            0.85,
+            0.65
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42
+        ],
+        "defaultAxleRatio": 3.23,
+        "curbWeightKg": 2254,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "2024+ TurboMax figures (430 lb-ft); 2019-2021 version made 348 lb-ft"
+      },
+      {
+        "id": "53-l84",
+        "engineName": "5.3L V8 (L84, EcoTec3 w/ Dynamic Fuel Management)",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1200,
+            350
+          ],
+          [
+            1400,
+            375
+          ],
+          [
+            1600,
+            400
+          ],
+          [
+            1800,
+            425
+          ],
+          [
+            2000,
+            445
+          ],
+          [
+            2200,
+            462
+          ],
+          [
+            2400,
+            476
+          ],
+          [
+            2600,
+            488
+          ],
+          [
+            2800,
+            498
+          ],
+          [
+            3000,
+            506
+          ],
+          [
+            3200,
+            512
+          ],
+          [
+            3400,
+            516
+          ],
+          [
+            3600,
+            519
+          ],
+          [
+            3800,
+            519
+          ],
+          [
+            4000,
+            519
+          ],
+          [
+            4100,
+            519
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            506
+          ],
+          [
+            4600,
+            496
+          ],
+          [
+            4800,
+            487
+          ],
+          [
+            5000,
+            478
+          ],
+          [
+            5200,
+            469
+          ],
+          [
+            5400,
+            460
+          ],
+          [
+            5600,
+            451
+          ],
+          [
+            5800,
+            430
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 10L80 10-speed automatic (current, 2024+ standard)",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42
+        ],
+        "defaultAxleRatio": 3.23,
+        "curbWeightKg": 2291,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "10-speed standard since 2024; launch trucks used an 8-speed"
+      },
+      {
+        "id": "62-l87",
+        "engineName": "6.2L V8 (L87, EcoTec3 w/ Dynamic Fuel Management)",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            400
+          ],
+          [
+            1200,
+            435
+          ],
+          [
+            1400,
+            465
+          ],
+          [
+            1600,
+            495
+          ],
+          [
+            1800,
+            520
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2200,
+            565
+          ],
+          [
+            2400,
+            582
+          ],
+          [
+            2600,
+            596
+          ],
+          [
+            2800,
+            608
+          ],
+          [
+            3000,
+            617
+          ],
+          [
+            3200,
+            623
+          ],
+          [
+            3400,
+            624
+          ],
+          [
+            3600,
+            624
+          ],
+          [
+            3800,
+            624
+          ],
+          [
+            4000,
+            624
+          ],
+          [
+            4100,
+            624
+          ],
+          [
+            4200,
+            618
+          ],
+          [
+            4400,
+            606
+          ],
+          [
+            4600,
+            594
+          ],
+          [
+            4800,
+            582
+          ],
+          [
+            5000,
+            570
+          ],
+          [
+            5200,
+            558
+          ],
+          [
+            5400,
+            546
+          ],
+          [
+            5600,
+            534
+          ],
+          [
+            5800,
+            510
+          ],
+          [
+            6000,
+            485
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 10L90 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2427,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        }
+      },
+      {
+        "id": "30-duramax",
+        "engineName": "3.0L Duramax I6 Diesel (LZ0, current; earlier LM2)",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            600
+          ],
+          [
+            1400,
+            622
+          ],
+          [
+            1600,
+            642
+          ],
+          [
+            1800,
+            655
+          ],
+          [
+            2000,
+            663
+          ],
+          [
+            2200,
+            668
+          ],
+          [
+            2400,
+            670
+          ],
+          [
+            2600,
+            671
+          ],
+          [
+            2750,
+            671
+          ],
+          [
+            2900,
+            660
+          ],
+          [
+            3100,
+            640
+          ],
+          [
+            3300,
+            615
+          ],
+          [
+            3500,
+            598
+          ],
+          [
+            3750,
+            579
+          ],
+          [
+            3900,
+            555
+          ],
+          [
+            4100,
+            520
+          ],
+          [
+            4300,
+            480
+          ],
+          [
+            4500,
+            435
+          ],
+          [
+            4700,
+            385
+          ],
+          [
+            4900,
+            330
+          ],
+          [
+            5000,
+            300
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Hydra-Matic 10L80 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2517,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "2023+ LZ0 figures (495 lb-ft); 2020-2022 LM2 made 460 lb-ft"
+      }
+    ]
+  },
+  {
+    "id": "gm-2500hd-2020",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 2500HD",
+    "classTier": "threequarter",
+    "generation": "2020+",
+    "yearStart": 2020,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.43,
+      "frontalAreaM2": 4.2
+    },
+    "powertrains": [
+      {
+        "id": "66-gas",
+        "engineName": "6.6L V8 Gas (L8T)",
+        "fuel": "gas",
+        "yearStart": 2020,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            380
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            480
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            570
+          ],
+          [
+            2800,
+            600
+          ],
+          [
+            3200,
+            618
+          ],
+          [
+            3600,
+            627
+          ],
+          [
+            4000,
+            629
+          ],
+          [
+            4400,
+            615
+          ],
+          [
+            4800,
+            590
+          ],
+          [
+            5200,
+            549
+          ],
+          [
+            5600,
+            500
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 650,
+        "displacementL": 6.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3243,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Allison 10-speed since 2024; 2020-2023 used the 6L90 6-speed"
+      },
+      {
+        "id": "66-duramax",
+        "engineName": "6.6L Duramax V8 Diesel (L5P)",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            700
+          ],
+          [
+            1000,
+            950
+          ],
+          [
+            1200,
+            1150
+          ],
+          [
+            1400,
+            1280
+          ],
+          [
+            1600,
+            1322
+          ],
+          [
+            1800,
+            1322
+          ],
+          [
+            2000,
+            1320
+          ],
+          [
+            2200,
+            1300
+          ],
+          [
+            2400,
+            1270
+          ],
+          [
+            2600,
+            1230
+          ],
+          [
+            2800,
+            1195
+          ],
+          [
+            3000,
+            1110
+          ],
+          [
+            3200,
+            1010
+          ],
+          [
+            3400,
+            880
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3501,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2024+ figures (470 hp / 975 lb-ft); 2020-2023 made 445 hp / 910 lb-ft"
+      }
+    ]
+  },
+  {
+    "id": "gm-3500hd-srw-2020",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 3500HD (SRW)",
+    "classTier": "one",
+    "generation": "2020+",
+    "yearStart": 2020,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.43,
+      "frontalAreaM2": 4.2
+    },
+    "powertrains": [
+      {
+        "id": "66-gas",
+        "engineName": "6.6L V8 Gas (L8T)",
+        "fuel": "gas",
+        "yearStart": 2020,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            380
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            480
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            570
+          ],
+          [
+            2800,
+            600
+          ],
+          [
+            3200,
+            618
+          ],
+          [
+            3600,
+            627
+          ],
+          [
+            4000,
+            629
+          ],
+          [
+            4400,
+            615
+          ],
+          [
+            4800,
+            590
+          ],
+          [
+            5200,
+            549
+          ],
+          [
+            5600,
+            500
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 650,
+        "displacementL": 6.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3311,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Allison 10-speed since 2024; 2020-2023 used the 6L90 6-speed"
+      },
+      {
+        "id": "66-duramax",
+        "engineName": "6.6L Duramax V8 Diesel (L5P)",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            700
+          ],
+          [
+            1000,
+            950
+          ],
+          [
+            1200,
+            1150
+          ],
+          [
+            1400,
+            1280
+          ],
+          [
+            1600,
+            1322
+          ],
+          [
+            1800,
+            1322
+          ],
+          [
+            2000,
+            1320
+          ],
+          [
+            2200,
+            1300
+          ],
+          [
+            2400,
+            1270
+          ],
+          [
+            2600,
+            1230
+          ],
+          [
+            2800,
+            1195
+          ],
+          [
+            3000,
+            1110
+          ],
+          [
+            3200,
+            1010
+          ],
+          [
+            3400,
+            880
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3573,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2024+ figures (470 hp / 975 lb-ft); 2020-2023 made 445 hp / 910 lb-ft"
+      }
+    ]
+  },
+  {
+    "id": "ram-1500-2019",
+    "make": "Ram",
+    "model": "1500",
+    "classTier": "half",
+    "generation": "DT",
+    "yearStart": 2019,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.41,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8 eTorque",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            420
+          ],
+          [
+            1400,
+            460
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            1800,
+            515
+          ],
+          [
+            2000,
+            535
+          ],
+          [
+            2200,
+            548
+          ],
+          [
+            2400,
+            553
+          ],
+          [
+            2600,
+            555
+          ],
+          [
+            2800,
+            556
+          ],
+          [
+            3000,
+            556
+          ],
+          [
+            3200,
+            556
+          ],
+          [
+            3400,
+            556
+          ],
+          [
+            3600,
+            556
+          ],
+          [
+            3800,
+            556
+          ],
+          [
+            3950,
+            556
+          ],
+          [
+            4200,
+            550
+          ],
+          [
+            4400,
+            542
+          ],
+          [
+            4600,
+            533
+          ],
+          [
+            4800,
+            524
+          ],
+          [
+            5000,
+            514
+          ],
+          [
+            5200,
+            505
+          ],
+          [
+            5400,
+            500
+          ],
+          [
+            5600,
+            496
+          ],
+          [
+            5800,
+            470
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "ZF 8HP75 (TorqueFlite 8HP75)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.21,
+        "curbWeightKg": 2379,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "eTorque assist not modeled; returned for 2026 after a 2025 hiatus"
+      },
+      {
+        "id": "30-hurricane-sst",
+        "engineName": "3.0L Hurricane SST I6 Twin-Turbo (Standard Output)",
+        "fuel": "gas",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            350
+          ],
+          [
+            1200,
+            420
+          ],
+          [
+            1400,
+            480
+          ],
+          [
+            1600,
+            540
+          ],
+          [
+            1800,
+            580
+          ],
+          [
+            2000,
+            610
+          ],
+          [
+            2200,
+            625
+          ],
+          [
+            2400,
+            632
+          ],
+          [
+            2600,
+            635
+          ],
+          [
+            2800,
+            635
+          ],
+          [
+            3000,
+            635
+          ],
+          [
+            3200,
+            635
+          ],
+          [
+            3400,
+            635
+          ],
+          [
+            3500,
+            635
+          ],
+          [
+            3600,
+            635
+          ],
+          [
+            3800,
+            635
+          ],
+          [
+            4000,
+            635
+          ],
+          [
+            4200,
+            625
+          ],
+          [
+            4400,
+            610
+          ],
+          [
+            4600,
+            595
+          ],
+          [
+            4800,
+            585
+          ],
+          [
+            5000,
+            578
+          ],
+          [
+            5200,
+            575
+          ],
+          [
+            5400,
+            540
+          ],
+          [
+            5600,
+            510
+          ],
+          [
+            5800,
+            480
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF 8HP75 (TorqueFlite 8HP75)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.11,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.21,
+        "curbWeightKg": 2409,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "2025+ replaces the 5.7L HEMI as the volume engine"
+      },
+      {
+        "id": "30-hurricane-sst-ho",
+        "engineName": "3.0L Hurricane SST I6 Twin-Turbo (High Output)",
+        "fuel": "gas",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            400
+          ],
+          [
+            1200,
+            480
+          ],
+          [
+            1400,
+            550
+          ],
+          [
+            1600,
+            610
+          ],
+          [
+            1800,
+            655
+          ],
+          [
+            2000,
+            685
+          ],
+          [
+            2200,
+            700
+          ],
+          [
+            2400,
+            705
+          ],
+          [
+            2600,
+            707
+          ],
+          [
+            2800,
+            707
+          ],
+          [
+            3000,
+            707
+          ],
+          [
+            3200,
+            707
+          ],
+          [
+            3400,
+            707
+          ],
+          [
+            3500,
+            707
+          ],
+          [
+            3600,
+            706
+          ],
+          [
+            3800,
+            702
+          ],
+          [
+            4000,
+            697
+          ],
+          [
+            4200,
+            691
+          ],
+          [
+            4400,
+            686
+          ],
+          [
+            4600,
+            682
+          ],
+          [
+            4800,
+            679
+          ],
+          [
+            5000,
+            677
+          ],
+          [
+            5200,
+            676
+          ],
+          [
+            5400,
+            675
+          ],
+          [
+            5600,
+            675
+          ],
+          [
+            5700,
+            675
+          ],
+          [
+            5800,
+            650
+          ],
+          [
+            6000,
+            610
+          ],
+          [
+            6100,
+            580
+          ]
+        ],
+        "redlineRpm": 6100,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF 8HP75 (TorqueFlite 8HP75)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.11,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.92
+        ],
+        "defaultAxleRatio": 3.92,
+        "curbWeightKg": 2614,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "2025+, upper trims only (3.92 axle standard)"
+      }
+    ]
+  },
+  {
+    "id": "ram-2500-2019",
+    "make": "Ram",
+    "model": "2500",
+    "classTier": "threequarter",
+    "generation": "5th gen",
+    "yearStart": 2019,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.8
+    },
+    "powertrains": [
+      {
+        "id": "64-hemi",
+        "engineName": "6.4L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            350
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            555
+          ],
+          [
+            2800,
+            570
+          ],
+          [
+            3200,
+            578
+          ],
+          [
+            3600,
+            581
+          ],
+          [
+            4000,
+            581.6
+          ],
+          [
+            4400,
+            575
+          ],
+          [
+            4800,
+            560
+          ],
+          [
+            5200,
+            540
+          ],
+          [
+            5600,
+            521.3
+          ],
+          [
+            5800,
+            500
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "ZF 8HP75-LCV (TorqueFlite HD) 8-speed",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3009,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-cummins-so",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1080
+          ],
+          [
+            1600,
+            1130
+          ],
+          [
+            1700,
+            1152.4
+          ],
+          [
+            2000,
+            1094.7
+          ],
+          [
+            2200,
+            1056.2
+          ],
+          [
+            2400,
+            1017.7
+          ],
+          [
+            2600,
+            979.2
+          ],
+          [
+            2800,
+            940.8
+          ],
+          [
+            3000,
+            820
+          ],
+          [
+            3200,
+            680
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3402,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2019-2024 standard-output Cummins (68RFE); discontinued for 2025"
+      },
+      {
+        "id": "67-cummins-ho",
+        "engineName": "6.7L Cummins I6 Diesel (High Output)",
+        "fuel": "diesel",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            720
+          ],
+          [
+            1000,
+            970
+          ],
+          [
+            1200,
+            1180
+          ],
+          [
+            1400,
+            1330
+          ],
+          [
+            1600,
+            1430
+          ],
+          [
+            1800,
+            1457.5
+          ],
+          [
+            2000,
+            1384.7
+          ],
+          [
+            2200,
+            1311.9
+          ],
+          [
+            2400,
+            1239.0
+          ],
+          [
+            2600,
+            1166.2
+          ],
+          [
+            2800,
+            1093.4
+          ],
+          [
+            3000,
+            930
+          ],
+          [
+            3200,
+            770
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF PowerLine 8AP1075 (TorqueFlite HD) 8-speed",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3505,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2025+ sole Cummins (430 hp / 1075 lb-ft, new ZF 8-speed)"
+      }
+    ]
+  },
+  {
+    "id": "ram-3500-srw-2019",
+    "make": "Ram",
+    "model": "3500",
+    "classTier": "one",
+    "generation": "5th gen",
+    "yearStart": 2019,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.8
+    },
+    "powertrains": [
+      {
+        "id": "64-hemi",
+        "engineName": "6.4L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2019,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            350
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            555
+          ],
+          [
+            2800,
+            570
+          ],
+          [
+            3200,
+            578
+          ],
+          [
+            3600,
+            581
+          ],
+          [
+            4000,
+            581.6
+          ],
+          [
+            4400,
+            575
+          ],
+          [
+            4800,
+            560
+          ],
+          [
+            5200,
+            540
+          ],
+          [
+            5600,
+            521.3
+          ],
+          [
+            5800,
+            500
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "ZF 8HP75-LCV (TorqueFlite HD) 8-speed",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3072,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        }
+      },
+      {
+        "id": "67-cummins-so",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1080
+          ],
+          [
+            1600,
+            1130
+          ],
+          [
+            1700,
+            1152.4
+          ],
+          [
+            2000,
+            1094.7
+          ],
+          [
+            2200,
+            1056.2
+          ],
+          [
+            2400,
+            1017.7
+          ],
+          [
+            2600,
+            979.2
+          ],
+          [
+            2800,
+            940.8
+          ],
+          [
+            3000,
+            820
+          ],
+          [
+            3200,
+            680
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3449,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2019-2024 standard-output Cummins (68RFE); discontinued for 2025"
+      },
+      {
+        "id": "67-cummins-ho-legacy",
+        "engineName": "6.7L Cummins I6 Diesel (High Output, Aisin)",
+        "fuel": "diesel",
+        "yearStart": 2019,
+        "yearEnd": 2024,
+        "torqueCurve": [
+          [
+            800,
+            700
+          ],
+          [
+            1000,
+            950
+          ],
+          [
+            1200,
+            1150
+          ],
+          [
+            1400,
+            1300
+          ],
+          [
+            1600,
+            1400
+          ],
+          [
+            1800,
+            1457.5
+          ],
+          [
+            2000,
+            1379.6
+          ],
+          [
+            2200,
+            1301.7
+          ],
+          [
+            2400,
+            1223.7
+          ],
+          [
+            2600,
+            1145.8
+          ],
+          [
+            2800,
+            1067.9
+          ],
+          [
+            3000,
+            900
+          ],
+          [
+            3200,
+            750
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Aisin AS69RC 6-speed",
+          "gearRatios": [
+            3.75,
+            2.0,
+            1.34,
+            1.0,
+            0.77,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3611,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2019-2024 High Output (400-430 hp era) with Aisin 6-speed"
+      },
+      {
+        "id": "67-cummins-ho",
+        "engineName": "6.7L Cummins I6 Diesel (High Output)",
+        "fuel": "diesel",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            720
+          ],
+          [
+            1000,
+            970
+          ],
+          [
+            1200,
+            1180
+          ],
+          [
+            1400,
+            1330
+          ],
+          [
+            1600,
+            1430
+          ],
+          [
+            1800,
+            1457.5
+          ],
+          [
+            2000,
+            1384.7
+          ],
+          [
+            2200,
+            1311.9
+          ],
+          [
+            2400,
+            1239.0
+          ],
+          [
+            2600,
+            1166.2
+          ],
+          [
+            2800,
+            1093.4
+          ],
+          [
+            3000,
+            930
+          ],
+          [
+            3200,
+            770
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF PowerLine 8AP1075 (TorqueFlite HD) 8-speed",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3550,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2025+ sole Cummins (430 hp / 1075 lb-ft, new ZF 8-speed)"
+      }
+    ]
+  },
+  {
+    "id": "toyota-tundra-2022",
+    "make": "Toyota",
+    "model": "Tundra",
+    "classTier": "half",
+    "generation": "XK70",
+    "yearStart": 2022,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.38,
+      "frontalAreaM2": 3.31
+    },
+    "powertrains": [
+      {
+        "id": "34-iforce",
+        "engineName": "3.4L i-FORCE Twin-Turbo V6",
+        "fuel": "gas",
+        "yearStart": 2022,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            460
+          ],
+          [
+            1400,
+            530
+          ],
+          [
+            1600,
+            590
+          ],
+          [
+            1800,
+            625
+          ],
+          [
+            2000,
+            645
+          ],
+          [
+            2200,
+            649
+          ],
+          [
+            2400,
+            650
+          ],
+          [
+            2600,
+            641
+          ],
+          [
+            2800,
+            627
+          ],
+          [
+            3000,
+            612
+          ],
+          [
+            3200,
+            597
+          ],
+          [
+            3400,
+            582
+          ],
+          [
+            3600,
+            568
+          ],
+          [
+            3800,
+            555
+          ],
+          [
+            4000,
+            544
+          ],
+          [
+            4200,
+            535
+          ],
+          [
+            4400,
+            529
+          ],
+          [
+            4600,
+            526
+          ],
+          [
+            4800,
+            527
+          ],
+          [
+            5000,
+            530
+          ],
+          [
+            5200,
+            533
+          ],
+          [
+            5400,
+            505
+          ],
+          [
+            5600,
+            475
+          ],
+          [
+            5800,
+            440
+          ],
+          [
+            6000,
+            405
+          ],
+          [
+            6200,
+            365
+          ],
+          [
+            6400,
+            320
+          ],
+          [
+            6600,
+            275
+          ]
+        ],
+        "redlineRpm": 6600,
+        "idleRpm": 650,
+        "displacementL": 3.4,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Aisin AWR10L65 10-speed automatic (Toyota-marketed as 'Direct Shift-10AT' / ECT-i)",
+          "gearRatios": [
+            4.92,
+            3.26,
+            2.35,
+            1.94,
+            1.53,
+            1.19,
+            1.0,
+            0.8,
+            0.66,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 2490,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        }
+      }
+    ]
+  }
+]

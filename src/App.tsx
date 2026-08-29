@@ -4,6 +4,7 @@ import AppShell from './components/layout/AppShell'
 import HomePage from './pages/HomePage'
 import SimulatorPage from './pages/SimulatorPage'
 import ComparePage from './pages/ComparePage'
+import TowingPage from './pages/TowingPage'
 import SavedPage from './pages/SavedPage'
 import CustomCarPage from './pages/CustomCarPage'
 import DynoReaderPage from './pages/DynoReaderPage'
@@ -27,6 +28,7 @@ export default function App() {
             <Route index element={<ErrorBoundary><HomePage /></ErrorBoundary>} />
             <Route path="simulator" element={<ErrorBoundary><SimulatorPage /></ErrorBoundary>} />
             <Route path="compare" element={<ErrorBoundary><ComparePage /></ErrorBoundary>} />
+            <Route path="towing" element={<ErrorBoundary><TowingPage /></ErrorBoundary>} />
             <Route path="saved" element={<ErrorBoundary><SavedPage /></ErrorBoundary>} />
             <Route path="custom-car" element={<ErrorBoundary><CustomCarPage /></ErrorBoundary>} />
             <Route path="custom-car/:id" element={<ErrorBoundary><CustomCarPage /></ErrorBoundary>} />

@@ -66,6 +66,8 @@ export interface TowingAnalysis {
   roadLoadN: number
   /** Power needed to hold the scenario speed (kW, at the wheels) */
   requiredKw: number
+  /** Lugging floor used for gear usability (rpm, fuel-type dependent) */
+  minLoadRpm: number
   gearsAtSpeed: GearAtSpeed[]
   /** Highest (lowest-RPM) gear that can hold the scenario speed, or null if none */
   cruisingGear: GearAtSpeed | null
@@ -334,6 +336,7 @@ export function runTowingAnalysis(
     totalMassKg,
     roadLoadN,
     requiredKw: (roadLoadN * scenario.speedMs) / 1000,
+    minLoadRpm,
     gearsAtSpeed,
     cruisingGear,
     maxSustainable,
