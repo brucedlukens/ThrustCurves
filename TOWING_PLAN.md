@@ -89,11 +89,9 @@ literature interference/shielding factors for truck+trailer combined drag.
 - [x] Worktree `../ThrustCurves-towing` on branch `feature/towing-comparison`
 - [x] Research agents launched (8: F-150, Super Duty, GM 1500, GM HD, Ram 1500, Ram HD, Tundra, trailers/aero).
       Results land in scratchpad `research/*.json` (session-specific; re-run agents if lost)
-- [x] Research received: toyota-tundra, trailers-aero, gm-1500, ram-1500, gm-hd, ram-hd,
-      ford-superduty. PENDING: ford-f150 (agent still running — re-run aggregation when it lands)
-- [x] Aggregation script (scratchpad/aggregate_trucks.py) → `src/data/trucks.json` (9 trucks,
-      F-150 to be added), `src/data/trailers.ts` done
-- [ ] `src/data/TRUCK_SOURCES.md` audit/provenance doc
+- [x] Research received: ALL 8 agents (F-150 included)
+- [x] Aggregation → `src/data/trucks.json` (10 trucks, 27 powertrains), `src/data/trailers.ts`
+- [x] `src/data/TRUCK_SOURCES.md` audit/provenance doc
 - [x] Types (`src/types/truck.ts`)
 - [x] Engine (`src/engine/towing.ts` + `performance.ts` grade/initialSpeed/stopAt extensions) + tests green
 - [x] `resolveTruckToCarSpec` + data tests (all 24 powertrain combos produce sane analyses)
