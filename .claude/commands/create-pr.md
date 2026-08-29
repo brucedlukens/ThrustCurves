@@ -33,7 +33,9 @@ When invoked, this skill should:
    - **Known Issues**: Ask user if there are any known issues or remaining work
 
 4. **Create PR body file** using the Write tool:
-   - Path: `C:\Users\Bruce\workspace\ThrustCurves\.pr-body.md`
+   - Path: `.pr-body.md` at the repo/worktree root (an absolute path is fine too —
+     just use the current working directory's actual location, not a hardcoded
+     machine-specific path)
    - Use Write tool, NOT bash heredocs (heredocs fail with backticks)
 
 5. **Create the PR**:
