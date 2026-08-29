@@ -99,8 +99,9 @@ literature interference/shielding factors for truck+trailer combined drag.
 - [x] Full suite green: 289 tests, lint clean, build OK
 - [ ] `resolveTruckToCarSpec` + tests
 - [ ] TowingPage UI + components + route/nav
-- [ ] frontend-ci agent passes in worktree
-- [ ] Pre-flight lint + build
-- [ ] PR created, remote CI green
-- [ ] Introspection agent run
+- [x] frontend-ci agent passes in worktree
+- [x] Pre-flight lint + build
+- [x] PR created (https://github.com/brucedlukens/ThrustCurves/pull/19), remote CI green (Build/Lint/Test)
+- [x] Introspection run (process docs + .claude/memory/MEMORY.md updated on this branch)
+- [ ] Manual testing by user (npm run dev in the worktree → /towing), then merge + worktree cleanup
 - [ ] (LATER, separate effort) previous-generation lookbacks to 2016
