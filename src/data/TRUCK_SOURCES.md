@@ -19,8 +19,9 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   listed are factory options per engine.
 - **Model years**: each powertrain uses its most recent output figures as
   primary; year-range notes flag older calibrations.
-- **v1 scope**: current generation only. Pre-2016 lookback generations are a
-  planned follow-up (see TOWING_PLAN.md).
+- **Lookback scope**: every family carries the generations on sale from 2016
+  to the current entry (half-tons and HDs). Ram HD models from the MY2013
+  towing refresh (not 2010) — same convention as the DS Ram 1500.
 
 ## Confidence summary by truck
 
@@ -29,6 +30,10 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Ford F-150 (2021+) | Gear/axle ratios (2023 order guide), peaks | Curve shapes (constructed), Cd/area estimate, redlines (forum consensus) |
 | Ford F-150 (2015–2020) | All hp/torque/rpm peaks + 6R80/10R80 ratios (Ford 2020 tech-spec PDF), axle sets per engine (Ford towing tables) | Cd 0.43/3.25 m² (no official figure — estimated slightly worse than 14th gen), curb weights (GVWR − payload from 2020 spec sheet, extrapolated back for pre-2018), curve shapes (constructed, no public dyno traces) |
 | Ford F-250/F-350 (2023+) | Weights, ratios, axles — all from Ford's official 2026 Super Duty tech-spec PDF | Curve shapes, Cd/area estimate |
+| Ford F-250/F-350 (2017–2022) | Outputs and axle sets (Ford 2017 towing-selector brochure), 10R140 ratios | Curb weights (no accessible per-engine Ford table; anchored to the 2023+ entries minus content deltas — lowest-confidence weights in the catalog), curve shapes |
+| Ford F-250/F-350 (2011–2016) | Outputs, 6R140 ratios, axle sets (Ford 2013 factory tech-spec PDF) | Diesel governed rpm (no primary source; 3200 used for catalog consistency), curb weights (GVWR−payload + diesel premium estimate), curve shapes |
+| GM 2500/3500HD K2XX (2015–2019) | Outputs, ratios, axles, tires, base curb weights — GM 2015/2016 spec sheets + real window stickers | L5P-era (2017–2019) axle/weight extrapolated from LML sheets; +45 kg mid-trim bump unsourced; curve shapes |
+| Ram 2500/3500 4th gen (2013–2018) | FCA spec-sheet PDFs for every MY 2013–2018 + 2016 towing charts (outputs, 66RFE/68RFE/Aisin, axles, J2807 base weights) | Curb weights are base-trim J2807 figures (mid trim runs heavier), 2015 HO 865 lb-ft from a single trade-press source, curve shapes |
 | GM 1500 (2019+) | Peaks (GM spec sheets), 10L80/90 ratios | 8L80 ratios (8L90-family proxy), weights (aggregators) |
 | GM 1500 K2XX (2014–2018) | Outputs, 6L80/8L90 ratios, axles, weights — all from GM's printed 2015/2016 product-info spec sheets | Cd 0.43/3.4 m² (extrapolated from GM's "7% better" T1 claim), curves reused from the identical pre-DFM T1 engines |
 | Ram 1500 DS (2013–2018) | FCA 2013/2014 spec + towing-chart PDFs (outputs, 8HP70 ratios, per-engine axle pairings) | Cd 0.43/3.43 m² (derived), curve shapes (HEMI reuses DT curve — same rating; EcoDiesel synthesized) |
@@ -73,6 +78,35 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   (2020–2022, 260 hp / 480 lb-ft) was also added to the existing DT entry;
   its official 5,800 rpm max engine speed is unusually high for a diesel but
   matches FCA's published figure.
+- **Super Duty 6.2L never left the 6-speed**: through the entire 2017–2022 run
+  (2020 refresh included) the 6.2L stayed on the 6R140-based TorqShift-G; only
+  the 7.3L and the diesel moved to the 10R140 in 2020. Ford's own 2013 factory
+  spec PDF gives the 6R140 ratios as 3.97/2.31/1.51/1.14/0.85/0.67 — the
+  commonly repeated 2.32/1.52/1.15/0.86 set is forum rounding (both gens use
+  the factory figures here).
+- **Super Duty SRW axle sets by era**: 2011–2016 diesel offered all of
+  3.31/3.55/3.73/4.30 (3.31 standard); 2017–2022 SRW diesel narrowed to
+  3.31/3.55 (F-350 SRW included — no 3.73). Gas is 3.73/4.30 in both eras, no
+  3.55. 2011–2016 mid-trim trucks ran LT245/75R17 (18s/20s were upper-trim).
+- **6.7L Power Stroke ladder**: 390/735 (MY2011 launch, reflashed free to
+  400/800 within the year) → 440/860 (2015, single GT37 VGT) → 440/925 (2017)
+  → 450/935 (2018) → 475/1050 (2020, 10R140) → 475/1050 SO + 500/1200 HO
+  (2023+). No primary source states the older engines' governed speed; 3200
+  rpm is used across the board for consistency.
+- **K2XX HD (2015–2019)**: gas L96 SRW trucks are 4.10-axle-only (GM's
+  general table lists 3.73 "or" 4.10, but every SRW trailering row and real
+  window stickers show only 4.10 — 3.73 is a DRW row); diesel is 3.73-only.
+  L96 max engine speed is 6000 rpm. Standard tires: LT245/75R17 (2500HD),
+  LT265/70R18 (3500HD SRW). LML 2015–2016, L5P 445/910 2017–2019, both on the
+  Allison 1000 6-speed.
+- **4th-gen Ram HD (2013–2018)**: there is NO 850 lb-ft 3500 standard-output
+  in this generation — the 68RFE Cummins is 370 hp / 800 lb-ft @ 1600 on both
+  2500 and 3500 SRW (850 is a 2019+ rating). SRW diesels are 3.42-axle-only
+  (3.73/4.10 are DRW-only). Gas 6.4L (2014+) uses the 66RFE — a 545RFE case
+  with 68RFE-style gearing, so the ratio set matches the 68RFE. Aisin HO
+  escalation: 850@1600 (2013–14) → 865@1700 (2015) → 900@1700 (2016–17) →
+  930@1700 (2018, modeled). The 2018 FCA PDF's "1,220 N·m" parenthetical is a
+  stale conversion of the prior 900 lb-ft rating; 1261 Nm is correct.
 - **13th-gen F-150 mid-cycle updates**: the 10R80 10-speed launched with the
   2nd-gen 3.5L EcoBoost (375 hp / 470 lb-ft) for MY2017 only; the 2.7L
   EcoBoost (400 lb-ft) and 5.0L Coyote (395 hp, port+direct injection) moved
@@ -94,6 +128,15 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   newer calibration is ≥ its predecessor at every rpm; advertised torque and
   power peaks unchanged. (The 14th-gen 5.0 truck can still trail the 13th-gen
   slightly in towing metrics — it is ~135 kg heavier, which is real.)
+- Same cross-generation treatment for the HD batch, enforced programmatically
+  on every same-engine chain before insertion: the 2020–2022 7.3L Godzilla
+  curve was clamped pointwise below the 2023+ (485 lb-ft) curve; the
+  2017–2022 6.2L's 4600–5600 rpm range was lifted above the 405 lb-ft
+  2011–2016 version (same 385 hp peak, still at 5750); the 2017–2019 Power
+  Stroke's sub-1600-rpm spool was lifted to sit between the 2015 (860 lb-ft)
+  and 2020 (1050 lb-ft) curves. Advertised peaks unchanged in all three.
+  (The 2020–22 F-250 diesel can still edge the 2023 by ~0.1% max grade — it
+  is a few kg lighter on a slightly taller tire, which is real.)
 
 ## Simulation constants (choices made here, not researched)
 

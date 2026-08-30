@@ -1944,6 +1944,823 @@
     ]
   },
   {
+    "id": "ford-f250-2017",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "4th gen",
+    "yearStart": 2017,
+    "yearEnd": 2022,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "62-gas-2017",
+        "engineName": "6.2L Gas V8 (Boss)",
+        "fuel": "gas",
+        "yearStart": 2017,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            1000,
+            385
+          ],
+          [
+            1200,
+            415
+          ],
+          [
+            1400,
+            450
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            1800,
+            520
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2200,
+            563
+          ],
+          [
+            2400,
+            575
+          ],
+          [
+            2600,
+            581
+          ],
+          [
+            2800,
+            583
+          ],
+          [
+            3000,
+            583
+          ],
+          [
+            3200,
+            583
+          ],
+          [
+            3400,
+            583
+          ],
+          [
+            3600,
+            583
+          ],
+          [
+            3800,
+            583
+          ],
+          [
+            4000,
+            577
+          ],
+          [
+            4200,
+            569
+          ],
+          [
+            4400,
+            559
+          ],
+          [
+            4600,
+            553
+          ],
+          [
+            4800,
+            550
+          ],
+          [
+            5000,
+            539
+          ],
+          [
+            5200,
+            526
+          ],
+          [
+            5400,
+            507
+          ],
+          [
+            5600,
+            489
+          ],
+          [
+            5750,
+            477
+          ]
+        ],
+        "redlineRpm": 5750,
+        "idleRpm": 600,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R140 TorqShift-G 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2860,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "6.2L SOHC 2V 'Boss' V8, essentially unchanged 2017-2022 including through the 2020 mid-cycle refresh. Confirmed via multiple 2020-era sources that it stayed on the 6R140-based TorqShift-G 6-speed for the whole generation -- it did NOT move to the 10R140 (unlike the diesel and the new-for-2020 7.3L gas engine), so this is modeled as a single powertrain entry rather than two."
+      },
+      {
+        "id": "73-godzilla-2020",
+        "engineName": "7.3L PFI Gas V8 (Godzilla)",
+        "fuel": "gas",
+        "yearStart": 2020,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            445
+          ],
+          [
+            1400,
+            500
+          ],
+          [
+            1600,
+            550
+          ],
+          [
+            1800,
+            577
+          ],
+          [
+            2000,
+            600
+          ],
+          [
+            2200,
+            615
+          ],
+          [
+            2400,
+            630
+          ],
+          [
+            2600,
+            639
+          ],
+          [
+            2800,
+            644
+          ],
+          [
+            3000,
+            644
+          ],
+          [
+            3200,
+            644
+          ],
+          [
+            3400,
+            644
+          ],
+          [
+            3600,
+            644
+          ],
+          [
+            3800,
+            644
+          ],
+          [
+            4000,
+            644
+          ],
+          [
+            4200,
+            641
+          ],
+          [
+            4400,
+            636
+          ],
+          [
+            4600,
+            629
+          ],
+          [
+            4800,
+            619
+          ],
+          [
+            5000,
+            600
+          ],
+          [
+            5200,
+            580
+          ],
+          [
+            5400,
+            564
+          ],
+          [
+            5600,
+            538
+          ],
+          [
+            5800,
+            500
+          ],
+          [
+            6000,
+            460
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 7.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2885,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "New-for-MY2020 7.3L OHV 2V 'Godzilla' gas V8, standard 10R140 10-speed. Same 430 hp/475 lb-ft rating that continues unchanged into the 2023+ generation already in this catalog (engineName matches that entry exactly so the UI can carry the selection across generations)."
+      },
+      {
+        "id": "67-powerstroke-2017",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2017,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            800,
+            680
+          ],
+          [
+            1000,
+            930
+          ],
+          [
+            1200,
+            1100
+          ],
+          [
+            1400,
+            1190
+          ],
+          [
+            1600,
+            1240
+          ],
+          [
+            1800,
+            1268
+          ],
+          [
+            2000,
+            1250
+          ],
+          [
+            2200,
+            1225
+          ],
+          [
+            2400,
+            1195
+          ],
+          [
+            2600,
+            1165
+          ],
+          [
+            2800,
+            1148
+          ],
+          [
+            3000,
+            1050
+          ],
+          [
+            3200,
+            900
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3150,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Second-generation 6.7L Power Stroke on the 6R140 6-speed. CORRECTION to brief: MY2017 actually launched at 440 hp @ 2,800 rpm / 925 lb-ft @ 1,800 rpm (confirmed directly from Ford's own 2017 Super Duty brochure cover page); MY2018-2019 were recalibrated up to 450 hp / 935 lb-ft at the same rpm points. Modeled here at the 450/935 MY2018-2019 rating per the brief's own instruction, with the weaker 440/925 MY2017 figure called out here rather than as a separate entry."
+      },
+      {
+        "id": "67-powerstroke-2020",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            700,
+            550
+          ],
+          [
+            900,
+            850
+          ],
+          [
+            1100,
+            1100
+          ],
+          [
+            1300,
+            1300
+          ],
+          [
+            1600,
+            1424
+          ],
+          [
+            1800,
+            1410
+          ],
+          [
+            2000,
+            1380
+          ],
+          [
+            2200,
+            1340
+          ],
+          [
+            2400,
+            1320
+          ],
+          [
+            2600,
+            1301
+          ],
+          [
+            2800,
+            1200
+          ],
+          [
+            3000,
+            1100
+          ],
+          [
+            3200,
+            1000
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3250,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2020 refresh: larger single sequential turbo, forged steel pistons, strengthened cylinder head, 36,000 psi common-rail injection, and the new 10R140 10-speed. 475 hp @ 2,800 rpm / 1,050 lb-ft @ 1,600 rpm -- an identical rating to the 2023+ standard-output Power Stroke already in this catalog, so the torque curve is reused verbatim from that entry per instructions."
+      }
+    ]
+  },
+  {
+    "id": "ford-f250-2011",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "3rd gen",
+    "yearStart": 2011,
+    "yearEnd": 2016,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.45
+    },
+    "powertrains": [
+      {
+        "id": "62-gas-2011",
+        "engineName": "6.2L Gas V8 (Boss)",
+        "fuel": "gas",
+        "yearStart": 2011,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            410
+          ],
+          [
+            1400,
+            440
+          ],
+          [
+            1600,
+            465
+          ],
+          [
+            1800,
+            485
+          ],
+          [
+            2000,
+            500
+          ],
+          [
+            2200,
+            513
+          ],
+          [
+            2400,
+            524
+          ],
+          [
+            2600,
+            533
+          ],
+          [
+            2800,
+            540
+          ],
+          [
+            3000,
+            545
+          ],
+          [
+            3200,
+            547
+          ],
+          [
+            3400,
+            548
+          ],
+          [
+            3600,
+            548
+          ],
+          [
+            3800,
+            548
+          ],
+          [
+            4000,
+            548
+          ],
+          [
+            4200,
+            548
+          ],
+          [
+            4400,
+            549
+          ],
+          [
+            4600,
+            549
+          ],
+          [
+            4800,
+            545
+          ],
+          [
+            5000,
+            535
+          ],
+          [
+            5200,
+            522
+          ],
+          [
+            5400,
+            505
+          ],
+          [
+            5600,
+            485
+          ],
+          [
+            5800,
+            465
+          ],
+          [
+            6000,
+            445
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3084,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Standard gas engine, 2011-2016 F-250/F-350 SRW, unchanged across the generation. 385 hp @ 5,500 rpm / 405 lb-ft @ 4,500 rpm applies to trucks under 10,000 lb GVWR, which covers all F-250/F-350 SRW pickup configurations. Ford's spec sheets also list a de-rated calibration (316 hp @ 4,179 rpm / 397 lb-ft @ 4,179 rpm) for chassis over 10,000 lb GVWR (F-350 DRW/F-450/F-550 cab-chassis) \u2014 not applicable to the SRW pickups modeled here. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
+      },
+      {
+        "id": "67-powerstroke-2011",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1060
+          ],
+          [
+            1600,
+            1085
+          ],
+          [
+            1800,
+            1084
+          ],
+          [
+            2000,
+            1080
+          ],
+          [
+            2200,
+            1074
+          ],
+          [
+            2400,
+            1064
+          ],
+          [
+            2600,
+            1050
+          ],
+          [
+            2800,
+            1017
+          ],
+          [
+            3000,
+            930
+          ],
+          [
+            3200,
+            820
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3379,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "MY2011 launched at 390 hp @ 2,800 rpm / 735 lb-ft @ 1,600 rpm; Ford issued a no-charge dealer PCM reflash within the 2011 model year that raised output to 400 hp / 800 lb-ft. That 400/800 rating is what shipped for the balance of 2011 production and for MY2012-2014, and is the rating modeled here (early-build 2011 trucks at 390/735 are not separately modeled). Twin-turbo 'DualBoost' (GT32) setup, replaced by the single GT37 VGT for 2015. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
+      },
+      {
+        "id": "67-powerstroke-2015",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2015,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            800,
+            660
+          ],
+          [
+            1000,
+            890
+          ],
+          [
+            1200,
+            1060
+          ],
+          [
+            1400,
+            1135
+          ],
+          [
+            1600,
+            1166
+          ],
+          [
+            1800,
+            1163
+          ],
+          [
+            2000,
+            1155
+          ],
+          [
+            2200,
+            1145
+          ],
+          [
+            2400,
+            1125
+          ],
+          [
+            2600,
+            1119
+          ],
+          [
+            2800,
+            1118
+          ],
+          [
+            3000,
+            1000
+          ],
+          [
+            3200,
+            850
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3402,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "2015 model-year revision: replaced the twin GT32 'DualBoost' turbo with a single larger GT37 variable-geometry turbo, added a Bosch CP4.2 high-pressure fuel pump (longer stroke) and piezo fuel injectors, and IROX-coated lower main bearings, raising output to 440 hp @ 2,800 rpm / 860 lb-ft @ 1,600 rpm. No significant powertrain calibration change for 2016. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim; curb weight bumped slightly (+50 lb) versus the 2011-2014 diesel entry for the larger turbo/cooling hardware \u2014 this delta is a low-confidence estimate."
+      }
+    ]
+  },
+  {
     "id": "ford-f350-srw-2023",
     "make": "Ford",
     "model": "F-350 Super Duty",
@@ -2347,6 +3164,823 @@
           "aspectRatio": 65,
           "rimDiameterIn": 18
         }
+      }
+    ]
+  },
+  {
+    "id": "ford-f350-srw-2017",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "4th gen",
+    "yearStart": 2017,
+    "yearEnd": 2022,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.55
+    },
+    "powertrains": [
+      {
+        "id": "62-gas-2017",
+        "engineName": "6.2L Gas V8 (Boss)",
+        "fuel": "gas",
+        "yearStart": 2017,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            1000,
+            385
+          ],
+          [
+            1200,
+            415
+          ],
+          [
+            1400,
+            450
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            1800,
+            520
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2200,
+            563
+          ],
+          [
+            2400,
+            575
+          ],
+          [
+            2600,
+            581
+          ],
+          [
+            2800,
+            583
+          ],
+          [
+            3000,
+            583
+          ],
+          [
+            3200,
+            583
+          ],
+          [
+            3400,
+            583
+          ],
+          [
+            3600,
+            583
+          ],
+          [
+            3800,
+            583
+          ],
+          [
+            4000,
+            577
+          ],
+          [
+            4200,
+            569
+          ],
+          [
+            4400,
+            559
+          ],
+          [
+            4600,
+            553
+          ],
+          [
+            4800,
+            550
+          ],
+          [
+            5000,
+            539
+          ],
+          [
+            5200,
+            526
+          ],
+          [
+            5400,
+            507
+          ],
+          [
+            5600,
+            489
+          ],
+          [
+            5750,
+            477
+          ]
+        ],
+        "redlineRpm": 5750,
+        "idleRpm": 600,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R140 TorqShift-G 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2930,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "6.2L SOHC 2V 'Boss' V8, essentially unchanged 2017-2022 including through the 2020 mid-cycle refresh. Confirmed via multiple 2020-era sources that it stayed on the 6R140-based TorqShift-G 6-speed for the whole generation -- it did NOT move to the 10R140 (unlike the diesel and the new-for-2020 7.3L gas engine), so this is modeled as a single powertrain entry rather than two."
+      },
+      {
+        "id": "73-godzilla-2020",
+        "engineName": "7.3L PFI Gas V8 (Godzilla)",
+        "fuel": "gas",
+        "yearStart": 2020,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            445
+          ],
+          [
+            1400,
+            500
+          ],
+          [
+            1600,
+            550
+          ],
+          [
+            1800,
+            577
+          ],
+          [
+            2000,
+            600
+          ],
+          [
+            2200,
+            615
+          ],
+          [
+            2400,
+            630
+          ],
+          [
+            2600,
+            639
+          ],
+          [
+            2800,
+            644
+          ],
+          [
+            3000,
+            644
+          ],
+          [
+            3200,
+            644
+          ],
+          [
+            3400,
+            644
+          ],
+          [
+            3600,
+            644
+          ],
+          [
+            3800,
+            644
+          ],
+          [
+            4000,
+            644
+          ],
+          [
+            4200,
+            641
+          ],
+          [
+            4400,
+            636
+          ],
+          [
+            4600,
+            629
+          ],
+          [
+            4800,
+            619
+          ],
+          [
+            5000,
+            600
+          ],
+          [
+            5200,
+            580
+          ],
+          [
+            5400,
+            564
+          ],
+          [
+            5600,
+            538
+          ],
+          [
+            5800,
+            500
+          ],
+          [
+            6000,
+            460
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 7.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2975,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "New-for-MY2020 7.3L OHV 2V 'Godzilla' gas V8, standard 10R140 10-speed. Same 430 hp/475 lb-ft rating that continues unchanged into the 2023+ generation already in this catalog (engineName matches that entry exactly so the UI can carry the selection across generations)."
+      },
+      {
+        "id": "67-powerstroke-2017",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2017,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            800,
+            680
+          ],
+          [
+            1000,
+            930
+          ],
+          [
+            1200,
+            1100
+          ],
+          [
+            1400,
+            1190
+          ],
+          [
+            1600,
+            1240
+          ],
+          [
+            1800,
+            1268
+          ],
+          [
+            2000,
+            1250
+          ],
+          [
+            2200,
+            1225
+          ],
+          [
+            2400,
+            1195
+          ],
+          [
+            2600,
+            1165
+          ],
+          [
+            2800,
+            1148
+          ],
+          [
+            3000,
+            1050
+          ],
+          [
+            3200,
+            900
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3230,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Second-generation 6.7L Power Stroke on the 6R140 6-speed. CORRECTION to brief: MY2017 actually launched at 440 hp @ 2,800 rpm / 925 lb-ft @ 1,800 rpm (confirmed directly from Ford's own 2017 Super Duty brochure cover page); MY2018-2019 were recalibrated up to 450 hp / 935 lb-ft at the same rpm points. Modeled here at the 450/935 MY2018-2019 rating per the brief's own instruction, with the weaker 440/925 MY2017 figure called out here rather than as a separate entry."
+      },
+      {
+        "id": "67-powerstroke-2020",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            700,
+            550
+          ],
+          [
+            900,
+            850
+          ],
+          [
+            1100,
+            1100
+          ],
+          [
+            1300,
+            1300
+          ],
+          [
+            1600,
+            1424
+          ],
+          [
+            1800,
+            1410
+          ],
+          [
+            2000,
+            1380
+          ],
+          [
+            2200,
+            1340
+          ],
+          [
+            2400,
+            1320
+          ],
+          [
+            2600,
+            1301
+          ],
+          [
+            2800,
+            1200
+          ],
+          [
+            3000,
+            1100
+          ],
+          [
+            3200,
+            1000
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 700,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R140 Heavy-Duty TorqShift 10-Speed",
+          "gearRatios": [
+            4.62,
+            2.92,
+            2.13,
+            1.77,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3340,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "2020 refresh: larger single sequential turbo, forged steel pistons, strengthened cylinder head, 36,000 psi common-rail injection, and the new 10R140 10-speed. 475 hp @ 2,800 rpm / 1,050 lb-ft @ 1,600 rpm -- an identical rating to the 2023+ standard-output Power Stroke already in this catalog, so the torque curve is reused verbatim from that entry per instructions."
+      }
+    ]
+  },
+  {
+    "id": "ford-f350-srw-2011",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "3rd gen",
+    "yearStart": 2011,
+    "yearEnd": 2016,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "62-gas-2011",
+        "engineName": "6.2L Gas V8 (Boss)",
+        "fuel": "gas",
+        "yearStart": 2011,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            410
+          ],
+          [
+            1400,
+            440
+          ],
+          [
+            1600,
+            465
+          ],
+          [
+            1800,
+            485
+          ],
+          [
+            2000,
+            500
+          ],
+          [
+            2200,
+            513
+          ],
+          [
+            2400,
+            524
+          ],
+          [
+            2600,
+            533
+          ],
+          [
+            2800,
+            540
+          ],
+          [
+            3000,
+            545
+          ],
+          [
+            3200,
+            547
+          ],
+          [
+            3400,
+            548
+          ],
+          [
+            3600,
+            548
+          ],
+          [
+            3800,
+            548
+          ],
+          [
+            4000,
+            548
+          ],
+          [
+            4200,
+            548
+          ],
+          [
+            4400,
+            549
+          ],
+          [
+            4600,
+            549
+          ],
+          [
+            4800,
+            545
+          ],
+          [
+            5000,
+            535
+          ],
+          [
+            5200,
+            522
+          ],
+          [
+            5400,
+            505
+          ],
+          [
+            5600,
+            485
+          ],
+          [
+            5800,
+            465
+          ],
+          [
+            6000,
+            445
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3130,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Standard gas engine, 2011-2016 F-250/F-350 SRW, unchanged across the generation. Same 385 hp / 405 lb-ft rating and gearbox as the F-250; no F-250-vs-F-350 difference found in Ford's factory spec sheet for this engine's output or axle/gear ratios. Curb weight is slightly higher than the F-250 (heavier frame/springs); tire size and axle/gear ratios are identical between the two trucks per Ford's documentation. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
+      },
+      {
+        "id": "67-powerstroke-2011",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1060
+          ],
+          [
+            1600,
+            1085
+          ],
+          [
+            1800,
+            1084
+          ],
+          [
+            2000,
+            1080
+          ],
+          [
+            2200,
+            1074
+          ],
+          [
+            2400,
+            1064
+          ],
+          [
+            2600,
+            1050
+          ],
+          [
+            2800,
+            1017
+          ],
+          [
+            3000,
+            930
+          ],
+          [
+            3200,
+            820
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3426,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same MY2011 launch-then-reflash history as the F-250 entry (390/735 launch, reflashed to 400/800 within MY2011; 400/800 used here for MY2011-2014). F-350 SRW crew cab GVWR options extend meaningfully higher than F-250 SRW (up to ~11,500 lb per Ford's payload tables) to preserve payload with the heavier diesel engine. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
+      },
+      {
+        "id": "67-powerstroke-2015",
+        "engineName": "6.7L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2015,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            800,
+            660
+          ],
+          [
+            1000,
+            890
+          ],
+          [
+            1200,
+            1060
+          ],
+          [
+            1400,
+            1135
+          ],
+          [
+            1600,
+            1166
+          ],
+          [
+            1800,
+            1163
+          ],
+          [
+            2000,
+            1155
+          ],
+          [
+            2200,
+            1145
+          ],
+          [
+            2400,
+            1125
+          ],
+          [
+            2600,
+            1119
+          ],
+          [
+            2800,
+            1118
+          ],
+          [
+            3000,
+            1000
+          ],
+          [
+            3200,
+            850
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R140 TorqShift 6-Speed",
+          "gearRatios": [
+            3.97,
+            2.31,
+            1.51,
+            1.14,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73,
+          4.3
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 3447,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same 2015 GT37 turbo/injector/fuel-pump revision as the F-250 entry, raising output to 440 hp @ 2,800 rpm / 860 lb-ft @ 1,600 rpm. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
       }
     ]
   },
@@ -3589,6 +5223,353 @@
     ]
   },
   {
+    "id": "gm-2500hd-2015",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 2500HD",
+    "classTier": "threequarter",
+    "generation": "K2XX",
+    "yearStart": 2015,
+    "yearEnd": 2019,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 4.15
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (L96)",
+        "fuel": "gas",
+        "yearStart": 2015,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            1000,
+            305
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1400,
+            383
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            1800,
+            443
+          ],
+          [
+            2000,
+            465
+          ],
+          [
+            2200,
+            483
+          ],
+          [
+            2400,
+            497
+          ],
+          [
+            2600,
+            507
+          ],
+          [
+            2800,
+            512
+          ],
+          [
+            3000,
+            513
+          ],
+          [
+            3200,
+            514
+          ],
+          [
+            3400,
+            514
+          ],
+          [
+            3600,
+            514
+          ],
+          [
+            3800,
+            514
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            515
+          ],
+          [
+            4600,
+            510
+          ],
+          [
+            4800,
+            500
+          ],
+          [
+            5000,
+            490
+          ],
+          [
+            5200,
+            480
+          ],
+          [
+            5400,
+            474
+          ],
+          [
+            5600,
+            460
+          ],
+          [
+            5800,
+            440
+          ],
+          [
+            6000,
+            415
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 6L90",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3008,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "L96 Vortec 6.0L V8, standard/only gas engine for K2XX HD 2015-2019. Rated 360 hp @ 5400 rpm / 380 lb-ft @ 4200 rpm (SAE net) for the entire model span. Paired exclusively with the Hydra-Matic 6L90-E 6-speed automatic and a 4.10 rear axle (GM's own 2015 consumer equipment sheet and 2016 technical spec sheet both state 4.10 is standard AND ONLY available on the Vortec 6.0L in SRW configurations; 3.73 appears in GM's tech-sheet transmission table as a theoretical alternate and does show up on some 3500HD DRW gas trailering rows, but never on 2500HD/3500HD SRW rows)."
+      },
+      {
+        "id": "66-duramax-lml",
+        "engineName": "6.6L Duramax V8 Diesel (LML)",
+        "fuel": "diesel",
+        "yearStart": 2015,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            800,
+            600
+          ],
+          [
+            1000,
+            850
+          ],
+          [
+            1200,
+            980
+          ],
+          [
+            1400,
+            1020
+          ],
+          [
+            1600,
+            1037
+          ],
+          [
+            1800,
+            1030
+          ],
+          [
+            2000,
+            1010
+          ],
+          [
+            2200,
+            985
+          ],
+          [
+            2400,
+            960
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            950
+          ],
+          [
+            3000,
+            942
+          ],
+          [
+            3200,
+            880
+          ],
+          [
+            3400,
+            750
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3398,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "LML Duramax, 2015-2016 only (replaced by L5P for MY2017). Rated 397 hp @ 3000 rpm / 765 lb-ft @ 1600 rpm (SAE cert). Allison 1000 6-speed and 3.73 axle only, confirmed by GM's 2016 spec sheet ('Final drive ratio: 3.73' under the Allison 1000 column) and independently by a 2015 diesel LT Crew Cab 4x4 window sticker (VIN 1GC1KVE87FF151272) showing 'Rear Axle, 3.73 Ratio' as an installed $100 option over base."
+      },
+      {
+        "id": "66-duramax-l5p",
+        "engineName": "6.6L Duramax V8 Diesel (L5P)",
+        "fuel": "diesel",
+        "yearStart": 2017,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            800,
+            650
+          ],
+          [
+            1000,
+            900
+          ],
+          [
+            1200,
+            1090
+          ],
+          [
+            1400,
+            1200
+          ],
+          [
+            1600,
+            1234
+          ],
+          [
+            1800,
+            1230
+          ],
+          [
+            2000,
+            1210
+          ],
+          [
+            2200,
+            1180
+          ],
+          [
+            2400,
+            1145
+          ],
+          [
+            2600,
+            1135
+          ],
+          [
+            2800,
+            1132
+          ],
+          [
+            3000,
+            1050
+          ],
+          [
+            3200,
+            950
+          ],
+          [
+            3400,
+            800
+          ],
+          [
+            3450,
+            750
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3398,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "L5P Duramax, 2017-2019, replaced LML for MY2017; carried the K2XX HD generation to its end in 2019 before the T1 HD redesign (MY2020) switched to the 10L1000 10-speed and a 3.42-only axle. Rated 445 hp @ 2800 rpm / 910 lb-ft @ 1600 rpm (SAE cert), still paired with the same Allison 1000 6-speed and 3.73 axle as the LML."
+      }
+    ]
+  },
+  {
     "id": "gm-3500hd-srw-2020",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 3500HD (SRW)",
@@ -3789,6 +5770,353 @@
           "rimDiameterIn": 18
         },
         "notes": "2024+ figures (470 hp / 975 lb-ft); 2020-2023 made 445 hp / 910 lb-ft"
+      }
+    ]
+  },
+  {
+    "id": "gm-3500hd-srw-2015",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 3500HD (SRW)",
+    "classTier": "one",
+    "generation": "K2XX",
+    "yearStart": 2015,
+    "yearEnd": 2019,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 4.15
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (L96)",
+        "fuel": "gas",
+        "yearStart": 2015,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            1000,
+            305
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1400,
+            383
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            1800,
+            443
+          ],
+          [
+            2000,
+            465
+          ],
+          [
+            2200,
+            483
+          ],
+          [
+            2400,
+            497
+          ],
+          [
+            2600,
+            507
+          ],
+          [
+            2800,
+            512
+          ],
+          [
+            3000,
+            513
+          ],
+          [
+            3200,
+            514
+          ],
+          [
+            3400,
+            514
+          ],
+          [
+            3600,
+            514
+          ],
+          [
+            3800,
+            514
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            515
+          ],
+          [
+            4600,
+            510
+          ],
+          [
+            4800,
+            500
+          ],
+          [
+            5000,
+            490
+          ],
+          [
+            5200,
+            480
+          ],
+          [
+            5400,
+            474
+          ],
+          [
+            5600,
+            460
+          ],
+          [
+            5800,
+            440
+          ],
+          [
+            6000,
+            415
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 6L90",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3090,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Same L96/6L90 combination as 2500HD; identical rating (360 hp @ 5400 / 380 lb-ft @ 4200) across the full 2015-2019 span. 3500HD SRW gas is 4.10-only per the same GM primary sources used for 2500HD (no separate DRW-only exception applies to SRW rows in GM's own trailering tables)."
+      },
+      {
+        "id": "66-duramax-lml",
+        "engineName": "6.6L Duramax V8 Diesel (LML)",
+        "fuel": "diesel",
+        "yearStart": 2015,
+        "yearEnd": 2016,
+        "torqueCurve": [
+          [
+            800,
+            600
+          ],
+          [
+            1000,
+            850
+          ],
+          [
+            1200,
+            980
+          ],
+          [
+            1400,
+            1020
+          ],
+          [
+            1600,
+            1037
+          ],
+          [
+            1800,
+            1030
+          ],
+          [
+            2000,
+            1010
+          ],
+          [
+            2200,
+            985
+          ],
+          [
+            2400,
+            960
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            950
+          ],
+          [
+            3000,
+            942
+          ],
+          [
+            3200,
+            880
+          ],
+          [
+            3400,
+            750
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3399,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Same LML/Allison 1000 combination as 2500HD (397 hp @ 3000 / 765 lb-ft @ 1600), 2015-2016 only, 3.73-only axle."
+      },
+      {
+        "id": "66-duramax-l5p",
+        "engineName": "6.6L Duramax V8 Diesel (L5P)",
+        "fuel": "diesel",
+        "yearStart": 2017,
+        "yearEnd": 2019,
+        "torqueCurve": [
+          [
+            800,
+            650
+          ],
+          [
+            1000,
+            900
+          ],
+          [
+            1200,
+            1090
+          ],
+          [
+            1400,
+            1200
+          ],
+          [
+            1600,
+            1234
+          ],
+          [
+            1800,
+            1230
+          ],
+          [
+            2000,
+            1210
+          ],
+          [
+            2200,
+            1180
+          ],
+          [
+            2400,
+            1145
+          ],
+          [
+            2600,
+            1135
+          ],
+          [
+            2800,
+            1132
+          ],
+          [
+            3000,
+            1050
+          ],
+          [
+            3200,
+            950
+          ],
+          [
+            3400,
+            800
+          ],
+          [
+            3450,
+            750
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3399,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "Same L5P/Allison 1000 combination as 2500HD (445 hp @ 2800 / 910 lb-ft @ 1600), 2017-2019, last three years of the K2XX HD generation before the T1 HD redesign for MY2020."
       }
     ]
   },
@@ -4946,6 +7274,202 @@
     ]
   },
   {
+    "id": "ram-2500-2013",
+    "make": "Ram",
+    "model": "2500",
+    "classTier": "threequarter",
+    "generation": "4th gen",
+    "yearStart": 2013,
+    "yearEnd": 2018,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.75
+    },
+    "powertrains": [
+      {
+        "id": "64-hemi-4g",
+        "engineName": "6.4L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2014,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            800,
+            350
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            555
+          ],
+          [
+            2800,
+            570
+          ],
+          [
+            3200,
+            578
+          ],
+          [
+            3600,
+            581
+          ],
+          [
+            4000,
+            581.6
+          ],
+          [
+            4400,
+            575
+          ],
+          [
+            4800,
+            560
+          ],
+          [
+            5200,
+            540
+          ],
+          [
+            5600,
+            521.3
+          ],
+          [
+            5800,
+            500
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "66RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3040,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "MY2014 introduction only \u2014 the 6.4L HEMI was NOT offered in MY2013 (5.7L HEMI was the sole gas engine that year); rating held constant at 410 hp @5,600 rpm / 429 lb-ft @4,000 rpm through 2018, identical to the 2019+ 6.4L HEMI, so the existing torque curve is reused verbatim. CORRECTION to brief: paired with the 66RFE 6-speed automatic, NOT the 68RFE \u2014 68RFE is diesel-only in this generation. The 66RFE combines a 545RFE-derived case with 68RFE-derived internal gearing, so its ratio set (3.23/1.84/1.41/1.00/0.82/0.63) is effectively identical to the 68RFE's, confirming the brief's assumed ratios even though the transmission name was wrong. FCA spec sheets also note a Mega Cab-specific derate to 370 hp @4,600 rpm for this engine; not modeled here (Crew Cab rating used, per the fixed 410 hp curve)."
+      },
+      {
+        "id": "67-cummins-so-4g",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2013,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1060
+          ],
+          [
+            1600,
+            1084.7
+          ],
+          [
+            1800,
+            1060
+          ],
+          [
+            2000,
+            1020
+          ],
+          [
+            2200,
+            995
+          ],
+          [
+            2400,
+            970
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            940.8
+          ],
+          [
+            3000,
+            820
+          ],
+          [
+            3200,
+            680
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3456,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "MAJOR CORRECTION to brief: in the 4th generation (2013-2018), the 68RFE-equipped Cummins carries the SAME 370 hp @2,800 rpm / 800 lb-ft @1,600 rpm rating on BOTH the 2500 and the 3500 SRW \u2014 there is no separate, higher-torque '850 lb-ft 3500 SO' calibration in this generation (that 850 lb-ft rating only appears starting with the 2019+ 5th-gen truck, which is why the 2019+ catalog entry can reuse one curve for both trucks at 850 lb-ft \u2014 the 4th-gen equivalent is this shared curve at 800 lb-ft instead). Confirmed identical across all five checked model years (2013, 2014, 2016, 2017, 2018 FCA spec sheets). Peak-torque rpm is 1,600, not 1,700 as the brief assumed (1,700 is the 5th-gen rpm). AXLE CORRECTION: FCA's official 2016 towing charts show 3500 SRW Cummins (both SO and HO) is restricted to the single 3.42 axle ratio \u2014 3.73 and 4.10 are explicitly DRW-only options on the diesel, unlike the gas 66RFE which offers 3.73/4.10 on SRW too. The 2500 Cummins is 3.42-only in every model year checked, with no 3.73/4.10 option ever listed. A 350 hp/660 lb-ft G56 6-speed manual was also offered on both trucks throughout 2013-2018 but is excluded per the catalog's automatic-only convention."
+      }
+    ]
+  },
+  {
     "id": "ram-3500-srw-2019",
     "make": "Ram",
     "model": "3500",
@@ -5317,6 +7841,294 @@
           "rimDiameterIn": 18
         },
         "notes": "2025+ sole Cummins (430 hp / 1075 lb-ft, new ZF 8-speed)"
+      }
+    ]
+  },
+  {
+    "id": "ram-3500-srw-2013",
+    "make": "Ram",
+    "model": "3500",
+    "classTier": "one",
+    "generation": "4th gen",
+    "yearStart": 2013,
+    "yearEnd": 2018,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.75
+    },
+    "powertrains": [
+      {
+        "id": "64-hemi-4g",
+        "engineName": "6.4L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2014,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            800,
+            350
+          ],
+          [
+            1200,
+            430
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2400,
+            555
+          ],
+          [
+            2800,
+            570
+          ],
+          [
+            3200,
+            578
+          ],
+          [
+            3600,
+            581
+          ],
+          [
+            4000,
+            581.6
+          ],
+          [
+            4400,
+            575
+          ],
+          [
+            4800,
+            560
+          ],
+          [
+            5200,
+            540
+          ],
+          [
+            5600,
+            521.3
+          ],
+          [
+            5800,
+            500
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "66RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3079,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "MY2014 introduction only \u2014 the 6.4L HEMI was NOT offered in MY2013 (5.7L HEMI was the sole gas engine that year); rating held constant at 410 hp @5,600 rpm / 429 lb-ft @4,000 rpm through 2018, identical to the 2019+ 6.4L HEMI, so the existing torque curve is reused verbatim. CORRECTION to brief: paired with the 66RFE 6-speed automatic, NOT the 68RFE \u2014 68RFE is diesel-only in this generation. The 66RFE combines a 545RFE-derived case with 68RFE-derived internal gearing, so its ratio set (3.23/1.84/1.41/1.00/0.82/0.63) is effectively identical to the 68RFE's, confirming the brief's assumed ratios even though the transmission name was wrong. FCA spec sheets also note a Mega Cab-specific derate to 370 hp @4,600 rpm for this engine; not modeled here (Crew Cab rating used, per the fixed 410 hp curve)."
+      },
+      {
+        "id": "67-cummins-so-4g",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2013,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            800,
+            620
+          ],
+          [
+            1000,
+            830
+          ],
+          [
+            1200,
+            990
+          ],
+          [
+            1400,
+            1060
+          ],
+          [
+            1600,
+            1084.7
+          ],
+          [
+            1800,
+            1060
+          ],
+          [
+            2000,
+            1020
+          ],
+          [
+            2200,
+            995
+          ],
+          [
+            2400,
+            970
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            940.8
+          ],
+          [
+            3000,
+            820
+          ],
+          [
+            3200,
+            680
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3460,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "MAJOR CORRECTION to brief: in the 4th generation (2013-2018), the 68RFE-equipped Cummins carries the SAME 370 hp @2,800 rpm / 800 lb-ft @1,600 rpm rating on BOTH the 2500 and the 3500 SRW \u2014 there is no separate, higher-torque '850 lb-ft 3500 SO' calibration in this generation (that 850 lb-ft rating only appears starting with the 2019+ 5th-gen truck, which is why the 2019+ catalog entry can reuse one curve for both trucks at 850 lb-ft \u2014 the 4th-gen equivalent is this shared curve at 800 lb-ft instead). Confirmed identical across all five checked model years (2013, 2014, 2016, 2017, 2018 FCA spec sheets). Peak-torque rpm is 1,600, not 1,700 as the brief assumed (1,700 is the 5th-gen rpm). AXLE CORRECTION: FCA's official 2016 towing charts show 3500 SRW Cummins (both SO and HO) is restricted to the single 3.42 axle ratio \u2014 3.73 and 4.10 are explicitly DRW-only options on the diesel, unlike the gas 66RFE which offers 3.73/4.10 on SRW too. The 2500 Cummins is 3.42-only in every model year checked, with no 3.73/4.10 option ever listed. A 350 hp/660 lb-ft G56 6-speed manual was also offered on both trucks throughout 2013-2018 but is excluded per the catalog's automatic-only convention."
+      },
+      {
+        "id": "67-cummins-ho-aisin-4g",
+        "engineName": "6.7L Cummins I6 Diesel (High Output, Aisin)",
+        "fuel": "diesel",
+        "yearStart": 2013,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            800,
+            660
+          ],
+          [
+            1000,
+            890
+          ],
+          [
+            1200,
+            1070
+          ],
+          [
+            1400,
+            1180
+          ],
+          [
+            1600,
+            1230
+          ],
+          [
+            1700,
+            1260.9
+          ],
+          [
+            1800,
+            1230
+          ],
+          [
+            2000,
+            1160
+          ],
+          [
+            2200,
+            1110
+          ],
+          [
+            2400,
+            1070
+          ],
+          [
+            2600,
+            1030
+          ],
+          [
+            2800,
+            980
+          ],
+          [
+            3000,
+            850
+          ],
+          [
+            3200,
+            700
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Aisin AS69RC 6-speed",
+          "gearRatios": [
+            3.75,
+            2.0,
+            1.34,
+            1.0,
+            0.77,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3527,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "3500-only, Aisin AS69RC. Horsepower held constant at 385 hp @2,800 rpm throughout 2013-2018, but torque escalated in several steps \u2014 CORRECTION to brief's guessed escalation years: 850 lb-ft @1,600 rpm (2013-2014) \u2192 865 lb-ft @1,700 rpm (2015 running change, +15 lb-ft per FCA's own 2015 press materials) \u2192 900 lb-ft @1,700 rpm (2016-2017, confirmed identical in both years' official spec sheets \u2014 the brief guessed correctly here) \u2192 930 lb-ft @1,700 rpm (2018 only). Modeled here at the latest (2018) 385 hp/930 lb-ft rating per instructions; see confidenceNotes for the full year-by-year rating if a future revision wants to split this into sub-eras. NOTE: the 2018 FCA spec PDF itself lists '930 lb.-ft. (1,220 N\u2022m)' \u2014 1,220 Nm is the stale/uncorrected conversion left over from the 900 lb-ft rating (930 lb-ft actually converts to 1,260.9 Nm); we used the corrected conversion for the modeled peak. AXLE CORRECTION: like the SO variant, 3500 SRW with the Aisin HO is restricted to the single 3.42 axle ratio per FCA's 2016 towing chart \u2014 3.73/4.10 are DRW-only, contradicting the brief's assumed 3.73 default."
       }
     ]
   },
