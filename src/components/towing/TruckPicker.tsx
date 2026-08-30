@@ -1,13 +1,13 @@
-import { TRUCKS, findTruck, findPowertrain } from '@/data/trucks'
+import { TRUCK_FAMILIES, familyOfTruck, findTruck, findPowertrain } from '@/data/trucks'
 import { useUnitStore } from '@/store/unitStore'
 import { kgToLb, lbToKg } from '@/utils/units'
 import type { TowTruckState } from './entry'
 import { TOWING_COLORS } from './entry'
-import { fmtMass } from './format'
+import { fmtMass, yearRangeLabel } from './format'
 
 interface TruckPickerProps {
   selections: TowTruckState[]
-  onAdd: (truckId: string) => void
+  onAdd: (familyKey: string) => void
   onUpdate: (key: string, patch: Partial<TowTruckState>) => void
   onRemove: (key: string) => void
 }
@@ -30,9 +30,9 @@ export default function TruckPicker({ selections, onAdd, onUpdate, onRemove }: T
         className={SELECT_CLASS}
       >
         <option value="">+ Add a truck…</option>
-        {TRUCKS.map(t => (
-          <option key={t.id} value={t.id}>
-            {t.make} {t.model} ({t.generation})
+        {TRUCK_FAMILIES.map(f => (
+          <option key={f.key} value={f.key}>
+            {f.make} {f.model}
           </option>
         ))}
       </select>
@@ -41,6 +41,7 @@ export default function TruckPicker({ selections, onAdd, onUpdate, onRemove }: T
         const truck = findTruck(sel.truckId)
         const powertrain = truck ? findPowertrain(truck, sel.powertrainId) : undefined
         if (!truck || !powertrain) return null
+        const family = familyOfTruck(sel.truckId)
         const color = TOWING_COLORS[i % TOWING_COLORS.length]
         const weightKg = sel.weightOverrideKg ?? powertrain.curbWeightKg
 
@@ -63,6 +64,24 @@ export default function TruckPicker({ selections, onAdd, onUpdate, onRemove }: T
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label className="font-display text-[9px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+                Generation
+              </label>
+              <select
+                value={sel.truckId}
+                aria-label={`${truck.model} generation`}
+                onChange={e => onUpdate(sel.key, { truckId: e.target.value })}
+                className={SELECT_CLASS}
+              >
+                {(family?.generations ?? [truck]).map(g => (
+                  <option key={g.id} value={g.id}>
+                    {yearRangeLabel(g.yearStart, g.yearEnd)} ({g.generation})
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -112,6 +131,7 @@ export default function TruckPicker({ selections, onAdd, onUpdate, onRemove }: T
                   type="number"
                   min={0}
                   step={imperial ? 50 : 25}
+                  aria-label={`${truck.model} weight`}
                   value={Math.round(imperial ? kgToLb(weightKg) : weightKg)}
                   onChange={e => {
                     const v = Math.max(0, Number(e.target.value))

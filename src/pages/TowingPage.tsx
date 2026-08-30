@@ -1,7 +1,13 @@
 import { useMemo, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 import { TRAILER_PRESETS, trailerToLoad } from '@/data/trailers'
-import { findPowertrain, findTruck, resolveTruckToCarSpec } from '@/data/trucks'
+import {
+  carrySelectionToGeneration,
+  findPowertrain,
+  findTruck,
+  findTruckFamily,
+  resolveTruckToCarSpec,
+} from '@/data/trucks'
 import { runTowingAnalysis } from '@/engine/towing'
 import type { TowScenario } from '@/types/truck'
 import { mphToMs } from '@/utils/units'
@@ -50,15 +56,16 @@ export default function TowingPage() {
   const [scenario, setScenario] = useState<ScenarioState>(DEFAULT_SCENARIO)
   const [selections, setSelections] = useState<TowTruckState[]>([])
 
-  const addTruck = (truckId: string) => {
-    const truck = findTruck(truckId)
-    if (!truck) return
+  const addTruck = (familyKey: string) => {
+    const family = findTruckFamily(familyKey)
+    if (!family) return
+    const truck = family.generations[0] // newest generation
     const powertrain = truck.powertrains[0]
     setSelections(prev => [
       ...prev,
       {
         key: uuidv4(),
-        truckId,
+        truckId: truck.id,
         powertrainId: powertrain.id,
         axleRatio: powertrain.defaultAxleRatio,
       },
@@ -70,8 +77,20 @@ export default function TowingPage() {
       prev.map(sel => {
         if (sel.key !== key) return sel
         const next = { ...sel, ...patch }
-        // Changing engine resets axle ratio and weight to that powertrain's defaults
-        if (patch.powertrainId && patch.powertrainId !== sel.powertrainId) {
+        if (patch.truckId && patch.truckId !== sel.truckId) {
+          // Generation swap: keep the engine/axle when the new generation offers
+          // them, and drop the weight override (baselines differ between gens)
+          const newTruck = findTruck(patch.truckId)
+          const prevTruck = findTruck(sel.truckId)
+          const prevPowertrain = prevTruck ? findPowertrain(prevTruck, sel.powertrainId) : undefined
+          if (newTruck) {
+            const carried = carrySelectionToGeneration(newTruck, prevPowertrain, sel.axleRatio)
+            next.powertrainId = carried.powertrainId
+            next.axleRatio = carried.axleRatio
+            next.weightOverrideKg = undefined
+          }
+        } else if (patch.powertrainId && patch.powertrainId !== sel.powertrainId) {
+          // Changing engine resets axle ratio and weight to that powertrain's defaults
           const truck = findTruck(sel.truckId)
           const powertrain = truck ? findPowertrain(truck, patch.powertrainId) : undefined
           if (powertrain) {
@@ -112,7 +131,7 @@ export default function TowingPage() {
         return [
           {
             key: sel.key,
-            name: `${truck.model} ${powertrain.engineName} ${sel.axleRatio.toFixed(2)}`,
+            name: `${truck.yearStart} ${truck.model} ${powertrain.engineName} ${sel.axleRatio.toFixed(2)}`,
             color: TOWING_COLORS[i % TOWING_COLORS.length],
             truck,
             powertrain,
