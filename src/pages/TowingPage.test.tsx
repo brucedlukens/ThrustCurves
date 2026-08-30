@@ -1,5 +1,5 @@
 import { describe, test, expect } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TowingPage from './TowingPage'
 
@@ -12,14 +12,24 @@ describe('TowingPage', () => {
     expect(screen.getByText('Grade (%)')).toBeInTheDocument()
   })
 
-  test('adding a truck shows its card and the results tables', async () => {
+  test('the add-truck list shows one entry per model family', () => {
+    render(<TowingPage />)
+    const addSelect = screen.getByRole('combobox', { name: /add a truck/i })
+    const options = within(addSelect).getAllByRole('option')
+    expect(options.filter(o => /F-250 Super Duty/.test(o.textContent ?? ''))).toHaveLength(1)
+  })
+
+  test('adding a truck shows its card, generation select, and the results tables', async () => {
     const user = userEvent.setup()
     render(<TowingPage />)
 
     const addSelect = screen.getByRole('combobox', { name: /add a truck/i })
-    await user.selectOptions(addSelect, 'ford-f250-2023')
+    await user.selectOptions(addSelect, 'ford-f-250-super-duty')
 
-    expect(screen.getByText('Ford F-250 Super Duty')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: /remove f-250 super duty/i })).toBeInTheDocument()
+    // Defaults to the newest generation of the family
+    const genSelect = screen.getByRole('combobox', { name: /f-250 super duty generation/i })
+    expect(genSelect).toHaveValue('ford-f250-2023')
     expect(screen.getByText(/Towing Metrics/i)).toBeInTheDocument()
     expect(screen.getByText(/Gears at Target Speed/i)).toBeInTheDocument()
   })
@@ -28,11 +38,11 @@ describe('TowingPage', () => {
     const user = userEvent.setup()
     render(<TowingPage />)
 
-    await user.selectOptions(screen.getByRole('combobox', { name: /add a truck/i }), 'toyota-tundra-2022')
-    expect(screen.getByText('Toyota Tundra')).toBeInTheDocument()
+    await user.selectOptions(screen.getByRole('combobox', { name: /add a truck/i }), 'toyota-tundra')
+    expect(screen.getByRole('button', { name: /remove tundra/i })).toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: /remove tundra/i }))
-    expect(screen.queryByText('Toyota Tundra')).not.toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /remove tundra/i })).not.toBeInTheDocument()
     expect(screen.getByText(/add trucks to compare/i)).toBeInTheDocument()
   })
 })

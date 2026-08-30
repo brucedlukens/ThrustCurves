@@ -1,7 +1,18 @@
 import { describe, it, expect } from 'vitest'
-import { TRUCKS, findTruck, findPowertrain, resolveTruckToCarSpec } from './trucks'
+import {
+  TRUCKS,
+  TRUCK_FAMILIES,
+  buildTruckFamilies,
+  carrySelectionToGeneration,
+  familyOfTruck,
+  findPowertrain,
+  findTruck,
+  findTruckFamily,
+  resolveTruckToCarSpec,
+} from './trucks'
 import { TRAILER_PRESETS, trailerToLoad } from './trailers'
 import { runTowingAnalysis } from '@/engine/towing'
+import type { TruckModel, TruckPowertrain } from '@/types/truck'
 
 describe('trucks.json schema', () => {
   it('contains the expected truck models', () => {
@@ -93,6 +104,99 @@ describe('resolveTruckToCarSpec', () => {
         expect(analysis.absoluteMaxGrade!.gradePercent, label).toBeGreaterThan(1)
       }
     }
+  })
+})
+
+describe('truck families', () => {
+  it('groups every generation under a make + model family', () => {
+    const total = TRUCK_FAMILIES.reduce((n, f) => n + f.generations.length, 0)
+    expect(total).toBe(TRUCKS.length)
+    expect(new Set(TRUCK_FAMILIES.map((f) => f.key)).size).toBe(TRUCK_FAMILIES.length)
+    for (const f of TRUCK_FAMILIES) {
+      expect(f.generations.length).toBeGreaterThan(0)
+      for (const g of f.generations) {
+        expect(g.make, f.key).toBe(f.make)
+        expect(g.model, f.key).toBe(f.model)
+        expect(g.classTier, f.key).toBe(f.classTier)
+      }
+    }
+  })
+
+  it("sorts a family's generations newest first", () => {
+    const gen = (id: string, yearStart: number, yearEnd: number | null) =>
+      ({
+        id,
+        make: 'Ford',
+        model: 'F-150',
+        classTier: 'half',
+        generation: id,
+        yearStart,
+        yearEnd,
+        powertrains: [],
+      }) as unknown as TruckModel
+    const families = buildTruckFamilies([gen('old', 2015, 2020), gen('new', 2021, null)])
+    expect(families).toHaveLength(1)
+    expect(families[0].generations.map((g) => g.id)).toEqual(['new', 'old'])
+  })
+
+  it('findTruckFamily and familyOfTruck resolve the F-150 family', () => {
+    const family = findTruckFamily('ford-f-150')
+    expect(family).toBeDefined()
+    expect(family!.generations.some((g) => g.id === 'ford-f150-2021')).toBe(true)
+    expect(familyOfTruck('ford-f150-2021')?.key).toBe('ford-f-150')
+  })
+})
+
+describe('carrySelectionToGeneration', () => {
+  const pt = (over: Partial<TruckPowertrain>) =>
+    ({
+      id: 'base',
+      engineName: 'Base V8',
+      fuel: 'gas',
+      displacementL: 5.0,
+      axleRatios: [3.31, 3.73],
+      defaultAxleRatio: 3.31,
+      ...over,
+    }) as TruckPowertrain
+  const truckWith = (...powertrains: TruckPowertrain[]) =>
+    ({ powertrains }) as unknown as TruckModel
+
+  it('keeps the same engine by name and the same axle ratio when offered', () => {
+    const prev = pt({ id: 'a', engineName: '3.5L EcoBoost V6', displacementL: 3.5 })
+    const target = truckWith(
+      pt({ id: 'other' }),
+      pt({ id: 'b', engineName: '3.5L EcoBoost V6', displacementL: 3.5 }),
+    )
+    expect(carrySelectionToGeneration(target, prev, 3.73)).toEqual({
+      powertrainId: 'b',
+      axleRatio: 3.73,
+    })
+  })
+
+  it('matches by fuel + displacement when the engine was renamed', () => {
+    const prev = pt({ id: 'a', engineName: '5.0L Ti-VCT V8' })
+    const target = truckWith(
+      pt({ id: 'diesel', fuel: 'diesel', displacementL: 3.0, engineName: '3.0L Diesel' }),
+      pt({ id: 'v8', engineName: '5.0L Coyote V8' }),
+    )
+    expect(carrySelectionToGeneration(target, prev, 3.31).powertrainId).toBe('v8')
+  })
+
+  it('falls back to the first powertrain and its default axle when nothing matches', () => {
+    const prev = pt({ id: 'a', engineName: '6.2L V8', displacementL: 6.2 })
+    const target = truckWith(pt({ id: 'first', axleRatios: [3.55], defaultAxleRatio: 3.55 }))
+    expect(carrySelectionToGeneration(target, prev, 4.3)).toEqual({
+      powertrainId: 'first',
+      axleRatio: 3.55,
+    })
+  })
+
+  it('uses the first powertrain when there is no previous powertrain', () => {
+    const target = truckWith(pt({ id: 'first' }))
+    expect(carrySelectionToGeneration(target, undefined, 3.73)).toEqual({
+      powertrainId: 'first',
+      axleRatio: 3.73,
+    })
   })
 })
 

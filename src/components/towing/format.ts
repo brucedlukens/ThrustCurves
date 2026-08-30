@@ -7,6 +7,11 @@ export function gearLabel(gear: number): string {
   return `${gear}${suffix}`
 }
 
+/** Model-year range label, e.g. "2021–present" or "2017–2022" */
+export function yearRangeLabel(yearStart: number, yearEnd: number | null): string {
+  return `${yearStart}–${yearEnd ?? 'present'}`
+}
+
 /** Format power (kW internal) in display units, with sign when requested */
 export function fmtPower(kw: number, units: UnitSystem, signed = false): string {
   const value = units === 'imperial' ? kwToHp(kw) : kw

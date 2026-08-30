@@ -1,5 +1,5 @@
 import type { CarSpec, CurvePoint } from '@/types/car'
-import type { TruckModel, TruckPowertrain } from '@/types/truck'
+import type { TruckFamily, TruckModel, TruckPowertrain } from '@/types/truck'
 import trucksData from './trucks.json'
 
 /** US pickup catalog for the Towing page. See src/data/TRUCK_SOURCES.md for provenance. */
@@ -23,6 +23,73 @@ export function findPowertrain(
   powertrainId: string,
 ): TruckPowertrain | undefined {
   return truck.powertrains.find((p) => p.id === powertrainId)
+}
+
+/** Stable family key for a nameplate, e.g. "ford-f-150" */
+export function truckFamilyKey(truck: Pick<TruckModel, 'make' | 'model'>): string {
+  return `${truck.make} ${truck.model}`.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+}
+
+/** Group truck generations into families (same make + model), newest generation first */
+export function buildTruckFamilies(trucks: TruckModel[]): TruckFamily[] {
+  const families = new Map<string, TruckFamily>()
+  for (const truck of trucks) {
+    const key = truckFamilyKey(truck)
+    const family = families.get(key)
+    if (family) {
+      family.generations.push(truck)
+    } else {
+      families.set(key, {
+        key,
+        make: truck.make,
+        model: truck.model,
+        classTier: truck.classTier,
+        generations: [truck],
+      })
+    }
+  }
+  for (const family of families.values()) {
+    family.generations.sort((a, b) => b.yearStart - a.yearStart)
+  }
+  return [...families.values()]
+}
+
+/** Truck catalog grouped by nameplate, in catalog order */
+export const TRUCK_FAMILIES = buildTruckFamilies(TRUCKS)
+
+export function findTruckFamily(key: string): TruckFamily | undefined {
+  return TRUCK_FAMILIES.find((f) => f.key === key)
+}
+
+/** The family a given truck generation belongs to */
+export function familyOfTruck(truckId: string): TruckFamily | undefined {
+  return TRUCK_FAMILIES.find((f) => f.generations.some((g) => g.id === truckId))
+}
+
+/**
+ * Carry a truck-card selection across a generation swap: keep the same engine
+ * (matched by name, then by fuel + displacement) and the same axle ratio when
+ * the target generation offers them, otherwise fall back to its defaults.
+ */
+export function carrySelectionToGeneration(
+  target: TruckModel,
+  prevPowertrain: TruckPowertrain | undefined,
+  prevAxleRatio: number,
+): { powertrainId: string; axleRatio: number } {
+  const carried =
+    (prevPowertrain &&
+      (target.powertrains.find((p) => p.engineName === prevPowertrain.engineName) ??
+        target.powertrains.find(
+          (p) =>
+            p.fuel === prevPowertrain.fuel && p.displacementL === prevPowertrain.displacementL,
+        ))) ||
+    target.powertrains[0]
+  return {
+    powertrainId: carried.id,
+    axleRatio: carried.axleRatios.includes(prevAxleRatio)
+      ? prevAxleRatio
+      : carried.defaultAxleRatio,
+  }
 }
 
 /**

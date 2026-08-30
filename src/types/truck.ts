@@ -51,6 +51,17 @@ export interface TruckModel {
   powertrains: TruckPowertrain[]
 }
 
+/** All generations of one nameplate (same make + model) */
+export interface TruckFamily {
+  /** Stable key derived from make + model, e.g. "ford-f-150" */
+  key: string
+  make: string
+  model: string
+  classTier: TruckClassTier
+  /** Member generations sorted newest first */
+  generations: TruckModel[]
+}
+
 export type TrailerCategory =
   | 'flatbed'
   | 'enclosed'
