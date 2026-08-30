@@ -24,6 +24,8 @@ export interface EngineSpec {
   displacementL: number
   /** True if turbocharged or supercharged */
   forcedInduction: boolean
+  /** Electric drive: no altitude power derate, torque available from 0 rpm */
+  electric?: boolean
 }
 
 export interface TransmissionSpec {

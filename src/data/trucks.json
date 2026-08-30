@@ -1537,6 +1537,1192 @@
     ]
   },
   {
+    "id": "ford-f150-2009",
+    "make": "Ford",
+    "model": "F-150",
+    "classTier": "half",
+    "generation": "12th gen",
+    "yearStart": 2009,
+    "yearEnd": 2014,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.3
+    },
+    "powertrains": [
+      {
+        "id": "46-triton-3v",
+        "engineName": "4.6L Triton V8 (3v)",
+        "fuel": "gas",
+        "yearStart": 2009,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            295
+          ],
+          [
+            1375,
+            318
+          ],
+          [
+            1750,
+            341
+          ],
+          [
+            2125,
+            362
+          ],
+          [
+            2500,
+            382
+          ],
+          [
+            2875,
+            401
+          ],
+          [
+            3250,
+            414
+          ],
+          [
+            3625,
+            424
+          ],
+          [
+            4000,
+            434
+          ],
+          [
+            4340,
+            425
+          ],
+          [
+            4680,
+            410
+          ],
+          [
+            5020,
+            390
+          ],
+          [
+            5360,
+            377
+          ],
+          [
+            5700,
+            365
+          ],
+          [
+            6000,
+            292
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 4.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R80",
+          "gearRatios": [
+            4.171,
+            2.34,
+            1.521,
+            1.143,
+            0.867,
+            0.691
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2495,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Base 3-valve V8 in its final two model years; adequate power but the least capable tow engine of this generation before EcoBoost/Coyote arrived."
+      },
+      {
+        "id": "54-triton-3v",
+        "engineName": "5.4L Triton V8 (3v)",
+        "fuel": "gas",
+        "yearStart": 2009,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            356
+          ],
+          [
+            1357,
+            385
+          ],
+          [
+            1714,
+            413
+          ],
+          [
+            2071,
+            440
+          ],
+          [
+            2429,
+            461
+          ],
+          [
+            2786,
+            480
+          ],
+          [
+            3143,
+            490
+          ],
+          [
+            3500,
+            495
+          ],
+          [
+            3875,
+            493
+          ],
+          [
+            4250,
+            484
+          ],
+          [
+            4625,
+            466
+          ],
+          [
+            5000,
+            441
+          ],
+          [
+            5375,
+            386
+          ],
+          [
+            5750,
+            331
+          ]
+        ],
+        "redlineRpm": 5750,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R80",
+          "gearRatios": [
+            4.171,
+            2.34,
+            1.521,
+            1.143,
+            0.867,
+            0.691
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2545,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Ford's long-serving 5.4L V8 in its final F-150 application; figures here are the SAE-net gasoline rating (the flex-fuel E85 rating is higher, 320 hp/390 lb-ft)."
+      },
+      {
+        "id": "35-ecoboost",
+        "engineName": "3.5L EcoBoost V6",
+        "fuel": "gas",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            1000,
+            350
+          ],
+          [
+            1200,
+            420
+          ],
+          [
+            1400,
+            480
+          ],
+          [
+            1600,
+            525
+          ],
+          [
+            1800,
+            555
+          ],
+          [
+            2000,
+            565
+          ],
+          [
+            2200,
+            568
+          ],
+          [
+            2400,
+            569
+          ],
+          [
+            2600,
+            569
+          ],
+          [
+            2800,
+            569
+          ],
+          [
+            3000,
+            563
+          ],
+          [
+            3200,
+            554
+          ],
+          [
+            3400,
+            544
+          ],
+          [
+            3600,
+            535
+          ],
+          [
+            3800,
+            526
+          ],
+          [
+            4000,
+            522
+          ],
+          [
+            4200,
+            521
+          ],
+          [
+            4400,
+            520
+          ],
+          [
+            4600,
+            520
+          ],
+          [
+            4800,
+            520
+          ],
+          [
+            5000,
+            520
+          ],
+          [
+            5200,
+            490
+          ],
+          [
+            5400,
+            460
+          ],
+          [
+            5600,
+            430
+          ],
+          [
+            5800,
+            400
+          ],
+          [
+            6000,
+            370
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 3.5,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "6R80",
+          "gearRatios": [
+            4.171,
+            2.34,
+            1.521,
+            1.143,
+            0.867,
+            0.691
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.15,
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2595,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Twin-turbo V6 introduced for 2011 with a broad low-rpm torque plateau; matched the Coyote V8 on power while beating every gas engine in the lineup on torque and low-end response."
+      },
+      {
+        "id": "50-coyote",
+        "engineName": "5.0L Coyote V8",
+        "fuel": "gas",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            1000,
+            330
+          ],
+          [
+            1361,
+            376
+          ],
+          [
+            1722,
+            402
+          ],
+          [
+            2083,
+            427
+          ],
+          [
+            2444,
+            445
+          ],
+          [
+            2806,
+            464
+          ],
+          [
+            3167,
+            480
+          ],
+          [
+            3528,
+            493
+          ],
+          [
+            3889,
+            505
+          ],
+          [
+            4250,
+            515
+          ],
+          [
+            4562,
+            511
+          ],
+          [
+            4875,
+            503
+          ],
+          [
+            5188,
+            488
+          ],
+          [
+            5500,
+            466
+          ],
+          [
+            5833,
+            443
+          ],
+          [
+            6167,
+            396
+          ],
+          [
+            6500,
+            350
+          ]
+        ],
+        "redlineRpm": 6500,
+        "idleRpm": 650,
+        "displacementL": 5.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R80",
+          "gearRatios": [
+            4.171,
+            2.34,
+            1.521,
+            1.143,
+            0.867,
+            0.691
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.15,
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2590,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "All-new for 2011, replacing the 4.6/5.4 as the mainstream V8; a truck-specific cam profile trades the Mustang Coyote's high-rpm output for more low/mid-range torque."
+      },
+      {
+        "id": "62-boss",
+        "engineName": "6.2L Gas V8 (Boss)",
+        "fuel": "gas",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            1000,
+            382
+          ],
+          [
+            1350,
+            433
+          ],
+          [
+            1700,
+            476
+          ],
+          [
+            2050,
+            504
+          ],
+          [
+            2400,
+            524
+          ],
+          [
+            2750,
+            539
+          ],
+          [
+            3100,
+            546
+          ],
+          [
+            3450,
+            552
+          ],
+          [
+            3800,
+            570
+          ],
+          [
+            4150,
+            579
+          ],
+          [
+            4500,
+            588
+          ],
+          [
+            4833,
+            569
+          ],
+          [
+            5167,
+            551
+          ],
+          [
+            5500,
+            532
+          ],
+          [
+            5700,
+            479
+          ]
+        ],
+        "redlineRpm": 5700,
+        "idleRpm": 650,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6R80",
+          "gearRatios": [
+            4.171,
+            2.34,
+            1.521,
+            1.143,
+            0.867,
+            0.691
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2655,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Optional heavy-duty V8, standard on SVT Raptor and Harley-Davidson and offered on Lariat Limited/Lariat/Platinum; the largest-displacement, highest-torque engine in this generation's F-150 lineup."
+      }
+    ]
+  },
+  {
+    "id": "ford-f150-2004",
+    "make": "Ford",
+    "model": "F-150",
+    "classTier": "half",
+    "generation": "11th gen",
+    "yearStart": 2004,
+    "yearEnd": 2008,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.2
+    },
+    "powertrains": [
+      {
+        "id": "46-triton-2v",
+        "engineName": "4.6L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 2004,
+        "yearEnd": 2008,
+        "torqueCurve": [
+          [
+            1000,
+            255
+          ],
+          [
+            1200,
+            281
+          ],
+          [
+            1400,
+            306
+          ],
+          [
+            1600,
+            329
+          ],
+          [
+            1800,
+            350
+          ],
+          [
+            2000,
+            368
+          ],
+          [
+            2200,
+            382
+          ],
+          [
+            2400,
+            390
+          ],
+          [
+            2600,
+            394
+          ],
+          [
+            2800,
+            395
+          ],
+          [
+            3000,
+            396
+          ],
+          [
+            3200,
+            396
+          ],
+          [
+            3400,
+            397
+          ],
+          [
+            3600,
+            397
+          ],
+          [
+            3800,
+            394
+          ],
+          [
+            4000,
+            387
+          ],
+          [
+            4200,
+            378
+          ],
+          [
+            4400,
+            368
+          ],
+          [
+            4600,
+            356
+          ],
+          [
+            4800,
+            345
+          ],
+          [
+            5000,
+            325
+          ],
+          [
+            5200,
+            302
+          ],
+          [
+            5400,
+            280
+          ],
+          [
+            5600,
+            258
+          ],
+          [
+            5800,
+            236
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 4.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R70E",
+          "gearRatios": [
+            2.84,
+            1.55,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2496,
+        "tireSize": {
+          "widthMm": 255,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "4.6L Triton V8, SOHC 2-valve: 231 hp @ 4,750 rpm / 293 lb-ft @ 3,500 rpm for 2004-2006, bumped to 248 hp / 294 lb-ft for 2007-2008 (this curve models the original 2004-2006 rating); paired only with the 4R70E 4-speed automatic."
+      },
+      {
+        "id": "54-triton-3v",
+        "engineName": "5.4L Triton V8 (3v)",
+        "fuel": "gas",
+        "yearStart": 2004,
+        "yearEnd": 2008,
+        "torqueCurve": [
+          [
+            1000,
+            330
+          ],
+          [
+            1200,
+            365
+          ],
+          [
+            1400,
+            395
+          ],
+          [
+            1600,
+            420
+          ],
+          [
+            1800,
+            442
+          ],
+          [
+            2000,
+            460
+          ],
+          [
+            2200,
+            474
+          ],
+          [
+            2400,
+            484
+          ],
+          [
+            2600,
+            490
+          ],
+          [
+            2800,
+            492
+          ],
+          [
+            3000,
+            493
+          ],
+          [
+            3200,
+            493
+          ],
+          [
+            3400,
+            493
+          ],
+          [
+            3600,
+            495
+          ],
+          [
+            3800,
+            495
+          ],
+          [
+            4000,
+            492
+          ],
+          [
+            4200,
+            483
+          ],
+          [
+            4400,
+            472
+          ],
+          [
+            4600,
+            459
+          ],
+          [
+            4800,
+            444
+          ],
+          [
+            5000,
+            425
+          ],
+          [
+            5200,
+            404
+          ],
+          [
+            5400,
+            382
+          ],
+          [
+            5600,
+            358
+          ],
+          [
+            5800,
+            333
+          ],
+          [
+            6000,
+            308
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R75E",
+          "gearRatios": [
+            2.84,
+            1.55,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2543,
+        "tireSize": {
+          "widthMm": 255,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "5.4L Triton V8, SOHC 3-valve with variable cam timing: 300 hp @ 5,000 rpm / 365 lb-ft @ 3,750 rpm, unchanged across the full 2004-2008 run; standard on FX4/Lariat/King Ranch and up, paired only with the 4R75E 4-speed automatic (no 6-speed offered this generation)."
+      }
+    ]
+  },
+  {
+    "id": "ford-f150-1997",
+    "make": "Ford",
+    "model": "F-150",
+    "classTier": "half",
+    "generation": "10th gen",
+    "yearStart": 1997,
+    "yearEnd": 2003,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.16
+    },
+    "powertrains": [
+      {
+        "id": "46-triton-2v",
+        "engineName": "4.6L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 1997,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            1000,
+            225
+          ],
+          [
+            1250,
+            260
+          ],
+          [
+            1500,
+            295
+          ],
+          [
+            1750,
+            322
+          ],
+          [
+            2000,
+            345
+          ],
+          [
+            2250,
+            365
+          ],
+          [
+            2500,
+            380
+          ],
+          [
+            2750,
+            389
+          ],
+          [
+            3000,
+            390
+          ],
+          [
+            3250,
+            393
+          ],
+          [
+            3500,
+            391
+          ],
+          [
+            3750,
+            385
+          ],
+          [
+            4000,
+            375
+          ],
+          [
+            4250,
+            362
+          ],
+          [
+            4500,
+            348
+          ],
+          [
+            4750,
+            322
+          ],
+          [
+            5000,
+            290
+          ],
+          [
+            5250,
+            265
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 4.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R70W 4-Speed",
+          "gearRatios": [
+            2.84,
+            1.55,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2125,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Base-generation V8, rated 220 hp/290 lb-ft for nearly the whole run; some late trucks may carry a 231 hp/293 lb-ft rating."
+      },
+      {
+        "id": "54-triton-2v-97",
+        "engineName": "5.4L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 1997,
+        "yearEnd": 1998,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1250,
+            300
+          ],
+          [
+            1500,
+            340
+          ],
+          [
+            1750,
+            375
+          ],
+          [
+            2000,
+            405
+          ],
+          [
+            2250,
+            428
+          ],
+          [
+            2500,
+            442
+          ],
+          [
+            2750,
+            446
+          ],
+          [
+            3000,
+            447
+          ],
+          [
+            3250,
+            445
+          ],
+          [
+            3500,
+            438
+          ],
+          [
+            3750,
+            425
+          ],
+          [
+            4000,
+            408
+          ],
+          [
+            4250,
+            393
+          ],
+          [
+            4500,
+            365
+          ],
+          [
+            4750,
+            330
+          ],
+          [
+            5000,
+            295
+          ],
+          [
+            5250,
+            260
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD 4-Speed",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2160,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Early 5.4L Triton rating, used 1997-1998 before the 1999 power bump."
+      },
+      {
+        "id": "54-triton-2v-99",
+        "engineName": "5.4L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 1999,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            1000,
+            300
+          ],
+          [
+            1250,
+            350
+          ],
+          [
+            1500,
+            395
+          ],
+          [
+            1750,
+            430
+          ],
+          [
+            2000,
+            455
+          ],
+          [
+            2250,
+            470
+          ],
+          [
+            2500,
+            475
+          ],
+          [
+            2750,
+            472
+          ],
+          [
+            3000,
+            465
+          ],
+          [
+            3250,
+            455
+          ],
+          [
+            3500,
+            443
+          ],
+          [
+            3750,
+            430
+          ],
+          [
+            4000,
+            418
+          ],
+          [
+            4250,
+            412
+          ],
+          [
+            4500,
+            411
+          ],
+          [
+            4750,
+            380
+          ],
+          [
+            5000,
+            345
+          ],
+          [
+            5250,
+            310
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R100 4-Speed",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2160,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Higher-output 5.4L Triton rating used from 1999 through the end of the generation in 2003."
+      }
+    ]
+  },
+  {
     "id": "ford-f150-1992",
     "make": "Ford",
     "model": "F-150",
@@ -1782,6 +2968,275 @@
           "rimDiameterIn": 15
         },
         "notes": "210 hp @ 3,600 rpm / 325 lb-ft @ 2,800 rpm for 1994-96, explicitly quoted from the period Ford brochure 'with Automatic Transmission.' Figures moved around across the run: 1992 was 210 hp/315 lb-ft, 1993 dipped to 200 hp/310 lb-ft (roller lifters/cam were introduced for 1994, coinciding with the return to 210 hp and a bump to 325 lb-ft). This entry models the 1994-96 automatic-transmission calibration as representative. SuperCab 4x4, short/standard bed only (no crew cab existed on the 9th-gen F-150)."
+      }
+    ]
+  },
+  {
+    "id": "ford-f150-lightning-2022",
+    "make": "Ford",
+    "model": "F-150 Lightning",
+    "classTier": "half",
+    "generation": "1st gen",
+    "yearStart": 2022,
+    "yearEnd": 2025,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.3
+    },
+    "powertrains": [
+      {
+        "id": "dual-sr",
+        "engineName": "Dual-Motor (Standard Range)",
+        "fuel": "ev",
+        "yearStart": 2022,
+        "yearEnd": 2025,
+        "torqueCurve": [
+          [
+            0,
+            1051
+          ],
+          [
+            500,
+            1051
+          ],
+          [
+            1000,
+            1051
+          ],
+          [
+            1500,
+            1051
+          ],
+          [
+            2000,
+            1051
+          ],
+          [
+            2500,
+            1051
+          ],
+          [
+            3000,
+            1051
+          ],
+          [
+            3050,
+            1051
+          ],
+          [
+            3500,
+            920
+          ],
+          [
+            4000,
+            805
+          ],
+          [
+            4500,
+            715
+          ],
+          [
+            5000,
+            644
+          ],
+          [
+            5500,
+            585
+          ],
+          [
+            6000,
+            536
+          ],
+          [
+            6500,
+            495
+          ],
+          [
+            7000,
+            460
+          ],
+          [
+            7500,
+            429
+          ],
+          [
+            8000,
+            402
+          ],
+          [
+            8500,
+            379
+          ],
+          [
+            9000,
+            358
+          ],
+          [
+            9500,
+            339
+          ],
+          [
+            10000,
+            322
+          ],
+          [
+            10500,
+            307
+          ],
+          [
+            11000,
+            293
+          ]
+        ],
+        "redlineRpm": 11000,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          9.72
+        ],
+        "defaultAxleRatio": 9.72,
+        "curbWeightKg": 2728,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Base dual-motor powertrain with the standard-range battery; full torque available from rest, tapering to constant power above roughly 3,050 rpm."
+      },
+      {
+        "id": "dual-er",
+        "engineName": "Dual-Motor (Extended Range)",
+        "fuel": "ev",
+        "yearStart": 2022,
+        "yearEnd": 2025,
+        "torqueCurve": [
+          [
+            0,
+            1051
+          ],
+          [
+            500,
+            1051
+          ],
+          [
+            1000,
+            1051
+          ],
+          [
+            1500,
+            1051
+          ],
+          [
+            2000,
+            1051
+          ],
+          [
+            2500,
+            1051
+          ],
+          [
+            3000,
+            1051
+          ],
+          [
+            3500,
+            1051
+          ],
+          [
+            3950,
+            1051
+          ],
+          [
+            4000,
+            1033
+          ],
+          [
+            4500,
+            918
+          ],
+          [
+            5000,
+            826
+          ],
+          [
+            5500,
+            751
+          ],
+          [
+            6000,
+            688
+          ],
+          [
+            6500,
+            635
+          ],
+          [
+            7000,
+            590
+          ],
+          [
+            7500,
+            551
+          ],
+          [
+            8000,
+            516
+          ],
+          [
+            8500,
+            486
+          ],
+          [
+            9000,
+            459
+          ],
+          [
+            9500,
+            435
+          ],
+          [
+            10000,
+            413
+          ],
+          [
+            10500,
+            393
+          ],
+          [
+            11000,
+            375
+          ]
+        ],
+        "redlineRpm": 11000,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          9.72
+        ],
+        "defaultAxleRatio": 9.72,
+        "curbWeightKg": 2989,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Higher-output dual-motor powertrain paired with the extended-range battery; same 775 lb-ft peak torque as Standard Range but stretched to more power via a constant-power taper starting near 3,950 rpm."
       }
     ]
   },
@@ -3006,6 +4461,858 @@
           "rimDiameterIn": 17
         },
         "notes": "2015 model-year revision: replaced the twin GT32 'DualBoost' turbo with a single larger GT37 variable-geometry turbo, added a Bosch CP4.2 high-pressure fuel pump (longer stroke) and piezo fuel injectors, and IROX-coated lower main bearings, raising output to 440 hp @ 2,800 rpm / 860 lb-ft @ 1,600 rpm. No significant powertrain calibration change for 2016. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim; curb weight bumped slightly (+50 lb) versus the 2011-2014 diesel entry for the larger turbo/cooling hardware \u2014 this delta is a low-confidence estimate."
+      }
+    ]
+  },
+  {
+    "id": "ford-f250-2008",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "2nd gen",
+    "yearStart": 2008,
+    "yearEnd": 2010,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.45
+    },
+    "powertrains": [
+      {
+        "id": "54-triton-3v-sd",
+        "engineName": "5.4L Triton V8 (3v)",
+        "fuel": "gas",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            300
+          ],
+          [
+            1250,
+            340
+          ],
+          [
+            1500,
+            375
+          ],
+          [
+            1750,
+            405
+          ],
+          [
+            2000,
+            430
+          ],
+          [
+            2250,
+            450
+          ],
+          [
+            2500,
+            465
+          ],
+          [
+            2750,
+            478
+          ],
+          [
+            3000,
+            487
+          ],
+          [
+            3250,
+            492
+          ],
+          [
+            3500,
+            494
+          ],
+          [
+            3750,
+            495
+          ],
+          [
+            4000,
+            490
+          ],
+          [
+            4250,
+            483
+          ],
+          [
+            4500,
+            475
+          ],
+          [
+            4750,
+            455
+          ],
+          [
+            5000,
+            420
+          ],
+          [
+            5250,
+            395
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3050,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The base V8 for '08-'10 Super Duty \u2014 adequate for light-duty use but the weakest tow engine of this trio."
+      },
+      {
+        "id": "68-v10-3v",
+        "engineName": "6.8L Triton V10 (3v)",
+        "fuel": "gas",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            390
+          ],
+          [
+            1250,
+            440
+          ],
+          [
+            1500,
+            480
+          ],
+          [
+            1750,
+            515
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2250,
+            570
+          ],
+          [
+            2500,
+            590
+          ],
+          [
+            2750,
+            605
+          ],
+          [
+            3000,
+            615
+          ],
+          [
+            3250,
+            620
+          ],
+          [
+            3500,
+            608
+          ],
+          [
+            3750,
+            594
+          ],
+          [
+            4000,
+            580
+          ],
+          [
+            4250,
+            565
+          ],
+          [
+            4500,
+            552
+          ],
+          [
+            4750,
+            540
+          ],
+          [
+            5000,
+            515
+          ],
+          [
+            5250,
+            485
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3120,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The volume gas engine of this generation \u2014 a real torque step up from the 5.4 without the diesel's weight or price."
+      },
+      {
+        "id": "64-powerstroke",
+        "engineName": "6.4L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            600
+          ],
+          [
+            1200,
+            700
+          ],
+          [
+            1400,
+            780
+          ],
+          [
+            1600,
+            840
+          ],
+          [
+            1800,
+            870
+          ],
+          [
+            2000,
+            881
+          ],
+          [
+            2200,
+            878
+          ],
+          [
+            2400,
+            868
+          ],
+          [
+            2600,
+            855
+          ],
+          [
+            2800,
+            845
+          ],
+          [
+            3000,
+            831
+          ],
+          [
+            3200,
+            780
+          ],
+          [
+            3400,
+            700
+          ],
+          [
+            3600,
+            590
+          ],
+          [
+            3800,
+            460
+          ]
+        ],
+        "redlineRpm": 3800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3400,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The heaviest and strongest option by far \u2014 a sequential twin-turbo diesel with a broad, flat torque plateau built for towing."
+      }
+    ]
+  },
+  {
+    "id": "ford-f250-1999",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "1st gen",
+    "yearStart": 1999,
+    "yearEnd": 2007,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.4
+    },
+    "powertrains": [
+      {
+        "id": "54-triton-sd",
+        "engineName": "5.4L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 1999,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1250,
+            360
+          ],
+          [
+            1500,
+            395
+          ],
+          [
+            1750,
+            425
+          ],
+          [
+            2000,
+            450
+          ],
+          [
+            2250,
+            468
+          ],
+          [
+            2500,
+            475
+          ],
+          [
+            2750,
+            472
+          ],
+          [
+            3000,
+            465
+          ],
+          [
+            3250,
+            452
+          ],
+          [
+            3500,
+            435
+          ],
+          [
+            3750,
+            415
+          ],
+          [
+            4000,
+            405
+          ],
+          [
+            4250,
+            411
+          ],
+          [
+            4500,
+            412
+          ],
+          [
+            4750,
+            393
+          ],
+          [
+            5000,
+            370
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2950,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "1999-2004 Super Duty-tuned 2-valve 5.4L, 260 hp @ 4,500 rpm / 350 lb-ft @ 2,500 rpm for the bulk of the run (very early 1999 trucks were 255 hp). Replaced by the 24-valve 3-valve 5.4L (300 hp/365 lb-ft) for 2005-2007, not modeled here per the brief."
+      },
+      {
+        "id": "68-v10-2v",
+        "engineName": "6.8L Triton V10 (2v)",
+        "fuel": "gas",
+        "yearStart": 1999,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1250,
+            425
+          ],
+          [
+            1500,
+            465
+          ],
+          [
+            1750,
+            500
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2250,
+            552
+          ],
+          [
+            2500,
+            566
+          ],
+          [
+            2750,
+            573
+          ],
+          [
+            3000,
+            576
+          ],
+          [
+            3250,
+            576
+          ],
+          [
+            3500,
+            570
+          ],
+          [
+            3750,
+            558
+          ],
+          [
+            4000,
+            543
+          ],
+          [
+            4250,
+            522
+          ],
+          [
+            4500,
+            480
+          ],
+          [
+            4750,
+            445
+          ],
+          [
+            5000,
+            410
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3020,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "1999-2004 20-valve V10, 310 hp @ 4,250 rpm / 425 lb-ft @ 3,250 rpm, matching the brief exactly. Replaced by the 30-valve 3-valve V10 for 2005."
+      },
+      {
+        "id": "68-v10-3v",
+        "engineName": "6.8L Triton V10 (3v)",
+        "fuel": "gas",
+        "yearStart": 2005,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            1000,
+            390
+          ],
+          [
+            1250,
+            440
+          ],
+          [
+            1500,
+            480
+          ],
+          [
+            1750,
+            515
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2250,
+            570
+          ],
+          [
+            2500,
+            590
+          ],
+          [
+            2750,
+            605
+          ],
+          [
+            3000,
+            615
+          ],
+          [
+            3250,
+            617
+          ],
+          [
+            3500,
+            608
+          ],
+          [
+            3750,
+            592
+          ],
+          [
+            4000,
+            573
+          ],
+          [
+            4250,
+            550
+          ],
+          [
+            4500,
+            543
+          ],
+          [
+            4750,
+            532
+          ],
+          [
+            5000,
+            495
+          ],
+          [
+            5250,
+            456
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110 TorqShift",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3060,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "2005-2007 3-valve V10 (355 hp / 455 lb-ft); Wikipedia's 362/457 figure belongs to the 2008-2010 trucks."
+      },
+      {
+        "id": "73-powerstroke-sd",
+        "engineName": "7.3L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 1999,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            800,
+            454
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            640
+          ],
+          [
+            1400,
+            675
+          ],
+          [
+            1600,
+            685
+          ],
+          [
+            1800,
+            684
+          ],
+          [
+            2000,
+            682
+          ],
+          [
+            2200,
+            678
+          ],
+          [
+            2400,
+            674
+          ],
+          [
+            2600,
+            672
+          ],
+          [
+            2800,
+            640
+          ],
+          [
+            3000,
+            560
+          ]
+        ],
+        "redlineRpm": 3000,
+        "idleRpm": 700,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3180,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Automatic-transmission rating for the bulk of the 1999-2003 run: 250 hp @ 2,600 rpm / 505 lb-ft @ 1,600 rpm. Very early 1999 (pre running-change) autos were lower at 235 hp/500 lb-ft, and manual-transmission trucks were rated higher (275 hp/525 lb-ft) -- neither modeled here per the brief's instruction to use the representative automatic calibration."
+      },
+      {
+        "id": "60-powerstroke",
+        "engineName": "6.0L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2003,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            600
+          ],
+          [
+            1200,
+            690
+          ],
+          [
+            1400,
+            745
+          ],
+          [
+            1600,
+            768
+          ],
+          [
+            1800,
+            772
+          ],
+          [
+            2000,
+            773
+          ],
+          [
+            2200,
+            765
+          ],
+          [
+            2400,
+            752
+          ],
+          [
+            2600,
+            735
+          ],
+          [
+            2800,
+            715
+          ],
+          [
+            3000,
+            705
+          ],
+          [
+            3200,
+            700
+          ],
+          [
+            3400,
+            685
+          ],
+          [
+            3600,
+            620
+          ],
+          [
+            3800,
+            560
+          ],
+          [
+            4000,
+            500
+          ],
+          [
+            4200,
+            440
+          ]
+        ],
+        "redlineRpm": 4200,
+        "idleRpm": 700,
+        "displacementL": 6.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "5R110 TorqShift",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3260,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "2003-2007 replacement for the 7.3L, single rating across auto/manual. Modeled at the 2005-2007 calibration, 325 hp @ 3,300 rpm / 570 lb-ft @ 2,000 rpm; 2003-2004 trucks were slightly lower at 560 lb-ft, per the brief's instruction."
       }
     ]
   },
@@ -4649,6 +6956,858 @@
           "rimDiameterIn": 17
         },
         "notes": "Same 2015 GT37 turbo/injector/fuel-pump revision as the F-250 entry, raising output to 440 hp @ 2,800 rpm / 860 lb-ft @ 1,600 rpm. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim."
+      }
+    ]
+  },
+  {
+    "id": "ford-f350-srw-2008",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "2nd gen",
+    "yearStart": 2008,
+    "yearEnd": 2010,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "54-triton-3v-sd",
+        "engineName": "5.4L Triton V8 (3v)",
+        "fuel": "gas",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            300
+          ],
+          [
+            1250,
+            340
+          ],
+          [
+            1500,
+            375
+          ],
+          [
+            1750,
+            405
+          ],
+          [
+            2000,
+            430
+          ],
+          [
+            2250,
+            450
+          ],
+          [
+            2500,
+            465
+          ],
+          [
+            2750,
+            478
+          ],
+          [
+            3000,
+            487
+          ],
+          [
+            3250,
+            492
+          ],
+          [
+            3500,
+            494
+          ],
+          [
+            3750,
+            495
+          ],
+          [
+            4000,
+            490
+          ],
+          [
+            4250,
+            483
+          ],
+          [
+            4500,
+            475
+          ],
+          [
+            4750,
+            455
+          ],
+          [
+            5000,
+            420
+          ],
+          [
+            5250,
+            395
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3110,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The base V8 for '08-'10 Super Duty \u2014 adequate for light-duty use but the weakest tow engine of this trio."
+      },
+      {
+        "id": "68-v10-3v",
+        "engineName": "6.8L Triton V10 (3v)",
+        "fuel": "gas",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            390
+          ],
+          [
+            1250,
+            440
+          ],
+          [
+            1500,
+            480
+          ],
+          [
+            1750,
+            515
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2250,
+            570
+          ],
+          [
+            2500,
+            590
+          ],
+          [
+            2750,
+            605
+          ],
+          [
+            3000,
+            615
+          ],
+          [
+            3250,
+            620
+          ],
+          [
+            3500,
+            608
+          ],
+          [
+            3750,
+            594
+          ],
+          [
+            4000,
+            580
+          ],
+          [
+            4250,
+            565
+          ],
+          [
+            4500,
+            552
+          ],
+          [
+            4750,
+            540
+          ],
+          [
+            5000,
+            515
+          ],
+          [
+            5250,
+            485
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3180,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The volume gas engine of this generation \u2014 a real torque step up from the 5.4 without the diesel's weight or price."
+      },
+      {
+        "id": "64-powerstroke",
+        "engineName": "6.4L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2008,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            1000,
+            600
+          ],
+          [
+            1200,
+            700
+          ],
+          [
+            1400,
+            780
+          ],
+          [
+            1600,
+            840
+          ],
+          [
+            1800,
+            870
+          ],
+          [
+            2000,
+            881
+          ],
+          [
+            2200,
+            878
+          ],
+          [
+            2400,
+            868
+          ],
+          [
+            2600,
+            855
+          ],
+          [
+            2800,
+            845
+          ],
+          [
+            3000,
+            831
+          ],
+          [
+            3200,
+            780
+          ],
+          [
+            3400,
+            700
+          ],
+          [
+            3600,
+            590
+          ],
+          [
+            3800,
+            460
+          ]
+        ],
+        "redlineRpm": 3800,
+        "idleRpm": 700,
+        "displacementL": 6.4,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "5R110W TorqShift 5-Speed",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3460,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "The heaviest and strongest option by far \u2014 a sequential twin-turbo diesel with a broad, flat torque plateau built for towing."
+      }
+    ]
+  },
+  {
+    "id": "ford-f350-srw-1999",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "1st gen",
+    "yearStart": 1999,
+    "yearEnd": 2007,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.45
+    },
+    "powertrains": [
+      {
+        "id": "54-triton-sd",
+        "engineName": "5.4L Triton V8 (2v)",
+        "fuel": "gas",
+        "yearStart": 1999,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1250,
+            360
+          ],
+          [
+            1500,
+            395
+          ],
+          [
+            1750,
+            425
+          ],
+          [
+            2000,
+            450
+          ],
+          [
+            2250,
+            468
+          ],
+          [
+            2500,
+            475
+          ],
+          [
+            2750,
+            472
+          ],
+          [
+            3000,
+            465
+          ],
+          [
+            3250,
+            452
+          ],
+          [
+            3500,
+            435
+          ],
+          [
+            3750,
+            415
+          ],
+          [
+            4000,
+            405
+          ],
+          [
+            4250,
+            411
+          ],
+          [
+            4500,
+            412
+          ],
+          [
+            4750,
+            393
+          ],
+          [
+            5000,
+            370
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 650,
+        "displacementL": 5.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3020,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry: 260 hp @ 4,500 rpm / 350 lb-ft @ 2,500 rpm for 1999-2004 (very early 1999 was 255 hp). Replaced by the 24-valve 3-valve 5.4L for 2005-2007, not modeled here."
+      },
+      {
+        "id": "68-v10-2v",
+        "engineName": "6.8L Triton V10 (2v)",
+        "fuel": "gas",
+        "yearStart": 1999,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1250,
+            425
+          ],
+          [
+            1500,
+            465
+          ],
+          [
+            1750,
+            500
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2250,
+            552
+          ],
+          [
+            2500,
+            566
+          ],
+          [
+            2750,
+            573
+          ],
+          [
+            3000,
+            576
+          ],
+          [
+            3250,
+            576
+          ],
+          [
+            3500,
+            570
+          ],
+          [
+            3750,
+            558
+          ],
+          [
+            4000,
+            543
+          ],
+          [
+            4250,
+            522
+          ],
+          [
+            4500,
+            480
+          ],
+          [
+            4750,
+            445
+          ],
+          [
+            5000,
+            410
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3090,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry: 1999-2004, 310 hp @ 4,250 rpm / 425 lb-ft @ 3,250 rpm."
+      },
+      {
+        "id": "68-v10-3v",
+        "engineName": "6.8L Triton V10 (3v)",
+        "fuel": "gas",
+        "yearStart": 2005,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            1000,
+            390
+          ],
+          [
+            1250,
+            440
+          ],
+          [
+            1500,
+            480
+          ],
+          [
+            1750,
+            515
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2250,
+            570
+          ],
+          [
+            2500,
+            590
+          ],
+          [
+            2750,
+            605
+          ],
+          [
+            3000,
+            615
+          ],
+          [
+            3250,
+            617
+          ],
+          [
+            3500,
+            608
+          ],
+          [
+            3750,
+            592
+          ],
+          [
+            4000,
+            573
+          ],
+          [
+            4250,
+            550
+          ],
+          [
+            4500,
+            543
+          ],
+          [
+            4750,
+            532
+          ],
+          [
+            5000,
+            495
+          ],
+          [
+            5250,
+            456
+          ]
+        ],
+        "redlineRpm": 5250,
+        "idleRpm": 650,
+        "displacementL": 6.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "5R110 TorqShift",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3130,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "2005-2007 3-valve V10 (355 hp / 455 lb-ft); Wikipedia's 362/457 figure belongs to the 2008-2010 trucks."
+      },
+      {
+        "id": "73-powerstroke-sd",
+        "engineName": "7.3L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 1999,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            800,
+            454
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            640
+          ],
+          [
+            1400,
+            675
+          ],
+          [
+            1600,
+            685
+          ],
+          [
+            1800,
+            684
+          ],
+          [
+            2000,
+            682
+          ],
+          [
+            2200,
+            678
+          ],
+          [
+            2400,
+            674
+          ],
+          [
+            2600,
+            672
+          ],
+          [
+            2800,
+            640
+          ],
+          [
+            3000,
+            560
+          ]
+        ],
+        "redlineRpm": 3000,
+        "idleRpm": 700,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "4R100",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3250,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry: automatic-rated 250 hp @ 2,600 rpm / 505 lb-ft @ 1,600 rpm for the bulk of 1999-2003 (early 1999/2000 lower, manual higher -- not modeled). This is the classic 1-ton Crew Cab 4x4 diesel combo of the era."
+      },
+      {
+        "id": "60-powerstroke",
+        "engineName": "6.0L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 2003,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            600
+          ],
+          [
+            1200,
+            690
+          ],
+          [
+            1400,
+            745
+          ],
+          [
+            1600,
+            768
+          ],
+          [
+            1800,
+            772
+          ],
+          [
+            2000,
+            773
+          ],
+          [
+            2200,
+            765
+          ],
+          [
+            2400,
+            752
+          ],
+          [
+            2600,
+            735
+          ],
+          [
+            2800,
+            715
+          ],
+          [
+            3000,
+            705
+          ],
+          [
+            3200,
+            700
+          ],
+          [
+            3400,
+            685
+          ],
+          [
+            3600,
+            620
+          ],
+          [
+            3800,
+            560
+          ],
+          [
+            4000,
+            500
+          ],
+          [
+            4200,
+            440
+          ]
+        ],
+        "redlineRpm": 4200,
+        "idleRpm": 700,
+        "displacementL": 6.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "5R110 TorqShift",
+          "gearRatios": [
+            3.11,
+            2.22,
+            1.55,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1,
+          4.3
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3330,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same engine/rating as the F-250 entry: 2003-2007, modeled at the 2005-2007 calibration of 325 hp @ 3,300 rpm / 570 lb-ft @ 2,000 rpm (2003-2004 was 560 lb-ft)."
       }
     ]
   },
@@ -6353,6 +9512,287 @@
           "rimDiameterIn": 16
         },
         "notes": "Vortec 5700, RPO L31: center-bolt valve covers, revised heads/intake vs L05. 255 hp @ 4600 rpm / 330 lb-ft @ 2800 rpm confirmed consistent 1996-1998 (engine ran through 2002 in vans/SUVs). Matches brief exactly."
+      }
+    ]
+  },
+  {
+    "id": "gm-silverado-ev-2024",
+    "make": "Chevrolet",
+    "model": "Silverado EV",
+    "classTier": "half",
+    "generation": "1st gen (BT1)",
+    "yearStart": 2024,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.41,
+      "frontalAreaM2": 3.4
+    },
+    "powertrains": [
+      {
+        "id": "wt-dual",
+        "engineName": "Dual-Motor (Work Truck)",
+        "fuel": "ev",
+        "yearStart": 2024,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            834
+          ],
+          [
+            500,
+            834
+          ],
+          [
+            1000,
+            834
+          ],
+          [
+            1500,
+            834
+          ],
+          [
+            2000,
+            834
+          ],
+          [
+            2500,
+            834
+          ],
+          [
+            3000,
+            834
+          ],
+          [
+            3500,
+            834
+          ],
+          [
+            4000,
+            834
+          ],
+          [
+            4350,
+            834
+          ],
+          [
+            4500,
+            807
+          ],
+          [
+            5000,
+            726
+          ],
+          [
+            5500,
+            660
+          ],
+          [
+            6000,
+            605
+          ],
+          [
+            6500,
+            559
+          ],
+          [
+            7000,
+            519
+          ],
+          [
+            7500,
+            484
+          ],
+          [
+            8000,
+            454
+          ],
+          [
+            8500,
+            427
+          ],
+          [
+            9000,
+            404
+          ],
+          [
+            9500,
+            382
+          ],
+          [
+            10000,
+            363
+          ],
+          [
+            10500,
+            346
+          ],
+          [
+            11000,
+            330
+          ],
+          [
+            11500,
+            316
+          ],
+          [
+            12000,
+            303
+          ],
+          [
+            12300,
+            295
+          ]
+        ],
+        "redlineRpm": 12300,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          10.5
+        ],
+        "defaultAxleRatio": 10.5,
+        "curbWeightKg": 3870,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Standard dual-motor powertrain for 3WT/4WT Work Truck trims; full torque from rest with a constant-power taper above roughly 4,350 rpm."
+      },
+      {
+        "id": "rst-max",
+        "engineName": "Dual-Motor (RST Max Power)",
+        "fuel": "ev",
+        "yearStart": 2024,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            1064
+          ],
+          [
+            500,
+            1064
+          ],
+          [
+            1000,
+            1064
+          ],
+          [
+            1500,
+            1064
+          ],
+          [
+            2000,
+            1064
+          ],
+          [
+            2500,
+            1064
+          ],
+          [
+            3000,
+            1064
+          ],
+          [
+            3500,
+            1064
+          ],
+          [
+            4000,
+            1064
+          ],
+          [
+            4500,
+            1064
+          ],
+          [
+            5000,
+            1064
+          ],
+          [
+            5050,
+            1064
+          ],
+          [
+            5500,
+            976
+          ],
+          [
+            6000,
+            895
+          ],
+          [
+            6500,
+            826
+          ],
+          [
+            7000,
+            767
+          ],
+          [
+            7500,
+            716
+          ],
+          [
+            8000,
+            671
+          ],
+          [
+            8500,
+            632
+          ],
+          [
+            9000,
+            597
+          ],
+          [
+            9500,
+            565
+          ],
+          [
+            10000,
+            537
+          ],
+          [
+            10500,
+            511
+          ],
+          [
+            10700,
+            502
+          ]
+        ],
+        "redlineRpm": 10700,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          10.5
+        ],
+        "defaultAxleRatio": 10.5,
+        "curbWeightKg": 3970,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 24
+        },
+        "notes": "Peak-output Silverado EV powertrain, reaching 754 hp/785 lb-ft only in the RST's 'Wide Open Watts' launch mode; constant-power taper above roughly 5,050 rpm."
       }
     ]
   },
@@ -8103,6 +11543,267 @@
           "rimDiameterIn": 16
         },
         "notes": "Same 6.5L Turbo Diesel (L56/L65) as the 2500HD entry, on the heavier 3500 SRW crew-cab baseline. This diesel+crew-cab combination was a common and popular GMT400 configuration among owners/collectors."
+      }
+    ]
+  },
+  {
+    "id": "gmc-hummer-ev-2022",
+    "make": "GMC",
+    "model": "Hummer EV Pickup",
+    "classTier": "half",
+    "generation": "1st gen",
+    "yearStart": 2022,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.5,
+      "frontalAreaM2": 3.9
+    },
+    "powertrains": [
+      {
+        "id": "2x",
+        "engineName": "Dual-Motor (2X)",
+        "fuel": "ev",
+        "yearStart": 2023,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            928.1
+          ],
+          [
+            500,
+            928.1
+          ],
+          [
+            1000,
+            928.1
+          ],
+          [
+            1500,
+            928.1
+          ],
+          [
+            2000,
+            928.1
+          ],
+          [
+            2500,
+            928.1
+          ],
+          [
+            3000,
+            928.1
+          ],
+          [
+            3500,
+            928.1
+          ],
+          [
+            4000,
+            928.1
+          ],
+          [
+            4500,
+            928.1
+          ],
+          [
+            4800,
+            928.1
+          ],
+          [
+            5300,
+            839.8
+          ],
+          [
+            5800,
+            767.4
+          ],
+          [
+            6300,
+            706.5
+          ],
+          [
+            6800,
+            654.5
+          ],
+          [
+            7300,
+            609.7
+          ],
+          [
+            7800,
+            570.6
+          ],
+          [
+            8300,
+            536.2
+          ],
+          [
+            8800,
+            505.8
+          ],
+          [
+            9300,
+            478.6
+          ],
+          [
+            9800,
+            454.2
+          ],
+          [
+            10300,
+            432.1
+          ],
+          [
+            10700,
+            416.0
+          ]
+        ],
+        "redlineRpm": 10700,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          10.5
+        ],
+        "defaultAxleRatio": 10.5,
+        "curbWeightKg": 4090,
+        "tireSize": {
+          "widthMm": 305,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "EV2X entry dual-motor trim (front + rear Ultium Drive units), available spring 2023."
+      },
+      {
+        "id": "3x",
+        "engineName": "Tri-Motor (3X)",
+        "fuel": "ev",
+        "yearStart": 2022,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            1484.9
+          ],
+          [
+            500,
+            1484.9
+          ],
+          [
+            1000,
+            1484.9
+          ],
+          [
+            1500,
+            1484.9
+          ],
+          [
+            2000,
+            1484.9
+          ],
+          [
+            2500,
+            1484.9
+          ],
+          [
+            3000,
+            1484.9
+          ],
+          [
+            3500,
+            1484.9
+          ],
+          [
+            4000,
+            1484.9
+          ],
+          [
+            4500,
+            1484.9
+          ],
+          [
+            4800,
+            1484.9
+          ],
+          [
+            5300,
+            1343.5
+          ],
+          [
+            5800,
+            1227.7
+          ],
+          [
+            6300,
+            1130.3
+          ],
+          [
+            6800,
+            1047.2
+          ],
+          [
+            7300,
+            975.4
+          ],
+          [
+            7800,
+            912.9
+          ],
+          [
+            8300,
+            857.9
+          ],
+          [
+            8800,
+            809.2
+          ],
+          [
+            9300,
+            765.7
+          ],
+          [
+            9800,
+            726.6
+          ],
+          [
+            10300,
+            691.3
+          ],
+          [
+            10700,
+            665.5
+          ]
+        ],
+        "redlineRpm": 10700,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          10.5
+        ],
+        "defaultAxleRatio": 10.5,
+        "curbWeightKg": 4110,
+        "tireSize": {
+          "widthMm": 305,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "EV3X / Edition 1 tri-motor flagship (1 front + 2 rear Ultium Drive units); launched as Edition 1 in Dec 2021, 3X trim added Apr 2023."
       }
     ]
   },
@@ -11329,6 +15030,629 @@
           "aspectRatio": 60,
           "rimDiameterIn": 20
         }
+      }
+    ]
+  },
+  {
+    "id": "rivian-r1t-2025",
+    "make": "Rivian",
+    "model": "R1T",
+    "classTier": "half",
+    "generation": "Gen 2",
+    "yearStart": 2025,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.3,
+      "frontalAreaM2": 3.2
+    },
+    "powertrains": [
+      {
+        "id": "dual-std",
+        "engineName": "Dual-Motor",
+        "fuel": "ev",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            827.1
+          ],
+          [
+            500,
+            827.1
+          ],
+          [
+            1000,
+            827.1
+          ],
+          [
+            1500,
+            827.1
+          ],
+          [
+            2000,
+            827.1
+          ],
+          [
+            2500,
+            827.1
+          ],
+          [
+            3000,
+            827.1
+          ],
+          [
+            3500,
+            827.1
+          ],
+          [
+            4000,
+            827.1
+          ],
+          [
+            4500,
+            827.1
+          ],
+          [
+            4600,
+            827.1
+          ],
+          [
+            5100,
+            744.3
+          ],
+          [
+            5600,
+            677.8
+          ],
+          [
+            6100,
+            622.3
+          ],
+          [
+            6600,
+            575.1
+          ],
+          [
+            7100,
+            534.6
+          ],
+          [
+            7600,
+            499.4
+          ],
+          [
+            8100,
+            468.6
+          ],
+          [
+            8600,
+            441.4
+          ],
+          [
+            9100,
+            417.1
+          ],
+          [
+            9600,
+            395.4
+          ],
+          [
+            10100,
+            375.8
+          ],
+          [
+            10600,
+            358.1
+          ],
+          [
+            11100,
+            342.0
+          ],
+          [
+            11600,
+            327.2
+          ],
+          [
+            12100,
+            313.7
+          ],
+          [
+            12600,
+            301.2
+          ],
+          [
+            13000,
+            292.0
+          ]
+        ],
+        "redlineRpm": 13000,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          12.0
+        ],
+        "defaultAxleRatio": 12.0,
+        "curbWeightKg": 3150,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 20
+        },
+        "notes": "Entry Dual-Motor R1T (Standard/Large pack); the volume work-and-tow trim of the Gen 2 lineup."
+      },
+      {
+        "id": "dual-perf",
+        "engineName": "Dual-Motor Performance",
+        "fuel": "ev",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            1124.0
+          ],
+          [
+            500,
+            1124.0
+          ],
+          [
+            1000,
+            1124.0
+          ],
+          [
+            1500,
+            1124.0
+          ],
+          [
+            2000,
+            1124.0
+          ],
+          [
+            2500,
+            1124.0
+          ],
+          [
+            3000,
+            1124.0
+          ],
+          [
+            3500,
+            1124.0
+          ],
+          [
+            4000,
+            1124.0
+          ],
+          [
+            4200,
+            1124.0
+          ],
+          [
+            4700,
+            1007.5
+          ],
+          [
+            5200,
+            910.6
+          ],
+          [
+            5700,
+            830.8
+          ],
+          [
+            6200,
+            763.8
+          ],
+          [
+            6700,
+            706.8
+          ],
+          [
+            7200,
+            657.7
+          ],
+          [
+            7700,
+            615.0
+          ],
+          [
+            8200,
+            577.5
+          ],
+          [
+            8700,
+            544.3
+          ],
+          [
+            9200,
+            514.7
+          ],
+          [
+            9700,
+            488.2
+          ],
+          [
+            10200,
+            464.2
+          ],
+          [
+            10700,
+            442.6
+          ],
+          [
+            11200,
+            422.8
+          ],
+          [
+            11700,
+            404.7
+          ],
+          [
+            12200,
+            388.1
+          ],
+          [
+            12700,
+            372.9
+          ],
+          [
+            13200,
+            358.7
+          ],
+          [
+            13600,
+            348.2
+          ]
+        ],
+        "redlineRpm": 13600,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          12.0
+        ],
+        "defaultAxleRatio": 12.0,
+        "curbWeightKg": 3180,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 20
+        },
+        "notes": "Performance-tuned dual-motor upgrade, offered as a step-up trim/option on the Gen 2 R1T."
+      },
+      {
+        "id": "tri",
+        "engineName": "Tri-Motor",
+        "fuel": "ev",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            1495.5
+          ],
+          [
+            500,
+            1495.5
+          ],
+          [
+            1000,
+            1495.5
+          ],
+          [
+            1500,
+            1495.5
+          ],
+          [
+            2000,
+            1495.5
+          ],
+          [
+            2500,
+            1495.5
+          ],
+          [
+            3000,
+            1495.5
+          ],
+          [
+            3500,
+            1495.5
+          ],
+          [
+            4000,
+            1495.5
+          ],
+          [
+            4050,
+            1495.5
+          ],
+          [
+            4550,
+            1330.1
+          ],
+          [
+            5050,
+            1198.4
+          ],
+          [
+            5550,
+            1090.5
+          ],
+          [
+            6050,
+            1000.4
+          ],
+          [
+            6550,
+            924.0
+          ],
+          [
+            7050,
+            858.5
+          ],
+          [
+            7550,
+            801.6
+          ],
+          [
+            8050,
+            751.8
+          ],
+          [
+            8550,
+            707.9
+          ],
+          [
+            9050,
+            668.7
+          ],
+          [
+            9550,
+            633.7
+          ],
+          [
+            10050,
+            602.2
+          ],
+          [
+            10550,
+            573.7
+          ],
+          [
+            11050,
+            547.7
+          ],
+          [
+            11550,
+            524.0
+          ],
+          [
+            12050,
+            502.3
+          ],
+          [
+            12550,
+            482.2
+          ],
+          [
+            13050,
+            463.8
+          ],
+          [
+            13550,
+            446.7
+          ],
+          [
+            14050,
+            430.8
+          ],
+          [
+            14550,
+            416.0
+          ],
+          [
+            14800,
+            408.9
+          ]
+        ],
+        "redlineRpm": 14800,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          12.0
+        ],
+        "defaultAxleRatio": 12.0,
+        "curbWeightKg": 3175,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 20
+        },
+        "notes": "Tri-Motor 'Ascend' trim (1 front + 2 independent rear motors); on sale since Nov 2024."
+      },
+      {
+        "id": "quad",
+        "engineName": "Quad-Motor",
+        "fuel": "ev",
+        "yearStart": 2025,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            0,
+            1624.3
+          ],
+          [
+            500,
+            1624.3
+          ],
+          [
+            1000,
+            1624.3
+          ],
+          [
+            1500,
+            1624.3
+          ],
+          [
+            2000,
+            1624.3
+          ],
+          [
+            2500,
+            1624.3
+          ],
+          [
+            3000,
+            1624.3
+          ],
+          [
+            3500,
+            1624.3
+          ],
+          [
+            4000,
+            1624.3
+          ],
+          [
+            4500,
+            1624.3
+          ],
+          [
+            5000,
+            1459.7
+          ],
+          [
+            5500,
+            1327.0
+          ],
+          [
+            6000,
+            1216.4
+          ],
+          [
+            6500,
+            1122.8
+          ],
+          [
+            7000,
+            1042.6
+          ],
+          [
+            7500,
+            973.1
+          ],
+          [
+            8000,
+            912.3
+          ],
+          [
+            8500,
+            858.6
+          ],
+          [
+            9000,
+            810.9
+          ],
+          [
+            9500,
+            768.2
+          ],
+          [
+            10000,
+            729.8
+          ],
+          [
+            10500,
+            695.1
+          ],
+          [
+            11000,
+            663.5
+          ],
+          [
+            11500,
+            634.6
+          ],
+          [
+            12000,
+            608.2
+          ],
+          [
+            12500,
+            583.9
+          ],
+          [
+            13000,
+            561.4
+          ],
+          [
+            13500,
+            540.6
+          ],
+          [
+            14000,
+            521.3
+          ],
+          [
+            14500,
+            503.3
+          ],
+          [
+            15000,
+            486.6
+          ],
+          [
+            15400,
+            473.9
+          ]
+        ],
+        "redlineRpm": 15400,
+        "idleRpm": 0,
+        "displacementL": 0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Single-speed reduction",
+          "gearRatios": [
+            1.0
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          12.0
+        ],
+        "defaultAxleRatio": 12.0,
+        "curbWeightKg": 3250,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 20
+        },
+        "notes": "Range-topping Quad-Motor (four independent motors); deliveries began summer 2025."
       }
     ]
   }

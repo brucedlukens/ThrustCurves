@@ -31,15 +31,18 @@ describe('trucks.json schema', () => {
           expect(p.torqueCurve[i][0], label).toBeGreaterThan(p.torqueCurve[i - 1][0])
         }
         expect(Math.min(...p.torqueCurve.map(([, nm]) => nm)), label).toBeGreaterThan(0)
-        // Gearing sane (90s trucks bottom out at 4-speed automatics)
-        expect(p.transmission.gearRatios.length, label).toBeGreaterThanOrEqual(4)
+        // Gearing sane (90s trucks bottom out at 4-speed automatics; EVs are single-speed)
+        expect(p.transmission.gearRatios.length, label).toBeGreaterThanOrEqual(
+          p.fuel === 'ev' ? 1 : 4,
+        )
         expect(p.axleRatios, label).toContain(p.defaultAxleRatio)
         // Redline at or above the last curve point
         expect(p.redlineRpm, label).toBeGreaterThanOrEqual(
           p.torqueCurve[p.torqueCurve.length - 1][0],
         )
         expect(p.curbWeightKg, label).toBeGreaterThan(2000)
-        expect(p.curbWeightKg, label).toBeLessThan(4000)
+        // EVs run heavy: the Hummer EV pickup is a ~4,100 kg truck
+        expect(p.curbWeightKg, label).toBeLessThan(p.fuel === 'ev' ? 4600 : 4000)
       }
     }
   })

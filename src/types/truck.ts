@@ -3,7 +3,7 @@ import type { AeroSpec, CurvePoint, TireSize, TransmissionType } from './car'
 /** Truck class: half-ton (1500/150), three-quarter-ton (2500/250), one-ton (3500/350) */
 export type TruckClassTier = 'half' | 'threequarter' | 'one'
 
-export type FuelType = 'gas' | 'diesel'
+export type FuelType = 'gas' | 'diesel' | 'ev'
 
 export interface TruckTransmission {
   /** Marketing/OEM name, e.g. "10R80", "Allison 10L1000" */

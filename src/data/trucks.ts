@@ -11,6 +11,9 @@ export const TRUCKS = trucksData as unknown as TruckModel[]
  */
 export const TRUCK_DRIVETRAIN_LOSS = 0.15
 
+/** Motor-to-wheel loss for an EV's single-speed reduction (no converter, no transfer case) */
+export const TRUCK_DRIVETRAIN_LOSS_EV = 0.08
+
 /** Representative shift time for truck automatics under load */
 export const TRUCK_SHIFT_TIME_MS = 400
 
@@ -120,12 +123,13 @@ export function resolveTruckToCarSpec(
       idleRpm: powertrain.idleRpm,
       displacementL: powertrain.displacementL,
       forcedInduction: powertrain.forcedInduction,
+      electric: powertrain.fuel === 'ev',
     },
     transmission: {
       gearRatios: powertrain.transmission.gearRatios,
       finalDriveRatio: axleRatio,
       shiftTimeMs: TRUCK_SHIFT_TIME_MS,
-      drivetrainLoss: TRUCK_DRIVETRAIN_LOSS,
+      drivetrainLoss: powertrain.fuel === 'ev' ? TRUCK_DRIVETRAIN_LOSS_EV : TRUCK_DRIVETRAIN_LOSS,
       type: powertrain.transmission.type,
     },
     tireSize: powertrain.tireSize,

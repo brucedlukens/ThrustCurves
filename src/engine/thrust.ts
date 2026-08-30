@@ -83,9 +83,12 @@ export function computeGearThrustCurve(
  */
 export function computeAllGearCurves(car: CarSpec, mods: CarModifications): GearThrustCurve[] {
   const isForced = mods.forcedInductionOverride ?? car.engine.forcedInduction
-  const powerCorrection = isForced
-    ? turboPowerCorrection(mods.altitudeM)
-    : naPowerCorrection(mods.altitudeM)
+  // Electric motors don't breathe air: no altitude power derate
+  const powerCorrection = car.engine.electric
+    ? 1
+    : isForced
+      ? turboPowerCorrection(mods.altitudeM)
+      : naPowerCorrection(mods.altitudeM)
   const torqueCurve = effectiveTorqueCurve(car, mods, powerCorrection)
   const radius = calcTireRadius(mods.tireSizeOverride ?? car.tireSize)
 

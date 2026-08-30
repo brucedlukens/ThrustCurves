@@ -24,7 +24,20 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   towing refresh (not 2010) — same convention as the DS Ram 1500. A "90s
   icons" batch adds one classic generation per family: 9th-gen F-150
   (1992–96), OBS F-250/F-350 (1992–97), GMT400 C/K trucks (1500 1992–98, HD
-  1992–2000), and 2nd-gen Ram (1500 1994–2001, HD 1994–2002).
+  1992–2000), and 2nd-gen Ram (1500 1994–2001, HD 1994–2002). The Ford
+  families are now gap-free from 1992 to present: 10th (1997–2003), 11th
+  (2004–08), and 12th-gen (2009–14) F-150 plus 1st (1999–2007) and 2nd-gen
+  (2008–10) Super Duty fill every hole. (The 1998 "light-duty F-250" F-150
+  variant is deliberately skipped.)
+- **EV conventions**: electric pickups (F-150 Lightning, Silverado EV,
+  Hummer EV Pickup, Rivian R1T) use `fuel: "ev"`, a single-speed gearbox
+  (`gearRatios: [1.0]`) with the motor→wheel reduction stored as the sole
+  "axle ratio", `idleRpm: 0`, and `displacementL: 0`. The torque curve is
+  combined motor-shaft torque: advertised peak flat from 0 rpm to the base
+  speed (9549·P/T), then constant advertised power to a redline set by the
+  governed top speed through the reduction and tire. Where OEMs quote
+  wheel-referenced torque (Hummer's "11,500 lb-ft"), it is divided by the
+  rear-unit reduction. All EVs are `classTier: "half"` regardless of mass.
 - **90s naming/config conventions**: lookback generations reuse the modern
   family's make/model strings so the UI's generation selector groups them
   (a 1992 truck files under "F-250 Super Duty" / "Silverado/Sierra 2500HD" /
@@ -54,6 +67,15 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Ram 1500 (2019+) | Official Stellantis spec/towing-chart PDFs (weights exact per config) | Curve shapes; HO Hurricane axle/gearing inferred from towing charts |
 | Ram 2500/3500 (2019+) | Official Stellantis spec + body-builder PDFs (ratios, axles, weights) | Curve shapes, Cd/area |
 | Toyota Tundra (2022+) | Toyota press-release figures; weight (Limited CrewMax spec) | AWR10L65 ratios (secondary listings), single 3.31 axle unconfirmed by order guide |
+| Ford F-150 (2009–14) | All five ratings + rpm peaks (Wikipedia cross-checks; 5.4 gasoline-vs-E85 distinction), 6R80 ratios, 5.0 curb weight (cars.com factory sheet) | Redlines (family-typical estimates), axle sets (enthusiast consensus, no order guide reached), Cd 0.44 (interpolated 11th→13th gen) |
+| Ford F-150 (2004–08) | Ratings incl. the 2007 4.6L bump (Wikipedia + cars.com agree), curb weights + 255/70R17 (cars.com factory sheets), 4R70E/4R75E pairing | Axle ratios (period-typical, unsourced), redlines/idle (estimates), 4R75E ratios assumed = 4R70W family |
+| Ford F-150 (1997–2003) | 220/290 + 260/350 ratings verbatim from a MY2001 factory brochure, 4R70W/4R100 ratios, 3.55+3.73 axles (brochure) | Curb weights (no primary source — NHTSA/EPA checked and dry), redlines (Triton-family estimate), early-5.4 rpm peaks |
+| Ford F-250/F-350 SD (1999–2007) | Ratings for all five engines (Wikipedia raw-wikitext cross-checks; 5R110 ratios 3.11/2.22/1.55/1.00/0.71 confirmed twice) | Curb weights, tire sizes, axle defaults (no factory sheet reachable — period-typical estimates); V10 3v held at 355/455 vs Wikipedia's conflated 362/457 (see corrections) |
+| Ford F-250/F-350 SD (2008–10) | 5.4/V10/6.4 ratings (Wikipedia, matches brief), 5R110W ratios, Sterling 10.5/Dana 60 hardware | Curb weights (brief estimates), 6.4 governed rpm (3800 estimate), tires inferred from the 2011–16 entries |
+| Ford F-150 Lightning (2022–25) | 452/580 hp + 775 lb-ft and SR curb 6,015 lb (Wikipedia + cars.com), 9.72:1 reduction (widely cited) | Top speed 108 mph (recalled, unverified), ER curb (mid-trim representative), frontal area (dimensional estimate) |
+| Chevrolet Silverado EV (2024+) | WT 510/615 + 8,532 lb and RST WOW 754/785 (Wikipedia + cars.com) | Reduction ratio 10.5:1 is an ENGINEERING ESTIMATE (GM doesn't publish; no teardown source reached), top speed 112 mph placeholder, RST curb estimated, Cd 0.41 midpoint of press claims |
+| GMC Hummer EV Pickup (2022+) | 1,000 hp (3X) and 625 hp (2X) ratings, 10.5:1 rear / 13.3:1 front reductions (Ultium Drive specs via Wikipedia) | Motor-shaft torque derived (3X: 11,500 wheel lb-ft ÷ 10.5) or scaled (2X), curb weights (estimates), Cd 0.50/3.9 m² (estimate), 106 mph governor unverified |
+| Rivian R1T Gen 2 (2025+) | Tri 850 hp + 7,000 lb curb and Quad 1,025 hp/1,198 lb-ft/130 mph (Electrek first drives) | 12:1 reduction (Munro-style teardown consensus, not Rivian-published), dual-motor figures carried from Gen 1 (Rivian kept them), most top speeds assumed, Cd 0.30 (Rivian claim, unverified for AT tires) |
 | Ford F-150 (1992–96) | 1994–96 brochure ratings, axle sets from the 1996 factory towing guide, E4OD ratios | Redlines (no factory figure anywhere — period-typical estimates), 5.8L curb weight (+40 kg estimate over the sourced 5.0L figure) |
 | Ford F-250/F-350 OBS (1992–97) | E4OD ratios, IDI/Power Stroke ratings (diesel-community consensus, 2–3 sources each) | Nearly everything else is secondary-source consensus: gas curb weights (engine-mass-delta estimates), gas redlines, the contested 1996–97 Power Stroke uprate (launch 210/425 modeled) |
 | GM 1500/HD GMT400 (1992–2000) | Engine ratings (multi-source consensus incl. GM crate-engine listings), 4L60-E/4L80-E ratios | 6.5L Turbo Diesel rating (genuinely conflicted sources; 190/385 auto figure modeled), all curb weights (forum scale reports, no factory sheet), 1500 axle set unconfirmed |
@@ -148,6 +170,23 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   235/460 only in 2001–02 (modeled), and the 2001–02 HO 245/505 was
   manual-only (excluded).
 
+- **Missing-generations batch facts worth keeping** (researcher corrections
+  to the briefs): the 12th-gen 5.4L 3v's oft-quoted 320 hp / 390 lb-ft is
+  the E85 flex-fuel rating — the gasoline rating is 310 / 365 (modeled). The
+  11th-gen transmission pairing is 4.6L→4R70E and 5.4L→4R75E (the brief had
+  it reversed), and the 4.6L was bumped to 248 hp for 2007–08 (2004–06
+  231 hp modeled). The 10th-gen 5.4 went 235/330 (1997–98, E4OD) →
+  260/350 (1999–2003, 4R100). The 5R110 TorqShift's ratios are
+  3.11/2.22/1.55/1.00/0.71 (not the forum-rounded 3.09/2.20/1.54/1.00/0.71
+  in the brief); the 6.0L Power Stroke's documented fuel cutoff is
+  4,200 rpm. The F-150 Lightning ended production in December 2025, so it
+  carries a closed 2022–2025 year range. Hummer EV2X is 625 hp (not ~570).
+- **EV figures are output-mode and trim-entangled** in a way ICE ratings
+  aren't: Silverado EV RST's 754 hp exists only in "Wide Open Watts" launch
+  mode (normal rating 664 hp — the WOW figure is modeled and noted), and
+  Rivian's dual-motor Gen 2 figures are carried-over Gen 1 ratings. Treat
+  EV-vs-EV comparisons at full advertised output as best-case.
+
 ## Corrections applied during aggregation
 
 - 6.7L Power Stroke (standard output): research curve had a small
@@ -175,14 +214,36 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   peak landed at 4400 rpm; 3600–4200 rpm points lifted so 245 hp lands at
   the advertised 4000. Within-batch calibration chains (TBI→Vortec ×2,
   IDI→Power Stroke, 12v→24v Cummins) all validated without adjustment.
+- Missing-generations batch chain fixes (all advertised peaks preserved):
+  the 2011–14 3.5L EcoBoost reuses the identical-rating 2015–16 curve
+  verbatim; the 2011–14 5.0L Coyote was clamped pointwise below the 2015
+  (385 hp) curve; the 12th-gen 6.2L Boss's 1350–3100 rpm range was lifted
+  to dominate the 385 hp Super Duty tune; the 12th-gen 5.4L 3v's upper
+  midrange was lifted to dominate the 300 hp Super Duty 3v tune; the
+  2005–07 V10 3v low end was clamped below the 2008–10 curve; and the SD
+  7.3L's 800 rpm point was nudged above the OBS 7.3L. The 1st-gen V10 3v
+  was also scaled from the researcher's 362/457 down to 355/455: Wikipedia's
+  Modular-engine table conflates the 2008–10 rating into 2005–07, while
+  Ford's 2005 press materials and period tests say 355/455 — this also
+  keeps the V10 ladder strictly ordered.
+- The cross-generation chain rule now polices pointwise implied power only
+  up to the stronger calibration's power peak (+5%): past it, in the
+  defuel/governor region, a higher-revving older engine may legitimately
+  cross above (the 4,200 rpm 6.0L Power Stroke genuinely out-powers the
+  6.4L at 3,600–3,800 rpm, where the 6.4 is already defueling).
 
 ## Simulation constants (choices made here, not researched)
 
 - `TRUCK_DRIVETRAIN_LOSS = 0.15` crank→wheel for a 4x4 pickup (auto +
   transfer case + axle), consistent with the 0.12–0.15 range used for cars.
+- `TRUCK_DRIVETRAIN_LOSS_EV = 0.08` motor→wheel for an EV's single-speed
+  reduction (no converter, no transfer case).
 - `TRUCK_SHIFT_TIME_MS = 400` for truck automatics under load.
 - Lugging floors for "usable gear" analysis: diesel 1000 rpm, gas 1250 rpm
-  (locked-converter sustained pulling; below this a transmission downshifts).
+  (locked-converter sustained pulling; below this a transmission downshifts);
+  EVs 0 rpm (full torque from a standstill). EVs also take no altitude power
+  derate (`electric` flag on the resolved engine spec) — only the shared
+  aero-density effect applies.
 - Aero for trucks is an estimate everywhere: OEMs publish Cd only for
   optimized 2WD configs (GM claimed 0.38, Ram 0.357); crew cab 4x4 values are
   bumped to 0.41–0.44 with frontal area from width × height × ~0.82–0.87 fill.

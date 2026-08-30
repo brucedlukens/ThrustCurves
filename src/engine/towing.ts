@@ -17,6 +17,8 @@ import type { IntegrationParams } from './performance'
  */
 export const MIN_LOAD_RPM_DIESEL = 1000
 export const MIN_LOAD_RPM_GAS = 1250
+/** Electric motors deliver full torque from a standstill — no lugging floor */
+export const MIN_LOAD_RPM_EV = 0
 
 /** Speed sample interval for the road-load overlay curve (m/s) */
 const ROAD_LOAD_STEP_MS = 0.5
@@ -245,7 +247,8 @@ export function runTowingAnalysis(
   const gearEffectiveRatios = car.transmission.gearRatios.map(
     (r) => r * car.transmission.finalDriveRatio,
   )
-  const minLoadRpm = fuel === 'diesel' ? MIN_LOAD_RPM_DIESEL : MIN_LOAD_RPM_GAS
+  const minLoadRpm =
+    fuel === 'diesel' ? MIN_LOAD_RPM_DIESEL : fuel === 'ev' ? MIN_LOAD_RPM_EV : MIN_LOAD_RPM_GAS
 
   const gearsAtSpeed = analyzeGearsAtSpeed(
     gearCurves,
