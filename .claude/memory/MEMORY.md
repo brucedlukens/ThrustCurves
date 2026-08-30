@@ -21,11 +21,23 @@ in `implement-feature.md` so this doesn't happen again silently.
 | Feature | Date | Time | Tokens (main / research subagents / ci-agent) | Test iterations | Lint commits | CI (local / remote) |
 |---|---|---|---|---|---|---|
 | Towing Comparison Section (PR #19) | 2026-08-29 | ~30 min | ~290k / ~1.15M across 8 subagents / ~13k | 2 | 0 | 1 local pass, 0 remote failures |
+| Truck Family Grouping + Generation Selector (PR #20) | 2026-08-29 | ~10 min | not measured (see Gap D) | 2 | 0 | 1 local pass (299 tests), 0 remote failures |
 
-All targets from `introspection.md` were met this round (test iterations 1–2, lint
+All targets from `introspection.md` were met both rounds (test iterations 1–2, lint
 commits 0–1, remote CI failures 0). Keep logging future features here even when nothing
 went wrong — the log is what makes "compare to previous implementations" (Step 2 of
 `introspection.md`) possible instead of anecdotal.
+
+PR #20's 2 test iterations were not an implementation bug: the first `frontend-ci` run
+failed 2 pre-existing assertions in `TowingPage.test.tsx` (`getByText('Toyota Tundra')`,
+`getByText('Ford F-250 Super Duty')`) that became ambiguous once the add-truck dropdown
+stopped appending a generation suffix to its options — the option text then exactly
+matched the truck card's `<h3>` title, so two elements matched the same text. Fixed by
+asserting on each card's remove button instead of its title text. **Carry forward**: when
+a UI change makes an element's accessible text a substring/exact-duplicate of another
+element already on the page, grep the touched component's existing tests for
+`getByText`/`getByRole(..., {name})` assertions against that same string before writing
+new code — cheaper than discovering the collision via a failed CI run.
 
 ## Patterns worth repeating
 
@@ -72,6 +84,26 @@ writing a physics/engine test fixture's expected value by hand, compute it with 
 throwaway script/REPL one-liner (or `node -e`) instead of mental/paper arithmetic before
 hardcoding the `toBeCloseTo` assertion — costs seconds, avoids a wasted red test run.
 
+### 5. `vi.mock` + `importOriginal` to clone real data into a synthetic fixture, when real data can't yet exercise a code path
+
+PR #20 (truck family grouping + generation selector) needed to test the multi-generation
+UI path — a family with 2+ `TruckModel` entries — but the real catalog only has one
+generation per nameplate so far (lookbacks to 2016 are a known future follow-up, see
+`towing-comparison-feature` project memory). `TowingPage.generations.test.tsx` mocks
+`@/data/trucks` with `vi.mock('@/data/trucks', async importOriginal => {...})`, calls
+`importOriginal()` to get the real module, clones the real `ford-f150-2021` entry into a
+synthetic `ford-f150-2015` (new id/generation/year range, powertrain curb weights nudged
+down), appends it to `TRUCKS`, and rebuilds `TRUCK_FAMILIES`/`findTruck`/`findTruckFamily`/
+`familyOfTruck` from the combined list before returning them from the mock factory.
+Result: the synthetic fixture is physics-valid by construction (it *is* real data, not
+hand-typed), and the test exercises real component code (`buildTruckFamilies`,
+`carrySelectionToGeneration`) against it rather than a hand-rolled family object that could
+drift from the real shape. **When to reuse**: a UI path only becomes reachable once a data
+set crosses some cardinality (2+ of something) that the real data doesn't have yet —
+clone-and-mutate a real record via `importOriginal` inside `vi.mock` instead of
+hand-authoring a fixture object, so the fixture inherits validity from the real data and
+stays in sync with schema changes automatically.
+
 ## Process gaps found (not feature bugs)
 
 ### A. This file didn't exist — introspection findings were never being persisted
@@ -106,11 +138,74 @@ it is a bigger, more deliberate call than a single introspection pass should mak
 unilaterally (risk of enshrining guesses as "guidelines"); flagging it here so the next
 person/session considers seeding it deliberately rather than rediscovering the gap.
 
+**Still open as of PR #20** — still doesn't exist. No action taken this round either, for
+the same reason (not this pass's call to make unilaterally).
+
+### D. `introspection.md`'s own "MANDATORY" Total Tokens metric wasn't supplied (PR #20)
+
+`introspection.md`'s Input Requirements section marks `Total Tokens: ~Xk (measure from
+Claude usage output - MANDATORY)` as required from the orchestrator. For PR #20 the
+orchestrator supplied time, test iterations, lint commits, and CI counts, but not a
+token figure — logged above as "not measured". Root cause is the same shape as Gap A:
+a documented mandatory input with no forcing function that actually checks it's present
+before the introspection agent is invoked. **Fix to consider**: `implement-feature.md`
+Phase 9 Step 1 ("Gather metrics") should explicitly say where to read the token count
+from (e.g. the harness's own usage/cost summary, if the session has access to it) rather
+than leaving it to be estimated or skipped — right now the skill lists "Total time
+estimate" first and tokens isn't even in its own Step 1 bullet list, only in
+`introspection.md`'s separate input contract, so the two docs disagree on what's
+required and it's easy for a session following `implement-feature.md` alone to never
+notice the token bullet exists.
+
+### E. Fresh worktree had no git identity, producing a wrong commit author (PR #20)
+
+The first commit made in the freshly-created `ThrustCurves-towing-gens` worktree picked
+up an auto-derived committer identity (`bruce@mail.example.com`) because neither the
+worktree nor the parent repo had `user.name`/`user.email` configured — every prior
+commit on `main` uses `Bruce Lukens <brucedlukens@gmail.com>`. Caught before the PR
+existed and fixed with repo-local `git config user.name`/`user.email` (shared across
+worktrees since it's the same `.git`) plus `git commit --amend --reset-author` and a
+force-push of the not-yet-reviewed branch. No harm done this time only because it was
+caught early — a merged commit with the wrong author is much more annoying to fix.
+**Fix applied**: none yet to the skill itself — this is the first time it's happened, so
+logging it now rather than waiting for a recurrence (contrast Gap F below, which is a
+genuine second occurrence).
+**Proposed action**: add a step to `implement-feature.md` Phase 1 ("Worktree Setup"),
+right after `npm install`, to run `git config user.name` / `git config user.email` and
+verify (or set) it before any commits happen in the new worktree — a `git worktree add`
+does not always inherit global config depending on how the environment is provisioned,
+so checking is cheap insurance against a silently wrong author on a merged commit.
+
+### F. Recurring — the `introspection` custom agent type still isn't registered in the harness session (PR #19 and PR #20)
+
+Both PR #19 (towing comparison) and PR #20 (this one) needed the mandatory Phase 9
+introspection step, and both times the harness session running the orchestration only
+had `frontend-ci` available as a registered custom `subagent_type` — `introspection` was
+not, so both runs fell back to a general-purpose agent pointed directly at
+`.claude/agents/introspection.md` and told to follow it. The fallback works (this file is
+proof), but it's now happened twice in a row, which crosses `introspection.md`'s own "if
+same task is repeated 3+ times, suggest automation" threshold once more — worth checking
+next time whether `introspection` needs to be registered wherever `frontend-ci` is
+registered (same directory, same discovery mechanism), since the two agent definitions
+live side by side in `.claude/agents/` and only one of them is being picked up.
+**Fix to consider**: whatever mechanism makes `frontend-ci` show up as a real
+`subagent_type` should be checked for why it isn't also picking up `introspection` — this
+is an environment/registration question, not a content problem with
+`introspection.md` itself.
+
 ## What's already working well (keep doing this)
 
-- **Lint before every commit** kept linting-fix commits at 0 (target 0–1) for this
-  feature, across 3 commits touching engine, data, and UI.
+- **Lint before every commit** kept linting-fix commits at 0 (target 0–1) for both PR #19
+  (3 commits touching engine, data, and UI) and PR #20 (1 commit, lint run before the
+  first test run) — two features running, still 0 lint-fix commits.
 - **Pre-flight `npm run lint -- --max-warnings=0` + `npm run build` before PR creation**
-  (Phase 5) kept remote CI failures at 0 — local/remote parity held.
-- **TDD (tests first)** meant the only red tests were fixture-constant mistakes (Pattern
-  4 above), never a real implementation defect surfacing late.
+  (Phase 5) kept remote CI failures at 0 for both PR #19 and PR #20 — local/remote parity
+  has held for 2 consecutive features now.
+- **TDD (tests first)** meant every red test across both features was either a
+  fixture-constant mistake (PR #19, Pattern 4) or a pre-existing test's assertion going
+  ambiguous under a UI change (PR #20, see Metrics log note) — never a real
+  implementation defect surfacing late in either case.
+- **Catching the wrong-git-identity commit before the PR existed** (PR #20, Gap E) —
+  amend + force-push on an unreviewed branch is cheap; the same fix after merge would not
+  be. Worth normalizing a git-identity check into Phase 1 regardless (see Gap E) so this
+  isn't relying on someone happening to notice `git log --format='%an'` looks wrong.
