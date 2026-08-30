@@ -30,6 +30,8 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Ford F-150 (2015–2020) | All hp/torque/rpm peaks + 6R80/10R80 ratios (Ford 2020 tech-spec PDF), axle sets per engine (Ford towing tables) | Cd 0.43/3.25 m² (no official figure — estimated slightly worse than 14th gen), curb weights (GVWR − payload from 2020 spec sheet, extrapolated back for pre-2018), curve shapes (constructed, no public dyno traces) |
 | Ford F-250/F-350 (2023+) | Weights, ratios, axles — all from Ford's official 2026 Super Duty tech-spec PDF | Curve shapes, Cd/area estimate |
 | GM 1500 (2019+) | Peaks (GM spec sheets), 10L80/90 ratios | 8L80 ratios (8L90-family proxy), weights (aggregators) |
+| GM 1500 K2XX (2014–2018) | Outputs, 6L80/8L90 ratios, axles, weights — all from GM's printed 2015/2016 product-info spec sheets | Cd 0.43/3.4 m² (extrapolated from GM's "7% better" T1 claim), curves reused from the identical pre-DFM T1 engines |
+| Ram 1500 DS (2013–2018) | FCA 2013/2014 spec + towing-chart PDFs (outputs, 8HP70 ratios, per-engine axle pairings) | Cd 0.43/3.43 m² (derived), curve shapes (HEMI reuses DT curve — same rating; EcoDiesel synthesized) |
 | GM 2500/3500HD (2020+) | L5P figures, Allison/6L90 ratios | Gas & 3500 SRW weights (interpolated), Cd/area |
 | Ram 1500 (2019+) | Official Stellantis spec/towing-chart PDFs (weights exact per config) | Curve shapes; HO Hurricane axle/gearing inferred from towing charts |
 | Ram 2500/3500 (2019+) | Official Stellantis spec + body-builder PDFs (ratios, axles, weights) | Curve shapes, Cd/area |
@@ -55,6 +57,22 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   3.92-axle-only per the towing charts.
 - **Tundra non-hybrid** has a single 3.31 axle ratio; transmission is the
   Aisin AWR10L65 ("Direct Shift-10AT").
+- **K2XX transmission availability**: the 6.2L got the 8L90 8-speed from
+  MY2015 (6L80 in 2014 only, folded into a note); the 5.3L stayed on the 6L80
+  as standard through 2018, with the 8L90 optional on higher trims from
+  MY2016 — modeled as separate 6-spd and 8-spd entries. Per GM's spec sheets
+  the 6.2L axle set is 3.23/3.42 only (a claimed 3.73 was rejected as
+  conflicting with GM's own trailering figures).
+- **DS Ram 1500 (2013–2018)**: the 1500's 6-speed is the 65RFE (66RFE is the
+  HD box — the brief had this wrong); it's covered as a note since the 8HP70
+  was the towing-focused default from MY2014. Per the official towing charts
+  the 8-speed HEMI paired only with 3.21/3.92 (3.55 was 65RFE-only) and the
+  EcoDiesel only with 3.55/3.92. MY2013 HEMI was rated 407 lb-ft; the
+  2014–2018 410 lb-ft rating is modeled. The DS continued as the "1500
+  Classic" through 2024. The DT-generation 3.0L EcoDiesel gen 3
+  (2020–2022, 260 hp / 480 lb-ft) was also added to the existing DT entry;
+  its official 5,800 rpm max engine speed is unusually high for a diesel but
+  matches FCA's published figure.
 - **13th-gen F-150 mid-cycle updates**: the 10R80 10-speed launched with the
   2nd-gen 3.5L EcoBoost (375 hp / 470 lb-ft) for MY2017 only; the 2.7L
   EcoBoost (400 lb-ft) and 5.0L Coyote (395 hp, port+direct injection) moved

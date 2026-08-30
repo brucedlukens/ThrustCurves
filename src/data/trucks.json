@@ -2936,6 +2936,455 @@
     ]
   },
   {
+    "id": "gm-1500-2014",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "K2XX",
+    "yearStart": 2014,
+    "yearEnd": 2018,
+    "aero": {
+      "cd": 0.43,
+      "frontalAreaM2": 3.4
+    },
+    "powertrains": [
+      {
+        "id": "53-l83-6spd",
+        "engineName": "5.3L EcoTec3 V8 (L83)",
+        "fuel": "gas",
+        "yearStart": 2014,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1200,
+            350
+          ],
+          [
+            1400,
+            375
+          ],
+          [
+            1600,
+            400
+          ],
+          [
+            1800,
+            425
+          ],
+          [
+            2000,
+            445
+          ],
+          [
+            2200,
+            462
+          ],
+          [
+            2400,
+            476
+          ],
+          [
+            2600,
+            488
+          ],
+          [
+            2800,
+            498
+          ],
+          [
+            3000,
+            506
+          ],
+          [
+            3200,
+            512
+          ],
+          [
+            3400,
+            516
+          ],
+          [
+            3600,
+            519
+          ],
+          [
+            3800,
+            519
+          ],
+          [
+            4000,
+            519
+          ],
+          [
+            4100,
+            519
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            506
+          ],
+          [
+            4600,
+            496
+          ],
+          [
+            4800,
+            487
+          ],
+          [
+            5000,
+            478
+          ],
+          [
+            5200,
+            469
+          ],
+          [
+            5400,
+            460
+          ],
+          [
+            5600,
+            451
+          ],
+          [
+            5800,
+            430
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 6L80 6-speed automatic",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.23,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.08,
+        "curbWeightKg": 2467,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "Standard L83/6L80 pairing across the whole K2 generation (2014-2018), all trims. Factory final-drive options 3.08 (standard)/3.23/3.42, plus 3.73 with the Max Trailering Package. 355 hp @ 5,600 rpm / 383 lb-ft @ 4,100 rpm, unchanged 2014-2018."
+      },
+      {
+        "id": "53-l83-8spd",
+        "engineName": "5.3L EcoTec3 V8 (L83)",
+        "fuel": "gas",
+        "yearStart": 2016,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1200,
+            350
+          ],
+          [
+            1400,
+            375
+          ],
+          [
+            1600,
+            400
+          ],
+          [
+            1800,
+            425
+          ],
+          [
+            2000,
+            445
+          ],
+          [
+            2200,
+            462
+          ],
+          [
+            2400,
+            476
+          ],
+          [
+            2600,
+            488
+          ],
+          [
+            2800,
+            498
+          ],
+          [
+            3000,
+            506
+          ],
+          [
+            3200,
+            512
+          ],
+          [
+            3400,
+            516
+          ],
+          [
+            3600,
+            519
+          ],
+          [
+            3800,
+            519
+          ],
+          [
+            4000,
+            519
+          ],
+          [
+            4100,
+            519
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            506
+          ],
+          [
+            4600,
+            496
+          ],
+          [
+            4800,
+            487
+          ],
+          [
+            5000,
+            478
+          ],
+          [
+            5200,
+            469
+          ],
+          [
+            5400,
+            460
+          ],
+          [
+            5600,
+            451
+          ],
+          [
+            5800,
+            430
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 8L90 8-speed automatic",
+          "gearRatios": [
+            4.56,
+            2.97,
+            2.08,
+            1.69,
+            1.27,
+            1.0,
+            0.85,
+            0.65
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2469,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "8L90 became optional with the 5.3L on LTZ, LTZ Z71, and High Country trims starting MY2016 (not offered with the 5.3L in 2014-2015; the 6.2L got the 8-speed first, in 2015). Same 355 hp/383 lb-ft rating as the 6-speed truck; commonly bundled with the Max Trailering Package (3.42 or 3.73 axle)."
+      },
+      {
+        "id": "62-l86-8spd",
+        "engineName": "6.2L EcoTec3 V8 (L86)",
+        "fuel": "gas",
+        "yearStart": 2015,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            1000,
+            400
+          ],
+          [
+            1200,
+            435
+          ],
+          [
+            1400,
+            465
+          ],
+          [
+            1600,
+            495
+          ],
+          [
+            1800,
+            520
+          ],
+          [
+            2000,
+            545
+          ],
+          [
+            2200,
+            565
+          ],
+          [
+            2400,
+            582
+          ],
+          [
+            2600,
+            596
+          ],
+          [
+            2800,
+            608
+          ],
+          [
+            3000,
+            617
+          ],
+          [
+            3200,
+            623
+          ],
+          [
+            3400,
+            624
+          ],
+          [
+            3600,
+            624
+          ],
+          [
+            3800,
+            624
+          ],
+          [
+            4000,
+            624
+          ],
+          [
+            4100,
+            624
+          ],
+          [
+            4200,
+            618
+          ],
+          [
+            4400,
+            606
+          ],
+          [
+            4600,
+            594
+          ],
+          [
+            4800,
+            582
+          ],
+          [
+            5000,
+            570
+          ],
+          [
+            5200,
+            558
+          ],
+          [
+            5400,
+            546
+          ],
+          [
+            5600,
+            534
+          ],
+          [
+            5800,
+            510
+          ],
+          [
+            6000,
+            485
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 8L90 8-speed automatic",
+          "gearRatios": [
+            4.56,
+            2.97,
+            2.08,
+            1.69,
+            1.27,
+            1.0,
+            0.85,
+            0.65
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42
+        ],
+        "defaultAxleRatio": 3.23,
+        "curbWeightKg": 2486,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "8L90 paired with the 6.2L L86 from MY2015 on (the 2014 launch year used a 6L80 6-speed with the 6.2L instead, at the same 420 hp/460 lb-ft rating; not modeled as a separate entry since it's a single niche year). 6.2L offered only on Double Cab/Crew Cab, LTZ trim and above. 3.23 standard axle, 3.42 with Max Trailering Package (12,000 lb max tow, 2WD Crew Cab)."
+      }
+    ]
+  },
+  {
     "id": "gm-2500hd-2020",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 2500HD",
@@ -3793,6 +4242,419 @@
           "rimDiameterIn": 20
         },
         "notes": "2025+, upper trims only (3.92 axle standard)"
+      },
+      {
+        "id": "30-ecodiesel",
+        "engineName": "3.0L EcoDiesel V6",
+        "fuel": "diesel",
+        "yearStart": 2020,
+        "yearEnd": 2022,
+        "torqueCurve": [
+          [
+            1000,
+            460
+          ],
+          [
+            1200,
+            545
+          ],
+          [
+            1400,
+            605
+          ],
+          [
+            1600,
+            651
+          ],
+          [
+            1800,
+            647
+          ],
+          [
+            2000,
+            645
+          ],
+          [
+            2200,
+            638
+          ],
+          [
+            2400,
+            629
+          ],
+          [
+            2600,
+            617
+          ],
+          [
+            2800,
+            604
+          ],
+          [
+            3000,
+            586
+          ],
+          [
+            3200,
+            564
+          ],
+          [
+            3400,
+            539
+          ],
+          [
+            3600,
+            512
+          ],
+          [
+            3800,
+            460
+          ],
+          [
+            4000,
+            410
+          ],
+          [
+            4200,
+            360
+          ],
+          [
+            4400,
+            310
+          ],
+          [
+            4600,
+            265
+          ],
+          [
+            4800,
+            220
+          ],
+          [
+            5000,
+            180
+          ],
+          [
+            5200,
+            145
+          ],
+          [
+            5400,
+            115
+          ],
+          [
+            5600,
+            90
+          ],
+          [
+            5800,
+            70
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF 8HP75 (TorqueFlite 8HP75)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.21,
+        "curbWeightKg": 2465,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "Second-generation (\"gen 3\" VM Motori-derived) EcoDiesel; discontinued after MY2022. Roughly 190 lb heavier than the eTorque 5.7 HEMI in like-for-like Crew Cab 4x4 trim. Official max engine speed is 5,800 rpm (unusually high for a diesel; confirmed by two independent sources) though real-world power falls off steeply well before that governed limit."
+      }
+    ]
+  },
+  {
+    "id": "ram-1500-2013",
+    "make": "Ram",
+    "model": "1500",
+    "classTier": "half",
+    "generation": "4th gen (DS)",
+    "yearStart": 2013,
+    "yearEnd": 2018,
+    "aero": {
+      "cd": 0.43,
+      "frontalAreaM2": 3.43
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi-ds",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2013,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            420
+          ],
+          [
+            1400,
+            460
+          ],
+          [
+            1600,
+            490
+          ],
+          [
+            1800,
+            515
+          ],
+          [
+            2000,
+            535
+          ],
+          [
+            2200,
+            548
+          ],
+          [
+            2400,
+            553
+          ],
+          [
+            2600,
+            555
+          ],
+          [
+            2800,
+            556
+          ],
+          [
+            3000,
+            556
+          ],
+          [
+            3200,
+            556
+          ],
+          [
+            3400,
+            556
+          ],
+          [
+            3600,
+            556
+          ],
+          [
+            3800,
+            556
+          ],
+          [
+            3950,
+            556
+          ],
+          [
+            4200,
+            550
+          ],
+          [
+            4400,
+            542
+          ],
+          [
+            4600,
+            533
+          ],
+          [
+            4800,
+            524
+          ],
+          [
+            5000,
+            514
+          ],
+          [
+            5200,
+            505
+          ],
+          [
+            5400,
+            500
+          ],
+          [
+            5600,
+            496
+          ],
+          [
+            5800,
+            470
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "ZF 8HP70 (TorqueFlite 8HP70)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.92
+        ],
+        "defaultAxleRatio": 3.21,
+        "curbWeightKg": 2459,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "MY2013 was rated 395 hp/407 lb-ft (548 Nm); a running change for MY2014 raised peak torque to 410 lb-ft (556 Nm, modeled here), matching the later eTorque figure. TorqueFlite 8HP70 was optional in 2013 alongside a 65RFE 6-speed (standard on base 4x2 trims); 8HP70 became the default towing-focused choice from MY2014 on, though 65RFE persisted as a lower-cost option on Tradesman/Express trims through 2018."
+      },
+      {
+        "id": "30-ecodiesel-ds",
+        "engineName": "3.0L EcoDiesel V6",
+        "fuel": "diesel",
+        "yearStart": 2014,
+        "yearEnd": 2018,
+        "torqueCurve": [
+          [
+            1000,
+            400
+          ],
+          [
+            1200,
+            460
+          ],
+          [
+            1400,
+            510
+          ],
+          [
+            1600,
+            545
+          ],
+          [
+            1800,
+            562
+          ],
+          [
+            2000,
+            569
+          ],
+          [
+            2200,
+            566
+          ],
+          [
+            2400,
+            560
+          ],
+          [
+            2600,
+            552
+          ],
+          [
+            2800,
+            542
+          ],
+          [
+            3000,
+            530
+          ],
+          [
+            3200,
+            516
+          ],
+          [
+            3400,
+            500
+          ],
+          [
+            3600,
+            474
+          ],
+          [
+            3800,
+            430
+          ],
+          [
+            4000,
+            385
+          ],
+          [
+            4200,
+            345
+          ],
+          [
+            4400,
+            300
+          ],
+          [
+            4600,
+            260
+          ],
+          [
+            4800,
+            220
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF 8HP70 (TorqueFlite 8HP70)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2577,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "First-generation VM Motori EcoDiesel; launched for MY2014 only (not offered in MY2013). Standard with TorqueFlite 8HP70; roughly 260 lb heavier than the 5.7 HEMI in like-for-like Crew Cab 4x4 trim."
       }
     ]
   },
