@@ -27,6 +27,7 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Truck | Strongest data | Weakest data |
 |---|---|---|
 | Ford F-150 (2021+) | Gear/axle ratios (2023 order guide), peaks | Curve shapes (constructed), Cd/area estimate, redlines (forum consensus) |
+| Ford F-150 (2015–2020) | All hp/torque/rpm peaks + 6R80/10R80 ratios (Ford 2020 tech-spec PDF), axle sets per engine (Ford towing tables) | Cd 0.43/3.25 m² (no official figure — estimated slightly worse than 14th gen), curb weights (GVWR − payload from 2020 spec sheet, extrapolated back for pre-2018), curve shapes (constructed, no public dyno traces) |
 | Ford F-250/F-350 (2023+) | Weights, ratios, axles — all from Ford's official 2026 Super Duty tech-spec PDF | Curve shapes, Cd/area estimate |
 | GM 1500 (2019+) | Peaks (GM spec sheets), 10L80/90 ratios | 8L80 ratios (8L90-family proxy), weights (aggregators) |
 | GM 2500/3500HD (2020+) | L5P figures, Allison/6L90 ratios | Gas & 3500 SRW weights (interpolated), Cd/area |
@@ -54,6 +55,12 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   3.92-axle-only per the towing charts.
 - **Tundra non-hybrid** has a single 3.31 axle ratio; transmission is the
   Aisin AWR10L65 ("Direct Shift-10AT").
+- **13th-gen F-150 mid-cycle updates**: the 10R80 10-speed launched with the
+  2nd-gen 3.5L EcoBoost (375 hp / 470 lb-ft) for MY2017 only; the 2.7L
+  EcoBoost (400 lb-ft) and 5.0L Coyote (395 hp, port+direct injection) moved
+  to it for MY2018, when the 3.0L Power Stroke diesel was also added. Each
+  spec version is modeled as its own powertrain entry with its year range.
+  The Limited/Raptor HO 3.5L (450 hp) is excluded as trim-exclusive.
 
 ## Corrections applied during aggregation
 
@@ -61,6 +68,14 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   non-monotonic kink at 2400 rpm ([2400, 1290] between 1340 and 1301);
   smoothed to [2400, 1320]. Peaks unchanged.
 - Fuel values normalized (`gasoline` → `gas`).
+- 2021 F-150 3.5L EcoBoost and 5.0L: the original constructed curves sagged
+  to a flat midrange (~345 hp at 4200–5000 for the 3.5L) that fell below the
+  weaker 13th-gen versions of the same engines — implausible for a
+  higher-output calibration of the same hardware. Midrange points (3.5L
+  4000–5800 rpm, 5.0L 4800–5800 rpm) lifted to a smooth power ramp so the
+  newer calibration is ≥ its predecessor at every rpm; advertised torque and
+  power peaks unchanged. (The 14th-gen 5.0 truck can still trail the 13th-gen
+  slightly in towing metrics — it is ~135 kg heavier, which is real.)
 
 ## Simulation constants (choices made here, not researched)
 
