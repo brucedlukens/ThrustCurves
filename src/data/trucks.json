@@ -1537,6 +1537,255 @@
     ]
   },
   {
+    "id": "ford-f150-1992",
+    "make": "Ford",
+    "model": "F-150",
+    "classTier": "half",
+    "generation": "9th gen (OBS)",
+    "yearStart": 1992,
+    "yearEnd": 1996,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.1
+    },
+    "powertrains": [
+      {
+        "id": "50-windsor",
+        "engineName": "5.0L Windsor V8 (302)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1996,
+        "torqueCurve": [
+          [
+            1000,
+            285
+          ],
+          [
+            1200,
+            312
+          ],
+          [
+            1400,
+            335
+          ],
+          [
+            1600,
+            353
+          ],
+          [
+            1800,
+            366
+          ],
+          [
+            2000,
+            372
+          ],
+          [
+            2200,
+            373
+          ],
+          [
+            2400,
+            373
+          ],
+          [
+            2600,
+            373
+          ],
+          [
+            2800,
+            373
+          ],
+          [
+            3000,
+            373
+          ],
+          [
+            3200,
+            371
+          ],
+          [
+            3400,
+            367
+          ],
+          [
+            3600,
+            360
+          ],
+          [
+            3800,
+            350
+          ],
+          [
+            4000,
+            347
+          ],
+          [
+            4200,
+            336
+          ],
+          [
+            4400,
+            320
+          ],
+          [
+            4600,
+            305
+          ],
+          [
+            4800,
+            285
+          ],
+          [
+            5000,
+            263
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 650,
+        "displacementL": 5.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.55
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2048,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 75,
+          "rimDiameterIn": 15
+        },
+        "notes": "195 hp @ 4,000 rpm / 275 lb-ft @ 3,000 rpm for automatic-equipped trucks (1994-96 Ford brochure figures; manual-transmission trucks were rated 205 hp at the same torque). 1992-93 trucks carried over the 1988-91-spec EFI 5.0L rated 185 hp @ 3,800 rpm / 270 lb-ft @ 2,400 rpm - noticeably milder than 1994-96. This entry models the 1994-96 automatic-transmission calibration as representative since the catalog only models the E4OD automatic. SuperCab 4x4, short/standard bed only (no crew cab existed on the 9th-gen F-150)."
+      },
+      {
+        "id": "58-windsor",
+        "engineName": "5.8L Windsor V8 (351W)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1996,
+        "torqueCurve": [
+          [
+            1000,
+            350
+          ],
+          [
+            1200,
+            380
+          ],
+          [
+            1400,
+            405
+          ],
+          [
+            1600,
+            424
+          ],
+          [
+            1800,
+            437
+          ],
+          [
+            2000,
+            441
+          ],
+          [
+            2200,
+            441
+          ],
+          [
+            2400,
+            441
+          ],
+          [
+            2600,
+            441
+          ],
+          [
+            2800,
+            441
+          ],
+          [
+            3000,
+            438
+          ],
+          [
+            3200,
+            432
+          ],
+          [
+            3400,
+            423
+          ],
+          [
+            3600,
+            412
+          ],
+          [
+            3800,
+            396
+          ],
+          [
+            4000,
+            375
+          ],
+          [
+            4200,
+            350
+          ],
+          [
+            4400,
+            320
+          ],
+          [
+            4600,
+            285
+          ],
+          [
+            4800,
+            248
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.55
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2088,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 75,
+          "rimDiameterIn": 15
+        },
+        "notes": "210 hp @ 3,600 rpm / 325 lb-ft @ 2,800 rpm for 1994-96, explicitly quoted from the period Ford brochure 'with Automatic Transmission.' Figures moved around across the run: 1992 was 210 hp/315 lb-ft, 1993 dipped to 200 hp/310 lb-ft (roller lifters/cam were introduced for 1994, coinciding with the return to 210 hp and a bump to 325 lb-ft). This entry models the 1994-96 automatic-transmission calibration as representative. SuperCab 4x4, short/standard bed only (no crew cab existed on the 9th-gen F-150)."
+      }
+    ]
+  },
+  {
     "id": "ford-f250-2023",
     "make": "Ford",
     "model": "F-250 Super Duty",
@@ -2757,6 +3006,425 @@
           "rimDiameterIn": 17
         },
         "notes": "2015 model-year revision: replaced the twin GT32 'DualBoost' turbo with a single larger GT37 variable-geometry turbo, added a Bosch CP4.2 high-pressure fuel pump (longer stroke) and piezo fuel injectors, and IROX-coated lower main bearings, raising output to 440 hp @ 2,800 rpm / 860 lb-ft @ 1,600 rpm. No significant powertrain calibration change for 2016. Curb weight and tire size are for a Crew Cab 4x4 SRW with the standard 6.75 ft box, XLT-equivalent trim; curb weight bumped slightly (+50 lb) versus the 2011-2014 diesel entry for the larger turbo/cooling hardware \u2014 this delta is a low-confidence estimate."
+      }
+    ]
+  },
+  {
+    "id": "ford-f250-1992",
+    "make": "Ford",
+    "model": "F-250 Super Duty",
+    "classTier": "threequarter",
+    "generation": "OBS (pre-Super Duty)",
+    "yearStart": 1992,
+    "yearEnd": 1997,
+    "aero": {
+      "cd": 0.47,
+      "frontalAreaM2": 3.4
+    },
+    "powertrains": [
+      {
+        "id": "58-windsor-hd",
+        "engineName": "5.8L Windsor V8 (351W)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            1000,
+            353
+          ],
+          [
+            1200,
+            382
+          ],
+          [
+            1400,
+            402
+          ],
+          [
+            1600,
+            418
+          ],
+          [
+            1800,
+            430
+          ],
+          [
+            2000,
+            434
+          ],
+          [
+            2200,
+            438
+          ],
+          [
+            2400,
+            440
+          ],
+          [
+            2600,
+            441
+          ],
+          [
+            2800,
+            440
+          ],
+          [
+            3000,
+            438
+          ],
+          [
+            3200,
+            433
+          ],
+          [
+            3400,
+            425
+          ],
+          [
+            3600,
+            415
+          ],
+          [
+            3800,
+            400
+          ],
+          [
+            4000,
+            375
+          ],
+          [
+            4200,
+            345
+          ],
+          [
+            4400,
+            312
+          ],
+          [
+            4600,
+            278
+          ],
+          [
+            4800,
+            245
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2700,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Brief's '~200-210 hp, 310-328 lb-ft' was directionally right but not a distinct 'HD' calibration split from F-150 in any source found; year-to-year running changes are what moved the number. Modeled 210 hp @ 3600 rpm / 325 lb-ft @ 2800 rpm, representative of 1994-1997 (majority of the run); 1992 ran ~210 hp/315 lb-ft and 1993 dipped to ~200 hp/310 lb-ft per secondary sources, so early-run trucks may read a touch lower than this curve."
+      },
+      {
+        "id": "75-gas-460",
+        "engineName": "7.5L V8 (460)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            1000,
+            480
+          ],
+          [
+            1200,
+            505
+          ],
+          [
+            1400,
+            525
+          ],
+          [
+            1600,
+            540
+          ],
+          [
+            1800,
+            550
+          ],
+          [
+            2000,
+            555
+          ],
+          [
+            2200,
+            556
+          ],
+          [
+            2400,
+            554
+          ],
+          [
+            2600,
+            549
+          ],
+          [
+            2800,
+            542
+          ],
+          [
+            3000,
+            532
+          ],
+          [
+            3200,
+            519
+          ],
+          [
+            3400,
+            504
+          ],
+          [
+            3600,
+            486
+          ],
+          [
+            3800,
+            466
+          ],
+          [
+            4000,
+            444
+          ],
+          [
+            4200,
+            420
+          ],
+          [
+            4400,
+            395
+          ]
+        ],
+        "redlineRpm": 4400,
+        "idleRpm": 650,
+        "displacementL": 7.5,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2780,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "1994-1997 EFI rating: 245 hp @ 4000 rpm / 410 lb-ft @ 2200 rpm (upper end of brief's stated range; used as the representative figure since it covers most of the run). Correction: 1992-1993 trucks were lower, commonly cited as 230 hp / 390 lb-ft, not modeled separately here. 1997 was the last model year the 460 was offered in the F-250."
+      },
+      {
+        "id": "73-idi-turbo",
+        "engineName": "7.3L IDI Turbo Diesel V8",
+        "fuel": "diesel",
+        "yearStart": 1993,
+        "yearEnd": 1994,
+        "torqueCurve": [
+          [
+            800,
+            440
+          ],
+          [
+            1000,
+            490
+          ],
+          [
+            1200,
+            515
+          ],
+          [
+            1400,
+            529
+          ],
+          [
+            1600,
+            525
+          ],
+          [
+            1800,
+            515
+          ],
+          [
+            2000,
+            500
+          ],
+          [
+            2200,
+            485
+          ],
+          [
+            2400,
+            470
+          ],
+          [
+            2600,
+            462
+          ],
+          [
+            2800,
+            456
+          ],
+          [
+            3000,
+            451
+          ],
+          [
+            3200,
+            430
+          ],
+          [
+            3300,
+            415
+          ]
+        ],
+        "redlineRpm": 3300,
+        "idleRpm": 675,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 2890,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Factory Garrett T3 turbo IDI (mechanical Stanadyne DB2 injection, 21.5:1 compression) was offered 1993 (mid-year, sometimes cited as '1993.5')-1994 only, exactly as the brief flagged. 190 hp @ 3000 rpm / 390 lb-ft @ 1400 rpm confirmed by two independent sources. The naturally-aspirated 7.3L IDI (185 hp @ 3000 rpm / ~358-360 lb-ft @ 1400 rpm, 21.5:1 CR, no turbo) ran 1988-1994 alongside/before it and is NOT modeled here per the brief's instruction."
+      },
+      {
+        "id": "73-powerstroke",
+        "engineName": "7.3L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 1994,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            800,
+            454
+          ],
+          [
+            1000,
+            497
+          ],
+          [
+            1200,
+            525
+          ],
+          [
+            1400,
+            546
+          ],
+          [
+            1600,
+            561
+          ],
+          [
+            1800,
+            568
+          ],
+          [
+            2000,
+            576
+          ],
+          [
+            2200,
+            564
+          ],
+          [
+            2400,
+            553
+          ],
+          [
+            2600,
+            540
+          ],
+          [
+            2800,
+            522
+          ],
+          [
+            3000,
+            498
+          ],
+          [
+            3200,
+            463
+          ],
+          [
+            3300,
+            440
+          ]
+        ],
+        "redlineRpm": 3300,
+        "idleRpm": 700,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 2900,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "HEUI-injected Garrett TP38 turbo (no intercooler until 1999), launched mid-1994 ('1994.5'). Modeled at the launch rating of 210 hp @ 3000 rpm / 425 lb-ft @ 2000 rpm, used as the representative E4OD-automatic figure for the full 1994.5-1997 run per the brief's instruction to model the automatic. CORRECTION/FLAG: secondary sources do NOT converge on the brief's specific claim of a clean 210/425-automatic vs 225/450-manual split for 1996-97 -- see confidenceNotes."
       }
     ]
   },
@@ -3985,6 +4653,425 @@
     ]
   },
   {
+    "id": "ford-f350-srw-1992",
+    "make": "Ford",
+    "model": "F-350 Super Duty",
+    "classTier": "one",
+    "generation": "OBS (pre-Super Duty)",
+    "yearStart": 1992,
+    "yearEnd": 1997,
+    "aero": {
+      "cd": 0.47,
+      "frontalAreaM2": 3.45
+    },
+    "powertrains": [
+      {
+        "id": "58-windsor-hd",
+        "engineName": "5.8L Windsor V8 (351W)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            1000,
+            353
+          ],
+          [
+            1200,
+            382
+          ],
+          [
+            1400,
+            402
+          ],
+          [
+            1600,
+            418
+          ],
+          [
+            1800,
+            430
+          ],
+          [
+            2000,
+            434
+          ],
+          [
+            2200,
+            438
+          ],
+          [
+            2400,
+            440
+          ],
+          [
+            2600,
+            441
+          ],
+          [
+            2800,
+            440
+          ],
+          [
+            3000,
+            438
+          ],
+          [
+            3200,
+            433
+          ],
+          [
+            3400,
+            425
+          ],
+          [
+            3600,
+            415
+          ],
+          [
+            3800,
+            400
+          ],
+          [
+            4000,
+            375
+          ],
+          [
+            4200,
+            345
+          ],
+          [
+            4400,
+            312
+          ],
+          [
+            4600,
+            278
+          ],
+          [
+            4800,
+            245
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 2950,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry (210 hp @ 3600 rpm / 325 lb-ft @ 2800 rpm, representative of 1994-1997; 1992 ~210/315, 1993 dipped to ~200/310). F-350 defaults to the 4.10 axle (more common on 1-ton than 3.55) per Ford towing-guide consensus."
+      },
+      {
+        "id": "75-gas-460",
+        "engineName": "7.5L V8 (460)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            1000,
+            480
+          ],
+          [
+            1200,
+            505
+          ],
+          [
+            1400,
+            525
+          ],
+          [
+            1600,
+            540
+          ],
+          [
+            1800,
+            550
+          ],
+          [
+            2000,
+            555
+          ],
+          [
+            2200,
+            556
+          ],
+          [
+            2400,
+            554
+          ],
+          [
+            2600,
+            549
+          ],
+          [
+            2800,
+            542
+          ],
+          [
+            3000,
+            532
+          ],
+          [
+            3200,
+            519
+          ],
+          [
+            3400,
+            504
+          ],
+          [
+            3600,
+            486
+          ],
+          [
+            3800,
+            466
+          ],
+          [
+            4000,
+            444
+          ],
+          [
+            4200,
+            420
+          ],
+          [
+            4400,
+            395
+          ]
+        ],
+        "redlineRpm": 4400,
+        "idleRpm": 650,
+        "displacementL": 7.5,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3030,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry (245 hp @ 4000 rpm / 410 lb-ft @ 2200 rpm for 1994-1997; 1992-1993 lower at ~230/390, not separately modeled). Popular F-350 gasser of the era for its low cost/high torque vs the diesel option."
+      },
+      {
+        "id": "73-idi-turbo",
+        "engineName": "7.3L IDI Turbo Diesel V8",
+        "fuel": "diesel",
+        "yearStart": 1993,
+        "yearEnd": 1994,
+        "torqueCurve": [
+          [
+            800,
+            440
+          ],
+          [
+            1000,
+            490
+          ],
+          [
+            1200,
+            515
+          ],
+          [
+            1400,
+            529
+          ],
+          [
+            1600,
+            525
+          ],
+          [
+            1800,
+            515
+          ],
+          [
+            2000,
+            500
+          ],
+          [
+            2200,
+            485
+          ],
+          [
+            2400,
+            470
+          ],
+          [
+            2600,
+            462
+          ],
+          [
+            2800,
+            456
+          ],
+          [
+            3000,
+            451
+          ],
+          [
+            3200,
+            430
+          ],
+          [
+            3300,
+            415
+          ]
+        ],
+        "redlineRpm": 3300,
+        "idleRpm": 675,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3140,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating as the F-250 entry. Offered 1993(.5)-1994 only before the Power Stroke replaced it mid-1994; NA IDI (185 hp/~358-360 lb-ft) not modeled per brief instruction."
+      },
+      {
+        "id": "73-powerstroke",
+        "engineName": "7.3L Power Stroke V8 Turbo Diesel",
+        "fuel": "diesel",
+        "yearStart": 1994,
+        "yearEnd": 1997,
+        "torqueCurve": [
+          [
+            800,
+            454
+          ],
+          [
+            1000,
+            497
+          ],
+          [
+            1200,
+            525
+          ],
+          [
+            1400,
+            546
+          ],
+          [
+            1600,
+            561
+          ],
+          [
+            1800,
+            568
+          ],
+          [
+            2000,
+            576
+          ],
+          [
+            2200,
+            564
+          ],
+          [
+            2400,
+            553
+          ],
+          [
+            2600,
+            540
+          ],
+          [
+            2800,
+            522
+          ],
+          [
+            3000,
+            498
+          ],
+          [
+            3200,
+            463
+          ],
+          [
+            3300,
+            440
+          ]
+        ],
+        "redlineRpm": 3300,
+        "idleRpm": 700,
+        "displacementL": 7.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "E4OD",
+          "gearRatios": [
+            2.71,
+            1.54,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3150,
+        "tireSize": {
+          "widthMm": 235,
+          "aspectRatio": 85,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same engine/rating and same 1996-97 uprate ambiguity as the F-250 entry -- see confidenceNotes. This is the flagship OBS heavy-duty combo (Crew Cab 4x4 SRW + 7.3 diesel); Crew Cab body was F-350-only in this generation, matching the brief's premise."
+      }
+    ]
+  },
+  {
     "id": "gm-1500-2019",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 1500",
@@ -5019,6 +6106,257 @@
     ]
   },
   {
+    "id": "gm-1500-1992",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "GMT400 (C/K)",
+    "yearStart": 1992,
+    "yearEnd": 1998,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.15
+    },
+    "powertrains": [
+      {
+        "id": "57-tbi",
+        "engineName": "5.7L V8 TBI (L05)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1995,
+        "torqueCurve": [
+          [
+            1000,
+            330
+          ],
+          [
+            1200,
+            350
+          ],
+          [
+            1400,
+            368
+          ],
+          [
+            1600,
+            383
+          ],
+          [
+            1800,
+            393
+          ],
+          [
+            2000,
+            400
+          ],
+          [
+            2200,
+            404
+          ],
+          [
+            2400,
+            406
+          ],
+          [
+            2600,
+            407
+          ],
+          [
+            2800,
+            407
+          ],
+          [
+            3000,
+            405
+          ],
+          [
+            3200,
+            400
+          ],
+          [
+            3400,
+            393
+          ],
+          [
+            3600,
+            385
+          ],
+          [
+            3800,
+            380
+          ],
+          [
+            4000,
+            374
+          ],
+          [
+            4200,
+            352
+          ],
+          [
+            4400,
+            332
+          ],
+          [
+            4600,
+            310
+          ]
+        ],
+        "redlineRpm": 4600,
+        "idleRpm": 600,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2200,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Throttle-body-injected 350ci small block, RPO L05. Advertised 210 hp @ 4000 rpm / 300 lb-ft @ 2800 rpm (SAE net), consistent across 1992-1995. 1992-93 trucks used the non-electronic 4L60 (same gear ratios as 4L60-E); 4L60-E (electronic) phased in through 1993-94."
+      },
+      {
+        "id": "57-vortec",
+        "engineName": "5.7L Vortec V8 (L31)",
+        "fuel": "gas",
+        "yearStart": 1996,
+        "yearEnd": 1998,
+        "torqueCurve": [
+          [
+            1000,
+            360
+          ],
+          [
+            1200,
+            385
+          ],
+          [
+            1400,
+            405
+          ],
+          [
+            1600,
+            420
+          ],
+          [
+            1800,
+            432
+          ],
+          [
+            2000,
+            440
+          ],
+          [
+            2200,
+            444
+          ],
+          [
+            2400,
+            446
+          ],
+          [
+            2600,
+            447
+          ],
+          [
+            2800,
+            447
+          ],
+          [
+            3000,
+            441
+          ],
+          [
+            3200,
+            435
+          ],
+          [
+            3400,
+            429
+          ],
+          [
+            3600,
+            423
+          ],
+          [
+            3800,
+            417
+          ],
+          [
+            4000,
+            411
+          ],
+          [
+            4200,
+            405
+          ],
+          [
+            4400,
+            399
+          ],
+          [
+            4600,
+            395
+          ],
+          [
+            4800,
+            375
+          ],
+          [
+            5000,
+            358
+          ],
+          [
+            5100,
+            342
+          ]
+        ],
+        "redlineRpm": 5100,
+        "idleRpm": 600,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2280,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Vortec 5700, RPO L31: center-bolt valve covers, revised heads/intake vs L05. 255 hp @ 4600 rpm / 330 lb-ft @ 2800 rpm confirmed consistent 1996-1998 (engine ran through 2002 in vans/SUVs). Matches brief exactly."
+      }
+    ]
+  },
+  {
     "id": "gm-2500hd-2020",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 2500HD",
@@ -5570,6 +6908,330 @@
     ]
   },
   {
+    "id": "gm-2500hd-1992",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 2500HD",
+    "classTier": "threequarter",
+    "generation": "GMT400 (C/K)",
+    "yearStart": 1992,
+    "yearEnd": 2000,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "74-tbi",
+        "engineName": "7.4L V8 TBI (454)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1995,
+        "torqueCurve": [
+          [
+            1000,
+            485
+          ],
+          [
+            1200,
+            502
+          ],
+          [
+            1400,
+            514
+          ],
+          [
+            1600,
+            522
+          ],
+          [
+            1800,
+            519
+          ],
+          [
+            2000,
+            513
+          ],
+          [
+            2200,
+            505
+          ],
+          [
+            2400,
+            496
+          ],
+          [
+            2600,
+            486
+          ],
+          [
+            2800,
+            476
+          ],
+          [
+            3000,
+            468
+          ],
+          [
+            3200,
+            462
+          ],
+          [
+            3400,
+            458
+          ],
+          [
+            3600,
+            455
+          ],
+          [
+            3800,
+            420
+          ],
+          [
+            4000,
+            395
+          ],
+          [
+            4200,
+            365
+          ],
+          [
+            4400,
+            320
+          ]
+        ],
+        "redlineRpm": 4400,
+        "idleRpm": 600,
+        "displacementL": 7.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2450,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "TBI big-block 454, RPO L19, standard 2500/3500 HD tune (distinct from the higher-output 454SS performance-truck calibration). 230 hp @ 3600 rpm / 385 lb-ft @ 1600 rpm, essentially unchanged 1988-1995 per GMT400 archival source."
+      },
+      {
+        "id": "74-vortec",
+        "engineName": "7.4L Vortec V8 (L29)",
+        "fuel": "gas",
+        "yearStart": 1996,
+        "yearEnd": 2000,
+        "torqueCurve": [
+          [
+            1000,
+            505
+          ],
+          [
+            1200,
+            525
+          ],
+          [
+            1400,
+            538
+          ],
+          [
+            1600,
+            549
+          ],
+          [
+            1800,
+            550
+          ],
+          [
+            2000,
+            552
+          ],
+          [
+            2200,
+            553
+          ],
+          [
+            2400,
+            554
+          ],
+          [
+            2600,
+            555
+          ],
+          [
+            2800,
+            555
+          ],
+          [
+            3000,
+            556
+          ],
+          [
+            3200,
+            556
+          ],
+          [
+            3400,
+            552
+          ],
+          [
+            3600,
+            544
+          ],
+          [
+            3800,
+            530
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            470
+          ],
+          [
+            4400,
+            435
+          ],
+          [
+            4600,
+            400
+          ]
+        ],
+        "redlineRpm": 4600,
+        "idleRpm": 600,
+        "displacementL": 7.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2500,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Vortec 7400, RPO L29: hydraulic roller cam, MPFI (vs L19's TBI), 1996-2000. 290 hp @ 4000 rpm / 410 lb-ft @ 3200 rpm confirmed by two independent sources."
+      },
+      {
+        "id": "65-turbodiesel",
+        "engineName": "6.5L Turbo Diesel V8",
+        "fuel": "diesel",
+        "yearStart": 1992,
+        "yearEnd": 2000,
+        "torqueCurve": [
+          [
+            800,
+            380
+          ],
+          [
+            1000,
+            430
+          ],
+          [
+            1200,
+            470
+          ],
+          [
+            1400,
+            500
+          ],
+          [
+            1600,
+            515
+          ],
+          [
+            1800,
+            522
+          ],
+          [
+            2000,
+            506
+          ],
+          [
+            2200,
+            491
+          ],
+          [
+            2400,
+            475
+          ],
+          [
+            2600,
+            460
+          ],
+          [
+            2800,
+            444
+          ],
+          [
+            3000,
+            429
+          ],
+          [
+            3200,
+            413
+          ],
+          [
+            3400,
+            398
+          ]
+        ],
+        "redlineRpm": 3400,
+        "idleRpm": 650,
+        "displacementL": 6.5,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 2600,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "GM/Detroit Diesel 6.5L Turbo (RPO L56 1992-93 with mechanical Stanadyne DB2 pump; RPO L65 1994-2000 with electronic DS4 pump). Modeled rating: 190 hp @ 3400 rpm / 385 lb-ft @ 1800 rpm - the automatic-transmission standard-pickup figure best corroborated for the bulk of the 1994-2000 production run."
+      }
+    ]
+  },
+  {
     "id": "gm-3500hd-srw-2020",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 3500HD (SRW)",
@@ -6117,6 +7779,330 @@
           "rimDiameterIn": 18
         },
         "notes": "Same L5P/Allison 1000 combination as 2500HD (445 hp @ 2800 / 910 lb-ft @ 1600), 2017-2019, last three years of the K2XX HD generation before the T1 HD redesign for MY2020."
+      }
+    ]
+  },
+  {
+    "id": "gm-3500hd-srw-1992",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 3500HD (SRW)",
+    "classTier": "one",
+    "generation": "GMT400 (C/K)",
+    "yearStart": 1992,
+    "yearEnd": 2000,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "74-tbi",
+        "engineName": "7.4L V8 TBI (454)",
+        "fuel": "gas",
+        "yearStart": 1992,
+        "yearEnd": 1995,
+        "torqueCurve": [
+          [
+            1000,
+            485
+          ],
+          [
+            1200,
+            502
+          ],
+          [
+            1400,
+            514
+          ],
+          [
+            1600,
+            522
+          ],
+          [
+            1800,
+            519
+          ],
+          [
+            2000,
+            513
+          ],
+          [
+            2200,
+            505
+          ],
+          [
+            2400,
+            496
+          ],
+          [
+            2600,
+            486
+          ],
+          [
+            2800,
+            476
+          ],
+          [
+            3000,
+            468
+          ],
+          [
+            3200,
+            462
+          ],
+          [
+            3400,
+            458
+          ],
+          [
+            3600,
+            455
+          ],
+          [
+            3800,
+            420
+          ],
+          [
+            4000,
+            395
+          ],
+          [
+            4200,
+            365
+          ],
+          [
+            4400,
+            320
+          ]
+        ],
+        "redlineRpm": 4400,
+        "idleRpm": 600,
+        "displacementL": 7.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2800,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same L19 TBI 454 as the 2500HD entry; curb weight raised for the heavier 3500 SRW crew-cab baseline (GMT400 crew cab did exist on the 3500, unlike the 1500/2500 which had no half-ton-style crew option until later platforms)."
+      },
+      {
+        "id": "74-vortec",
+        "engineName": "7.4L Vortec V8 (L29)",
+        "fuel": "gas",
+        "yearStart": 1996,
+        "yearEnd": 2000,
+        "torqueCurve": [
+          [
+            1000,
+            505
+          ],
+          [
+            1200,
+            525
+          ],
+          [
+            1400,
+            538
+          ],
+          [
+            1600,
+            549
+          ],
+          [
+            1800,
+            550
+          ],
+          [
+            2000,
+            552
+          ],
+          [
+            2200,
+            553
+          ],
+          [
+            2400,
+            554
+          ],
+          [
+            2600,
+            555
+          ],
+          [
+            2800,
+            555
+          ],
+          [
+            3000,
+            556
+          ],
+          [
+            3200,
+            556
+          ],
+          [
+            3400,
+            552
+          ],
+          [
+            3600,
+            544
+          ],
+          [
+            3800,
+            530
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            470
+          ],
+          [
+            4400,
+            435
+          ],
+          [
+            4600,
+            400
+          ]
+        ],
+        "redlineRpm": 4600,
+        "idleRpm": 600,
+        "displacementL": 7.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2850,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same L29 Vortec 7400 as the 2500HD entry; curb weight raised for the 3500 SRW crew-cab baseline."
+      },
+      {
+        "id": "65-turbodiesel",
+        "engineName": "6.5L Turbo Diesel V8",
+        "fuel": "diesel",
+        "yearStart": 1992,
+        "yearEnd": 2000,
+        "torqueCurve": [
+          [
+            800,
+            380
+          ],
+          [
+            1000,
+            430
+          ],
+          [
+            1200,
+            470
+          ],
+          [
+            1400,
+            500
+          ],
+          [
+            1600,
+            515
+          ],
+          [
+            1800,
+            522
+          ],
+          [
+            2000,
+            506
+          ],
+          [
+            2200,
+            491
+          ],
+          [
+            2400,
+            475
+          ],
+          [
+            2600,
+            460
+          ],
+          [
+            2800,
+            444
+          ],
+          [
+            3000,
+            429
+          ],
+          [
+            3200,
+            413
+          ],
+          [
+            3400,
+            398
+          ]
+        ],
+        "redlineRpm": 3400,
+        "idleRpm": 650,
+        "displacementL": 6.5,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "4L80-E",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 2950,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same 6.5L Turbo Diesel (L56/L65) as the 2500HD entry, on the heavier 3500 SRW crew-cab baseline. This diesel+crew-cab combination was a common and popular GMT400 configuration among owners/collectors."
       }
     ]
   },
@@ -6987,6 +8973,251 @@
     ]
   },
   {
+    "id": "ram-1500-1994",
+    "make": "Ram",
+    "model": "1500",
+    "classTier": "half",
+    "generation": "2nd gen (BR)",
+    "yearStart": 1994,
+    "yearEnd": 2001,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.25
+    },
+    "powertrains": [
+      {
+        "id": "52-magnum",
+        "engineName": "5.2L Magnum V8",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2001,
+        "torqueCurve": [
+          [
+            1000,
+            230
+          ],
+          [
+            1200,
+            265
+          ],
+          [
+            1400,
+            300
+          ],
+          [
+            1600,
+            330
+          ],
+          [
+            1800,
+            355
+          ],
+          [
+            2000,
+            375
+          ],
+          [
+            2200,
+            390
+          ],
+          [
+            2400,
+            400
+          ],
+          [
+            2600,
+            405
+          ],
+          [
+            2800,
+            407
+          ],
+          [
+            3000,
+            407
+          ],
+          [
+            3200,
+            407
+          ],
+          [
+            3400,
+            404
+          ],
+          [
+            3600,
+            395
+          ],
+          [
+            3800,
+            383
+          ],
+          [
+            4000,
+            375
+          ],
+          [
+            4200,
+            367
+          ],
+          [
+            4400,
+            356
+          ],
+          [
+            4600,
+            344
+          ],
+          [
+            4800,
+            330
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "44RE 4-speed automatic (42RE 1994-1995)",
+          "gearRatios": [
+            2.74,
+            1.54,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          3.92
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2100,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "220 hp @ 4400 rpm / 300 lb-ft @ 3200 rpm, unchanged 1994-2001. CORRECTION to brief: the 5.2L stayed in the light-duty Chrysler A500 transmission family the whole generation (42RE 1994-95 -> 44RE 1996-2001) -- it never moved to the larger A518-family 46RE used behind the 5.9L; the brief's '46RE from 1996?' guess was wrong. 42RE/44RE share the same A500 gearset (2.74/1.54/1.00/0.69), distinct from 46RE's 2.45/1.45/1.00/0.69. Baseline is Club Cab (extended cab) 4x4 short bed; no crew cab existed in this generation (Quad Cab from 1998 is still an extended cab)."
+      },
+      {
+        "id": "59-magnum",
+        "engineName": "5.9L Magnum V8",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2001,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1200,
+            300
+          ],
+          [
+            1400,
+            340
+          ],
+          [
+            1600,
+            375
+          ],
+          [
+            1800,
+            400
+          ],
+          [
+            2000,
+            420
+          ],
+          [
+            2200,
+            435
+          ],
+          [
+            2400,
+            445
+          ],
+          [
+            2600,
+            450
+          ],
+          [
+            2800,
+            453
+          ],
+          [
+            3000,
+            454
+          ],
+          [
+            3200,
+            454
+          ],
+          [
+            3400,
+            450
+          ],
+          [
+            3600,
+            448
+          ],
+          [
+            3800,
+            445
+          ],
+          [
+            4000,
+            436
+          ],
+          [
+            4200,
+            414
+          ],
+          [
+            4400,
+            392
+          ],
+          [
+            4600,
+            375
+          ],
+          [
+            4800,
+            355
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.9,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "46RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          3.92
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2150,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the dominant late-generation rating: 245 hp @ 4000 rpm / 335 lb-ft @ 3200 rpm (1997-2001; Sport Group trucks were 250 hp/345 lb-ft in the last couple of years). CORRECTION/refinement to brief: 1994-1996 trucks made less -- 230 hp / 330 lb-ft -- so the brief's '230-245 hp / 330-345 lb-ft' range is correct but understates that it's a step change around MY1997, not a smooth spread. Secondary sources disagree on the exact torque peak rpm (3200 vs 3250); used the rounder, more commonly published 3200 figure matching the brief. Same Club Cab 4x4 short bed baseline as the 5.2L."
+      }
+    ]
+  },
+  {
     "id": "ram-2500-2019",
     "make": "Ram",
     "model": "2500",
@@ -7466,6 +9697,405 @@
           "rimDiameterIn": 18
         },
         "notes": "MAJOR CORRECTION to brief: in the 4th generation (2013-2018), the 68RFE-equipped Cummins carries the SAME 370 hp @2,800 rpm / 800 lb-ft @1,600 rpm rating on BOTH the 2500 and the 3500 SRW \u2014 there is no separate, higher-torque '850 lb-ft 3500 SO' calibration in this generation (that 850 lb-ft rating only appears starting with the 2019+ 5th-gen truck, which is why the 2019+ catalog entry can reuse one curve for both trucks at 850 lb-ft \u2014 the 4th-gen equivalent is this shared curve at 800 lb-ft instead). Confirmed identical across all five checked model years (2013, 2014, 2016, 2017, 2018 FCA spec sheets). Peak-torque rpm is 1,600, not 1,700 as the brief assumed (1,700 is the 5th-gen rpm). AXLE CORRECTION: FCA's official 2016 towing charts show 3500 SRW Cummins (both SO and HO) is restricted to the single 3.42 axle ratio \u2014 3.73 and 4.10 are explicitly DRW-only options on the diesel, unlike the gas 66RFE which offers 3.73/4.10 on SRW too. The 2500 Cummins is 3.42-only in every model year checked, with no 3.73/4.10 option ever listed. A 350 hp/660 lb-ft G56 6-speed manual was also offered on both trucks throughout 2013-2018 but is excluded per the catalog's automatic-only convention."
+      }
+    ]
+  },
+  {
+    "id": "ram-2500-1994",
+    "make": "Ram",
+    "model": "2500",
+    "classTier": "threequarter",
+    "generation": "2nd gen (BR)",
+    "yearStart": 1994,
+    "yearEnd": 2002,
+    "aero": {
+      "cd": 0.47,
+      "frontalAreaM2": 3.55
+    },
+    "powertrains": [
+      {
+        "id": "59-magnum-hd",
+        "engineName": "5.9L Magnum V8",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            1000,
+            250
+          ],
+          [
+            1200,
+            288
+          ],
+          [
+            1400,
+            325
+          ],
+          [
+            1600,
+            360
+          ],
+          [
+            1800,
+            385
+          ],
+          [
+            2000,
+            405
+          ],
+          [
+            2200,
+            420
+          ],
+          [
+            2400,
+            435
+          ],
+          [
+            2600,
+            443
+          ],
+          [
+            2800,
+            446
+          ],
+          [
+            3000,
+            447
+          ],
+          [
+            3200,
+            447
+          ],
+          [
+            3400,
+            443
+          ],
+          [
+            3600,
+            436
+          ],
+          [
+            3800,
+            424
+          ],
+          [
+            4000,
+            410
+          ],
+          [
+            4200,
+            396
+          ],
+          [
+            4400,
+            378
+          ],
+          [
+            4600,
+            360
+          ],
+          [
+            4800,
+            345
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.9,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "46RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2700,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the brief's proposed HD calibration, 230 hp @ 4000 rpm / 330 lb-ft @ 3200 rpm -- effectively the 1994-1996 1500 rating held for the whole 2500/3500 run. FLAG: sourcing that distinguishes a separate 2500/3500 'HD calibration' of the 5.9L Magnum from the 1500's rating is scarce/absent in what this session could retrieve -- most secondary sources just quote one 5.9L Magnum rating for the whole truck line without splitting by GVWR class, and some suggest the 2500/3500 tracked the 1500's 230->245hp progression too. Kept the brief's lower, more conservative figure since it is unrefuted, but this is the single lowest-confidence figure in this dataset."
+      },
+      {
+        "id": "80-magnum-v10",
+        "engineName": "8.0L Magnum V10",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            1000,
+            420
+          ],
+          [
+            1200,
+            480
+          ],
+          [
+            1400,
+            530
+          ],
+          [
+            1600,
+            570
+          ],
+          [
+            1800,
+            595
+          ],
+          [
+            2000,
+            605
+          ],
+          [
+            2200,
+            609
+          ],
+          [
+            2400,
+            610
+          ],
+          [
+            2600,
+            606
+          ],
+          [
+            2800,
+            598
+          ],
+          [
+            3000,
+            585
+          ],
+          [
+            3200,
+            568
+          ],
+          [
+            3400,
+            548
+          ],
+          [
+            3600,
+            530
+          ],
+          [
+            3800,
+            525
+          ],
+          [
+            4000,
+            520
+          ],
+          [
+            4200,
+            510
+          ],
+          [
+            4400,
+            485
+          ],
+          [
+            4600,
+            450
+          ]
+        ],
+        "redlineRpm": 4600,
+        "idleRpm": 650,
+        "displacementL": 8.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "47RE 4-speed automatic (47RH 1994-1995)",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2750,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the original 1994-1998 rating, 300 hp @ 4100 rpm / 450 lb-ft @ 2400 rpm. CORRECTION to brief: peak-power rpm is 4100, not 4000 (dieselhub.com spec table). NOTE (not modeled): 1999-2002 trucks were bumped to 310 hp at the same 4100 rpm/450 lb-ft@2400 -- roughly the second half of this generation's V10 production, so treat the modeled 300hp figure as slightly conservative for later trucks. Transmission was 47RH for 1994-1995 only, then 47RE 1996-2002 (NV4500 5-speed manual was also available throughout); modeled the automatic. "
+      },
+      {
+        "id": "59-cummins-12v",
+        "engineName": "5.9L Cummins I6 Diesel (12-valve)",
+        "fuel": "diesel",
+        "yearStart": 1994,
+        "yearEnd": 1998,
+        "torqueCurve": [
+          [
+            800,
+            430
+          ],
+          [
+            1000,
+            500
+          ],
+          [
+            1200,
+            545
+          ],
+          [
+            1400,
+            569
+          ],
+          [
+            1600,
+            565
+          ],
+          [
+            1800,
+            545
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2200,
+            520
+          ],
+          [
+            2400,
+            515
+          ],
+          [
+            2500,
+            513
+          ]
+        ],
+        "redlineRpm": 2500,
+        "idleRpm": 750,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "47RE 4-speed automatic (47RH 1994-1995)",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2900,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the 1996-1998 automatic rating, 180 hp @ 2500 rpm / 420 lb-ft @ 1500 rpm -- matches the brief exactly. CORRECTION/addition: this rating did NOT hold for the full 1994-1998 span. 1994-1995 automatics were lower, 160 hp @ 2500 / 400 lb-ft @ 1600. Manual-transmission trucks (NV4500) were rated higher throughout and are NOT modeled here: 175 hp @ 2600 / 420 lb-ft @ 1500 (1994-95) -> 215 hp @ 2600 / 440 lb-ft @ 1500 (1996-98), confirming the brief's 'manual was 215/440 in later years' note. Mechanical P7100 pump, governed at 2,500 rpm (matches rated-power rpm; brief's guess of '~2700' governed speed is not supported by sources found and is treated as a correction). Transmission was 47RH for 1994-1995 only, then 47RE 1996-1998 (same A618 gearset as the V10). "
+      },
+      {
+        "id": "59-cummins-24v",
+        "engineName": "5.9L Cummins I6 Diesel (24-valve)",
+        "fuel": "diesel",
+        "yearStart": 1998,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            605
+          ],
+          [
+            1400,
+            624
+          ],
+          [
+            1600,
+            622
+          ],
+          [
+            1800,
+            621
+          ],
+          [
+            2000,
+            620
+          ],
+          [
+            2200,
+            620
+          ],
+          [
+            2400,
+            620
+          ],
+          [
+            2600,
+            620
+          ],
+          [
+            2800,
+            605
+          ],
+          [
+            3000,
+            540
+          ]
+        ],
+        "redlineRpm": 3000,
+        "idleRpm": 700,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "47RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2900,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Introduced mid-year as a 1998.5 model (modeled yearStart 1998); electronic Bosch VP44 pump replaced the mechanical P7100. Modeled at the peak/latest automatic rating, 235 hp @ 2700 rpm / 460 lb-ft @ 1400 rpm (2001-2002). CORRECTION to brief: this rating did NOT hold for the whole 1998.5-2002 span -- automatics were significantly weaker at introduction, 215 hp @ 2700 / 420 lb-ft @ 1600 (1998.5 through 1999 or 2000, sources disagree on the exact cutover year), stepping up to 235/460 only in the final years. Manual-transmission (NV4500) trucks were 235 hp @ 2700 / 460 lb-ft @ 1600 from the start. CONFIRMED per brief: the 2001-2002 High Output variant (245 hp @ 2900 rpm / 505 lb-ft @ 1400 rpm) was paired exclusively with the 6-speed NV5600 manual (a wider-input-shaft version unique to HO trucks) and was not available with any automatic or with the CA emissions package -- not modeled as a separate powertrain per the brief's instruction, but noted here. Governed/fuel-cutoff commonly cited around 3,200 rpm (VP44 stock fueling limit) but rated power at 2,700 (or 2,900 for HO); redline modeled at 3,000 rpm as a practical power-falloff point, not a confirmed factory spec. "
       }
     ]
   },
@@ -8131,6 +10761,406 @@
         "notes": "3500-only, Aisin AS69RC. Horsepower held constant at 385 hp @2,800 rpm throughout 2013-2018, but torque escalated in several steps \u2014 CORRECTION to brief's guessed escalation years: 850 lb-ft @1,600 rpm (2013-2014) \u2192 865 lb-ft @1,700 rpm (2015 running change, +15 lb-ft per FCA's own 2015 press materials) \u2192 900 lb-ft @1,700 rpm (2016-2017, confirmed identical in both years' official spec sheets \u2014 the brief guessed correctly here) \u2192 930 lb-ft @1,700 rpm (2018 only). Modeled here at the latest (2018) 385 hp/930 lb-ft rating per instructions; see confidenceNotes for the full year-by-year rating if a future revision wants to split this into sub-eras. NOTE: the 2018 FCA spec PDF itself lists '930 lb.-ft. (1,220 N\u2022m)' \u2014 1,220 Nm is the stale/uncorrected conversion left over from the 900 lb-ft rating (930 lb-ft actually converts to 1,260.9 Nm); we used the corrected conversion for the modeled peak. AXLE CORRECTION: like the SO variant, 3500 SRW with the Aisin HO is restricted to the single 3.42 axle ratio per FCA's 2016 towing chart \u2014 3.73/4.10 are DRW-only, contradicting the brief's assumed 3.73 default."
       }
     ]
+  },
+  {
+    "id": "ram-3500-1994",
+    "make": "Ram",
+    "model": "3500",
+    "classTier": "one",
+    "generation": "2nd gen (BR)",
+    "yearStart": 1994,
+    "yearEnd": 2002,
+    "aero": {
+      "cd": 0.47,
+      "frontalAreaM2": 3.55
+    },
+    "powertrains": [
+      {
+        "id": "59-magnum-hd",
+        "engineName": "5.9L Magnum V8",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            1000,
+            250
+          ],
+          [
+            1200,
+            288
+          ],
+          [
+            1400,
+            325
+          ],
+          [
+            1600,
+            360
+          ],
+          [
+            1800,
+            385
+          ],
+          [
+            2000,
+            405
+          ],
+          [
+            2200,
+            420
+          ],
+          [
+            2400,
+            435
+          ],
+          [
+            2600,
+            443
+          ],
+          [
+            2800,
+            446
+          ],
+          [
+            3000,
+            447
+          ],
+          [
+            3200,
+            447
+          ],
+          [
+            3400,
+            443
+          ],
+          [
+            3600,
+            436
+          ],
+          [
+            3800,
+            424
+          ],
+          [
+            4000,
+            410
+          ],
+          [
+            4200,
+            396
+          ],
+          [
+            4400,
+            378
+          ],
+          [
+            4600,
+            360
+          ],
+          [
+            4800,
+            345
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.9,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "46RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2850,
+        "tireSize": {
+          "widthMm": 225,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the brief's proposed HD calibration, 230 hp @ 4000 rpm / 330 lb-ft @ 3200 rpm -- effectively the 1994-1996 1500 rating held for the whole 2500/3500 run. FLAG: sourcing that distinguishes a separate 2500/3500 'HD calibration' of the 5.9L Magnum from the 1500's rating is scarce/absent in what this session could retrieve -- most secondary sources just quote one 5.9L Magnum rating for the whole truck line without splitting by GVWR class, and some suggest the 2500/3500 tracked the 1500's 230->245hp progression too. Kept the brief's lower, more conservative figure since it is unrefuted, but this is the single lowest-confidence figure in this dataset."
+      },
+      {
+        "id": "80-magnum-v10",
+        "engineName": "8.0L Magnum V10",
+        "fuel": "gas",
+        "yearStart": 1994,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            1000,
+            420
+          ],
+          [
+            1200,
+            480
+          ],
+          [
+            1400,
+            530
+          ],
+          [
+            1600,
+            570
+          ],
+          [
+            1800,
+            595
+          ],
+          [
+            2000,
+            605
+          ],
+          [
+            2200,
+            609
+          ],
+          [
+            2400,
+            610
+          ],
+          [
+            2600,
+            606
+          ],
+          [
+            2800,
+            598
+          ],
+          [
+            3000,
+            585
+          ],
+          [
+            3200,
+            568
+          ],
+          [
+            3400,
+            548
+          ],
+          [
+            3600,
+            530
+          ],
+          [
+            3800,
+            525
+          ],
+          [
+            4000,
+            520
+          ],
+          [
+            4200,
+            510
+          ],
+          [
+            4400,
+            485
+          ],
+          [
+            4600,
+            450
+          ]
+        ],
+        "redlineRpm": 4600,
+        "idleRpm": 650,
+        "displacementL": 8.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "47RE 4-speed automatic (47RH 1994-1995)",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 2900,
+        "tireSize": {
+          "widthMm": 225,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the original 1994-1998 rating, 300 hp @ 4100 rpm / 450 lb-ft @ 2400 rpm. CORRECTION to brief: peak-power rpm is 4100, not 4000 (dieselhub.com spec table). NOTE (not modeled): 1999-2002 trucks were bumped to 310 hp at the same 4100 rpm/450 lb-ft@2400 -- roughly the second half of this generation's V10 production, so treat the modeled 300hp figure as slightly conservative for later trucks. Transmission was 47RH for 1994-1995 only, then 47RE 1996-2002 (NV4500 5-speed manual was also available throughout); modeled the automatic. "
+      },
+      {
+        "id": "59-cummins-12v",
+        "engineName": "5.9L Cummins I6 Diesel (12-valve)",
+        "fuel": "diesel",
+        "yearStart": 1994,
+        "yearEnd": 1998,
+        "torqueCurve": [
+          [
+            800,
+            430
+          ],
+          [
+            1000,
+            500
+          ],
+          [
+            1200,
+            545
+          ],
+          [
+            1400,
+            569
+          ],
+          [
+            1600,
+            565
+          ],
+          [
+            1800,
+            545
+          ],
+          [
+            2000,
+            530
+          ],
+          [
+            2200,
+            520
+          ],
+          [
+            2400,
+            515
+          ],
+          [
+            2500,
+            513
+          ]
+        ],
+        "redlineRpm": 2500,
+        "idleRpm": 750,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "47RE 4-speed automatic (47RH 1994-1995)",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 3020,
+        "tireSize": {
+          "widthMm": 225,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Modeled at the 1996-1998 automatic rating, 180 hp @ 2500 rpm / 420 lb-ft @ 1500 rpm -- matches the brief exactly. CORRECTION/addition: this rating did NOT hold for the full 1994-1998 span. 1994-1995 automatics were lower, 160 hp @ 2500 / 400 lb-ft @ 1600. Manual-transmission trucks (NV4500) were rated higher throughout and are NOT modeled here: 175 hp @ 2600 / 420 lb-ft @ 1500 (1994-95) -> 215 hp @ 2600 / 440 lb-ft @ 1500 (1996-98), confirming the brief's 'manual was 215/440 in later years' note. Mechanical P7100 pump, governed at 2,500 rpm (matches rated-power rpm; brief's guess of '~2700' governed speed is not supported by sources found and is treated as a correction). Transmission was 47RH for 1994-1995 only, then 47RE 1996-1998 (same A618 gearset as the V10). MODELED-AS-DRW NOTE: see truck-level notes."
+      },
+      {
+        "id": "59-cummins-24v",
+        "engineName": "5.9L Cummins I6 Diesel (24-valve)",
+        "fuel": "diesel",
+        "yearStart": 1998,
+        "yearEnd": 2002,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            605
+          ],
+          [
+            1400,
+            624
+          ],
+          [
+            1600,
+            622
+          ],
+          [
+            1800,
+            621
+          ],
+          [
+            2000,
+            620
+          ],
+          [
+            2200,
+            620
+          ],
+          [
+            2400,
+            620
+          ],
+          [
+            2600,
+            620
+          ],
+          [
+            2800,
+            605
+          ],
+          [
+            3000,
+            540
+          ]
+        ],
+        "redlineRpm": 3000,
+        "idleRpm": 700,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "47RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.54,
+          4.1
+        ],
+        "defaultAxleRatio": 3.54,
+        "curbWeightKg": 3040,
+        "tireSize": {
+          "widthMm": 225,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Introduced mid-year as a 1998.5 model (modeled yearStart 1998); electronic Bosch VP44 pump replaced the mechanical P7100. Modeled at the peak/latest automatic rating, 235 hp @ 2700 rpm / 460 lb-ft @ 1400 rpm (2001-2002). CORRECTION to brief: this rating did NOT hold for the whole 1998.5-2002 span -- automatics were significantly weaker at introduction, 215 hp @ 2700 / 420 lb-ft @ 1600 (1998.5 through 1999 or 2000, sources disagree on the exact cutover year), stepping up to 235/460 only in the final years. Manual-transmission (NV4500) trucks were 235 hp @ 2700 / 460 lb-ft @ 1600 from the start. CONFIRMED per brief: the 2001-2002 High Output variant (245 hp @ 2900 rpm / 505 lb-ft @ 1400 rpm) was paired exclusively with the 6-speed NV5600 manual (a wider-input-shaft version unique to HO trucks) and was not available with any automatic or with the CA emissions package -- not modeled as a separate powertrain per the brief's instruction, but noted here. Governed/fuel-cutoff commonly cited around 3,200 rpm (VP44 stock fueling limit) but rated power at 2,700 (or 2,900 for HO); redline modeled at 3,000 rpm as a practical power-falloff point, not a confirmed factory spec. MODELED-AS-DRW NOTE: see truck-level notes."
+      }
+    ],
+    "notes": "MAJOR CORRECTION to brief: the 2nd-generation (1994-2002) Ram 3500 was NOT available as a single rear wheel (SRW) pickup truck from the factory. SRW 3500s existed only as cab-chassis (for utility/service bodies), per dodgeforum.com owner/enthusiast consensus ('most of the SRW 3500's came thru as cab/chassis... did not come from the factory' with an SRW pickup bed). Per the brief's own instruction, this entry is modeled as the pickup-box truck, which was DRW-only -- id/model/classTier kept as 'ram-3500-srw-1994' / '3500' / 'one' per the brief, but the physical truck modeled (curb weight, tires) is the dual-rear-wheel pickup, not a literal SRW variant. Curb weights and tires for this truck are offset up/narrower from the 2500 to reflect the heavier DRW chassis and dually tire package; this is the lowest-confidence truck-level judgment call in this dataset."
   },
   {
     "id": "toyota-tundra-2022",

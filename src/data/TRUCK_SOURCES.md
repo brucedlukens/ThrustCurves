@@ -21,7 +21,20 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   primary; year-range notes flag older calibrations.
 - **Lookback scope**: every family carries the generations on sale from 2016
   to the current entry (half-tons and HDs). Ram HD models from the MY2013
-  towing refresh (not 2010) — same convention as the DS Ram 1500.
+  towing refresh (not 2010) — same convention as the DS Ram 1500. A "90s
+  icons" batch adds one classic generation per family: 9th-gen F-150
+  (1992–96), OBS F-250/F-350 (1992–97), GMT400 C/K trucks (1500 1992–98, HD
+  1992–2000), and 2nd-gen Ram (1500 1994–2001, HD 1994–2002).
+- **90s naming/config conventions**: lookback generations reuse the modern
+  family's make/model strings so the UI's generation selector groups them
+  (a 1992 truck files under "F-250 Super Duty" / "Silverado/Sierra 2500HD" /
+  make "Ram"); the generation label carries the real identity ("OBS
+  (pre-Super Duty)", "GMT400 (C/K)", "2nd gen (BR)"). Half-ton baselines are
+  extended-cab 4x4 (no 90s half-ton crew cabs existed); crew cab only where
+  real (F-350, GM 3500). The 2nd-gen Ram 3500 pickup was DRW-only — modeled
+  as the dually (extra dual-tire rolling drag not modeled). 90s ratings are
+  the automatic-transmission calibrations, which often differed from the
+  manuals'.
 
 ## Confidence summary by truck
 
@@ -41,6 +54,10 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Ram 1500 (2019+) | Official Stellantis spec/towing-chart PDFs (weights exact per config) | Curve shapes; HO Hurricane axle/gearing inferred from towing charts |
 | Ram 2500/3500 (2019+) | Official Stellantis spec + body-builder PDFs (ratios, axles, weights) | Curve shapes, Cd/area |
 | Toyota Tundra (2022+) | Toyota press-release figures; weight (Limited CrewMax spec) | AWR10L65 ratios (secondary listings), single 3.31 axle unconfirmed by order guide |
+| Ford F-150 (1992–96) | 1994–96 brochure ratings, axle sets from the 1996 factory towing guide, E4OD ratios | Redlines (no factory figure anywhere — period-typical estimates), 5.8L curb weight (+40 kg estimate over the sourced 5.0L figure) |
+| Ford F-250/F-350 OBS (1992–97) | E4OD ratios, IDI/Power Stroke ratings (diesel-community consensus, 2–3 sources each) | Nearly everything else is secondary-source consensus: gas curb weights (engine-mass-delta estimates), gas redlines, the contested 1996–97 Power Stroke uprate (launch 210/425 modeled) |
+| GM 1500/HD GMT400 (1992–2000) | Engine ratings (multi-source consensus incl. GM crate-engine listings), 4L60-E/4L80-E ratios | 6.5L Turbo Diesel rating (genuinely conflicted sources; 190/385 auto figure modeled), all curb weights (forum scale reports, no factory sheet), 1500 axle set unconfirmed |
+| Ram 1500/HD 2nd gen (1994–2002) | Cummins rating timeline (dieselhub), 42RE/44RE/46RE/47RE identification, Dana 3.54 axle code | 5.9L Magnum "HD" rating unverified, curb weights scaled from one Quad-Cab data point, HD axle sets assumed, dually tire size unconfirmed |
 
 ## Notable verified facts (commonly confused)
 
@@ -114,6 +131,23 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   spec version is modeled as its own powertrain entry with its year range.
   The Limited/Raptor HO 3.5L (450 hp) is excluded as trim-exclusive.
 
+- **90s facts worth keeping** (all corrections researchers made to the
+  briefs): the 9th-gen F-150 never offered 4.10 axles (3.08/3.55 only, per
+  the 1996 factory towing guide) and its brochure ratings split by
+  transmission (5.0L: 195 hp auto / 205 manual). The factory-turbo 7.3L IDI
+  existed for 1993–94 only. GMT400 TBI 350 is 210 hp / 300 lb-ft @ 2800 (the
+  often-quoted 255 hp "454" figure for 1994–95 is the 454SS street truck,
+  not the HD calibration); GMT400 4x4 half-tons ran 245/75R16 (235/75R15 is
+  2WD-only). The 5.2L Magnum used the light-duty 42RE/44RE its whole life,
+  never the 46RE; Dana axle codes are 3.54/3.92/4.10 (3.55 is rounding). The
+  12-valve Cummins automatic was rated 160/400 (1994–95) then 180/420
+  (1996–98) — well under the manuals — and is governed at 2500 rpm, which
+  leaves it unable to hold 65 mph with the mid travel trailer (3rd gear sits
+  39 rpm past the governor, 4th is ~250 N short): the catalog-wide sweep
+  test asserts 60 mph for this reason. The 24-valve automatic reached
+  235/460 only in 2001–02 (modeled), and the 2001–02 HO 245/505 was
+  manual-only (excluded).
+
 ## Corrections applied during aggregation
 
 - 6.7L Power Stroke (standard output): research curve had a small
@@ -137,6 +171,10 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   and 2020 (1050 lb-ft) curves. Advertised peaks unchanged in all three.
   (The 2020–22 F-250 diesel can still edge the 2023 by ~0.1% max grade — it
   is a few kg lighter on a slightly taller tire, which is real.)
+- 90s batch: the 2nd-gen 5.9L Magnum (245 hp @ 4000) curve's implied power
+  peak landed at 4400 rpm; 3600–4200 rpm points lifted so 245 hp lands at
+  the advertised 4000. Within-batch calibration chains (TBI→Vortec ×2,
+  IDI→Power Stroke, 12v→24v Cummins) all validated without adjustment.
 
 ## Simulation constants (choices made here, not researched)
 
