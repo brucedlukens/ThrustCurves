@@ -28,7 +28,10 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   families are now gap-free from 1992 to present: 10th (1997–2003), 11th
   (2004–08), and 12th-gen (2009–14) F-150 plus 1st (1999–2007) and 2nd-gen
   (2008–10) Super Duty fill every hole. (The 1998 "light-duty F-250" F-150
-  variant is deliberately skipped.)
+  variant is deliberately skipped.) GM and Ram are likewise gap-free: GMT800
+  (1999–2006) + GMT900 (2007–13) 1500s, GMT800 HD (2001–07) + GMT900 HD
+  (2007–14), Ram 1500 3rd gen (2002–08) + early 4th gen (2009–12), and Ram
+  HD 3rd gen (2003–09) + early 4th gen (2010–12, pre-towing-refresh).
 - **EV conventions**: electric pickups (F-150 Lightning, Silverado EV,
   Hummer EV Pickup, Rivian R1T) use `fuel: "ev"`, a single-speed gearbox
   (`gearRatios: [1.0]`) with the motor→wheel reduction stored as the sole
@@ -76,6 +79,14 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Chevrolet Silverado EV (2024+) | WT 510/615 + 8,532 lb and RST WOW 754/785 (Wikipedia + cars.com) | Reduction ratio 10.5:1 is an ENGINEERING ESTIMATE (GM doesn't publish; no teardown source reached), top speed 112 mph placeholder, RST curb estimated, Cd 0.41 midpoint of press claims |
 | GMC Hummer EV Pickup (2022+) | 1,000 hp (3X) and 625 hp (2X) ratings, 10.5:1 rear / 13.3:1 front reductions (Ultium Drive specs via Wikipedia) | Motor-shaft torque derived (3X: 11,500 wheel lb-ft ÷ 10.5) or scaled (2X), curb weights (estimates), Cd 0.50/3.9 m² (estimate), 106 mph governor unverified |
 | Rivian R1T Gen 2 (2025+) | Tri 850 hp + 7,000 lb curb and Quad 1,025 hp/1,198 lb-ft/130 mph (Electrek first drives) | 12:1 reduction (Munro-style teardown consensus, not Rivian-published), dual-motor figures carried from Gen 1 (Rivian kept them), most top speeds assumed, Cd 0.30 (Rivian claim, unverified for AT tires) |
+| GM 1500 GMT800 (1999–2006) | MY2000-03 ratings + curb weights + 245/75R16 (cars.com factory sheets; MY1999 launch tune and 2004+ bumps documented), 4L60-E ratios | Axle set 3.42/3.73/4.10 (period-plausible, unverified), redlines (estimates) |
+| GM 1500 GMT900 (2007–13) | All four ratings incl. the 2010+ VVT 5.3 (335 lb-ft @ 4000) and 6.2's 2009 truck debut (cars.com + Wikipedia), curb weights | Axle spread (RPO knowledge, unverified), 6.2's Silverado availability (cars.com only shows Sierra Denali), redlines |
+| GM HD GMT800 (2001–07) | LB7/LBZ/Allison/4L80-E figures verbatim (Wikipedia engine/trans articles), LT245/75R16 fitment | Curb weights + axle defaults (brief estimates, spec sites all blocked), gas redlines; 8.1 modeled with the optional Allison (4L85-E was standard) |
+| GM HD GMT900 (2007.5–14) | LMM/LML ratings + 3,450 rpm HD governor (Wikipedia Duramax article), LML curve = validated K2XX curve verbatim, Allison/6L90 ratios | Curb weights (estimates), axle sets by analogy to K2XX, 6.0 modeled at the L96 rating (LY6 353/373 for 2007.5–09 noted) |
+| Ram 1500 3rd gen (2002–08) | 4.7/HEMI/5.9 ratings (Wikipedia + cars.com agree), 545RFE corrected ratios, P245/70R17, curb weights (cars.com) | Axle ratios (unverified), 3rd-gen HEMI curb (garbled source page — midpoint used), redlines |
+| Ram 1500 4th gen early (2009–12) | 310/330 4.7 and 390/407 VVT HEMI + curbs + tires per engine (cars.com), 65RFE 2012 cutover | Axle ratios (unverified), redlines |
+| Ram HD 3rd gen (2003–09) | Cummins 600 (325/610) + 6.7 (350/650 auto) ratings, 48RE/68RFE ratios (Wikipedia); 2009 2500-only 390/410 HEMI documented (not modeled) | Whether 48RE autos got the full 610 lb-ft from 04.5 (community consensus modeled, no primary source), curb weights, axle defaults |
+| Ram HD 4th gen early (2010–12) | 383/400 HD HEMI + 350/650 SO (Wikipedia), 66RFE (not 65RFE) 2012 correction, 3.42-only SRW Cummins | The late-2011 3500 HO 800 lb-ft calibration (confirmed to exist, transmission pairing unclear — not modeled), curb weights |
 | Ford F-150 (1992–96) | 1994–96 brochure ratings, axle sets from the 1996 factory towing guide, E4OD ratios | Redlines (no factory figure anywhere — period-typical estimates), 5.8L curb weight (+40 kg estimate over the sourced 5.0L figure) |
 | Ford F-250/F-350 OBS (1992–97) | E4OD ratios, IDI/Power Stroke ratings (diesel-community consensus, 2–3 sources each) | Nearly everything else is secondary-source consensus: gas curb weights (engine-mass-delta estimates), gas redlines, the contested 1996–97 Power Stroke uprate (launch 210/425 modeled) |
 | GM 1500/HD GMT400 (1992–2000) | Engine ratings (multi-source consensus incl. GM crate-engine listings), 4L60-E/4L80-E ratios | 6.5L Turbo Diesel rating (genuinely conflicted sources; 190/385 auto figure modeled), all curb weights (forum scale reports, no factory sheet), 1500 axle set unconfirmed |
@@ -181,6 +192,18 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   in the brief); the 6.0L Power Stroke's documented fuel cutoff is
   4,200 rpm. The F-150 Lightning ended production in December 2025, so it
   carries a closed 2022–2025 year range. Hummer EV2X is 625 hp (not ~570).
+- **GM/Ram gap-fill facts worth keeping**: the 545RFE's real drive-upshift
+  second gear is 1.50 (1.67 is the kickdown-only "2nd Prime" — two agents
+  converged on this independently); the 2012 HD Ram 6-speed is the 66RFE,
+  not the 1500's 65RFE; GMT800 half-tons had a MY1999-only lower launch tune
+  (4.8: 255 hp, 5.3: 270/315); the 2010+ GMT900 5.3 VVT calibration is
+  335 lb-ft @ 4000 (vs 338 @ 4400 pre-VVT) so the 4-spd and 6-spd entries
+  deliberately carry different curves; the 6.2L reached GM half-ton pickups
+  only in 2009. Axle-default history shows up honestly in results: GMT900
+  1500s shipped tall 3.42s (GMT800 3.73), the GMT800 LBZ carried a 4.10 tow
+  axle, and the 2010–12 Ram Cummins went 3.42-only — so several older trucks
+  legitimately out-grade their successors at 65 mph until the axle is
+  changed in the UI.
 - **EV figures are output-mode and trim-entangled** in a way ICE ratings
   aren't: Silverado EV RST's 754 hp exists only in "Wide Open Watts" launch
   mode (normal rating 664 hp — the WOW figure is modeled and noted), and
@@ -226,6 +249,14 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
   Modular-engine table conflates the 2008–10 rating into 2005–07, while
   Ford's 2005 press materials and period tests say 355/455 — this also
   keeps the V10 ladder strictly ordered.
+- GM/Ram gap-fill chain fixes (advertised peaks preserved): GMT800 LQ4 6.0
+  low-end clamped below the L96; 8.1's 1,200 rpm point lifted above the
+  outgoing 7.4 Vortec; LMM midrange lifted over the near-equal LBZ; 5.9
+  Cummins 600's 800 rpm point lifted over the 2nd-gen 24v; 2009 VVT HEMI's
+  4,400–5,400 range clamped below the 2013 DS curve; 2009 4.7's sub-1,400
+  points lifted over the 235 hp version. Equal-rated curves are shared
+  verbatim (3rd-gen HEMI across 1500/HD, 6.7 Cummins across 2007.5–2012,
+  GMT900 LML = K2XX LML, 5.9 Magnum carryover = 2nd-gen curve).
 - The cross-generation chain rule now polices pointwise implied power only
   up to the stronger calibration's power peak (+5%): past it, in the
   defuel/governor region, a higher-revving older engine may legitimately

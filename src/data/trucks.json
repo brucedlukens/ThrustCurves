@@ -9265,6 +9265,583 @@
     ]
   },
   {
+    "id": "gm-1500-2007",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "GMT900",
+    "yearStart": 2007,
+    "yearEnd": 2013,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.35
+    },
+    "powertrains": [
+      {
+        "id": "48-vortec",
+        "engineName": "4.8L Vortec V8 (LY2)",
+        "fuel": "gas",
+        "yearStart": 2007,
+        "yearEnd": 2013,
+        "torqueCurve": [
+          [
+            1000,
+            290
+          ],
+          [
+            1400,
+            325
+          ],
+          [
+            1800,
+            355
+          ],
+          [
+            2200,
+            378
+          ],
+          [
+            2600,
+            395
+          ],
+          [
+            3000,
+            405
+          ],
+          [
+            3400,
+            410
+          ],
+          [
+            3800,
+            412
+          ],
+          [
+            4200,
+            413
+          ],
+          [
+            4600,
+            413
+          ],
+          [
+            4800,
+            414
+          ],
+          [
+            5200,
+            400
+          ],
+          [
+            5600,
+            375
+          ],
+          [
+            6000,
+            335
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 4.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2400,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Base V8, fuel-economy oriented; never paired with the 6-speed automatic, and factory output rose modestly (295 to 302 hp) partway through the run."
+      },
+      {
+        "id": "53-vortec-4spd",
+        "engineName": "5.3L Vortec V8 (LMG)",
+        "fuel": "gas",
+        "yearStart": 2007,
+        "yearEnd": 2009,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1400,
+            365
+          ],
+          [
+            1800,
+            400
+          ],
+          [
+            2200,
+            425
+          ],
+          [
+            2600,
+            442
+          ],
+          [
+            3000,
+            452
+          ],
+          [
+            3400,
+            456
+          ],
+          [
+            3800,
+            457
+          ],
+          [
+            4200,
+            457
+          ],
+          [
+            4400,
+            458
+          ],
+          [
+            4800,
+            445
+          ],
+          [
+            5200,
+            431
+          ],
+          [
+            5600,
+            392
+          ],
+          [
+            6000,
+            350
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2380,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Volume mid-range V8, paired exclusively with the 4-speed automatic through the 2009 model year."
+      },
+      {
+        "id": "53-vortec-6spd",
+        "engineName": "5.3L Vortec V8 (LMG)",
+        "fuel": "gas",
+        "yearStart": 2010,
+        "yearEnd": 2013,
+        "torqueCurve": [
+          [
+            1000,
+            315
+          ],
+          [
+            1400,
+            360
+          ],
+          [
+            1800,
+            395
+          ],
+          [
+            2200,
+            420
+          ],
+          [
+            2600,
+            438
+          ],
+          [
+            3000,
+            448
+          ],
+          [
+            3400,
+            452
+          ],
+          [
+            3800,
+            453
+          ],
+          [
+            4000,
+            454
+          ],
+          [
+            4400,
+            448
+          ],
+          [
+            4800,
+            438
+          ],
+          [
+            5200,
+            431
+          ],
+          [
+            5600,
+            392
+          ],
+          [
+            6000,
+            350
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6L80",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.08,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2425,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same 5.3L V8 gains the 6-speed automatic and a revised (VVT-enabled) torque calibration starting with the 2010 model year."
+      },
+      {
+        "id": "62-vortec",
+        "engineName": "6.2L Vortec V8 (L94)",
+        "fuel": "gas",
+        "yearStart": 2009,
+        "yearEnd": 2013,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1400,
+            430
+          ],
+          [
+            1800,
+            470
+          ],
+          [
+            2200,
+            500
+          ],
+          [
+            2600,
+            525
+          ],
+          [
+            3000,
+            545
+          ],
+          [
+            3400,
+            558
+          ],
+          [
+            3800,
+            564
+          ],
+          [
+            4200,
+            565
+          ],
+          [
+            4600,
+            555
+          ],
+          [
+            5000,
+            535
+          ],
+          [
+            5400,
+            515
+          ],
+          [
+            5800,
+            495
+          ],
+          [
+            6200,
+            460
+          ]
+        ],
+        "redlineRpm": 6200,
+        "idleRpm": 600,
+        "displacementL": 6.2,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "6L80",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2458,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "High-output V8, standard on GMC Sierra Denali and optional on top Silverado/Sierra trims from 2009 on; always paired with the 6-speed automatic."
+      }
+    ]
+  },
+  {
+    "id": "gm-1500-1999",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "GMT800",
+    "yearStart": 1999,
+    "yearEnd": 2006,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.25
+    },
+    "powertrains": [
+      {
+        "id": "48-vortec",
+        "engineName": "4.8L Vortec V8 (LR4)",
+        "fuel": "gas",
+        "yearStart": 2000,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            900,
+            210
+          ],
+          [
+            1200,
+            250
+          ],
+          [
+            1600,
+            290
+          ],
+          [
+            2000,
+            322
+          ],
+          [
+            2400,
+            348
+          ],
+          [
+            2800,
+            366
+          ],
+          [
+            3200,
+            378
+          ],
+          [
+            3600,
+            384
+          ],
+          [
+            4000,
+            386
+          ],
+          [
+            4400,
+            381
+          ],
+          [
+            4800,
+            375
+          ],
+          [
+            5200,
+            370
+          ],
+          [
+            5600,
+            345
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 600,
+        "displacementL": 4.8,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E 4-speed automatic",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2170,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Base V8 for extended-cab 4x4 GMT800 half-tons, rated 270 hp/285 lb-ft for MY2000-2003 (the MY1999 launch tune was a lower 255 hp, and MY2004+ trucks moved to a revised 285 hp/295 lb-ft version not modeled here)."
+      },
+      {
+        "id": "53-vortec",
+        "engineName": "5.3L Vortec V8 (LM7)",
+        "fuel": "gas",
+        "yearStart": 2000,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            900,
+            260
+          ],
+          [
+            1200,
+            310
+          ],
+          [
+            1600,
+            365
+          ],
+          [
+            2000,
+            405
+          ],
+          [
+            2400,
+            425
+          ],
+          [
+            2800,
+            435
+          ],
+          [
+            3200,
+            439
+          ],
+          [
+            3600,
+            440
+          ],
+          [
+            4000,
+            441
+          ],
+          [
+            4400,
+            428
+          ],
+          [
+            4800,
+            410
+          ],
+          [
+            5200,
+            390
+          ],
+          [
+            5600,
+            360
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 600,
+        "displacementL": 5.3,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L60-E 4-speed automatic",
+          "gearRatios": [
+            3.06,
+            1.63,
+            1.0,
+            0.7
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42,
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2180,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Volume-selling V8 for GMT800 half-tons, rated 285 hp/325 lb-ft for MY2000-2003 (the MY1999 launch tune was a lower 270 hp/315 lb-ft, and MY2004+ trucks moved to a revised 295 hp/330 lb-ft version not modeled here)."
+      }
+    ]
+  },
+  {
     "id": "gm-1500-1992",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 1500",
@@ -10348,6 +10925,717 @@
     ]
   },
   {
+    "id": "gm-2500hd-2007",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 2500HD",
+    "classTier": "threequarter",
+    "generation": "GMT900",
+    "yearStart": 2007,
+    "yearEnd": 2014,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 4.0
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (L96)",
+        "fuel": "gas",
+        "yearStart": 2007,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            1000,
+            305
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1400,
+            383
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            1800,
+            443
+          ],
+          [
+            2000,
+            465
+          ],
+          [
+            2200,
+            483
+          ],
+          [
+            2400,
+            497
+          ],
+          [
+            2600,
+            507
+          ],
+          [
+            2800,
+            512
+          ],
+          [
+            3000,
+            513
+          ],
+          [
+            3200,
+            514
+          ],
+          [
+            3400,
+            514
+          ],
+          [
+            3600,
+            514
+          ],
+          [
+            3800,
+            514
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            515
+          ],
+          [
+            4600,
+            510
+          ],
+          [
+            4800,
+            500
+          ],
+          [
+            5000,
+            490
+          ],
+          [
+            5200,
+            480
+          ],
+          [
+            5400,
+            474
+          ],
+          [
+            5600,
+            460
+          ],
+          [
+            5800,
+            440
+          ],
+          [
+            6000,
+            415
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 6L90",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3010,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "6.0L Vortec V8 gas, standard engine for GMT900 HD trucks; curve models the 2010-2014 L96 rating (360 hp @ 5400 rpm / 380 lb-ft @ 4200 rpm) that carried into the K2XX successor, since the earlier 2007.5-2009 LY6 was rated lower at 353 hp / 373 lb-ft on the same architecture."
+      },
+      {
+        "id": "66-duramax-lmm",
+        "engineName": "6.6L Duramax V8 Diesel (LMM)",
+        "fuel": "diesel",
+        "yearStart": 2007,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            800,
+            550
+          ],
+          [
+            1000,
+            780
+          ],
+          [
+            1200,
+            860
+          ],
+          [
+            1400,
+            885
+          ],
+          [
+            1600,
+            895
+          ],
+          [
+            1800,
+            890
+          ],
+          [
+            2000,
+            875
+          ],
+          [
+            2200,
+            870
+          ],
+          [
+            2400,
+            866
+          ],
+          [
+            2600,
+            860
+          ],
+          [
+            2800,
+            858
+          ],
+          [
+            3000,
+            856
+          ],
+          [
+            3200,
+            812
+          ],
+          [
+            3400,
+            760
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3330,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "6.6L Duramax V8 diesel (LMM), the sole diesel offering for MY2007.5-2010, rated 365 hp @ 3200 rpm / 660 lb-ft @ 1600 rpm (SAE) with a 3,450 rpm redline in Silverado/Sierra HD applications, paired exclusively with the Allison 1000 6-speed."
+      },
+      {
+        "id": "66-duramax-lml",
+        "engineName": "6.6L Duramax V8 Diesel (LML)",
+        "fuel": "diesel",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            800,
+            600
+          ],
+          [
+            1000,
+            850
+          ],
+          [
+            1200,
+            980
+          ],
+          [
+            1400,
+            1020
+          ],
+          [
+            1600,
+            1037
+          ],
+          [
+            1800,
+            1030
+          ],
+          [
+            2000,
+            1010
+          ],
+          [
+            2200,
+            985
+          ],
+          [
+            2400,
+            960
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            950
+          ],
+          [
+            3000,
+            942
+          ],
+          [
+            3200,
+            880
+          ],
+          [
+            3400,
+            750
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3360,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "6.6L Duramax V8 diesel (LML), replacing the LMM for MY2011-2014 with SCR/DEF emissions aftertreatment added; rated 397 hp @ 3000 rpm / 765 lb-ft @ 1600 rpm (SAE) - identical rating to the later K2XX-generation LML (2015-2016), still on the Allison 1000 6-speed."
+      }
+    ]
+  },
+  {
+    "id": "gm-2500hd-2001",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 2500HD",
+    "classTier": "threequarter",
+    "generation": "GMT800",
+    "yearStart": 2001,
+    "yearEnd": 2007,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.8
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (LQ4)",
+        "fuel": "gas",
+        "yearStart": 2001,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            320
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            2000,
+            450
+          ],
+          [
+            2400,
+            468
+          ],
+          [
+            2800,
+            478
+          ],
+          [
+            3200,
+            483
+          ],
+          [
+            3600,
+            486
+          ],
+          [
+            4000,
+            488
+          ],
+          [
+            4400,
+            485
+          ],
+          [
+            4800,
+            440
+          ],
+          [
+            5200,
+            380
+          ],
+          [
+            5600,
+            340
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 650,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E 4-speed automatic",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2900,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The workhorse gas V8 of the GMT800 HD line \u2014 smooth and cheap to run, but it has to work hard towing heavy loads."
+      },
+      {
+        "id": "81-vortec",
+        "engineName": "8.1L Vortec V8 Gas (L18)",
+        "fuel": "gas",
+        "yearStart": 2001,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            420
+          ],
+          [
+            1200,
+            526
+          ],
+          [
+            1600,
+            555
+          ],
+          [
+            2000,
+            590
+          ],
+          [
+            2400,
+            608
+          ],
+          [
+            2800,
+            615
+          ],
+          [
+            3200,
+            617
+          ],
+          [
+            3600,
+            610
+          ],
+          [
+            4000,
+            590
+          ],
+          [
+            4400,
+            555
+          ],
+          [
+            4600,
+            500
+          ],
+          [
+            4800,
+            460
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 8.1,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Allison 1000 5-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2990,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "GM's biggest-ever pickup gas V8 \u2014 brute-force big-block torque for towing, without a diesel's price premium."
+      },
+      {
+        "id": "66-duramax-lb7",
+        "engineName": "6.6L Duramax V8 Diesel (LB7)",
+        "fuel": "diesel",
+        "yearStart": 2001,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            570
+          ],
+          [
+            1200,
+            630
+          ],
+          [
+            1400,
+            670
+          ],
+          [
+            1600,
+            695
+          ],
+          [
+            1800,
+            705
+          ],
+          [
+            2000,
+            704
+          ],
+          [
+            2200,
+            704
+          ],
+          [
+            2400,
+            703
+          ],
+          [
+            2600,
+            703
+          ],
+          [
+            2800,
+            702
+          ],
+          [
+            3000,
+            702
+          ],
+          [
+            3250,
+            600
+          ]
+        ],
+        "redlineRpm": 3250,
+        "idleRpm": 700,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000 5-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3110,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The first-generation Duramax that put GM back in the diesel-towing conversation \u2014 later recalled for injector durability issues."
+      },
+      {
+        "id": "66-duramax-lbz",
+        "engineName": "6.6L Duramax V8 Diesel (LBZ)",
+        "fuel": "diesel",
+        "yearStart": 2006,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            550
+          ],
+          [
+            1000,
+            680
+          ],
+          [
+            1200,
+            780
+          ],
+          [
+            1400,
+            845
+          ],
+          [
+            1600,
+            881
+          ],
+          [
+            1800,
+            878
+          ],
+          [
+            2000,
+            874
+          ],
+          [
+            2200,
+            870
+          ],
+          [
+            2400,
+            865
+          ],
+          [
+            2600,
+            860
+          ],
+          [
+            2800,
+            858
+          ],
+          [
+            3000,
+            855
+          ],
+          [
+            3250,
+            750
+          ]
+        ],
+        "redlineRpm": 3250,
+        "idleRpm": 700,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000 6-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3150,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The most sought-after pre-emissions Duramax \u2014 strong power with no DPF, right before the 2007.5 LMM added one."
+      }
+    ]
+  },
+  {
     "id": "gm-2500hd-1992",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 2500HD",
@@ -11219,6 +12507,717 @@
           "rimDiameterIn": 18
         },
         "notes": "Same L5P/Allison 1000 combination as 2500HD (445 hp @ 2800 / 910 lb-ft @ 1600), 2017-2019, last three years of the K2XX HD generation before the T1 HD redesign for MY2020."
+      }
+    ]
+  },
+  {
+    "id": "gm-3500hd-srw-2007",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 3500HD (SRW)",
+    "classTier": "one",
+    "generation": "GMT900",
+    "yearStart": 2007,
+    "yearEnd": 2014,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 4.0
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (L96)",
+        "fuel": "gas",
+        "yearStart": 2007,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            1000,
+            305
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1400,
+            383
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            1800,
+            443
+          ],
+          [
+            2000,
+            465
+          ],
+          [
+            2200,
+            483
+          ],
+          [
+            2400,
+            497
+          ],
+          [
+            2600,
+            507
+          ],
+          [
+            2800,
+            512
+          ],
+          [
+            3000,
+            513
+          ],
+          [
+            3200,
+            514
+          ],
+          [
+            3400,
+            514
+          ],
+          [
+            3600,
+            514
+          ],
+          [
+            3800,
+            514
+          ],
+          [
+            4000,
+            515
+          ],
+          [
+            4200,
+            515
+          ],
+          [
+            4400,
+            515
+          ],
+          [
+            4600,
+            510
+          ],
+          [
+            4800,
+            500
+          ],
+          [
+            5000,
+            490
+          ],
+          [
+            5200,
+            480
+          ],
+          [
+            5400,
+            474
+          ],
+          [
+            5600,
+            460
+          ],
+          [
+            5800,
+            440
+          ],
+          [
+            6000,
+            415
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 600,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 6L90",
+          "gearRatios": [
+            4.03,
+            2.36,
+            1.53,
+            1.15,
+            0.85,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3080,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same L96-rated 6.0L Vortec V8 as the 2500HD (360 hp @ 5400 rpm / 380 lb-ft @ 4200 rpm), heavier-duty springs/frame on the 3500HD SRW add roughly 70kg of curb weight versus the 2500HD."
+      },
+      {
+        "id": "66-duramax-lmm",
+        "engineName": "6.6L Duramax V8 Diesel (LMM)",
+        "fuel": "diesel",
+        "yearStart": 2007,
+        "yearEnd": 2010,
+        "torqueCurve": [
+          [
+            800,
+            550
+          ],
+          [
+            1000,
+            780
+          ],
+          [
+            1200,
+            860
+          ],
+          [
+            1400,
+            885
+          ],
+          [
+            1600,
+            895
+          ],
+          [
+            1800,
+            890
+          ],
+          [
+            2000,
+            875
+          ],
+          [
+            2200,
+            870
+          ],
+          [
+            2400,
+            866
+          ],
+          [
+            2600,
+            860
+          ],
+          [
+            2800,
+            858
+          ],
+          [
+            3000,
+            856
+          ],
+          [
+            3200,
+            812
+          ],
+          [
+            3400,
+            760
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3395,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same LMM-rated 6.6L Duramax as the 2500HD (365 hp @ 3200 rpm / 660 lb-ft @ 1600 rpm), sole diesel for MY2007.5-2010; 3500HD SRW carries roughly 65kg more curb weight than the 2500HD."
+      },
+      {
+        "id": "66-duramax-lml",
+        "engineName": "6.6L Duramax V8 Diesel (LML)",
+        "fuel": "diesel",
+        "yearStart": 2011,
+        "yearEnd": 2014,
+        "torqueCurve": [
+          [
+            800,
+            600
+          ],
+          [
+            1000,
+            850
+          ],
+          [
+            1200,
+            980
+          ],
+          [
+            1400,
+            1020
+          ],
+          [
+            1600,
+            1037
+          ],
+          [
+            1800,
+            1030
+          ],
+          [
+            2000,
+            1010
+          ],
+          [
+            2200,
+            985
+          ],
+          [
+            2400,
+            960
+          ],
+          [
+            2600,
+            955
+          ],
+          [
+            2800,
+            950
+          ],
+          [
+            3000,
+            942
+          ],
+          [
+            3200,
+            880
+          ],
+          [
+            3400,
+            750
+          ],
+          [
+            3450,
+            700
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3430,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same LML-rated 6.6L Duramax as the 2500HD (397 hp @ 3000 rpm / 765 lb-ft @ 1600 rpm), MY2011-2014; 3500HD SRW carries roughly 70kg more curb weight than the 2500HD."
+      }
+    ]
+  },
+  {
+    "id": "gm-3500hd-srw-2001",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 3500HD (SRW)",
+    "classTier": "one",
+    "generation": "GMT800",
+    "yearStart": 2001,
+    "yearEnd": 2007,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.8
+    },
+    "powertrains": [
+      {
+        "id": "60-vortec",
+        "engineName": "6.0L Vortec V8 Gas (LQ4)",
+        "fuel": "gas",
+        "yearStart": 2001,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            320
+          ],
+          [
+            1200,
+            345
+          ],
+          [
+            1600,
+            415
+          ],
+          [
+            2000,
+            450
+          ],
+          [
+            2400,
+            468
+          ],
+          [
+            2800,
+            478
+          ],
+          [
+            3200,
+            483
+          ],
+          [
+            3600,
+            486
+          ],
+          [
+            4000,
+            488
+          ],
+          [
+            4400,
+            485
+          ],
+          [
+            4800,
+            440
+          ],
+          [
+            5200,
+            380
+          ],
+          [
+            5600,
+            340
+          ]
+        ],
+        "redlineRpm": 5600,
+        "idleRpm": 650,
+        "displacementL": 6.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "4L80-E 4-speed automatic",
+          "gearRatios": [
+            2.48,
+            1.48,
+            1.0,
+            0.75
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2970,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "Same LQ4 gas V8 as the 2500HD, in the heavier-duty 3500 SRW chassis \u2014 a lower-cost alternative to the diesel for towing."
+      },
+      {
+        "id": "81-vortec",
+        "engineName": "8.1L Vortec V8 Gas (L18)",
+        "fuel": "gas",
+        "yearStart": 2001,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            420
+          ],
+          [
+            1200,
+            526
+          ],
+          [
+            1600,
+            555
+          ],
+          [
+            2000,
+            590
+          ],
+          [
+            2400,
+            608
+          ],
+          [
+            2800,
+            615
+          ],
+          [
+            3200,
+            617
+          ],
+          [
+            3600,
+            610
+          ],
+          [
+            4000,
+            590
+          ],
+          [
+            4400,
+            555
+          ],
+          [
+            4600,
+            500
+          ],
+          [
+            4800,
+            460
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 8.1,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Allison 1000 5-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3065,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The big-block option in the top-GVWR SRW pickup \u2014 favored by owners wanting diesel-like towing torque without diesel fuel/maintenance costs."
+      },
+      {
+        "id": "66-duramax-lb7",
+        "engineName": "6.6L Duramax V8 Diesel (LB7)",
+        "fuel": "diesel",
+        "yearStart": 2001,
+        "yearEnd": 2004,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            570
+          ],
+          [
+            1200,
+            630
+          ],
+          [
+            1400,
+            670
+          ],
+          [
+            1600,
+            695
+          ],
+          [
+            1800,
+            705
+          ],
+          [
+            2000,
+            704
+          ],
+          [
+            2200,
+            704
+          ],
+          [
+            2400,
+            703
+          ],
+          [
+            2600,
+            703
+          ],
+          [
+            2800,
+            702
+          ],
+          [
+            3000,
+            702
+          ],
+          [
+            3250,
+            600
+          ]
+        ],
+        "redlineRpm": 3250,
+        "idleRpm": 700,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000 5-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3190,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The 3500 SRW's most popular tow rig of this era \u2014 LB7 diesel torque on the highest-GVWR single-rear-wheel chassis."
+      },
+      {
+        "id": "66-duramax-lbz",
+        "engineName": "6.6L Duramax V8 Diesel (LBZ)",
+        "fuel": "diesel",
+        "yearStart": 2006,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            550
+          ],
+          [
+            1000,
+            680
+          ],
+          [
+            1200,
+            780
+          ],
+          [
+            1400,
+            845
+          ],
+          [
+            1600,
+            881
+          ],
+          [
+            1800,
+            878
+          ],
+          [
+            2000,
+            874
+          ],
+          [
+            2200,
+            870
+          ],
+          [
+            2400,
+            865
+          ],
+          [
+            2600,
+            860
+          ],
+          [
+            2800,
+            858
+          ],
+          [
+            3000,
+            855
+          ],
+          [
+            3250,
+            750
+          ]
+        ],
+        "redlineRpm": 3250,
+        "idleRpm": 700,
+        "displacementL": 6.6,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 1000 6-speed automatic",
+          "gearRatios": [
+            3.1,
+            1.81,
+            1.41,
+            1.0,
+            0.71,
+            0.61
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 4.1,
+        "curbWeightKg": 3235,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 75,
+          "rimDiameterIn": 16
+        },
+        "notes": "The last pre-DPF Duramax in the top-GVWR SRW pickup \u2014 peak power/torque for this generation before 2007.5 emissions changes."
       }
     ]
   },
@@ -12674,6 +14673,696 @@
     ]
   },
   {
+    "id": "ram-1500-2009",
+    "make": "Ram",
+    "model": "1500",
+    "classTier": "half",
+    "generation": "4th gen (DS, pre-refresh)",
+    "yearStart": 2009,
+    "yearEnd": 2012,
+    "aero": {
+      "cd": 0.43,
+      "frontalAreaM2": 3.43
+    },
+    "powertrains": [
+      {
+        "id": "47-powertech",
+        "engineName": "4.7L PowerTech V8",
+        "fuel": "gas",
+        "yearStart": 2009,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            1000,
+            230
+          ],
+          [
+            1200,
+            266
+          ],
+          [
+            1400,
+            300
+          ],
+          [
+            1600,
+            330
+          ],
+          [
+            1800,
+            365
+          ],
+          [
+            2000,
+            395
+          ],
+          [
+            2200,
+            415
+          ],
+          [
+            2400,
+            430
+          ],
+          [
+            2600,
+            438
+          ],
+          [
+            2800,
+            442
+          ],
+          [
+            3000,
+            444
+          ],
+          [
+            3200,
+            445
+          ],
+          [
+            3400,
+            446
+          ],
+          [
+            3600,
+            446
+          ],
+          [
+            3800,
+            447
+          ],
+          [
+            4000,
+            447
+          ],
+          [
+            4200,
+            443
+          ],
+          [
+            4400,
+            438
+          ],
+          [
+            4600,
+            434
+          ],
+          [
+            4800,
+            430
+          ],
+          [
+            5000,
+            424
+          ],
+          [
+            5200,
+            417
+          ],
+          [
+            5400,
+            407
+          ],
+          [
+            5650,
+            391
+          ],
+          [
+            5900,
+            356
+          ]
+        ],
+        "redlineRpm": 5900,
+        "idleRpm": 650,
+        "displacementL": 4.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed automatic (2009-2011; 65RFE 6-speed automatic from MY2012)",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2380,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Updated 4.7L V8 carried the same 310 hp/330 lb-ft rating through the whole pre-refresh 4th generation; MY2012 switched it from the 545RFE to the newer 65RFE 6-speed."
+      },
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2009,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            1000,
+            280
+          ],
+          [
+            1200,
+            325
+          ],
+          [
+            1400,
+            365
+          ],
+          [
+            1600,
+            405
+          ],
+          [
+            1800,
+            440
+          ],
+          [
+            2000,
+            470
+          ],
+          [
+            2200,
+            495
+          ],
+          [
+            2400,
+            515
+          ],
+          [
+            2600,
+            530
+          ],
+          [
+            2800,
+            540
+          ],
+          [
+            3000,
+            546
+          ],
+          [
+            3200,
+            549
+          ],
+          [
+            3400,
+            551
+          ],
+          [
+            3600,
+            551
+          ],
+          [
+            3800,
+            552
+          ],
+          [
+            4000,
+            552
+          ],
+          [
+            4200,
+            548
+          ],
+          [
+            4400,
+            542
+          ],
+          [
+            4600,
+            533
+          ],
+          [
+            4800,
+            524
+          ],
+          [
+            5000,
+            514
+          ],
+          [
+            5200,
+            505
+          ],
+          [
+            5400,
+            500
+          ],
+          [
+            5600,
+            496
+          ],
+          [
+            5800,
+            461
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed automatic (2009-2011; 65RFE 6-speed automatic from MY2012)",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.21,
+          3.55,
+          3.92
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2420,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "New VVT (variable camshaft timing) HEMI generation with MDS cylinder deactivation from launch; carried the same 390 hp/407 lb-ft rating through the whole pre-refresh 4th generation."
+      }
+    ]
+  },
+  {
+    "id": "ram-1500-2002",
+    "make": "Ram",
+    "model": "1500",
+    "classTier": "half",
+    "generation": "3rd gen",
+    "yearStart": 2002,
+    "yearEnd": 2008,
+    "aero": {
+      "cd": 0.44,
+      "frontalAreaM2": 3.4
+    },
+    "powertrains": [
+      {
+        "id": "47-powertech",
+        "engineName": "4.7L PowerTech V8",
+        "fuel": "gas",
+        "yearStart": 2002,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            1000,
+            230
+          ],
+          [
+            1200,
+            265
+          ],
+          [
+            1400,
+            300
+          ],
+          [
+            1600,
+            330
+          ],
+          [
+            1800,
+            355
+          ],
+          [
+            2000,
+            375
+          ],
+          [
+            2200,
+            390
+          ],
+          [
+            2400,
+            397
+          ],
+          [
+            2600,
+            399
+          ],
+          [
+            2800,
+            399
+          ],
+          [
+            3000,
+            400
+          ],
+          [
+            3200,
+            400
+          ],
+          [
+            3400,
+            399
+          ],
+          [
+            3600,
+            396
+          ],
+          [
+            3800,
+            390
+          ],
+          [
+            4000,
+            383
+          ],
+          [
+            4200,
+            374
+          ],
+          [
+            4400,
+            364
+          ],
+          [
+            4600,
+            356
+          ],
+          [
+            4800,
+            349
+          ],
+          [
+            5000,
+            330
+          ],
+          [
+            5200,
+            310
+          ],
+          [
+            5400,
+            290
+          ],
+          [
+            5700,
+            260
+          ]
+        ],
+        "redlineRpm": 5700,
+        "idleRpm": 650,
+        "displacementL": 4.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed automatic (45RFE 4-speed in MY2002 only)",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.92,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2322,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Base 4.7L V8 offered across the whole generation, rated 235 hp/295 lb-ft through MY2007; a running change for MY2008 raised it to roughly 310 hp/330 lb-ft (not modeled as a separate entry here)."
+      },
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2003,
+        "yearEnd": 2008,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1200,
+            300
+          ],
+          [
+            1400,
+            340
+          ],
+          [
+            1600,
+            375
+          ],
+          [
+            1800,
+            410
+          ],
+          [
+            2000,
+            440
+          ],
+          [
+            2200,
+            465
+          ],
+          [
+            2400,
+            485
+          ],
+          [
+            2600,
+            498
+          ],
+          [
+            2800,
+            503
+          ],
+          [
+            3000,
+            505
+          ],
+          [
+            3200,
+            506
+          ],
+          [
+            3400,
+            507
+          ],
+          [
+            3600,
+            507
+          ],
+          [
+            3800,
+            507
+          ],
+          [
+            4000,
+            508
+          ],
+          [
+            4200,
+            508
+          ],
+          [
+            4400,
+            500
+          ],
+          [
+            4600,
+            492
+          ],
+          [
+            4800,
+            483
+          ],
+          [
+            5000,
+            472
+          ],
+          [
+            5200,
+            462
+          ],
+          [
+            5400,
+            455
+          ],
+          [
+            5600,
+            435
+          ],
+          [
+            5800,
+            410
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed automatic",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.92,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2400,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "First-generation (non-VVT) 5.7L HEMI; introduced for MY2003 as the range-topping engine, gained cylinder-deactivation (MDS) for MY2005 with no change to peak ratings."
+      },
+      {
+        "id": "59-magnum",
+        "engineName": "5.9L Magnum V8",
+        "fuel": "gas",
+        "yearStart": 2002,
+        "yearEnd": 2003,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1200,
+            300
+          ],
+          [
+            1400,
+            340
+          ],
+          [
+            1600,
+            375
+          ],
+          [
+            1800,
+            400
+          ],
+          [
+            2000,
+            420
+          ],
+          [
+            2200,
+            435
+          ],
+          [
+            2400,
+            445
+          ],
+          [
+            2600,
+            450
+          ],
+          [
+            2800,
+            453
+          ],
+          [
+            3000,
+            454
+          ],
+          [
+            3200,
+            454
+          ],
+          [
+            3400,
+            450
+          ],
+          [
+            3600,
+            448
+          ],
+          [
+            3800,
+            445
+          ],
+          [
+            4000,
+            436
+          ],
+          [
+            4200,
+            414
+          ],
+          [
+            4400,
+            392
+          ],
+          [
+            4600,
+            375
+          ],
+          [
+            4800,
+            355
+          ]
+        ],
+        "redlineRpm": 4800,
+        "idleRpm": 650,
+        "displacementL": 5.9,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "46RE 4-speed automatic",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.92,
+          4.1
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2400,
+        "tireSize": {
+          "widthMm": 245,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Carryover top engine from the 2nd-gen truck, offered only in the first two model years of the 3rd generation before the 5.7L HEMI replaced it as the range-topping V8."
+      }
+    ]
+  },
+  {
     "id": "ram-1500-1994",
     "make": "Ram",
     "model": "1500",
@@ -13398,6 +16087,524 @@
           "rimDiameterIn": 18
         },
         "notes": "MAJOR CORRECTION to brief: in the 4th generation (2013-2018), the 68RFE-equipped Cummins carries the SAME 370 hp @2,800 rpm / 800 lb-ft @1,600 rpm rating on BOTH the 2500 and the 3500 SRW \u2014 there is no separate, higher-torque '850 lb-ft 3500 SO' calibration in this generation (that 850 lb-ft rating only appears starting with the 2019+ 5th-gen truck, which is why the 2019+ catalog entry can reuse one curve for both trucks at 850 lb-ft \u2014 the 4th-gen equivalent is this shared curve at 800 lb-ft instead). Confirmed identical across all five checked model years (2013, 2014, 2016, 2017, 2018 FCA spec sheets). Peak-torque rpm is 1,600, not 1,700 as the brief assumed (1,700 is the 5th-gen rpm). AXLE CORRECTION: FCA's official 2016 towing charts show 3500 SRW Cummins (both SO and HO) is restricted to the single 3.42 axle ratio \u2014 3.73 and 4.10 are explicitly DRW-only options on the diesel, unlike the gas 66RFE which offers 3.73/4.10 on SRW too. The 2500 Cummins is 3.42-only in every model year checked, with no 3.73/4.10 option ever listed. A 350 hp/660 lb-ft G56 6-speed manual was also offered on both trucks throughout 2013-2018 but is excluded per the catalog's automatic-only convention."
+      }
+    ]
+  },
+  {
+    "id": "ram-2500-2010",
+    "make": "Ram",
+    "model": "2500",
+    "classTier": "threequarter",
+    "generation": "4th gen (pre-refresh)",
+    "yearStart": 2010,
+    "yearEnd": 2012,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.75
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2010,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            800,
+            330.0
+          ],
+          [
+            1200,
+            400.0
+          ],
+          [
+            1600,
+            455.0
+          ],
+          [
+            2000,
+            495.0
+          ],
+          [
+            2400,
+            520.0
+          ],
+          [
+            2800,
+            535.0
+          ],
+          [
+            3200,
+            541.0
+          ],
+          [
+            3600,
+            542.0
+          ],
+          [
+            4000,
+            542.3
+          ],
+          [
+            4400,
+            535.0
+          ],
+          [
+            4800,
+            522.0
+          ],
+          [
+            5200,
+            505.0
+          ],
+          [
+            5600,
+            487.5
+          ],
+          [
+            5800,
+            470.0
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3030,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "The HD-tune, non-MDS 5.7L HEMI used in 2500/3500 (as opposed to the 1500's higher-output tune) making 383 hp and 400 lb-ft; paired with the 5-speed 545RFE automatic through 2011, replaced by the 6-speed 66RFE for 2012 with essentially the same ratio spread."
+      },
+      {
+        "id": "67-cummins-so",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2010,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            800,
+            490.0
+          ],
+          [
+            1000,
+            660.0
+          ],
+          [
+            1200,
+            790.0
+          ],
+          [
+            1400,
+            855.0
+          ],
+          [
+            1600,
+            881.3
+          ],
+          [
+            1800,
+            875.0
+          ],
+          [
+            2000,
+            865.0
+          ],
+          [
+            2200,
+            857.0
+          ],
+          [
+            2400,
+            850.0
+          ],
+          [
+            2600,
+            842.0
+          ],
+          [
+            2800,
+            835.0
+          ],
+          [
+            3000,
+            830.7
+          ],
+          [
+            3200,
+            600.0
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3340,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Standard Output 6.7L Cummins with the 68RFE 6-speed automatic, rated 350 hp / 650 lb-ft \u2014 the sole automatic-transmission Cummins calibration on the 2500 in this pre-refresh era (a manual-only 350 hp/800 lb-ft High Output rating existed on the 3500 starting late MY2011, but was G56-manual-only and not offered with an automatic until the 2013 Aisin refresh, so it is excluded here)."
+      }
+    ]
+  },
+  {
+    "id": "ram-2500-2003",
+    "make": "Ram",
+    "model": "2500",
+    "classTier": "threequarter",
+    "generation": "3rd gen",
+    "yearStart": 2003,
+    "yearEnd": 2009,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.65
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2003,
+        "yearEnd": 2009,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1200,
+            300
+          ],
+          [
+            1400,
+            340
+          ],
+          [
+            1600,
+            375
+          ],
+          [
+            1800,
+            410
+          ],
+          [
+            2000,
+            440
+          ],
+          [
+            2200,
+            465
+          ],
+          [
+            2400,
+            485
+          ],
+          [
+            2600,
+            498
+          ],
+          [
+            2800,
+            503
+          ],
+          [
+            3000,
+            505
+          ],
+          [
+            3200,
+            506
+          ],
+          [
+            3400,
+            507
+          ],
+          [
+            3600,
+            507
+          ],
+          [
+            3800,
+            507
+          ],
+          [
+            4000,
+            508
+          ],
+          [
+            4200,
+            508
+          ],
+          [
+            4400,
+            500
+          ],
+          [
+            4600,
+            492
+          ],
+          [
+            4800,
+            483
+          ],
+          [
+            5000,
+            472
+          ],
+          [
+            5200,
+            462
+          ],
+          [
+            5400,
+            455
+          ],
+          [
+            5600,
+            435
+          ],
+          [
+            5800,
+            410
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2880,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Ram HD's standard-output 5.7L HEMI V8, essentially unchanged across this generation for the 2500/3500 (the 2009 Ram 2500 alone got a late uprated 390 hp version, not modeled here)."
+      },
+      {
+        "id": "59-cummins-600",
+        "engineName": "5.9L Cummins I6 Diesel (600 Series)",
+        "fuel": "diesel",
+        "yearStart": 2003,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            700
+          ],
+          [
+            1400,
+            780
+          ],
+          [
+            1600,
+            827
+          ],
+          [
+            1817,
+            822
+          ],
+          [
+            2033,
+            817
+          ],
+          [
+            2250,
+            812
+          ],
+          [
+            2467,
+            808
+          ],
+          [
+            2683,
+            803
+          ],
+          [
+            2900,
+            798
+          ],
+          [
+            3200,
+            620
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 750,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "48RE",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3180,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "The mid-2004 'Cummins 600' update raised the 5.9L I6 diesel to 325 hp/610 lb-ft, matched here with the 48RE 4-speed automatic through the engine's final year (2007)."
+      },
+      {
+        "id": "67-cummins",
+        "engineName": "6.7L Cummins I6 Diesel",
+        "fuel": "diesel",
+        "yearStart": 2007,
+        "yearEnd": 2009,
+        "torqueCurve": [
+          [
+            800,
+            490.0
+          ],
+          [
+            1000,
+            660.0
+          ],
+          [
+            1200,
+            790.0
+          ],
+          [
+            1400,
+            855.0
+          ],
+          [
+            1600,
+            881.3
+          ],
+          [
+            1800,
+            875.0
+          ],
+          [
+            2000,
+            865.0
+          ],
+          [
+            2200,
+            857.0
+          ],
+          [
+            2400,
+            850.0
+          ],
+          [
+            2600,
+            842.0
+          ],
+          [
+            2800,
+            835.0
+          ],
+          [
+            3000,
+            830.7
+          ],
+          [
+            3200,
+            600.0
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 750,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3270,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "The all-new 6.7L Cummins I6 diesel replaced the 5.9L mid-year (2007.5), pairing with the new 68RFE 6-speed automatic and adding a diesel particulate filter."
       }
     ]
   },
@@ -14460,6 +17667,524 @@
           "rimDiameterIn": 18
         },
         "notes": "3500-only, Aisin AS69RC. Horsepower held constant at 385 hp @2,800 rpm throughout 2013-2018, but torque escalated in several steps \u2014 CORRECTION to brief's guessed escalation years: 850 lb-ft @1,600 rpm (2013-2014) \u2192 865 lb-ft @1,700 rpm (2015 running change, +15 lb-ft per FCA's own 2015 press materials) \u2192 900 lb-ft @1,700 rpm (2016-2017, confirmed identical in both years' official spec sheets \u2014 the brief guessed correctly here) \u2192 930 lb-ft @1,700 rpm (2018 only). Modeled here at the latest (2018) 385 hp/930 lb-ft rating per instructions; see confidenceNotes for the full year-by-year rating if a future revision wants to split this into sub-eras. NOTE: the 2018 FCA spec PDF itself lists '930 lb.-ft. (1,220 N\u2022m)' \u2014 1,220 Nm is the stale/uncorrected conversion left over from the 900 lb-ft rating (930 lb-ft actually converts to 1,260.9 Nm); we used the corrected conversion for the modeled peak. AXLE CORRECTION: like the SO variant, 3500 SRW with the Aisin HO is restricted to the single 3.42 axle ratio per FCA's 2016 towing chart \u2014 3.73/4.10 are DRW-only, contradicting the brief's assumed 3.73 default."
+      }
+    ]
+  },
+  {
+    "id": "ram-3500-srw-2010",
+    "make": "Ram",
+    "model": "3500",
+    "classTier": "one",
+    "generation": "4th gen (pre-refresh)",
+    "yearStart": 2010,
+    "yearEnd": 2012,
+    "aero": {
+      "cd": 0.45,
+      "frontalAreaM2": 3.75
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2010,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            800,
+            330.0
+          ],
+          [
+            1200,
+            400.0
+          ],
+          [
+            1600,
+            455.0
+          ],
+          [
+            2000,
+            495.0
+          ],
+          [
+            2400,
+            520.0
+          ],
+          [
+            2800,
+            535.0
+          ],
+          [
+            3200,
+            541.0
+          ],
+          [
+            3600,
+            542.0
+          ],
+          [
+            4000,
+            542.3
+          ],
+          [
+            4400,
+            535.0
+          ],
+          [
+            4800,
+            522.0
+          ],
+          [
+            5200,
+            505.0
+          ],
+          [
+            5600,
+            487.5
+          ],
+          [
+            5800,
+            470.0
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE 5-speed",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3080,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same HD-tune 383 hp / 400 lb-ft 5.7L HEMI as the 2500, on the heavier 3500 SRW frame/springs; 545RFE 5-speed through 2011, 66RFE 6-speed for 2012."
+      },
+      {
+        "id": "67-cummins-so",
+        "engineName": "6.7L Cummins I6 Diesel (Standard Output)",
+        "fuel": "diesel",
+        "yearStart": 2010,
+        "yearEnd": 2012,
+        "torqueCurve": [
+          [
+            800,
+            490.0
+          ],
+          [
+            1000,
+            660.0
+          ],
+          [
+            1200,
+            790.0
+          ],
+          [
+            1400,
+            855.0
+          ],
+          [
+            1600,
+            881.3
+          ],
+          [
+            1800,
+            875.0
+          ],
+          [
+            2000,
+            865.0
+          ],
+          [
+            2200,
+            857.0
+          ],
+          [
+            2400,
+            850.0
+          ],
+          [
+            2600,
+            842.0
+          ],
+          [
+            2800,
+            835.0
+          ],
+          [
+            3000,
+            830.7
+          ],
+          [
+            3200,
+            600.0
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 650,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE 6-speed",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3400,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Same 350 hp / 650 lb-ft Standard Output 6.7L Cummins + 68RFE as the 2500, on the heavier 3500 SRW frame/springs. A 350 hp/800 lb-ft High Output calibration existed for the 3500 from late MY2011, but only with the G56 6-speed MANUAL \u2014 no automatic-transmission HO existed on the 3500 until the 2013 Aisin AS69RC refresh, so per the brief's instruction it is excluded from this automatic-only catalog (see the 2500 entry's confidenceNotes for the full investigation)."
+      }
+    ]
+  },
+  {
+    "id": "ram-3500-srw-2003",
+    "make": "Ram",
+    "model": "3500",
+    "classTier": "one",
+    "generation": "3rd gen",
+    "yearStart": 2003,
+    "yearEnd": 2009,
+    "aero": {
+      "cd": 0.46,
+      "frontalAreaM2": 3.65
+    },
+    "powertrains": [
+      {
+        "id": "57-hemi",
+        "engineName": "5.7L HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2003,
+        "yearEnd": 2009,
+        "torqueCurve": [
+          [
+            1000,
+            260
+          ],
+          [
+            1200,
+            300
+          ],
+          [
+            1400,
+            340
+          ],
+          [
+            1600,
+            375
+          ],
+          [
+            1800,
+            410
+          ],
+          [
+            2000,
+            440
+          ],
+          [
+            2200,
+            465
+          ],
+          [
+            2400,
+            485
+          ],
+          [
+            2600,
+            498
+          ],
+          [
+            2800,
+            503
+          ],
+          [
+            3000,
+            505
+          ],
+          [
+            3200,
+            506
+          ],
+          [
+            3400,
+            507
+          ],
+          [
+            3600,
+            507
+          ],
+          [
+            3800,
+            507
+          ],
+          [
+            4000,
+            508
+          ],
+          [
+            4200,
+            508
+          ],
+          [
+            4400,
+            500
+          ],
+          [
+            4600,
+            492
+          ],
+          [
+            4800,
+            483
+          ],
+          [
+            5000,
+            472
+          ],
+          [
+            5200,
+            462
+          ],
+          [
+            5400,
+            455
+          ],
+          [
+            5600,
+            435
+          ],
+          [
+            5800,
+            410
+          ]
+        ],
+        "redlineRpm": 5800,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "545RFE",
+          "gearRatios": [
+            3.0,
+            1.5,
+            1.0,
+            0.75,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2955,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "Ram HD's standard-output 5.7L HEMI V8, essentially unchanged across this generation for the 2500/3500 (the 2009 Ram 2500 alone got a late uprated 390 hp version, not modeled here)."
+      },
+      {
+        "id": "59-cummins-600",
+        "engineName": "5.9L Cummins I6 Diesel (600 Series)",
+        "fuel": "diesel",
+        "yearStart": 2003,
+        "yearEnd": 2007,
+        "torqueCurve": [
+          [
+            800,
+            480
+          ],
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            700
+          ],
+          [
+            1400,
+            780
+          ],
+          [
+            1600,
+            827
+          ],
+          [
+            1817,
+            822
+          ],
+          [
+            2033,
+            817
+          ],
+          [
+            2250,
+            812
+          ],
+          [
+            2467,
+            808
+          ],
+          [
+            2683,
+            803
+          ],
+          [
+            2900,
+            798
+          ],
+          [
+            3200,
+            620
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 750,
+        "displacementL": 5.9,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "48RE",
+          "gearRatios": [
+            2.45,
+            1.45,
+            1.0,
+            0.69
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3255,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "The mid-2004 'Cummins 600' update raised the 5.9L I6 diesel to 325 hp/610 lb-ft, matched here with the 48RE 4-speed automatic through the engine's final year (2007)."
+      },
+      {
+        "id": "67-cummins",
+        "engineName": "6.7L Cummins I6 Diesel",
+        "fuel": "diesel",
+        "yearStart": 2007,
+        "yearEnd": 2009,
+        "torqueCurve": [
+          [
+            800,
+            490.0
+          ],
+          [
+            1000,
+            660.0
+          ],
+          [
+            1200,
+            790.0
+          ],
+          [
+            1400,
+            855.0
+          ],
+          [
+            1600,
+            881.3
+          ],
+          [
+            1800,
+            875.0
+          ],
+          [
+            2000,
+            865.0
+          ],
+          [
+            2200,
+            857.0
+          ],
+          [
+            2400,
+            850.0
+          ],
+          [
+            2600,
+            842.0
+          ],
+          [
+            2800,
+            835.0
+          ],
+          [
+            3000,
+            830.7
+          ],
+          [
+            3200,
+            600.0
+          ]
+        ],
+        "redlineRpm": 3200,
+        "idleRpm": 750,
+        "displacementL": 6.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "68RFE",
+          "gearRatios": [
+            3.23,
+            1.84,
+            1.41,
+            1.0,
+            0.82,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.73,
+          4.1
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 3345,
+        "tireSize": {
+          "widthMm": 265,
+          "aspectRatio": 70,
+          "rimDiameterIn": 17
+        },
+        "notes": "The all-new 6.7L Cummins I6 diesel replaced the 5.9L mid-year (2007.5), pairing with the new 68RFE 6-speed automatic and adding a diesel particulate filter."
       }
     ]
   },
