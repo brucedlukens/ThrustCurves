@@ -44,7 +44,7 @@ export const TRAILER_PRESETS: TrailerPreset[] = [
     id: 'enclosed-cargo-standard',
     name: 'Enclosed cargo (standard height)',
     category: 'enclosed',
-    defaultMassKg: 2600,
+    defaultMassKg: 3538, // 7,800 lb
     massRangeKg: [1450, 4500],
     frontalAreaM2: 6.0,
     cd: 0.75,
@@ -56,7 +56,7 @@ export const TRAILER_PRESETS: TrailerPreset[] = [
     id: 'enclosed-cargo-tall',
     name: 'Enclosed cargo (extra tall)',
     category: 'enclosed',
-    defaultMassKg: 2700,
+    defaultMassKg: 3629, // 8,000 lb
     massRangeKg: [1500, 4500],
     frontalAreaM2: 6.7,
     cd: 0.8,
