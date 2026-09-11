@@ -12,6 +12,10 @@ import type { TowingMasses } from './towing'
 import type { CarSpec, CurvePoint } from '@/types/car'
 import type { TowScenario } from '@/types/truck'
 import type { EnvelopePoint, GearThrustCurve } from '@/types/simulation'
+import { findPowertrain, findTruck, resolveTruckToCarSpec } from '@/data/trucks'
+import { TRAILER_PRESETS, trailerToLoad } from '@/data/trailers'
+
+const MPH_TO_MS = 0.44704
 
 const MASSES: TowingMasses = {
   truckMassKg: 3000,
@@ -299,5 +303,45 @@ describe('runTowingAnalysis', () => {
     const peakHigh = Math.max(...highAlt.envelope.map((p) => p.forceN))
     const peakSea = Math.max(...seaLevel.envelope.map((p) => p.forceN))
     expect(peakHigh).toBeLessThan(peakSea * 0.85)
+  })
+})
+
+describe('enclosed-trailer calibration', () => {
+  // Road data from a 2017 F-150 5.0L/6R80/3.31 (Platinum SuperCrew 4x4,
+  // ~5,150 lb) pulling an 8,000 lb extra-tall enclosed. See TRUCK_SOURCES.md,
+  // "Enclosed-trailer calibration". These pin the preset's exposure factor so
+  // a future drag re-tune can't silently re-introduce the pessimism.
+  const truck = findTruck('ford-f150-2015')!
+  const powertrain = findPowertrain(truck, '50-coyote-2015')!
+  const car = resolveTruckToCarSpec(truck, powertrain, 3.31, 2340)
+  const tall = TRAILER_PRESETS.find((p) => p.id === 'enclosed-cargo-tall')!
+  const scenario = (speedMph: number, altitudeFt: number, gradePercent: number): TowScenario => ({
+    trailer: trailerToLoad(tall, 3629),
+    cargoMassKg: 136,
+    altitudeM: altitudeFt / 3.28084,
+    gradePercent,
+    speedMs: speedMph * MPH_TO_MS,
+  })
+  const gear = (a: ReturnType<typeof runTowingAnalysis>, n: number) =>
+    a.gearsAtSpeed.find((g) => g.gear === n)!
+
+  it('4th holds 80 mph on flat ground at 3,000 ft', () => {
+    const a = runTowingAnalysis(car, scenario(80, 3000, 0), 'gas')
+    expect(gear(a, 4).surplusN).toBeGreaterThan(0)
+  })
+
+  it('4th cannot hold 90 mph on flat ground at 3,000 ft', () => {
+    const a = runTowingAnalysis(car, scenario(90, 3000, 0), 'gas')
+    expect(gear(a, 4).surplusN).toBeLessThan(0)
+  })
+
+  it('3rd holds 88 mph on a 1% grade at 4,000 ft', () => {
+    const a = runTowingAnalysis(car, scenario(88, 4000, 1), 'gas')
+    expect(gear(a, 3).surplusN).toBeGreaterThan(0)
+  })
+
+  it('standard-height enclosed stays less draggy than extra tall', () => {
+    const std = TRAILER_PRESETS.find((p) => p.id === 'enclosed-cargo-standard')!
+    expect(trailerToLoad(std, 1).effectiveCdA).toBeLessThan(trailerToLoad(tall, 1).effectiveCdA)
   })
 })

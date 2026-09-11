@@ -48,7 +48,9 @@ export const TRAILER_PRESETS: TrailerPreset[] = [
     massRangeKg: [1450, 4500],
     frontalAreaM2: 6.0,
     cd: 0.75,
-    exposureFactor: 0.6,
+    // Scaled with the extra-tall preset's road-test calibration (see
+    // TRUCK_SOURCES.md, "Enclosed-trailer calibration"); keeps std < tall.
+    exposureFactor: 0.4,
     crr: TRAILER_TIRE_CRR,
     description: "8.5×20 enclosed car hauler, ~6'6\" interior, loaded",
   },
@@ -60,7 +62,11 @@ export const TRAILER_PRESETS: TrailerPreset[] = [
     massRangeKg: [1500, 4500],
     frontalAreaM2: 6.7,
     cd: 0.8,
-    exposureFactor: 0.7,
+    // Calibrated against steady-state road data (2017 F-150 5.0/6R80/3.31,
+    // 8,000 lb tall enclosed): 4th holds ~82 mph flat below 3,500 ft and 3rd
+    // holds ~88 mph on the mild I-76/I-80 grades near 4,000 ft. The prior 0.7
+    // overstated drag by ~35% (see TRUCK_SOURCES.md).
+    exposureFactor: 0.45,
     crr: TRAILER_TIRE_CRR,
     description: "8.5-ft wide enclosed with 7.5–8 ft interior height, loaded",
   },
