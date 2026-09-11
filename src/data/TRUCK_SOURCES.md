@@ -293,6 +293,29 @@ vs 0.43 solo), and A-B-A towing fuel-economy data. ST trailer tire
 Crr = 0.013 (derived from NAS SR 286 passenger baselines + radial/bias
 differential; no direct ST measurement exists — weakest number in the set).
 
+### Enclosed-trailer calibration (2026-09)
+
+The two enclosed-cargo presets originally used k = 0.6 (standard) and 0.7
+(extra tall). Steady-state road data from a 2017 F-150 5.0L/6R80/3.31 axle
+(Platinum SuperCrew 4x4, ~5,150 lb) pulling an 8,000 lb extra-tall enclosed
+contradicted those values at every point:
+
+| Observation | Model at k = 0.7 | k implied |
+|---|---|---|
+| 4th (1.143) holds 81–82 mph on flat ground below 3,500 ft | 4th tops out ~71 mph | ~0.47 |
+| 4th tops out 73–74 mph at 5,000 ft | ~70 mph | ~0.6 |
+| 3rd (1.521) holds 88 mph on the 1–2% I-76/I-80 grades near 4,000 ft | 3rd cannot hold 88 mph even on flat | 0.40–0.45 |
+
+The 3rd-gear point is the cleanest anchor: grade force is exact and 88 mph
+in 3rd sits at ~4,670 rpm where the curve is pinned to the advertised peak.
+The 5,000 ft point is weighted least because altitude alone barely moves the
+crossing (NA power loss and drag relief nearly cancel); the spread there is
+consistent with wind, temperature, and 91- vs 93-octane fuel. A fuel-economy
+energy balance (solo vs towing mpg on EcoBoost trucks) independently lands
+near k ≈ 0.5. Result: extra tall k = 0.45, standard height k = 0.4 (scaled to
+keep the ordering). Regression test: `src/engine/towing.test.ts`
+("enclosed-trailer calibration").
+
 Key sources: SAE 2017-01-1540 (yaw drag of vehicle-trailer combos),
 researchgate wind-tunnel truck+trailer study, thecalibertech.com CFD towing
 analysis, lightshiprv.com aero writeups, nationalacademies.org SR 286.
