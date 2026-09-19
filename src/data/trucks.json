@@ -1,12 +1,496 @@
 [
   {
+    "id": "ford-f150-2027",
+    "make": "Ford",
+    "model": "F-150",
+    "classTier": "half",
+    "generation": "14th gen (2027 update)",
+    "yearStart": 2027,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.41,
+      "frontalAreaM2": 3.3
+    },
+    "powertrains": [
+      {
+        "id": "30-ecoboost",
+        "engineName": "3.0L EcoBoost V6",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1200,
+            390
+          ],
+          [
+            1400,
+            450
+          ],
+          [
+            1600,
+            500
+          ],
+          [
+            1800,
+            525
+          ],
+          [
+            2000,
+            538
+          ],
+          [
+            2250,
+            542
+          ],
+          [
+            2400,
+            542
+          ],
+          [
+            2600,
+            542
+          ],
+          [
+            2800,
+            542
+          ],
+          [
+            3000,
+            542
+          ],
+          [
+            3200,
+            542
+          ],
+          [
+            3400,
+            535
+          ],
+          [
+            3600,
+            522
+          ],
+          [
+            3800,
+            508
+          ],
+          [
+            4000,
+            494
+          ],
+          [
+            4200,
+            482
+          ],
+          [
+            4400,
+            472
+          ],
+          [
+            4600,
+            465
+          ],
+          [
+            4800,
+            465
+          ],
+          [
+            5000,
+            463
+          ],
+          [
+            5200,
+            445
+          ],
+          [
+            5400,
+            425
+          ],
+          [
+            5600,
+            400
+          ],
+          [
+            5800,
+            370
+          ],
+          [
+            6000,
+            330
+          ],
+          [
+            6200,
+            280
+          ]
+        ],
+        "redlineRpm": 6200,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R80",
+          "gearRatios": [
+            4.696,
+            2.985,
+            2.146,
+            1.769,
+            1.52,
+            1.275,
+            1.0,
+            0.854,
+            0.689,
+            0.636
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2250,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "New standard engine for 2027, replacing the 2.7L: same 325 hp / 400 lb-ft peaks but peak torque arrives at 2,250 rpm (Ford). Power rpm, axle set and curb weight carried from the 2.7L pending the tech-spec sheet."
+      },
+      {
+        "id": "35-ecoboost",
+        "engineName": "3.5L EcoBoost V6",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            380
+          ],
+          [
+            1200,
+            460
+          ],
+          [
+            1400,
+            540
+          ],
+          [
+            1600,
+            600
+          ],
+          [
+            1800,
+            645
+          ],
+          [
+            2000,
+            668
+          ],
+          [
+            2200,
+            678
+          ],
+          [
+            2400,
+            678
+          ],
+          [
+            2600,
+            678
+          ],
+          [
+            2800,
+            678
+          ],
+          [
+            3000,
+            678
+          ],
+          [
+            3100,
+            678
+          ],
+          [
+            3200,
+            676
+          ],
+          [
+            3400,
+            668
+          ],
+          [
+            3600,
+            652
+          ],
+          [
+            3800,
+            632
+          ],
+          [
+            4000,
+            623
+          ],
+          [
+            4200,
+            605
+          ],
+          [
+            4400,
+            588
+          ],
+          [
+            4600,
+            571
+          ],
+          [
+            4800,
+            556
+          ],
+          [
+            5000,
+            543
+          ],
+          [
+            5200,
+            529
+          ],
+          [
+            5400,
+            514
+          ],
+          [
+            5600,
+            501
+          ],
+          [
+            5800,
+            487
+          ],
+          [
+            6000,
+            475
+          ],
+          [
+            6200,
+            452
+          ],
+          [
+            6350,
+            425
+          ]
+        ],
+        "redlineRpm": 6350,
+        "idleRpm": 700,
+        "displacementL": 3.5,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "10R80",
+          "gearRatios": [
+            4.696,
+            2.985,
+            2.146,
+            1.769,
+            1.52,
+            1.275,
+            1.0,
+            0.854,
+            0.689,
+            0.636
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.31,
+          3.55,
+          3.73
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 2311,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Carryover 400 hp / 500 lb-ft rating for 2027"
+      },
+      {
+        "id": "50-coyote",
+        "engineName": "5.0L Coyote V8",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            320
+          ],
+          [
+            1200,
+            360
+          ],
+          [
+            1400,
+            400
+          ],
+          [
+            1600,
+            435
+          ],
+          [
+            1800,
+            465
+          ],
+          [
+            2000,
+            490
+          ],
+          [
+            2200,
+            510
+          ],
+          [
+            2400,
+            525
+          ],
+          [
+            2600,
+            538
+          ],
+          [
+            2800,
+            548
+          ],
+          [
+            3000,
+            553
+          ],
+          [
+            3200,
+            555
+          ],
+          [
+            3400,
+            556
+          ],
+          [
+            3600,
+            556
+          ],
+          [
+            3800,
+            556
+          ],
+          [
+            4000,
+            556
+          ],
+          [
+            4200,
+            556
+          ],
+          [
+            4250,
+            556
+          ],
+          [
+            4400,
+            553
+          ],
+          [
+            4600,
+            545
+          ],
+          [
+            4800,
+            543
+          ],
+          [
+            5000,
+            531
+          ],
+          [
+            5200,
+            520
+          ],
+          [
+            5400,
+            509
+          ],
+          [
+            5600,
+            499
+          ],
+          [
+            5800,
+            487
+          ],
+          [
+            6000,
+            475
+          ],
+          [
+            6200,
+            455
+          ],
+          [
+            6400,
+            430
+          ],
+          [
+            6500,
+            405
+          ]
+        ],
+        "redlineRpm": 6500,
+        "idleRpm": 650,
+        "displacementL": 5.0,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "10R80",
+          "gearRatios": [
+            4.696,
+            2.985,
+            2.146,
+            1.769,
+            1.52,
+            1.275,
+            1.0,
+            0.854,
+            0.689,
+            0.636
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.15,
+          3.31,
+          3.73
+        ],
+        "defaultAxleRatio": 3.31,
+        "curbWeightKg": 2389,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "Carryover 400 hp / 410 lb-ft; offered on every trim from XL to Platinum for 2027"
+      }
+    ]
+  },
+  {
     "id": "ford-f150-2021",
     "make": "Ford",
     "model": "F-150",
     "classTier": "half",
     "generation": "14th gen",
     "yearStart": 2021,
-    "yearEnd": null,
+    "yearEnd": 2026,
     "aero": {
       "cd": 0.41,
       "frontalAreaM2": 3.3
@@ -8231,13 +8715,605 @@
     ]
   },
   {
+    "id": "gm-1500-2027",
+    "make": "Chevrolet/GMC",
+    "model": "Silverado/Sierra 1500",
+    "classTier": "half",
+    "generation": "5th gen (2027+)",
+    "yearStart": 2027,
+    "yearEnd": null,
+    "aero": {
+      "cd": 0.41,
+      "frontalAreaM2": 3.5
+    },
+    "powertrains": [
+      {
+        "id": "27-turbomax",
+        "engineName": "2.7L Turbo I4 (L3B / TurboMax, enhanced)",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            390
+          ],
+          [
+            1200,
+            470
+          ],
+          [
+            1400,
+            535
+          ],
+          [
+            1600,
+            575
+          ],
+          [
+            1800,
+            600
+          ],
+          [
+            2000,
+            612
+          ],
+          [
+            2200,
+            617
+          ],
+          [
+            2400,
+            617
+          ],
+          [
+            2600,
+            617
+          ],
+          [
+            2800,
+            617
+          ],
+          [
+            3000,
+            617
+          ],
+          [
+            3200,
+            612
+          ],
+          [
+            3400,
+            600
+          ],
+          [
+            3600,
+            585
+          ],
+          [
+            3800,
+            568
+          ],
+          [
+            4000,
+            550
+          ],
+          [
+            4200,
+            532
+          ],
+          [
+            4400,
+            516
+          ],
+          [
+            4600,
+            504
+          ],
+          [
+            4800,
+            494
+          ],
+          [
+            5000,
+            486
+          ],
+          [
+            5200,
+            479
+          ],
+          [
+            5400,
+            460
+          ],
+          [
+            5600,
+            440
+          ],
+          [
+            5800,
+            415
+          ],
+          [
+            6000,
+            385
+          ],
+          [
+            6100,
+            365
+          ]
+        ],
+        "redlineRpm": 6100,
+        "idleRpm": 650,
+        "displacementL": 2.7,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Hydra-Matic 10L80 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42
+        ],
+        "defaultAxleRatio": 3.23,
+        "curbWeightKg": 2254,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "Enhanced TurboMax: 350 hp @ 5,200 / 455 lb-ft @ 3,000 (up from 310/430) and moves from the 8-speed to the 10-speed. Axle set and curb weight carried from the T1 truck pending GM spec sheets."
+      },
+      {
+        "id": "57-l76",
+        "engineName": "5.7L V8 (L76, Gen 6 small block)",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            358
+          ],
+          [
+            1200,
+            391
+          ],
+          [
+            1400,
+            419
+          ],
+          [
+            1600,
+            447
+          ],
+          [
+            1800,
+            475
+          ],
+          [
+            2000,
+            497
+          ],
+          [
+            2200,
+            516
+          ],
+          [
+            2400,
+            532
+          ],
+          [
+            2600,
+            545
+          ],
+          [
+            2800,
+            557
+          ],
+          [
+            3000,
+            566
+          ],
+          [
+            3200,
+            572
+          ],
+          [
+            3400,
+            577
+          ],
+          [
+            3600,
+            580
+          ],
+          [
+            3800,
+            580
+          ],
+          [
+            4000,
+            580
+          ],
+          [
+            4100,
+            580
+          ],
+          [
+            4200,
+            576
+          ],
+          [
+            4400,
+            566
+          ],
+          [
+            4600,
+            554
+          ],
+          [
+            4800,
+            544
+          ],
+          [
+            5000,
+            536
+          ],
+          [
+            5200,
+            530
+          ],
+          [
+            5400,
+            520
+          ],
+          [
+            5600,
+            511
+          ],
+          [
+            5800,
+            490
+          ],
+          [
+            6000,
+            465
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 5.7,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 10L80 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42
+        ],
+        "defaultAxleRatio": 3.23,
+        "curbWeightKg": 2306,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "Replaces the 5.3L L84: 402 hp / 428 lb-ft (GM has not published the peak rpm; 5,600 / 4,100 assumed from the L84). Max tow 13,700 lb. Axle set and curb weight extrapolated from the T1 5.3L."
+      },
+      {
+        "id": "66-l78",
+        "engineName": "6.6L V8 (L78, Gen 6 small block)",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            435
+          ],
+          [
+            1200,
+            475
+          ],
+          [
+            1400,
+            510
+          ],
+          [
+            1600,
+            540
+          ],
+          [
+            1800,
+            568
+          ],
+          [
+            2000,
+            593
+          ],
+          [
+            2200,
+            615
+          ],
+          [
+            2400,
+            633
+          ],
+          [
+            2600,
+            648
+          ],
+          [
+            2800,
+            660
+          ],
+          [
+            3000,
+            669
+          ],
+          [
+            3200,
+            675
+          ],
+          [
+            3400,
+            678
+          ],
+          [
+            3600,
+            679
+          ],
+          [
+            3800,
+            679
+          ],
+          [
+            4000,
+            679
+          ],
+          [
+            4100,
+            679
+          ],
+          [
+            4200,
+            675
+          ],
+          [
+            4400,
+            665
+          ],
+          [
+            4600,
+            655
+          ],
+          [
+            4800,
+            645
+          ],
+          [
+            5000,
+            636
+          ],
+          [
+            5200,
+            628
+          ],
+          [
+            5400,
+            620
+          ],
+          [
+            5600,
+            612
+          ],
+          [
+            5800,
+            590
+          ],
+          [
+            6000,
+            560
+          ]
+        ],
+        "redlineRpm": 6000,
+        "idleRpm": 650,
+        "displacementL": 6.6,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "Hydra-Matic 10L90 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.42,
+          3.73
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 2447,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "Replaces the 6.2L L87 on upper trims (not offered on Trail Boss at launch): 481 hp / 501 lb-ft (peak rpm unpublished; 5,600 / 4,100 assumed from the L87). Axle set and curb weight extrapolated from the T1 6.2L."
+      },
+      {
+        "id": "30-duramax",
+        "engineName": "3.0L Duramax I6 Diesel (LZ0)",
+        "fuel": "diesel",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            560
+          ],
+          [
+            1200,
+            600
+          ],
+          [
+            1400,
+            622
+          ],
+          [
+            1600,
+            642
+          ],
+          [
+            1800,
+            655
+          ],
+          [
+            2000,
+            663
+          ],
+          [
+            2200,
+            668
+          ],
+          [
+            2400,
+            670
+          ],
+          [
+            2600,
+            671
+          ],
+          [
+            2750,
+            671
+          ],
+          [
+            2900,
+            660
+          ],
+          [
+            3100,
+            640
+          ],
+          [
+            3300,
+            615
+          ],
+          [
+            3500,
+            598
+          ],
+          [
+            3750,
+            579
+          ],
+          [
+            3900,
+            555
+          ],
+          [
+            4100,
+            520
+          ],
+          [
+            4300,
+            480
+          ],
+          [
+            4500,
+            435
+          ],
+          [
+            4700,
+            385
+          ],
+          [
+            4900,
+            330
+          ],
+          [
+            5000,
+            300
+          ]
+        ],
+        "redlineRpm": 5000,
+        "idleRpm": 700,
+        "displacementL": 3.0,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Hydra-Matic 10L80 10-speed automatic",
+          "gearRatios": [
+            4.7,
+            2.99,
+            2.15,
+            1.8,
+            1.52,
+            1.28,
+            1.0,
+            0.85,
+            0.69,
+            0.64
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.23,
+          3.73
+        ],
+        "defaultAxleRatio": 3.73,
+        "curbWeightKg": 2517,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 60,
+          "rimDiameterIn": 20
+        },
+        "notes": "Carryover 305 hp @ 3,750 / 495 lb-ft @ 2,750 for 2027."
+      }
+    ]
+  },
+  {
     "id": "gm-1500-2019",
     "make": "Chevrolet/GMC",
     "model": "Silverado/Sierra 1500",
     "classTier": "half",
     "generation": "T1",
     "yearStart": 2019,
-    "yearEnd": null,
+    "yearEnd": 2026,
     "aero": {
       "cd": 0.41,
       "frontalAreaM2": 3.5
@@ -13824,7 +14900,7 @@
         "engineName": "5.7L HEMI V8 eTorque",
         "fuel": "gas",
         "yearStart": 2019,
-        "yearEnd": 2024,
+        "yearEnd": null,
         "torqueCurve": [
           [
             1000,
@@ -13957,7 +15033,7 @@
           "aspectRatio": 55,
           "rimDiameterIn": 20
         },
-        "notes": "eTorque assist not modeled; returned for 2026 after a 2025 hiatus"
+        "notes": "eTorque assist not modeled; skipped MY2025, returned for 2026 and continues (395 hp / 410 lb-ft) for 2027"
       },
       {
         "id": "30-hurricane-sst",
@@ -14256,6 +15332,310 @@
           "rimDiameterIn": 20
         },
         "notes": "2025+, upper trims only (3.92 axle standard)"
+      },
+      {
+        "id": "64-hemi",
+        "engineName": "6.4L HEMI V8 (392)",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            420
+          ],
+          [
+            1200,
+            450
+          ],
+          [
+            1400,
+            480
+          ],
+          [
+            1600,
+            505
+          ],
+          [
+            1800,
+            528
+          ],
+          [
+            2000,
+            548
+          ],
+          [
+            2200,
+            565
+          ],
+          [
+            2400,
+            578
+          ],
+          [
+            2600,
+            590
+          ],
+          [
+            2800,
+            598
+          ],
+          [
+            3000,
+            604
+          ],
+          [
+            3200,
+            608
+          ],
+          [
+            3400,
+            611
+          ],
+          [
+            3600,
+            613
+          ],
+          [
+            3800,
+            615
+          ],
+          [
+            4000,
+            616
+          ],
+          [
+            4200,
+            617
+          ],
+          [
+            4400,
+            615
+          ],
+          [
+            4600,
+            610
+          ],
+          [
+            4800,
+            604
+          ],
+          [
+            5000,
+            597
+          ],
+          [
+            5200,
+            590
+          ],
+          [
+            5400,
+            582
+          ],
+          [
+            5600,
+            574
+          ],
+          [
+            5800,
+            566
+          ],
+          [
+            6000,
+            558
+          ],
+          [
+            6200,
+            530
+          ],
+          [
+            6400,
+            495
+          ]
+        ],
+        "redlineRpm": 6400,
+        "idleRpm": 650,
+        "displacementL": 6.4,
+        "forcedInduction": false,
+        "transmission": {
+          "name": "ZF 8HP75 (TorqueFlite 8HP75)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.92
+        ],
+        "defaultAxleRatio": 3.92,
+        "curbWeightKg": 2671,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 55,
+          "rimDiameterIn": 20
+        },
+        "notes": "New for 2027 (Rumble Bee 392 / 392 Track Pack): 470 hp @ 6,000 / 455 lb-ft @ 4,200, 8HP75, 3.92 axle, 5,888 lb curb, 8,890 lb max tow. Ram marketing also quotes 470 lb-ft; the press-kit 455 figure is modeled."
+      },
+      {
+        "id": "62-hemi-sc",
+        "engineName": "6.2L Supercharged HEMI V8",
+        "fuel": "gas",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            1000,
+            620
+          ],
+          [
+            1200,
+            660
+          ],
+          [
+            1400,
+            700
+          ],
+          [
+            1600,
+            735
+          ],
+          [
+            1800,
+            765
+          ],
+          [
+            2000,
+            790
+          ],
+          [
+            2200,
+            812
+          ],
+          [
+            2400,
+            832
+          ],
+          [
+            2600,
+            850
+          ],
+          [
+            2800,
+            866
+          ],
+          [
+            3000,
+            880
+          ],
+          [
+            3200,
+            892
+          ],
+          [
+            3400,
+            902
+          ],
+          [
+            3600,
+            910
+          ],
+          [
+            3800,
+            915
+          ],
+          [
+            4000,
+            918
+          ],
+          [
+            4200,
+            920
+          ],
+          [
+            4400,
+            921
+          ],
+          [
+            4600,
+            922
+          ],
+          [
+            4800,
+            922
+          ],
+          [
+            5000,
+            921
+          ],
+          [
+            5200,
+            919
+          ],
+          [
+            5400,
+            916
+          ],
+          [
+            5600,
+            913
+          ],
+          [
+            5800,
+            910
+          ],
+          [
+            6000,
+            908
+          ],
+          [
+            6100,
+            907
+          ],
+          [
+            6200,
+            880
+          ],
+          [
+            6400,
+            830
+          ]
+        ],
+        "redlineRpm": 6400,
+        "idleRpm": 700,
+        "displacementL": 6.2,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "ZF 8HP95 (TorqueFlite 8HP95)",
+          "gearRatios": [
+            4.71,
+            3.14,
+            2.1,
+            1.67,
+            1.29,
+            1.0,
+            0.84,
+            0.67
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.55
+        ],
+        "defaultAxleRatio": 3.55,
+        "curbWeightKg": 2880,
+        "tireSize": {
+          "widthMm": 325,
+          "aspectRatio": 65,
+          "rimDiameterIn": 18
+        },
+        "notes": "New for 2027 (TRX SRT / Rumble Bee SRT): 777 hp / 680 lb-ft, 8HP95, 3.55 axle, 6,350 lb curb (TRX). Peak rpm assumed at the 2021 TRX points (6,100 / 4,800)."
       },
       {
         "id": "30-ecodiesel",

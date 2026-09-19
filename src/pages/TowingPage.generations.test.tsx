@@ -3,12 +3,12 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import TowingPage from './TowingPage'
 
-// The real catalog has one generation per family so far. Mock in a second
-// F-150 generation (cloned from the real 2021 truck so the physics data stays
-// valid) to exercise the generation-swap behavior end to end.
+// Mock a two-generation F-150 family (both cloned from the real 2021 truck so
+// the physics data stays valid, with the year ranges pinned so catalog updates
+// don't move the labels) to exercise the generation-swap behavior end to end.
 vi.mock('@/data/trucks', async importOriginal => {
   const orig = await importOriginal<typeof import('@/data/trucks')>()
-  const current = orig.TRUCKS.find(t => t.id === 'ford-f150-2021')!
+  const current = { ...orig.TRUCKS.find(t => t.id === 'ford-f150-2021')!, yearEnd: null }
   const older = {
     ...current,
     id: 'ford-f150-2015',

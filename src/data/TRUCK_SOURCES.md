@@ -57,6 +57,9 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | Truck | Strongest data | Weakest data |
 |---|---|---|
 | Ford F-150 (2021+) | Gear/axle ratios (2023 order guide), peaks | Curve shapes (constructed), Cd/area estimate, redlines (forum consensus) |
+| Ford F-150 (2027 update) | 3.0L EcoBoost 325 hp / 400 lb-ft @ 2,250 rpm (Ford announcement, 2026-09); 3.5L EB and 5.0L carry over unchanged; 10R80 | 3.0L power rpm (5,000 assumed from the 2.7L), axle set and curb weight (carried from the 2.7L until the tech-spec sheet is parsed), curve shape |
+| GM 1500 (2027+, 5th gen) | Ratings for all four engines (GM/Chevrolet announcements, 2026-09: TurboMax 350 @ 5,200 / 455 @ 3,000; L76 402/428; L78 481/501; LZ0 305/495), 10-speed across the board | V8 peak rpm (GM withheld; 5,600 / 4,100 assumed from L84/L87), axle sets, curb weights and Cd/area all carried from the T1 truck pending GM spec sheets |
+| Ram 1500 2027 additions | 6.4L HEMI 470 hp @ 6,000 / 455 lb-ft @ 4,200, 8HP75, 3.92 axle, 5,888 lb curb (Stellantis press kit); 6.2L SC HEMI 777 hp / 680 lb-ft, 8HP95, 6,350 lb curb (Ram TRX spec page) | 6.2L peak rpm (2021 TRX points assumed), 6.2L axle 3.55 (previous TRX), Rumble Bee 392 tire size (DT default assumed), curve shapes |
 | Ford F-150 (2015–2020) | All hp/torque/rpm peaks + 6R80/10R80 ratios (Ford 2020 tech-spec PDF), axle sets per engine (Ford towing tables) | Cd 0.43/3.25 m² (no official figure — estimated slightly worse than 14th gen), curb weights (GVWR − payload from 2020 spec sheet, extrapolated back for pre-2018), curve shapes (constructed, no public dyno traces) |
 | Ford F-250/F-350 (2023+) | Weights, ratios, axles — all from Ford's official 2026 Super Duty tech-spec PDF | Curve shapes, Cd/area estimate |
 | Ford F-250/F-350 (2017–2022) | Outputs and axle sets (Ford 2017 towing-selector brochure), 10R140 ratios | Curb weights (no accessible per-engine Ford table; anchored to the 2023+ entries minus content deltas — lowest-confidence weights in the catalog), curve shapes |
@@ -94,6 +97,18 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 
 ## Notable verified facts (commonly confused)
 
+- **MY2027 half-tons**: Ford replaced the 2.7L EcoBoost with a 3.0L EcoBoost
+  at the same 325 hp / 400 lb-ft peaks (torque now at 2,250 rpm) and kept
+  the 3.5L EcoBoost (400/500) and 5.0L (400/410) unchanged; modeled as a
+  separate "14th gen (2027 update)" entry so the 2021–2026 truck keeps the
+  2.7L. GM launched the 5th-gen Silverado/Sierra 1500 with two Gen 6 small
+  blocks — 5.7L L76 (402/428, replaces the 5.3L) and 6.6L L78 (481/501,
+  replaces the 6.2L) — an enhanced TurboMax (350/455, now on the 10-speed)
+  and an unchanged LZ0 Duramax. Ram's carryover 1500 engines (Hurricane SO/HO,
+  5.7L HEMI) are unchanged for 2027; what is new is the 6.4L HEMI (Rumble Bee
+  392) and the 6.2L supercharged HEMI (TRX SRT / Rumble Bee SRT), added to the
+  DT entry with `yearStart: 2027`. Ram quotes the 6.4L at both 470 and 455
+  lb-ft; the press-kit 455 @ 4,200 figure is modeled.
 - **Ford 6.8L gas Super Duty uses the 10R100 TorqShift-G**, not the 10R140;
   only the 7.3L gas and both 6.7L Power Strokes use the 10R140. Super Duty SRW
   axles: gas 3.73/4.30, diesel 3.31/3.55 (verified in Ford's tech-spec PDF).
