@@ -698,8 +698,8 @@
       "forcedInduction": false
     },
     "transmission": {
-      "gearRatios": [3.540, 2.130, 1.517, 1.183, 1.000, 0.767],
-      "finalDriveRatio": 3.583,
+      "gearRatios": [3.626, 2.189, 1.541, 1.213, 1.000, 0.767],
+      "finalDriveRatio": 4.100,
       "shiftTimeMs": 180,
       "drivetrainLoss": 0.13,
       "type": "manual"
@@ -1354,5 +1354,41 @@
     },
     "tireSize": { "widthMm": 245, "aspectRatio": 40, "rimDiameterIn": 18 },
     "aero": { "cd": 0.33, "frontalAreaM2": 2.17 }
+  },
+  {
+    "id": "subaru-brz-2026",
+    "make": "Subaru",
+    "model": "BRZ",
+    "year": 2026,
+    "trim": "tS (6MT, ZD8)",
+    "curbWeightKg": 1293,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [1000, 140], [1500, 188], [2000, 218], [2500, 238], [3000, 247],
+        [3500, 250], [3700, 250], [4000, 249], [4500, 247], [5000, 246],
+        [5500, 245], [6000, 243], [6500, 239], [7000, 232], [7400, 205],
+        [7500, 190]
+      ],
+      "powerCurve": [
+        [1000, 15], [1500, 30], [2000, 46], [2500, 62], [3000, 78],
+        [3500, 92], [3700, 97], [4000, 104], [4500, 116], [5000, 129],
+        [5500, 141], [6000, 153], [6500, 163], [7000, 170], [7400, 159],
+        [7500, 149]
+      ],
+      "redlineRpm": 7500,
+      "idleRpm": 700,
+      "displacementL": 2.4,
+      "forcedInduction": false
+    },
+    "transmission": {
+      "gearRatios": [3.626, 2.189, 1.541, 1.213, 1.000, 0.767],
+      "finalDriveRatio": 4.100,
+      "shiftTimeMs": 180,
+      "drivetrainLoss": 0.13,
+      "type": "manual"
+    },
+    "tireSize": { "widthMm": 215, "aspectRatio": 40, "rimDiameterIn": 18 },
+    "aero": { "cd": 0.27, "frontalAreaM2": 1.92 }
   }
 ]

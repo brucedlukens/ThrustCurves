@@ -274,13 +274,29 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 
 | Field | Old JSON | Corrected | Note |
 |-------|----------|-----------|------|
-| Final drive | 4.300 | 3.583 | Was using 2022 BRZ's FDR |
+| Final drive | 3.583 | 4.100 | Re-corrected 2026-09 (see below) |
 | Peak torque | 250 Nm at 3500 rpm | 250 Nm at 3700 rpm | Curve rebuilt |
 | Peak power | ~140 kW at 6500 rpm | 170 kW (228 hp) at 7000 rpm | ~18% too low — major error |
-| Gear ratios | [3.540, 2.130, 1.517, 1.183, 1.000, 0.767] | (retained) | Plausible per forum data |
+| Gear ratios | [3.540, 2.130, 1.517, 1.183, 1.000, 0.767] | [3.626, 2.189, 1.541, 1.213, 1.000, 0.767] | Re-corrected 2026-09 |
 
-**Sources**: Toyota GR86 UK technical specifications (media.toyota.co.uk); Toyota GR86 Forum gearing thread; GR86/BRZ comparison data
-**Correction**: Final drive corrected from 4.300 (2022 Subaru BRZ value) to 3.583 (GR86 MT). The GR86 uses taller gearing than the BRZ for the same platform. Torque and power curves completely rebuilt to reflect FA24 engine characteristics: broad flat torque plateau, 250 Nm peak at 3700 rpm, 170 kW peak at 7000 rpm.
+**Sources**: Toyota GR86 UK technical specifications PDF (media.toyota.co.uk, 220725M-GR86-Tech-Spec); Subaru 22MY/23MY BRZ spec sheets; GR86 Forum gearing thread
+**Correction (2026-09)**: An earlier audit set the final drive to 3.583 with 3.540/2.130/… gear ratios, claiming the GR86 was geared taller than the BRZ. That was wrong: the GR86 and BRZ share the same TL70 6MT and 4.100 final drive. Toyota's own tech-spec sheet lists 3.626 / 2.189 / 1.541 / 1.213 / 1.000 / 0.767 (reverse 3.438) with a 4.100 final drive, identical to Subaru's BRZ sheet. Both fields corrected. Torque and power curves (250 Nm at 3700 rpm, 170 kW at 7000 rpm) were already right and are retained.
+
+---
+
+### Subaru BRZ 2026 (tS, 6MT, ZD8) — `subaru-brz-2026`
+
+| Field | JSON | Actual | Status |
+|-------|------|--------|--------|
+| Peak torque | 250 Nm at 3700 rpm | 249 Nm (184 lb-ft) at 3700 rpm | ✅ Correct |
+| Peak power | 170 kW at 7000 rpm | 170 kW (228 hp) at 7000 rpm | ✅ Correct |
+| Gear ratios | [3.626, 2.189, 1.541, 1.213, 1.000, 0.767] | Subaru 22MY–26MY BRZ 6MT spec sheets | ✅ Confirmed |
+| Final drive | 4.100 | 4.100 (all 2022+ BRZ/GR86 6MT) | ✅ Confirmed |
+| Curb weight | 1293 kg | 2,851 lb (2026 tS 6MT; Limited 6MT is 2,837 lb) | ✅ Confirmed |
+| Tires | 215/40R18 | 215/40R18 (tS and Limited; Premium runs 215/45R17) | ✅ Confirmed |
+
+**Sources**: Subaru 2026 BRZ product specifications; Subaru 22MY/23MY BRZ spec sheets (gear ratios); Toyota GR86 UK tech-spec (cross-check)
+**Status**: Second-generation BRZ added 2026-09 alongside the existing 2022 GR86. Same FA24 engine and TL70 gearbox as the GR86, so the torque/power curves are shared; only weight and tire fitment differ. Cd 0.27 / 1.92 m² carried from the first-gen BRZ entry (Subaru does not publish a figure for the ZD8).
 
 ---
 
