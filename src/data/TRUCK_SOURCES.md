@@ -97,6 +97,14 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 
 ## Notable verified facts (commonly confused)
 
+- **2.7L EcoBoost torque plateau (corrected 2026-09)**: the three 2.7L
+  entries were drawn with full torque from ~2,200 rpm, which is optimistic
+  against Ford's ratings (375 lb-ft @ 3,000 for 2015–17, 400 @ 2,750 for
+  2018–20, 400 @ 3,000 for 2021–26). They now ramp to the rated peak at the
+  rated rpm (roughly 480 Nm at 2,000 rpm for the 2021+ engine) with the
+  upper taper and power peaks unchanged. This is what separates the MY2027
+  3.0L (400 lb-ft @ 2,250) from the 2.7L in the sim: ~10% more torque in
+  the 2,000–2,600 rpm band, identical above 3,000, matching Ford's claim.
 - **MY2027 half-tons**: Ford replaced the 2.7L EcoBoost with a 3.0L EcoBoost
   at the same 325 hp / 400 lb-ft peaks (torque now at 2,250 rpm) and kept
   the 3.5L EcoBoost (400/500) and 5.0L (400/410) unchanged; modeled as a
