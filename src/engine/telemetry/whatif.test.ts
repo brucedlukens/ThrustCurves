@@ -1,0 +1,201 @@
+import { describe, it, expect } from 'vitest'
+import { analyzeWhatIf, parseCsv, autoDetectMapping, buildRun, inferRoadDyno } from './index'
+import {
+  buildPowertrainModel,
+  thrustAtSpeed,
+  detectGear,
+  traceTimeS,
+  computeCeiling,
+} from './whatif'
+import { DEFAULT_MODIFICATIONS } from '@/types/config'
+import { DEFAULT_WHATIF_OPTIONS } from '@/types/telemetry'
+import type { TelemetryRun } from '@/types/telemetry'
+import { getTestCar, rowsToCsv, synthesizeRun, SAMPLE_COURSE } from '@/test/telemetryFixtures'
+import { GRAVITY_MS2 } from '@/data/presets'
+
+const car = getTestCar()
+
+function makeRun(opts: Parameters<typeof synthesizeRun>[2] = {}, csvOpts = opts): TelemetryRun {
+  const rows = synthesizeRun(car, SAMPLE_COURSE, { rateHz: 10, ...opts })
+  const table = parseCsv(rowsToCsv(rows, csvOpts))
+  return buildRun(table, autoDetectMapping(table.headers))
+}
+
+describe('buildPowertrainModel / thrustAtSpeed / detectGear', () => {
+  const model = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
+
+  it('builds a model with envelope, gear curves and effective ratios', () => {
+    expect(model.massKg).toBe(car.curbWeightKg)
+    expect(model.envelope.length).toBeGreaterThan(10)
+    expect(model.gearCurves).toHaveLength(car.transmission.gearRatios.length)
+    expect(model.gearEffectiveRatios[0]).toBeCloseTo(car.transmission.gearRatios[0] * car.transmission.finalDriveRatio, 6)
+  })
+
+  it('applies weight, final drive and torque mods', () => {
+    const m = buildPowertrainModel(car, { ...DEFAULT_MODIFICATIONS, weightDeltaKg: 100, finalDriveOverride: 4.5, torqueMultiplier: 1.2 })
+    expect(m.massKg).toBe(car.curbWeightKg + 100)
+    expect(m.gearEffectiveRatios[1]).toBeCloseTo(car.transmission.gearRatios[1] * 4.5, 6)
+    expect(thrustAtSpeed(m, 20)).toBeGreaterThan(thrustAtSpeed(model, 20))
+  })
+
+  it('held gear returns zero thrust past that gear’s redline speed', () => {
+    const secondMax = model.gearCurves[1].speedRangeMs[1]
+    expect(thrustAtSpeed(model, secondMax - 1, 2)).toBeGreaterThan(0)
+    expect(thrustAtSpeed(model, secondMax + 1, 2)).toBe(0)
+    expect(thrustAtSpeed(model, 10, 99)).toBe(0)
+  })
+
+  it('detects the gear from rpm/speed and rejects nonsense', () => {
+    const ratio = model.gearEffectiveRatios[1]
+    const rpmAt20 = (20 * ratio * 60) / (2 * Math.PI * model.tireRadiusM)
+    expect(detectGear(model, 20, rpmAt20)).toBe(2)
+    expect(detectGear(model, 20, rpmAt20 * 1.25)).toBeUndefined()
+    expect(detectGear(model, 1, 3000)).toBeUndefined()
+  })
+})
+
+describe('traceTimeS / computeCeiling', () => {
+  it('integrates distance over average speed with a floor for standing starts', () => {
+    expect(traceTimeS([10, 10, 10], 1)).toBeCloseTo(0.2, 6)
+    expect(traceTimeS([0, 0, 0], 1)).toBeCloseTo(4, 6) // 0.5 m/s floor
+    expect(traceTimeS([10, 20, 30], 1, 1, 3)).toBeCloseTo(1 / 25, 6)
+  })
+
+  it('fixes non-power samples, caps power samples by lateral grip and back-propagates braking', () => {
+    const samples = [0, 1, 2, 3, 4].map(i => ({ distanceM: i, timeS: i, speedMs: 20, longAccelMs2: 0, latAccelMs2: 0 }))
+    samples[1].latAccelMs2 = 0.25 * GRAVITY_MS2 // quarter of a 1 g limit ⇒ ceiling = 20·√4 = 40
+    const run: TelemetryRun = { sourceName: 't', samples, stepM: 1, totalDistanceM: 4, totalTimeS: 4, hasThrottle: false, hasRpm: false, hasLatAccel: true, sourceRateHz: 1 }
+    const { ceiling, source } = computeCeiling(run, ['power', 'power', 'power', 'cornering', 'cornering'], { maxLatG: 1, maxAccelG: 0.5, maxBrakeG: 1 })
+    expect(source[3]).toBe('fixed')
+    expect(ceiling[3]).toBe(20)
+    expect(ceiling[2]).toBeCloseTo(Math.sqrt(400 + 2 * 9.81), 3)
+    expect(source[2]).toBe('braking')
+    // Sample 1 carries 0.25 g lateral ⇒ braking available = 1 g·√(1 − 0.25²)
+    expect(ceiling[1]).toBeCloseTo(Math.sqrt(ceiling[2] ** 2 + 2 * 9.80665 * Math.sqrt(1 - 0.0625)), 3)
+    expect(ceiling[0]).toBeGreaterThan(ceiling[1])
+  })
+})
+
+describe('analyzeWhatIf on a synthetic autocross run', () => {
+  const run = makeRun()
+
+  it('finds power-limited stretches and fits the baseline model to the log', () => {
+    const r = analyzeWhatIf(run, car, DEFAULT_MODIFICATIONS, DEFAULT_WHATIF_OPTIONS)
+    const powerSegs = r.segments.filter(s => s.kind === 'power')
+    expect(powerSegs.length).toBeGreaterThanOrEqual(3)
+    expect(r.powerLimitedFraction).toBeGreaterThan(0.3)
+    expect(r.powerLimitedFraction).toBeLessThan(0.9)
+    expect(r.segments.some(s => s.kind === 'braking')).toBe(true)
+    expect(r.segments.some(s => s.kind === 'cornering')).toBe(true)
+    // Synthetic car is driven by the same model, so calibration is ~1 and the fit is tight.
+    // Thresholds: observed ~1.00 / ~0.1 m/s; allow 2x.
+    expect(r.calibrationFactor).toBeGreaterThan(0.9)
+    expect(r.calibrationFactor).toBeLessThan(1.1)
+    expect(r.baselineFitRmsMs).toBeLessThan(0.6)
+  })
+
+  it('no modification ⇒ no delta', () => {
+    const r = analyzeWhatIf(run, car, DEFAULT_MODIFICATIONS, DEFAULT_WHATIF_OPTIONS)
+    expect(r.totalDeltaS).toBeCloseTo(0, 6)
+    r.segmentResults.forEach(s => expect(s.deltaS).toBeCloseTo(0, 6))
+    expect(r.modifiedSpeedsMs).toEqual(r.baselineSpeedsMs)
+  })
+
+  it('more torque ⇒ faster, higher peaks, and cornering speeds untouched', () => {
+    const r = analyzeWhatIf(run, car, { ...DEFAULT_MODIFICATIONS, torqueMultiplier: 1.25 }, DEFAULT_WHATIF_OPTIONS)
+    expect(r.totalDeltaS).toBeLessThan(-0.1)
+    r.segmentResults.forEach(s => {
+      expect(s.deltaS).toBeLessThanOrEqual(1e-9)
+      expect(s.modifiedPeakMs).toBeGreaterThanOrEqual(s.baselinePeakMs)
+    })
+    r.kinds.forEach((k, i) => {
+      if (k === 'cornering') expect(r.modifiedSpeedsMs[i]).toBe(r.measuredSpeedsMs[i])
+    })
+    expect(r.totalModifiedTimeS).toBeCloseTo(r.totalBaselineTimeS + r.totalDeltaS, 9)
+  })
+
+  it('more weight ⇒ slower', () => {
+    const r = analyzeWhatIf(run, car, { ...DEFAULT_MODIFICATIONS, weightDeltaKg: 150 }, DEFAULT_WHATIF_OPTIONS)
+    expect(r.totalDeltaS).toBeGreaterThan(0.05)
+  })
+
+  it('lots of power becomes grip-limited or braking-limited somewhere', () => {
+    const r = analyzeWhatIf(run, car, { ...DEFAULT_MODIFICATIONS, torqueMultiplier: 2.5 }, DEFAULT_WHATIF_OPTIONS)
+    const flagged = r.segmentResults.filter(s => s.gripLimitedAtM !== undefined || s.brakingLimitedAtM !== undefined)
+    expect(flagged.length).toBeGreaterThan(0)
+    // More power is never slower anywhere, and fixed sections stay measured
+    r.modifiedSpeedsMs.forEach((v, i) => expect(v).toBeGreaterThanOrEqual(r.baselineSpeedsMs[i] - 1e-9))
+    r.kinds.forEach((k, i) => {
+      if (k === 'cornering' || k === 'driver' || k === 'grip') expect(r.modifiedSpeedsMs[i]).toBe(r.measuredSpeedsMs[i])
+    })
+  })
+
+  it('a slalom with headroom reports a finite line ceiling above the driven speed', () => {
+    const r = analyzeWhatIf(run, car, DEFAULT_MODIFICATIONS, DEFAULT_WHATIF_OPTIONS)
+    const slalomSeg = r.segmentResults.find(s => s.segment.startM > 70 && s.segment.startM < 160 && Number.isFinite(s.lineHeadroomRatio))
+    expect(slalomSeg).toBeDefined()
+    expect(slalomSeg!.lineHeadroomRatio).toBeGreaterThanOrEqual(1)
+    expect(slalomSeg!.lineHeadroomRatio).toBeLessThan(3)
+    expect(slalomSeg!.lineHeadroomCeilingMs).toBeGreaterThan(0)
+    // A pure straight has no lateral load, so no finite ceiling
+    const straight = r.segmentResults.find(s => s.segment.startM >= 340 && s.segment.startM < 400)
+    expect(straight).toBeDefined()
+    expect(straight!.lineHeadroomRatio).toBe(Infinity)
+  })
+
+  it('calibration off uses the raw model', () => {
+    const weakRun = makeRun({ thrustScale: 0.85 })
+    const on = analyzeWhatIf(weakRun, car, DEFAULT_MODIFICATIONS, DEFAULT_WHATIF_OPTIONS)
+    const off = analyzeWhatIf(weakRun, car, DEFAULT_MODIFICATIONS, { ...DEFAULT_WHATIF_OPTIONS, calibrate: false })
+    expect(on.calibrationFactor).toBeGreaterThan(0.75)
+    expect(on.calibrationFactor).toBeLessThan(0.95)
+    expect(off.calibrationFactor).toBe(1)
+    expect(off.baselineFitRmsMs).toBeGreaterThan(on.baselineFitRmsMs)
+  })
+
+  it('hold-gear strategy hits the rev limiter when a shorter final drive runs out of 2nd', () => {
+    const shortFd = { ...DEFAULT_MODIFICATIONS, finalDriveOverride: car.transmission.finalDriveRatio * 1.35 }
+    const hold = analyzeWhatIf(run, car, shortFd, { ...DEFAULT_WHATIF_OPTIONS, gearStrategy: 'hold' })
+    const optimal = analyzeWhatIf(run, car, shortFd, DEFAULT_WHATIF_OPTIONS)
+    expect(hold.segmentResults.some(s => s.revLimitedAtM !== undefined)).toBe(true)
+    expect(optimal.segmentResults.every(s => s.revLimitedAtM === undefined)).toBe(true)
+    expect(hold.totalModifiedTimeS).toBeGreaterThan(optimal.totalModifiedTimeS)
+  })
+
+  it('scaleGripWithMass lets a lighter car use the same g, so weight loss helps more', () => {
+    const lighter = { ...DEFAULT_MODIFICATIONS, weightDeltaKg: -100 }
+    const plain = analyzeWhatIf(run, car, lighter, DEFAULT_WHATIF_OPTIONS)
+    const scaled = analyzeWhatIf(run, car, lighter, { ...DEFAULT_WHATIF_OPTIONS, scaleGripWithMass: true })
+    expect(plain.totalDeltaS).toBeLessThan(0)
+    expect(scaled.envelope.maxLatG).toBe(plain.envelope.maxLatG)
+    const heavier = analyzeWhatIf(run, car, { ...DEFAULT_MODIFICATIONS, weightDeltaKg: 100 }, { ...DEFAULT_WHATIF_OPTIONS, scaleGripWithMass: true })
+    expect(heavier.envelope.maxLatG).toBeLessThan(plain.envelope.maxLatG)
+  })
+
+  it('works on a log with only time and speed', () => {
+    const bare = makeRun({}, { withThrottle: false, withRpm: false, withLatAccel: false })
+    expect(bare.hasLatAccel).toBe(false)
+    const r = analyzeWhatIf(bare, car, { ...DEFAULT_MODIFICATIONS, torqueMultiplier: 1.2 }, DEFAULT_WHATIF_OPTIONS)
+    expect(r.segmentResults.length).toBeGreaterThan(0)
+    expect(r.totalDeltaS).toBeLessThan(0)
+  })
+
+  it('road dyno reproduces the modeled thrust on power samples', () => {
+    const model = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
+    const r = analyzeWhatIf(run, car, DEFAULT_MODIFICATIONS, DEFAULT_WHATIF_OPTIONS)
+    const pts = inferRoadDyno(run.samples, r.kinds, { ...model, gravityMs2: GRAVITY_MS2 })
+    expect(pts.length).toBeGreaterThan(5)
+    const errs: number[] = []
+    for (const p of pts) {
+      if (p.count < 3 || p.speedMs < 6) continue
+      const modeled = thrustAtSpeed(model, p.speedMs)
+      errs.push(Math.abs(p.forceN - modeled) / modeled)
+    }
+    errs.sort((a, b) => a - b)
+    const median = errs[Math.floor(errs.length / 2)]
+    // Thresholds: observed median ≈ 2%, worst ≈ 19% (bins straddling a gear change on the
+    // smoothed log); allow ~2x on the median and cap the worst at 30%
+    expect(median).toBeLessThan(0.05)
+    expect(errs[errs.length - 1]).toBeLessThan(0.3)
+  })
+})

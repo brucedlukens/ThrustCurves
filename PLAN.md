@@ -175,6 +175,27 @@ All calculations use **SI units internally** (m, s, N, kg). Display conversion h
 - OCR or color-based curve tracing
 - Map extracted points to 200 RPM intervals
 
+### Phase 8: Telemetry What-If (shipped)
+
+Import a logged autocross/track run and answer "what would +X hp / a shorter final
+drive / −Y kg have done on this exact run?" without a course model.
+
+- `src/engine/telemetry/` — pure functions: `csv.ts` (delimiter/header/metadata-line
+  detection), `mapping.ts` (auto-map RaceCapture/AiM/RaceChrono-style headers + units),
+  `resample.ts` (SI conversion, smoothing, derived long/lat accel, 1 m distance grid),
+  `envelope.ts` (g-g edge at the 98th percentile; accel traction = max(observed,
+  0.6 × lateral) since a power-limited car never shows its traction limit),
+  `classify.ts` (power / grip / cornering / braking / driver per sample, 5 m minimum
+  segment), `roadDyno.ts` (implied wheel force F = m·a + drag + Crr), `whatif.ts`
+  (powertrain model from `CarSpec` + `CarModifications`, per-run calibration factor,
+  speed ceilings, forward re-integration of power-limited stretches only, late-braking
+  credit, hold-gear mode with rev limiter, headroom on the driven line).
+- Key assumption (stated in the UI): corner speeds, braking points and the driven line
+  are fixed. Deltas are a floor. `lineHeadroomRatio` flags where the line had room.
+- `src/pages/TelemetryPage.tsx` at `/telemetry`; reuses `CarSearch` + `ModificationsPanel`
+  so every existing mod is a what-if input. `public/samples/autocross-mx5-sample.csv` is
+  a synthetic 10 Hz run generated from `src/test/telemetryFixtures.ts`.
+
 ## Dependencies
 
 | Package | Purpose |

@@ -38,6 +38,15 @@ const FEATURE_CARDS = [
       </svg>
     ),
   },
+  {
+    title: 'Telemetry What-If',
+    description: 'Import a logged run and see what more power, gearing or less weight would have done',
+    icon: (
+      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h3l2.5-6 4 12 2.5-6H21" />
+      </svg>
+    ),
+  },
 ]
 
 export default function HomePage() {
