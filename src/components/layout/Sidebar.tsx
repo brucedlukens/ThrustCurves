@@ -76,6 +76,16 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
+  {
+    to: '/telemetry',
+    label: 'Telemetry',
+    end: false,
+    icon: (
+      <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 12h3l2.5-6 4 12 2.5-6H21" />
+      </svg>
+    ),
+  },
 ]
 
 export default function Sidebar({ isOpen, onClose }: SidebarProps) {
