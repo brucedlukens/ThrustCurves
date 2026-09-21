@@ -47,6 +47,22 @@ describe('autoDetectMapping', () => {
     expect(m.speedUnit).toBe('kmh')
   })
 
+  it('maps abbreviated Solostorm-style accel headers and GPS_ prefixes', () => {
+    const m = autoDetectMapping(['Time (sec)', 'Speed (km/h)', 'LatAcc (G)', 'LonAcc (G)', 'GPS_Lat', 'GPS_Lon', 'Engine RPM', 'Throttle Pos (%)'])
+    expect(m.columns.latAccel).toBe('LatAcc (G)')
+    expect(m.columns.longAccel).toBe('LonAcc (G)')
+    expect(m.columns.lat).toBe('GPS_Lat')
+    expect(m.columns.lon).toBe('GPS_Lon')
+    expect(m.columns.rpm).toBe('Engine RPM')
+    expect(m.columns.throttle).toBe('Throttle Pos (%)')
+    expect(m.speedUnit).toBe('kmh')
+  })
+
+  it('maps short lowercase headers (accx/accy/tps/dist)', () => {
+    const m = autoDetectMapping(['time', 'lap', 'dist', 'speed', 'lat', 'lon', 'alt', 'accx', 'accy', 'accz', 'gyrz', 'rpm', 'tps'])
+    expect(m.columns).toEqual({ time: 'time', distance: 'dist', speed: 'speed', lat: 'lat', lon: 'lon', latAccel: 'accx', longAccel: 'accy', rpm: 'rpm', throttle: 'tps' })
+  })
+
   it('falls back to defaults when no unit hints exist', () => {
     const m = autoDetectMapping(['time', 'speed'])
     expect(m.speedUnit).toBe('mph')

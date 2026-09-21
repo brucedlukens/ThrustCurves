@@ -27,7 +27,7 @@ const PATTERNS: Record<TelemetryChannel, RegExp[]> = {
   time: [/^(time|timestamp|elapsed|interval|session ?time|utc ?time|lap ?time|t)$/i, /^time/i, /elapsed/i, /^interval/i],
   speed: [/^(gps ?speed|speed|velocity|vehicle ?speed|ground ?speed|spd)$/i, /gps.*speed/i, /speed/i, /velocity/i],
   distance: [/^(distance|dist|lap ?distance|odometer)$/i, /distance/i, /^dist/i],
-  longAccel: [/^(long(itudinal)? ?(accel|acc|g)|g[_ ]?long|accel ?y|accely|acc[_ ]?y|inline ?g|acceleration)$/i, /long.*(acc|g)/i, /accel.?y/i, /g.?long/i],
+  longAccel: [/^(long?(itudinal)? ?(accel|acc|g)|g[_ ]?long?|accel ?y|accely|acc[_ ]?y|inline ?g|acceleration)$/i, /long?.*(acc|g)/i, /accel.?y/i, /g.?long?/i],
   latAccel: [/^(lat(eral)? ?(accel|acc|g)|g[_ ]?lat|accel ?x|accelx|acc[_ ]?x|lateral ?g)$/i, /lat(eral)?.*(acc|g)/i, /accel.?x/i, /g.?lat/i],
   throttle: [/^(throttle|tps|throttle ?pos(ition)?|accelerator|pedal|throttlepos)$/i, /throttle/i, /^tps/i, /pedal/i],
   rpm: [/^(rpm|engine ?rpm|engine ?speed|enginespeed)$/i, /rpm/i, /engine.?speed/i],
