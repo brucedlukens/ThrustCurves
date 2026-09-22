@@ -270,6 +270,24 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 
 ---
 
+### Subaru BRZ 2018 (DST Build) — `subaru-brz-2018-dst`
+
+Owner-supplied build spec for an SCCA DST-class car, not an OEM datasheet.
+
+| Field | JSON | Source | Status |
+|-------|------|--------|--------|
+| Torque curve | 150 lb-ft @ 2500 → 200 lb-ft @ 4500–5000 → 135 lb-ft @ 8000 (converted to Nm, 250 rpm steps) | Owner's curve, taken as crank lb-ft | ✅ As supplied |
+| Power curve | Derived: P(kW) = T(Nm) · rpm / 9549; peak ≈ 172 kW (230 hp) at 7000 rpm | Computed | ✅ |
+| Weight | 1134 kg (2500 lb) | Owner | ✅ As supplied |
+| Tires | 245/40R17 | Owner | ✅ As supplied |
+| Gear ratios | [3.626, 2.188, 1.541, 1.213, 1.000, 0.767] | TL70 6MT (ZN6/ZC6), same box as GR86 entry | ✅ |
+| Final drive | 4.300 | 2017+ BRZ/86 6MT (MY2017 refresh raised the MT final drive from 4.10) | ⚠️ Verify against the actual car |
+| Redline | 8000 | Curve extends to 8000; stock fuel cut is ~7500 | ⚠️ Clip if the limiter is stock |
+
+**Note**: The `subaru-brz-2018` (Limited) entry above carries different gear ratios and a 3.900 final drive; those conflict with the GR86 section and with this entry, and should be audited.
+
+---
+
 ### Toyota GR86 2022 (Premium) — `toyota-gr86-2022`
 
 | Field | Old JSON | Corrected | Note |
