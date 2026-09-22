@@ -77,3 +77,18 @@ export function kgToLb(kg: number): number {
 export function lbToKg(lb: number): number {
   return lb / KG_TO_LB
 }
+
+/** Conversion factor: m² → ft² */
+export const M2_TO_FT2 = 10.7639
+
+export function ftToM(ft: number): number {
+  return ft / M_TO_FT
+}
+
+export function m2ToFt2(m2: number): number {
+  return m2 * M2_TO_FT2
+}
+
+export function ft2ToM2(ft2: number): number {
+  return ft2 / M2_TO_FT2
+}

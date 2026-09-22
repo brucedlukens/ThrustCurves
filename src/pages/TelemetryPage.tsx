@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { useCarStore } from '@/store/carStore'
 import { useTelemetryStore } from '@/store/telemetryStore'
+import { useUnitStore } from '@/store/unitStore'
+import { mToFt } from '@/utils/units'
 import { DEFAULT_MODIFICATIONS } from '@/types/config'
 import { GRAVITY_MS2 } from '@/data/presets'
 import { analyzeWhatIf, buildPowertrainModel, computeGripEnvelope, inferRoadDyno } from '@/engine/telemetry'
@@ -61,6 +63,8 @@ export default function TelemetryPage() {
   const selectedCar = useCarStore(state => state.cars.find(c => c.id === state.selectedCarId))
   const modifications = useCarStore(state => state.modifications)
   const updateModifications = useCarStore(state => state.updateModifications)
+  const units = useUnitStore(state => state.units)
+  const fmtElev = (m: number) => (units === 'imperial' ? `${Math.round(mToFt(m)).toLocaleString()} ft` : `${Math.round(m)} m`)
 
   // Offer the log's GPS elevation as the altitude setting when it differs materially
   const logElevationM = run?.elevationM
@@ -148,7 +152,7 @@ export default function TelemetryPage() {
         {altitudeHint !== null && (
           <div className={`${CARD_CLS} flex flex-wrap items-center justify-between gap-3 py-3`}>
             <p className="font-data text-xs text-label">
-              The log was recorded at about {altitudeHint} m elevation; the altitude setting is {modifications.altitudeM} m.
+              The log was recorded at about {fmtElev(altitudeHint)} elevation; the altitude setting is {fmtElev(modifications.altitudeM)}.
               Both baseline and modified thrust are derated for altitude, so the calibration factor absorbs the gap, but
               the road dyno comparison is cleaner with the right value.
             </p>
@@ -157,7 +161,7 @@ export default function TelemetryPage() {
               onClick={() => updateModifications({ altitudeM: altitudeHint })}
               className="px-3 py-1.5 rounded border border-line bg-lift hover:bg-raised text-xs font-display tracking-wide uppercase text-gray-200 transition-colors"
             >
-              Use {altitudeHint} m
+              Use {fmtElev(altitudeHint)}
             </button>
           </div>
         )}
