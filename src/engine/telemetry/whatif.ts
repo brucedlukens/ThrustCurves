@@ -51,11 +51,16 @@ export function buildPowertrainModel(car: CarSpec, mods: CarModifications, crr =
 }
 
 /** Thrust (N) at a speed: the envelope, or a held gear (0 above that gear's redline speed). */
-export function thrustAtSpeed(model: PowertrainModel, speedMs: number, heldGear?: number): number {
+export function thrustAtSpeed(model: PowertrainModel, speedMs: number, heldGear?: number, limiterRpm?: number): number {
   if (heldGear !== undefined) {
     const gc = model.gearCurves[heldGear - 1]
     if (!gc || gc.points.length === 0) return 0
     if (speedMs > gc.speedRangeMs[1]) return 0
+    if (limiterRpm !== undefined) {
+      const ratio = model.gearEffectiveRatios[heldGear - 1]
+      const rpm = (speedMs * ratio * 60) / (2 * Math.PI * model.tireRadiusM)
+      if (rpm > limiterRpm) return 0
+    }
     return interpolateGearThrust(gc, speedMs)
   }
   return interpolateEnvelope(model.envelope, speedMs)
@@ -101,16 +106,48 @@ export function segmentGear(model: PowertrainModel, run: TelemetryRun, seg: RunS
   return best
 }
 
+/** Fraction of the observed rev-limit rpm above which a sample counts as "on the limiter". */
+const LIMITER_FRACTION = 0.97
+
+/**
+ * The rev limiter the car actually hit in this run: the 99.5th percentile of rpm.
+ * Undefined when the log has no rpm channel.
+ */
+export function observedLimiterRpm(run: TelemetryRun): number | undefined {
+  if (!run.hasRpm) return undefined
+  const rpms = run.samples.map(s => s.rpm ?? NaN).filter(r => Number.isFinite(r) && r > 0)
+  if (rpms.length < 10) return undefined
+  rpms.sort((a, b) => a - b)
+  return rpms[Math.min(rpms.length - 1, Math.floor(rpms.length * 0.995))]
+}
+
 /**
  * Scalar that makes the modeled thrust match the log's implied tractive force
  * over the power-limited samples (median ratio, clamped to [0.5, 1.5]).
+ *
+ * Compares like with like: in hold-gear mode the modeled thrust comes from the
+ * gear the log says the car was in, and samples sitting on the rev limiter are
+ * skipped, since their near-zero acceleration says nothing about the engine.
  */
-export function computeCalibrationFactor(run: TelemetryRun, kinds: LimitKind[], model: PowertrainModel): number {
+export function computeCalibrationFactor(
+  run: TelemetryRun,
+  kinds: LimitKind[],
+  model: PowertrainModel,
+  gearStrategy: WhatIfOptions['gearStrategy'] = 'optimal',
+): number {
   const ratios: number[] = []
   const p = { ...model, gravityMs2: GRAVITY_MS2 }
+  const hold = gearStrategy === 'hold' && run.hasRpm
+  const limiter = observedLimiterRpm(run)
   run.samples.forEach((s, i) => {
     if (kinds[i] !== 'power' || s.speedMs < 3) return
-    const modeled = thrustAtSpeed(model, s.speedMs)
+    if (limiter !== undefined && s.rpm !== undefined && s.rpm >= LIMITER_FRACTION * limiter) return
+    let heldGear: number | undefined
+    if (hold) {
+      heldGear = detectGear(model, s.speedMs, s.rpm ?? NaN)
+      if (heldGear === undefined) return
+    }
+    const modeled = thrustAtSpeed(model, s.speedMs, heldGear)
     if (modeled <= 0) return
     const measured = impliedTractiveForceN(s, p)
     if (measured <= 0) return
@@ -200,6 +237,7 @@ export function simulateTrace(
   gearStrategy: WhatIfOptions['gearStrategy'],
   ceiling: number[],
   ceilingSource: CeilingSource[],
+  limiterRpm?: number,
 ): { speeds: number[]; flags: Map<number, TraceFlags> } {
   const n = run.samples.length
   const dx = run.stepM
@@ -214,7 +252,7 @@ export function simulateTrace(
 
     for (let i = seg.startIdx; i < seg.endIdx - 1 && i < n - 1; i++) {
       const s = run.samples[i]
-      const thrust = calibration * thrustAtSpeed(model, v[i], heldGear)
+      const thrust = calibration * thrustAtSpeed(model, v[i], heldGear, heldGear !== undefined ? limiterRpm : undefined)
       if (heldGear !== undefined && thrust === 0 && f.revLimitedAtM === undefined && v[i] > 3) {
         f.revLimitedAtM = s.distanceM
       }
@@ -284,11 +322,15 @@ export function runWhatIf(input: WhatIfInput): WhatIfResult {
     }
   }
 
-  const calibrationFactor = options.calibrate ? computeCalibrationFactor(run, kinds, input.baseline) : 1
+  const calibrationFactor = options.calibrate
+    ? computeCalibrationFactor(run, kinds, input.baseline, options.gearStrategy)
+    : 1
   const { ceiling, source, lateralCeiling } = computeCeiling(run, kinds, envelope)
+  // In hold-gear mode the limiter the car actually hit beats the curve's last rpm
+  const limiterRpm = options.gearStrategy === 'hold' ? observedLimiterRpm(run) : undefined
 
-  const base = simulateTrace(run, kinds, segments, envelope, input.baseline, calibrationFactor, options.gearStrategy, ceiling, source)
-  const mod = simulateTrace(run, kinds, segments, envelope, input.modified, calibrationFactor, options.gearStrategy, ceiling, source)
+  const base = simulateTrace(run, kinds, segments, envelope, input.baseline, calibrationFactor, options.gearStrategy, ceiling, source, limiterRpm)
+  const mod = simulateTrace(run, kinds, segments, envelope, input.modified, calibrationFactor, options.gearStrategy, ceiling, source, limiterRpm)
 
   const measured = run.samples.map(s => s.speedMs)
   const powerSegs = segments.filter(s => s.kind === 'power')

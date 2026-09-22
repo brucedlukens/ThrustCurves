@@ -15,6 +15,7 @@ export type TelemetryChannel =
   | 'rpm'
   | 'lat'
   | 'lon'
+  | 'elevation'
 
 export type SpeedUnit = 'mph' | 'kmh' | 'ms'
 export type TimeUnit = 's' | 'ms'
@@ -30,6 +31,12 @@ export interface ColumnMapping {
   distanceUnit: DistanceUnit
   accelUnit: AccelUnit
   throttleUnit: ThrottleUnit
+  /**
+   * Derive longitudinal accel from the speed trace instead of the mapped channel.
+   * Default true: accelerometer channels carry mount tilt, noise and filter lag,
+   * while the speed derivative is consistent with the trace the what-if integrates.
+   */
+  deriveLongAccelFromSpeed?: boolean
   /** Some loggers log lateral accel with the opposite sign convention. Purely cosmetic for analysis. */
   invertLatAccel?: boolean
 }
@@ -66,6 +73,8 @@ export interface TelemetryRun {
   hasLatAccel: boolean
   /** Original sample rate estimate (Hz) before resampling */
   sourceRateHz: number
+  /** Median GPS elevation (m) when the log has one; drives the altitude suggestion */
+  elevationM?: number
 }
 
 /** Measured grip limits derived from the run's own g-g scatter. */
@@ -152,7 +161,7 @@ export type GearStrategy = 'optimal' | 'hold'
 export interface WhatIfOptions {
   /** Scale modeled thrust so the baseline model matches the measured run. Default true. */
   calibrate: boolean
-  /** 'optimal' shifts along the thrust envelope; 'hold' keeps the logged gear (needs rpm). Default 'optimal'. */
+  /** 'optimal' shifts along the thrust envelope; 'hold' keeps the logged gear (needs rpm). Defaults to 'hold' when the log has rpm. */
   gearStrategy: GearStrategy
   /** Scale the grip envelope with mass change (lighter car = same lateral g). Default false. */
   scaleGripWithMass: boolean

@@ -6,10 +6,12 @@ import {
   detectGear,
   traceTimeS,
   computeCeiling,
+  computeCalibrationFactor,
+  observedLimiterRpm,
 } from './whatif'
 import { DEFAULT_MODIFICATIONS } from '@/types/config'
 import { DEFAULT_WHATIF_OPTIONS } from '@/types/telemetry'
-import type { TelemetryRun } from '@/types/telemetry'
+import type { LimitKind, TelemetryRun, TelemetrySample } from '@/types/telemetry'
 import { getTestCar, rowsToCsv, synthesizeRun, SAMPLE_COURSE } from '@/test/telemetryFixtures'
 import { GRAVITY_MS2 } from '@/data/presets'
 
@@ -51,6 +53,58 @@ describe('buildPowertrainModel / thrustAtSpeed / detectGear', () => {
     expect(detectGear(model, 20, rpmAt20)).toBe(2)
     expect(detectGear(model, 20, rpmAt20 * 1.25)).toBeUndefined()
     expect(detectGear(model, 1, 3000)).toBeUndefined()
+  })
+})
+
+describe('computeCalibrationFactor', () => {
+  const model = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
+  const rpmIn = (gear: number, v: number) => (v * model.gearEffectiveRatios[gear - 1] * 60) / (2 * Math.PI * model.tireRadiusM)
+  /** A run of full-throttle samples in 2nd gear at 12–20 m/s, where the envelope would pick 1st. */
+  function secondGearRun(extra: TelemetrySample[] = []): { run: TelemetryRun; kinds: LimitKind[] } {
+    const samples: TelemetrySample[] = []
+    for (let i = 0; i < 40; i++) {
+      const v = 12 + i * 0.2
+      const rrN = 0.015 * model.massKg * GRAVITY_MS2
+      const drag = 0.5 * model.cd * model.frontalAreaM2 * model.airDensityKgM3 * v * v
+      // The "car" delivers exactly the 2nd-gear modeled force
+      const a = (thrustAtSpeed(model, v, 2) - drag - rrN) / model.massKg
+      samples.push({ distanceM: i, timeS: i / v, speedMs: v, longAccelMs2: a, latAccelMs2: 0, throttle: 1, rpm: rpmIn(2, v) })
+    }
+    const all = [...samples, ...extra]
+    const run: TelemetryRun = { sourceName: 't', samples: all, stepM: 1, totalDistanceM: all.length, totalTimeS: 10, hasThrottle: true, hasRpm: true, hasLatAccel: false, sourceRateHz: 10 }
+    return { run, kinds: all.map(() => 'power' as const) }
+  }
+
+  it('in hold mode compares against the gear the log was in', () => {
+    const { run, kinds } = secondGearRun()
+    expect(computeCalibrationFactor(run, kinds, model, 'hold')).toBeCloseTo(1, 2)
+    // Optimal mode assumes 1st gear at these speeds, so the same log reads as a weak engine
+    expect(computeCalibrationFactor(run, kinds, model, 'optimal')).toBeLessThan(0.8)
+  })
+
+  it('ignores samples sitting on the rev limiter', () => {
+    const limiterV = 25
+    const onLimiter: TelemetrySample[] = Array.from({ length: 60 }, (_, i) => ({
+      distanceM: 100 + i, timeS: 20 + i / limiterV, speedMs: limiterV, longAccelMs2: 0, latAccelMs2: 0, throttle: 1, rpm: rpmIn(2, limiterV),
+    }))
+    const { run, kinds } = secondGearRun(onLimiter)
+    expect(observedLimiterRpm(run)).toBeCloseTo(rpmIn(2, limiterV), 0)
+    // 60 zero-accel limiter samples would otherwise drag the median ratio toward zero
+    expect(computeCalibrationFactor(run, kinds, model, 'hold')).toBeCloseTo(1, 2)
+  })
+
+  it('returns 1 with too few usable samples and undefined limiter without rpm', () => {
+    const { run, kinds } = secondGearRun()
+    const noRpm: TelemetryRun = { ...run, hasRpm: false, samples: run.samples.slice(0, 3) }
+    expect(computeCalibrationFactor(noRpm, kinds.slice(0, 3), model)).toBe(1)
+    expect(observedLimiterRpm(noRpm)).toBeUndefined()
+  })
+
+  it('a held gear makes no thrust above the observed limiter', () => {
+    const v = 20
+    const rpm = rpmIn(2, v)
+    expect(thrustAtSpeed(model, v, 2, rpm + 100)).toBeGreaterThan(0)
+    expect(thrustAtSpeed(model, v, 2, rpm - 100)).toBe(0)
   })
 })
 

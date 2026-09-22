@@ -180,7 +180,7 @@ export function buildRun(table: ParsedTable, mapping: ColumnMapping, opts: Build
   }
 
   // Longitudinal accel: channel or derivative of smoothed speed
-  const rawLong = pick(col('longAccel'))
+  const rawLong = mapping.deriveLongAccelFromSpeed ? undefined : pick(col('longAccel'))
   let longAccelMs2: number[]
   if (rawLong && rawLong.some(Number.isFinite)) {
     longAccelMs2 = movingAverage(
@@ -240,6 +240,9 @@ export function buildRun(table: ParsedTable, mapping: ColumnMapping, opts: Build
   const rawRpm = pick(col('rpm'))
   const hasRpm = !!rawRpm && rawRpm.some(Number.isFinite)
 
+  const rawElev = pick(col('elevation'))
+  const elevationM = rawElev ? median(rawElev.filter(v => Number.isFinite(v) && v > -500 && v < 9000)) : NaN
+
   // Collapse duplicate distances (stationary periods) keeping the LAST row for each,
   // so the launch instant is what lands at distance 0.
   const xs: number[] = []
@@ -286,5 +289,6 @@ export function buildRun(table: ParsedTable, mapping: ColumnMapping, opts: Build
     hasRpm,
     hasLatAccel,
     sourceRateHz,
+    ...(Number.isFinite(elevationM) ? { elevationM } : {}),
   }
 }

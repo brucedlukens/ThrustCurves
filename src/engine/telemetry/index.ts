@@ -13,6 +13,7 @@ export {
   thrustAtSpeed,
   detectGear,
   computeCalibrationFactor,
+  observedLimiterRpm,
   computeCeiling,
   simulateTrace,
   traceTimeS,

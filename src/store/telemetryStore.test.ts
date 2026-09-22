@@ -17,6 +17,14 @@ describe('telemetryStore', () => {
     expect(s.error).toBeNull()
   })
 
+  it('defaults the gear strategy from the rpm channel', () => {
+    useTelemetryStore.getState().loadCsvText(csv, 'run.csv')
+    expect(useTelemetryStore.getState().options.gearStrategy).toBe('hold')
+    const noRpm = rowsToCsv(synthesizeRun(getTestCar(), SAMPLE_COURSE, { rateHz: 10 }), { withRpm: false })
+    useTelemetryStore.getState().loadCsvText(noRpm, 'norpm.csv')
+    expect(useTelemetryStore.getState().options.gearStrategy).toBe('optimal')
+  })
+
   it('reports an error when the file has no numeric rows', () => {
     useTelemetryStore.getState().loadCsvText('hello\nworld\n', 'x.csv')
     expect(useTelemetryStore.getState().run).toBeNull()
