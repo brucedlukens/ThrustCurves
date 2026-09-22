@@ -25,6 +25,7 @@ export {
   maxSustainableSpeed,
   analyzeGearsAtSpeed,
   runTowingAnalysis,
+  chartSpeedCutoffMs,
   MIN_LOAD_RPM_DIESEL,
   MIN_LOAD_RPM_GAS,
 } from './towing'

@@ -349,3 +349,20 @@ export function runTowingAnalysis(
     roadLoadCurve,
   }
 }
+
+/**
+ * Speed (m/s) beyond which no truck in a comparison can accelerate: the highest
+ * max-sustainable speed across the entries, plus a small margin so the last
+ * thrust/load crossing is visible, never past the widest envelope. Trucks that
+ * cannot hold any speed on the scenario contribute nothing; if none can, the
+ * widest envelope is used so the chart still shows why.
+ */
+export function chartSpeedCutoffMs(
+  analyses: Pick<TowingAnalysis, 'maxSustainable' | 'envelope'>[],
+  marginFraction = 0.03,
+): number {
+  const envelopeMax = Math.max(0, ...analyses.map((a) => a.envelope.at(-1)?.speedMs ?? 0))
+  const sustainableMax = Math.max(0, ...analyses.map((a) => a.maxSustainable?.speedMs ?? 0))
+  if (sustainableMax <= 0) return envelopeMax
+  return Math.min(envelopeMax, sustainableMax * (1 + marginFraction))
+}

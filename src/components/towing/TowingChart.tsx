@@ -11,6 +11,7 @@ import {
 } from 'recharts'
 import { MS_TO_MPH, MS_TO_KMH, N_TO_LBF } from '@/utils/units'
 import { useUnitStore } from '@/store/unitStore'
+import { chartSpeedCutoffMs } from '@/engine/towing'
 import type { TowingEntry } from './entry'
 
 interface TowingChartProps {
@@ -76,9 +77,15 @@ export default function TowingChart({ entries, speedMs }: TowingChartProps) {
     }
   })
 
+  // Stop where no truck can accelerate any further: past the last thrust/load crossing
+  // the curves only show gearing ceilings nobody can reach with the trailer on.
+  const cutoffMs = chartSpeedCutoffMs(entries.map((e) => e.analysis))
+  const cutoff = Math.ceil(cutoffMs * speedFactor) // whole mph / km/h so the end tick reads cleanly
+
   const data = [...rowsByKey.entries()]
     .sort((a, b) => a[0] - b[0])
     .map(([, row]) => row)
+    .filter((row) => row.speed <= cutoff)
 
   return (
     <ResponsiveContainer width="100%" height="100%">
@@ -87,7 +94,8 @@ export default function TowingChart({ entries, speedMs }: TowingChartProps) {
         <XAxis
           dataKey="speed"
           type="number"
-          domain={['auto', 'auto']}
+          domain={[0, cutoff]}
+          allowDataOverflow
           label={{
             value: `SPEED (${speedUnit.toUpperCase()})`,
             position: 'insideBottom',
