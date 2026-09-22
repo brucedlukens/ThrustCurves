@@ -44,8 +44,9 @@ export default function WhatIfSummary({ result, hasChange }: WhatIfSummaryProps)
         ))}
       </div>
       <p className="font-data text-[10px] text-muted-txt mt-4 leading-snug">
-        Only power-limited stretches are re-simulated. Corner speeds, braking points and the driven line stay as logged,
-        so deltas are a floor: a faster car would also open up its line where headroom exists.
+        Only power-limited stretches are re-simulated. Corner speeds and the driven line stay as logged; a faster car
+        brakes earlier for the same corner at your measured braking g. Deltas are a floor: a faster car would also
+        open up its line where headroom exists.
       </p>
     </div>
   )

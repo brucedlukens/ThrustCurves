@@ -40,7 +40,7 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
             <th className={th}>Stretch</th>
             <th className={th}>Entry</th>
             <th className={th}>Peak (base → mod)</th>
-            <th className={th}>Exit (base → mod)</th>
+            <th className={th}>Brakes earlier by</th>
             <th className={th}>Δ time</th>
             <th className={th}>Fit</th>
             <th className={th}>Limit hit</th>
@@ -50,8 +50,10 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
           {results.map((r, i) => {
             const flags: string[] = []
             if (r.gripLimitedAtM !== undefined) flags.push(`grip @ ${dist(r.gripLimitedAtM)}`)
-            if (r.brakingLimitedAtM !== undefined) flags.push(`brake zone @ ${dist(r.brakingLimitedAtM)}`)
             if (r.revLimitedAtM !== undefined) flags.push(`rev limiter @ ${dist(r.revLimitedAtM)}`)
+            // The logged car started braking at the end of this stretch; the modified car meets
+            // the max-braking curve into the same corner speed this much sooner.
+            const brakesEarlierM = r.brakingLimitedAtM !== undefined ? Math.max(0, r.segment.endM - r.brakingLimitedAtM) : undefined
             const headroom = Number.isFinite(r.lineHeadroomRatio)
               ? `line headroom ×${r.lineHeadroomRatio.toFixed(2)}`
               : 'straight'
@@ -66,9 +68,8 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
                   {spd(r.baselinePeakMs)}
                   {hasChange && <> → <span className={r.modifiedPeakMs > r.baselinePeakMs + 0.05 ? 'text-signal-hi' : ''}>{spd(r.modifiedPeakMs)}</span></>}
                 </td>
-                <td className={td}>
-                  {spd(r.baselineExitMs)}
-                  {hasChange && <> → {spd(r.modifiedExitMs)}</>}
+                <td className={`${td} ${brakesEarlierM ? 'text-gray-200' : 'text-label'}`}>
+                  {hasChange ? (brakesEarlierM !== undefined ? dist(brakesEarlierM) : '—') : ''}
                 </td>
                 <td className={`${td} ${r.deltaS < -0.0005 ? 'text-green-400' : r.deltaS > 0.0005 ? 'text-signal-hi' : 'text-label'}`}>
                   {hasChange ? fmtDelta(r.deltaS) : '—'}
