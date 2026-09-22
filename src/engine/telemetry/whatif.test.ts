@@ -27,7 +27,7 @@ describe('buildPowertrainModel / thrustAtSpeed / detectGear', () => {
   const model = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
 
   it('builds a model with envelope, gear curves and effective ratios', () => {
-    expect(model.massKg).toBe(car.curbWeightKg)
+    expect(model.massKg).toBe(car.curbWeightKg + 91) // driver always on board
     expect(model.envelope.length).toBeGreaterThan(10)
     expect(model.gearCurves).toHaveLength(car.transmission.gearRatios.length)
     expect(model.gearEffectiveRatios[0]).toBeCloseTo(car.transmission.gearRatios[0] * car.transmission.finalDriveRatio, 6)
@@ -35,7 +35,7 @@ describe('buildPowertrainModel / thrustAtSpeed / detectGear', () => {
 
   it('applies weight, final drive and torque mods', () => {
     const m = buildPowertrainModel(car, { ...DEFAULT_MODIFICATIONS, weightDeltaKg: 100, finalDriveOverride: 4.5, torqueMultiplier: 1.2 })
-    expect(m.massKg).toBe(car.curbWeightKg + 100)
+    expect(m.massKg).toBe(car.curbWeightKg + 91 + 100)
     expect(m.gearEffectiveRatios[1]).toBeCloseTo(car.transmission.gearRatios[1] * 4.5, 6)
     expect(thrustAtSpeed(m, 20)).toBeGreaterThan(thrustAtSpeed(model, 20))
   })

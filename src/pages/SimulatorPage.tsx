@@ -4,6 +4,7 @@ import { useCarStore } from '@/store/carStore'
 import { useSimulationStore } from '@/store/simulationStore'
 import { useUnitStore } from '@/store/unitStore'
 import { mphToMs, msToMph, msToKmh } from '@/utils/units'
+import { vehicleMassKg } from '@/engine/mass'
 import type { TimeStep } from '@/types/simulation'
 import CarSearch from '@/components/car-selector/CarSearch'
 import CarSpecTable from '@/components/car-selector/CarSpecTable'
@@ -186,7 +187,7 @@ export default function SimulatorPage() {
 
   const selectedCar = useCarStore(state => state.cars.find(c => c.id === state.selectedCarId))
   const selectedCarId = useCarStore(state => state.selectedCarId)
-  const weightDeltaKg = useCarStore(state => state.modifications.weightDeltaKg)
+  const modifications = useCarStore(state => state.modifications)
   const result = useSimulationStore(state => state.result)
   const isRunning = useSimulationStore(state => state.isRunning)
   const error = useSimulationStore(state => state.error)
@@ -338,7 +339,7 @@ export default function SimulatorPage() {
             <SectionLabel hint="Natural frequency of the suspension at each corner. A rear frequency 10–20% higher than front produces a 'flat ride.'">
               Suspension Frequency
             </SectionLabel>
-            <SuspensionFrequencyCard totalWeightKg={selectedCar.curbWeightKg + weightDeltaKg} />
+            <SuspensionFrequencyCard totalWeightKg={vehicleMassKg(selectedCar, modifications)} />
           </div>
         )}
       </div>

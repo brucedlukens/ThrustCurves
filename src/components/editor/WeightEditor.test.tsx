@@ -18,18 +18,26 @@ describe('WeightEditor', () => {
     expect(input).toHaveValue(0)
   })
 
-  test('shows stock and effective weight', () => {
+  test('shows stock weight plus the default 91 kg driver as the simulated mass', () => {
     render(<WeightEditor stockWeightKg={1565} />)
-    expect(screen.getByText(/stock: 1565 kg/i)).toBeInTheDocument()
-    expect(screen.getByText(/effective: 1565 kg/i)).toBeInTheDocument()
+    expect(screen.getByText(/stock 1565 kg \+ driver 91 kg/i)).toBeInTheDocument()
+    expect(screen.getByText(/simulated: 1656 kg/i)).toBeInTheDocument()
+    expect(screen.getByRole('spinbutton', { name: /driver mass/i })).toHaveValue(91)
   })
 
-  test('shows updated effective weight when delta is set', () => {
+  test('shows updated simulated mass when delta is set', () => {
     useCarStore.setState({
       modifications: { ...DEFAULT_MODIFICATIONS, weightDeltaKg: -50 },
     })
     render(<WeightEditor stockWeightKg={1565} />)
-    expect(screen.getByText(/effective: 1515 kg/i)).toBeInTheDocument()
+    expect(screen.getByText(/− 50 kg → simulated: 1606 kg/i)).toBeInTheDocument()
+  })
+
+  test('changing the driver mass updates the store and the simulated mass', () => {
+    render(<WeightEditor stockWeightKg={1565} />)
+    fireEvent.change(screen.getByRole('spinbutton', { name: /driver mass/i }), { target: { value: '75' } })
+    expect(useCarStore.getState().modifications.driverMassKg).toBe(75)
+    expect(screen.getByText(/simulated: 1640 kg/i)).toBeInTheDocument()
   })
 
   test('changing delta updates the store', () => {
