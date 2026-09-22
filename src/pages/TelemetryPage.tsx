@@ -60,6 +60,14 @@ export default function TelemetryPage() {
   const envelopeOverrides = useTelemetryStore(state => state.envelopeOverrides)
   const selectedCar = useCarStore(state => state.cars.find(c => c.id === state.selectedCarId))
   const modifications = useCarStore(state => state.modifications)
+  const updateModifications = useCarStore(state => state.updateModifications)
+
+  // Offer the log's GPS elevation as the altitude setting when it differs materially
+  const logElevationM = run?.elevationM
+  const altitudeHint =
+    logElevationM !== undefined && selectedCar && Math.abs(logElevationM - modifications.altitudeM) > 150
+      ? Math.round(logElevationM)
+      : null
 
   const measuredEnvelope = useMemo(
     () => (run ? computeGripEnvelope(run.samples, run.hasLatAccel) : null),
@@ -134,6 +142,23 @@ export default function TelemetryPage() {
         {run && !selectedCar && (
           <div className={CARD_CLS}>
             <p className="font-data text-sm text-label">Select the car this run was logged in to analyze it.</p>
+          </div>
+        )}
+
+        {altitudeHint !== null && (
+          <div className={`${CARD_CLS} flex flex-wrap items-center justify-between gap-3 py-3`}>
+            <p className="font-data text-xs text-label">
+              The log was recorded at about {altitudeHint} m elevation; the altitude setting is {modifications.altitudeM} m.
+              Both baseline and modified thrust are derated for altitude, so the calibration factor absorbs the gap, but
+              the road dyno comparison is cleaner with the right value.
+            </p>
+            <button
+              type="button"
+              onClick={() => updateModifications({ altitudeM: altitudeHint })}
+              className="px-3 py-1.5 rounded border border-line bg-lift hover:bg-raised text-xs font-display tracking-wide uppercase text-gray-200 transition-colors"
+            >
+              Use {altitudeHint} m
+            </button>
           </div>
         )}
 

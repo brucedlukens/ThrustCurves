@@ -12,6 +12,7 @@ const CHANNELS: { key: TelemetryChannel; label: string; required?: boolean; hint
   { key: 'rpm', label: 'RPM', hint: 'needed for hold-gear mode' },
   { key: 'lat', label: 'Latitude' },
   { key: 'lon', label: 'Longitude' },
+  { key: 'elevation', label: 'Elevation', hint: 'suggests the altitude setting' },
 ]
 
 export default function ChannelMapper() {

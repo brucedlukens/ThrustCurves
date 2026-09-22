@@ -15,6 +15,7 @@ export type TelemetryChannel =
   | 'rpm'
   | 'lat'
   | 'lon'
+  | 'elevation'
 
 export type SpeedUnit = 'mph' | 'kmh' | 'ms'
 export type TimeUnit = 's' | 'ms'
@@ -66,6 +67,8 @@ export interface TelemetryRun {
   hasLatAccel: boolean
   /** Original sample rate estimate (Hz) before resampling */
   sourceRateHz: number
+  /** Median GPS elevation (m) when the log has one; drives the altitude suggestion */
+  elevationM?: number
 }
 
 /** Measured grip limits derived from the run's own g-g scatter. */

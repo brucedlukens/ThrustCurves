@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
-import { autoDetectMapping, mappingErrors, splitHeader } from './mapping'
+import { autoDetectMapping, mappingErrors, splitHeader, inferTimeUnit, inferAccelUnit } from './mapping'
+import { SOLOSTORM_HEADERS } from '@/test/fixtures/solostormHeaders'
 
 describe('splitHeader', () => {
   it('extracts units in parens, brackets, pipes and suffixes', () => {
@@ -60,7 +61,7 @@ describe('autoDetectMapping', () => {
 
   it('maps short lowercase headers (accx/accy/tps/dist)', () => {
     const m = autoDetectMapping(['time', 'lap', 'dist', 'speed', 'lat', 'lon', 'alt', 'accx', 'accy', 'accz', 'gyrz', 'rpm', 'tps'])
-    expect(m.columns).toEqual({ time: 'time', distance: 'dist', speed: 'speed', lat: 'lat', lon: 'lon', latAccel: 'accx', longAccel: 'accy', rpm: 'rpm', throttle: 'tps' })
+    expect(m.columns).toEqual({ time: 'time', distance: 'dist', speed: 'speed', lat: 'lat', lon: 'lon', latAccel: 'accx', longAccel: 'accy', rpm: 'rpm', throttle: 'tps', elevation: 'alt' })
   })
 
   it('falls back to defaults when no unit hints exist', () => {
@@ -79,5 +80,49 @@ describe('autoDetectMapping', () => {
   it('mappingErrors reports the required channels', () => {
     expect(mappingErrors(autoDetectMapping(['foo', 'bar']))).toHaveLength(2)
     expect(mappingErrors(autoDetectMapping(['time', 'speed']))).toHaveLength(0)
+  })
+})
+
+describe('autoDetectMapping on a real Solostorm export', () => {
+  it('picks GPS time, corrected speed, cumulative distance, calc accel axes, throttle and rpm', () => {
+    const m = autoDetectMapping(SOLOSTORM_HEADERS)
+    expect(m.columns.time).toBe('GPS_TIME (ms)')
+    expect(m.timeUnit).toBe('ms')
+    expect(m.columns.speed).toBe('SPEED (m/s)')
+    expect(m.speedUnit).toBe('ms')
+    expect(m.columns.distance).toBe('MATH_ELAPSED_DISTANCE')
+    expect(m.columns.latAccel).toBe('MATH_CALC_ACCEL_X')
+    expect(m.columns.longAccel).toBe('MATH_CALC_ACCEL_Y')
+    expect(m.columns.lat).toBe('LAT (deg)')
+    expect(m.columns.lon).toBe('LONG (deg)')
+    expect(m.columns.throttle).toBe('THROTTLE (%)')
+    expect(m.columns.rpm).toBe('RPM')
+  })
+
+  it('never maps LONG (deg) or LAT (deg) to an accel channel', () => {
+    const m = autoDetectMapping(['GPS_TIME (ms)', 'LONG (deg)', 'LAT (deg)', 'SPEED (m/s)'])
+    expect(m.columns.longAccel).toBeUndefined()
+    expect(m.columns.latAccel).toBeUndefined()
+    expect(m.columns.lon).toBe('LONG (deg)')
+    expect(m.columns.lat).toBe('LAT (deg)')
+  })
+
+  it('infers ms time and m/s² accel from the data when headers carry no unit', () => {
+    const headers = ['MATH_ELAPSED_TIME', 'SPEED (m/s)', 'MATH_CALC_ACCEL_X', 'MATH_CALC_ACCEL_Y']
+    const rows = Array.from({ length: 30 }, (_, i) => [String(i * 100), String(i), String(8 * Math.sin(i)), String(5)])
+    const m = autoDetectMapping(headers, { headers, rows })
+    expect(m.columns.time).toBe('MATH_ELAPSED_TIME')
+    expect(m.timeUnit).toBe('ms')
+    expect(m.accelUnit).toBe('ms2')
+    const rowsG = rows.map(r => [String(Number(r[0]) / 1000), r[1], String(Number(r[2]) / 9.8), '0.5'])
+    const mg = autoDetectMapping(headers, { headers, rows: rowsG })
+    expect(mg.timeUnit).toBe('s')
+    expect(mg.accelUnit).toBe('g')
+  })
+
+  it('inferTimeUnit / inferAccelUnit give up on unusable columns', () => {
+    expect(inferTimeUnit([1, 1, 1])).toBeUndefined()
+    expect(inferTimeUnit([NaN, NaN])).toBeUndefined()
+    expect(inferAccelUnit([1, 2])).toBeUndefined()
   })
 })

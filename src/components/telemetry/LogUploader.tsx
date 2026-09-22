@@ -123,6 +123,7 @@ export default function LogUploader() {
           <Stat label="Duration" value={`${run.totalTimeS.toFixed(2)} s`} />
           <Stat label="Throttle" value={run.hasThrottle ? 'yes' : 'no'} />
           <Stat label="RPM" value={run.hasRpm ? 'yes' : 'no'} />
+          {run.elevationM !== undefined && <Stat label="Elevation" value={`${run.elevationM.toFixed(0)} m`} />}
         </div>
       )}
     </div>

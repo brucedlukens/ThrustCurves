@@ -47,7 +47,7 @@ export const useTelemetryStore = create<TelemetryStore>((set, get) => ({
       set({ fileName, table, mapping: null, run: null, error: 'No numeric rows found in this file.' })
       return
     }
-    const mapping = autoDetectMapping(table.headers)
+    const mapping = autoDetectMapping(table.headers, table)
     const { run, error } = tryBuild(table, mapping, fileName)
     set({ fileName, table, mapping, run, error, envelopeOverrides: {} })
   },
