@@ -14,6 +14,7 @@ import { DEFAULT_CRR, GRAVITY_MS2 } from '@/data/presets'
 import { airDensityAtAltitude } from '../altitude'
 import { dragForceN } from '../aerodynamics'
 import { rollingResistanceN, tireRadiusM } from '../tires'
+import { vehicleMassKg } from '../mass'
 import { computeAllGearCurves, computeEnvelope, interpolateEnvelope, interpolateGearThrust } from '../thrust'
 import { G, longitudinalAvailableG } from './envelope'
 import { impliedTractiveForceN } from './roadDyno'
@@ -38,7 +39,7 @@ export function buildPowertrainModel(car: CarSpec, mods: CarModifications, crr =
   const envelope = computeEnvelope(gearCurves)
   const finalDrive = mods.finalDriveOverride ?? car.transmission.finalDriveRatio
   return {
-    massKg: car.curbWeightKg + mods.weightDeltaKg,
+    massKg: vehicleMassKg(car, mods),
     cd: mods.cdOverride ?? car.aero.cd,
     frontalAreaM2: mods.frontalAreaOverride ?? car.aero.frontalAreaM2,
     airDensityKgM3: airDensityAtAltitude(mods.altitudeM),

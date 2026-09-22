@@ -17,6 +17,7 @@ export {
   findShiftPoints,
 } from './thrust'
 export { runIntegration } from './performance'
+export { vehicleMassKg, driverMassKg } from './mass'
 export type { IntegrationParams } from './performance'
 export {
   towingRoadLoadN,
@@ -34,6 +35,7 @@ import type { CarModifications } from '@/types/config'
 import type { SimulationResult } from '@/types/simulation'
 import { DEFAULT_CRR, GRAVITY_MS2 } from '@/data/presets'
 import { tireRadiusM } from './tires'
+import { vehicleMassKg } from './mass'
 import { airDensityAtAltitude } from './altitude'
 import { computeAllGearCurves, computeEnvelope, findShiftPoints } from './thrust'
 import { runIntegration } from './performance'
@@ -57,8 +59,8 @@ export function runSimulation(
   const altitude = mods.altitudeM
   const airDensity = airDensityAtAltitude(altitude)
 
-  // Effective mass with weight modification (needed for traction limit)
-  const massKg = car.curbWeightKg + mods.weightDeltaKg
+  // Effective mass: curb + driver + weight modification (needed for traction limit)
+  const massKg = vehicleMassKg(car, mods)
 
   // Build gear thrust curves (applies mods + altitude correction)
   const gearCurves = computeAllGearCurves(car, mods)

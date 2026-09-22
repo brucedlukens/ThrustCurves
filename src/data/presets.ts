@@ -20,3 +20,6 @@ export const GRAVITY_MS2 = 9.81
 
 /** Sea-level air density (kg/m³) */
 export const SEA_LEVEL_AIR_DENSITY = 1.225
+
+/** Driver mass (kg) added to every vehicle mass calculation unless a setup overrides it (≈200 lb) */
+export const DEFAULT_DRIVER_MASS_KG = 91

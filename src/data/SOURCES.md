@@ -303,6 +303,24 @@ Owner-supplied build spec for an SCCA DST-class car, not an OEM datasheet.
 
 ---
 
+### Nissan 370Z 2009 (BST Build) — `nissan-370z-2009-bst`
+
+Owner-supplied build spec for an SCCA BST-class car, not an OEM datasheet.
+
+| Field | JSON | Source | Status |
+|-------|------|--------|--------|
+| Torque curve | 220 lb-ft @ 2500 → 245 lb-ft @ 4500 → 206 lb-ft @ 7800 (converted to Nm, 250 rpm steps) | Owner's chassis dyno, **wheel** torque, corrected | ✅ As supplied |
+| Power curve | Derived: P(kW) = T(Nm) · rpm / 9549; peak ≈ 228 kW (306 whp) at 7800 rpm | Computed | ✅ |
+| Drivetrain loss | 0 | Wheel curve | ✅ |
+| Weight | 1406 kg (3100 lb, without driver — the app adds the driver separately) | Owner | ✅ As supplied |
+| Tires | 295/30R18 | Owner | ✅ As supplied |
+| Gear ratios | [3.794, 2.324, 1.624, 1.271, 1.000, 0.794] | Z34 6MT (FS6R31A) | ✅ |
+| Final drive | 3.692 | Z34 6MT | ✅ |
+| Aero | Cd 0.30, 2.10 m² | Z34 coupe published Cd; frontal area estimated | ⚠️ Estimate |
+| Redline | 7800 | Curve ends at 7800; stock VQ37VHR fuel cut is 7500 | ⚠️ Clip if the limiter is stock |
+
+---
+
 ### Toyota GR86 2022 (CST Build) — `toyota-gr86-2022-cst`
 
 Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.

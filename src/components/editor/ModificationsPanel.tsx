@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useCarStore } from '@/store/carStore'
 import type { CarSpec } from '@/types/car'
+import { DEFAULT_DRIVER_MASS_KG } from '@/data/presets'
 import AltitudeSelector from './AltitudeSelector'
 import WeightEditor from './WeightEditor'
 import TorqueCurveEditor from './TorqueCurveEditor'
@@ -64,6 +65,7 @@ export default function ModificationsPanel({ car }: ModificationsPanelProps) {
 
   const activeCount = [
     modifications.weightDeltaKg !== 0,
+    modifications.driverMassKg !== undefined && modifications.driverMassKg !== DEFAULT_DRIVER_MASS_KG,
     modifications.torqueMultiplier !== 1.0,
     modifications.customTorqueCurve !== undefined,
     modifications.gearRatioOverrides.some(r => r !== undefined),

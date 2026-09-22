@@ -4,6 +4,8 @@ import type { CurvePoint, TireSize } from './car.ts'
 export interface CarModifications {
   /** Additional weight in kg (negative = weight reduction) */
   weightDeltaKg: number
+  /** Driver mass in kg. undefined = DEFAULT_DRIVER_MASS_KG (≈200 lb). Always included in the simulated mass. */
+  driverMassKg?: number
   /** Multiply all torque values by this factor (1.0 = stock) */
   torqueMultiplier: number
   /** Replace the stock torque curve entirely (optional) */
