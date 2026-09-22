@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { analyzeWhatIf, parseCsv, autoDetectMapping, buildRun, inferRoadDyno } from './index'
 import {
+  runWhatIf,
   buildPowertrainModel,
   thrustAtSpeed,
   detectGear,
@@ -8,7 +9,11 @@ import {
   computeCeiling,
   computeCalibrationFactor,
   observedLimiterRpm,
+  loggedGears,
+  observedShiftRpm,
+  rpmAt,
 } from './whatif'
+import { markLaunch } from './classify'
 import { DEFAULT_MODIFICATIONS } from '@/types/config'
 import { DEFAULT_WHATIF_OPTIONS } from '@/types/telemetry'
 import type { LimitKind, TelemetryRun, TelemetrySample } from '@/types/telemetry'
@@ -56,24 +61,30 @@ describe('buildPowertrainModel / thrustAtSpeed / detectGear', () => {
   })
 })
 
-describe('computeCalibrationFactor', () => {
-  const model = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
-  const rpmIn = (gear: number, v: number) => (v * model.gearEffectiveRatios[gear - 1] * 60) / (2 * Math.PI * model.tireRadiusM)
-  /** A run of full-throttle samples in 2nd gear at 12–20 m/s, where the envelope would pick 1st. */
-  function secondGearRun(extra: TelemetrySample[] = []): { run: TelemetryRun; kinds: LimitKind[] } {
-    const samples: TelemetrySample[] = []
-    for (let i = 0; i < 40; i++) {
-      const v = 12 + i * 0.2
-      const rrN = 0.015 * model.massKg * GRAVITY_MS2
-      const drag = 0.5 * model.cd * model.frontalAreaM2 * model.airDensityKgM3 * v * v
-      // The "car" delivers exactly the 2nd-gear modeled force
-      const a = (thrustAtSpeed(model, v, 2) - drag - rrN) / model.massKg
-      samples.push({ distanceM: i, timeS: i / v, speedMs: v, longAccelMs2: a, latAccelMs2: 0, throttle: 1, rpm: rpmIn(2, v) })
-    }
-    const all = [...samples, ...extra]
-    const run: TelemetryRun = { sourceName: 't', samples: all, stepM: 1, totalDistanceM: all.length, totalTimeS: 10, hasThrottle: true, hasRpm: true, hasLatAccel: false, sourceRateHz: 10 }
-    return { run, kinds: all.map(() => 'power' as const) }
+const stockModel = buildPowertrainModel(car, DEFAULT_MODIFICATIONS)
+const rpmIn = (gear: number, v: number) => (v * stockModel.gearEffectiveRatios[gear - 1] * 60) / (2 * Math.PI * stockModel.tireRadiusM)
+
+/** A run of full-throttle samples in 2nd gear from `v0` m/s, `n` samples, where the envelope would pick 1st at the low end. */
+function secondGearRun(extra: TelemetrySample[] = [], v0 = 12, n = 40): { run: TelemetryRun; kinds: LimitKind[] } {
+  const model = stockModel
+  const samples: TelemetrySample[] = []
+  let t = 0
+  for (let i = 0; i < n; i++) {
+    const v = v0 + i * 0.2
+    const rrN = 0.015 * model.massKg * GRAVITY_MS2
+    const drag = 0.5 * model.cd * model.frontalAreaM2 * model.airDensityKgM3 * v * v
+    // The "car" delivers exactly the 2nd-gear modeled force
+    const a = (thrustAtSpeed(model, v, 2) - drag - rrN) / model.massKg
+    samples.push({ distanceM: i, timeS: t, speedMs: v, longAccelMs2: a, latAccelMs2: 0, throttle: 1, rpm: rpmIn(2, v) })
+    t += 1 / v
   }
+  const all = [...samples, ...extra]
+  const run: TelemetryRun = { sourceName: 't', samples: all, stepM: 1, totalDistanceM: all.length, totalTimeS: t, hasThrottle: true, hasRpm: true, hasLatAccel: false, sourceRateHz: 10 }
+  return { run, kinds: all.map(() => 'power' as const) }
+}
+
+describe('computeCalibrationFactor', () => {
+  const model = stockModel
 
   it('in hold mode compares against the gear the log was in', () => {
     const { run, kinds } = secondGearRun()
@@ -207,13 +218,29 @@ describe('analyzeWhatIf on a synthetic autocross run', () => {
     expect(off.baselineFitRmsMs).toBeGreaterThan(on.baselineFitRmsMs)
   })
 
-  it('hold-gear strategy hits the rev limiter when a shorter final drive runs out of 2nd', () => {
+  it('hold-gear strategy shifts where the driver did (same rpm) and reports a stretch fit', () => {
+    // The synthetic driver shifts at the envelope crossovers, so a shorter final drive just
+    // moves those shifts earlier: no limiter, and a time close to optimal shifting.
     const shortFd = { ...DEFAULT_MODIFICATIONS, finalDriveOverride: car.transmission.finalDriveRatio * 1.35 }
     const hold = analyzeWhatIf(run, car, shortFd, { ...DEFAULT_WHATIF_OPTIONS, gearStrategy: 'hold' })
     const optimal = analyzeWhatIf(run, car, shortFd, DEFAULT_WHATIF_OPTIONS)
-    expect(hold.segmentResults.some(s => s.revLimitedAtM !== undefined)).toBe(true)
-    expect(optimal.segmentResults.every(s => s.revLimitedAtM === undefined)).toBe(true)
-    expect(hold.totalModifiedTimeS).toBeGreaterThan(optimal.totalModifiedTimeS)
+    expect(hold.segmentResults.every(s => s.revLimitedAtM === undefined)).toBe(true)
+    expect(Math.abs(hold.totalModifiedTimeS - optimal.totalModifiedTimeS)).toBeLessThan(0.3)
+    hold.segmentResults.forEach(s => {
+      expect(s.baselineFitRmsMs).toBeGreaterThanOrEqual(0)
+      expect(s.baselineFitRmsMs).toBeLessThan(1)
+    })
+  })
+
+  it('marks a standing start as launch and leaves it at the logged speed', () => {
+    const r = analyzeWhatIf(run, car, { ...DEFAULT_MODIFICATIONS, torqueMultiplier: 1.5 }, DEFAULT_WHATIF_OPTIONS)
+    expect(r.kinds[0]).toBe('launch')
+    const launchLen = r.kinds.filter(k => k === 'launch').length
+    expect(launchLen).toBeGreaterThan(5)
+    expect(launchLen).toBeLessThanOrEqual(60)
+    for (let i = 0; i < launchLen; i++) expect(r.modifiedSpeedsMs[i]).toBe(r.measuredSpeedsMs[i])
+    // …and the first sample past the launch is faster than 12 m/s or 60 m in
+    expect(run.samples[launchLen].speedMs >= 12 || run.samples[launchLen].distanceM >= 60).toBe(true)
   })
 
   it('scaleGripWithMass lets a lighter car use the same g, so weight loss helps more', () => {
@@ -253,3 +280,73 @@ describe('analyzeWhatIf on a synthetic autocross run', () => {
     expect(errs[errs.length - 1]).toBeLessThan(0.3)
   })
 })
+
+describe('logged gears, shift rpm and the launch mark', () => {
+  it('loggedGears forward-fills through undetectable samples', () => {
+    const { run } = secondGearRun()
+    const g = loggedGears(stockModel, run)
+    expect(g.every(x => x === 2)).toBe(true)
+    const noRpm: TelemetryRun = { ...run, samples: run.samples.map((s, i) => (i % 2 ? { ...s, rpm: undefined } : s)) }
+    expect(loggedGears(stockModel, noRpm).every(x => x === 2)).toBe(true)
+    const early: TelemetryRun = { ...run, samples: run.samples.map((s, i) => (i < 3 ? { ...s, rpm: undefined } : s)) }
+    expect(loggedGears(stockModel, early).slice(0, 3)).toEqual([undefined, undefined, undefined])
+  })
+
+  it('observedShiftRpm reads the rpm just before each upshift and caps at the limiter', () => {
+    const { run } = secondGearRun()
+    // Append a 3rd-gear tail so the log shows one 2→3 shift
+    const tail: TelemetrySample[] = Array.from({ length: 10 }, (_, i) => {
+      const v = 20.2 + i * 0.2
+      return { distanceM: 40 + i, timeS: 10 + i / v, speedMs: v, longAccelMs2: 1, latAccelMs2: 0, throttle: 1, rpm: rpmIn(3, v) }
+    })
+    const shifted: TelemetryRun = { ...run, samples: [...run.samples, ...tail] }
+    const gears = loggedGears(stockModel, shifted)
+    expect(gears[39]).toBe(2)
+    expect(gears[45]).toBe(3)
+    const shift = observedShiftRpm(shifted, gears, undefined)
+    expect(shift.get(2)).toBeCloseTo(rpmIn(2, 19.8), -1)
+    expect(shift.has(3)).toBe(false)
+    expect(observedShiftRpm(shifted, gears, 3000).get(2)).toBe(3000)
+  })
+
+  it('a gear the driver never shifted out of is held to the limiter and flagged', () => {
+    // 2nd gear from 12 to 20 m/s; the limiter is the rpm at 20 m/s in 2nd
+    const { run, kinds } = secondGearRun([], 12, 40)
+    const limiter = rpmIn(2, 19.8)
+    const segments = [{ index: 0, kind: 'power' as const, startIdx: 0, endIdx: run.samples.length, startM: 0, endM: 39, entrySpeedMs: 12, exitSpeedMs: 19.8, peakSpeedMs: 19.8, timeS: run.totalTimeS }]
+    const env = { maxLatG: 1, maxAccelG: 1, maxBrakeG: 1 }
+    const modified = buildPowertrainModel(car, { ...DEFAULT_MODIFICATIONS, torqueMultiplier: 1.5 })
+    const r = runWhatIfWithLimiter(run, kinds, segments, env, modified, limiter)
+    expect(r.segmentResults[0].revLimitedAtM).toBeDefined()
+    // Speed never exceeds the 2nd-gear limiter speed
+    r.modifiedSpeedsMs.forEach(v => expect(rpmAt(stockModel, v, 2)).toBeLessThanOrEqual(limiter * 1.02))
+  })
+
+  it('markLaunch only applies to standing starts and stops at 12 m/s or 60 m', () => {
+    const rolling = secondGearRun([], 15, 20)
+    expect(markLaunch(rolling.run.samples, rolling.kinds).every(k => k === 'power')).toBe(true)
+    const standing = secondGearRun([], 1, 80) // 1 m/s → 16.8 m/s over 80 m
+    const kinds = markLaunch(standing.run.samples, standing.kinds)
+    const n = kinds.filter(k => k === 'launch').length
+    expect(n).toBeGreaterThan(0)
+    expect(standing.run.samples[n].speedMs).toBeGreaterThanOrEqual(12)
+    expect(standing.run.samples[n - 1].speedMs).toBeLessThan(12)
+    const slow = secondGearRun([], 1, 100).run
+    slow.samples.forEach(s => (s.speedMs = Math.min(s.speedMs, 5)))
+    expect(markLaunch(slow.samples, slow.samples.map(() => 'power' as const)).filter(k => k === 'launch').length).toBe(60)
+  })
+})
+
+/** Run the what-if on a hand-built run with an explicit limiter (hold mode). */
+function runWhatIfWithLimiter(
+  run: TelemetryRun,
+  kinds: LimitKind[],
+  segments: import('@/types/telemetry').RunSegment[],
+  envelope: import('@/types/telemetry').GripEnvelope,
+  modified: ReturnType<typeof buildPowertrainModel>,
+  limiter: number,
+) {
+  // observedLimiterRpm reads the 99.5th percentile of rpm; the run tops out at the limiter by construction
+  expect(observedLimiterRpm(run)).toBeCloseTo(limiter, -1)
+  return runWhatIf({ run, kinds, segments, envelope, baseline: stockModel, modified, options: { ...DEFAULT_WHATIF_OPTIONS, gearStrategy: 'hold', calibrate: false } })
+}

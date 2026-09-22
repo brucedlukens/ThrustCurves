@@ -8,6 +8,9 @@ interface SegmentTableProps {
   hasChange: boolean
 }
 
+/** Baseline-vs-log RMS (m/s) above which a stretch's delta is flagged (≈1.5 mph) */
+const POOR_FIT_MS = 0.67
+
 export default function SegmentTable({ results, hasChange }: SegmentTableProps) {
   const units = useUnitStore(state => state.units)
   const speedFactor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
@@ -30,7 +33,7 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
 
   return (
     <div className="overflow-x-auto -mx-1">
-      <table className="w-full min-w-[640px]">
+      <table className="w-full min-w-[700px]">
         <thead>
           <tr className="border-b border-line">
             <th className={th}>#</th>
@@ -39,6 +42,7 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
             <th className={th}>Peak (base → mod)</th>
             <th className={th}>Exit (base → mod)</th>
             <th className={th}>Δ time</th>
+            <th className={th}>Fit</th>
             <th className={th}>Limit hit</th>
           </tr>
         </thead>
@@ -68,6 +72,12 @@ export default function SegmentTable({ results, hasChange }: SegmentTableProps) 
                 </td>
                 <td className={`${td} ${r.deltaS < -0.0005 ? 'text-green-400' : r.deltaS > 0.0005 ? 'text-signal-hi' : 'text-label'}`}>
                   {hasChange ? fmtDelta(r.deltaS) : '—'}
+                </td>
+                <td
+                  className={`${td} ${r.baselineFitRmsMs > POOR_FIT_MS ? 'text-signal-hi' : 'text-label'}`}
+                  title="RMS error of the baseline model vs the log in this stretch. Large = the model does not reproduce what the car did here, so treat its Δ with suspicion."
+                >
+                  {r.baselineFitRmsMs > POOR_FIT_MS ? '⚠ ' : ''}{spd(r.baselineFitRmsMs)}
                 </td>
                 <td className={`${td} text-label`}>
                   {hasChange && (flags.length > 0 ? flags.join(', ') : 'none')}

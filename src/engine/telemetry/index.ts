@@ -5,7 +5,7 @@ export { parseCsv, numericColumn, detectDelimiter, splitLine } from './csv'
 export { autoDetectMapping, mappingErrors, splitHeader } from './mapping'
 export { buildRun, movingAverage, derivative, interpolateOnGrid, DEFAULT_STEP_M } from './resample'
 export { computeGripEnvelope, longitudinalAvailableG, percentile, G, DEFAULT_LAT_G } from './envelope'
-export { classifySamples, smoothKinds, segmentRun } from './classify'
+export { classifySamples, smoothKinds, segmentRun, markLaunch } from './classify'
 export { inferRoadDyno, impliedTractiveForceN } from './roadDyno'
 export type { RoadLoadParams } from './roadDyno'
 export {
@@ -14,6 +14,8 @@ export {
   detectGear,
   computeCalibrationFactor,
   observedLimiterRpm,
+  loggedGears,
+  observedShiftRpm,
   computeCeiling,
   simulateTrace,
   traceTimeS,
@@ -26,7 +28,7 @@ import type { CarModifications } from '@/types/config'
 import { DEFAULT_MODIFICATIONS } from '@/types/config'
 import type { GripEnvelope, TelemetryRun, WhatIfOptions, WhatIfResult } from '@/types/telemetry'
 import { computeGripEnvelope } from './envelope'
-import { classifySamples, segmentRun, smoothKinds } from './classify'
+import { classifySamples, markLaunch, segmentRun, smoothKinds } from './classify'
 import { buildPowertrainModel, runWhatIf } from './whatif'
 
 export interface AnalyzeOptions extends WhatIfOptions {
@@ -45,7 +47,7 @@ export function analyzeWhatIf(
   options: AnalyzeOptions,
 ): WhatIfResult {
   const envelope = computeGripEnvelope(run.samples, run.hasLatAccel, options.envelopeOverrides)
-  const kinds = smoothKinds(classifySamples(run.samples, envelope, { hasThrottle: run.hasThrottle }), run.stepM)
+  const kinds = markLaunch(run.samples, smoothKinds(classifySamples(run.samples, envelope, { hasThrottle: run.hasThrottle }), run.stepM))
   const segments = segmentRun(run.samples, kinds)
   const baselineMods: CarModifications = { ...DEFAULT_MODIFICATIONS, altitudeM: mods.altitudeM }
   const baseline = buildPowertrainModel(car, baselineMods)

@@ -87,24 +87,52 @@ export function detectGear(model: PowertrainModel, speedMs: number, rpm: number,
   return bestErr <= tolerance ? best : undefined
 }
 
-/** Most common detected gear inside a segment, or undefined when nothing was detected. */
-export function segmentGear(model: PowertrainModel, run: TelemetryRun, seg: RunSegment): number | undefined {
-  const counts = new Map<number, number>()
-  for (let i = seg.startIdx; i < seg.endIdx; i++) {
-    const s = run.samples[i]
-    if (s.rpm === undefined) continue
-    const g = detectGear(model, s.speedMs, s.rpm)
-    if (g !== undefined) counts.set(g, (counts.get(g) ?? 0) + 1)
+/**
+ * The gear the log says the car was in at every sample, forward-filled through
+ * samples where detection fails (shifts, clutch slip, very low speed).
+ * Undefined entries only occur before the first detected gear.
+ */
+export function loggedGears(model: PowertrainModel, run: TelemetryRun): (number | undefined)[] {
+  const out = new Array<number | undefined>(run.samples.length)
+  let last: number | undefined
+  run.samples.forEach((s, i) => {
+    const g = s.rpm !== undefined ? detectGear(model, s.speedMs, s.rpm) : undefined
+    if (g !== undefined) last = g
+    out[i] = last
+  })
+  return out
+}
+
+/**
+ * The rpm the driver upshifted at, per gear: the median rpm seen just before
+ * each logged upshift out of that gear. Gears never shifted out of get the limiter.
+ */
+export function observedShiftRpm(run: TelemetryRun, gears: (number | undefined)[], limiterRpm: number | undefined): Map<number, number> {
+  const seen = new Map<number, number[]>()
+  for (let i = 1; i < gears.length; i++) {
+    const from = gears[i - 1]
+    const to = gears[i]
+    if (from === undefined || to === undefined || to !== from + 1) continue
+    // Look back a few samples for the peak rpm before the shift registered
+    let peak = 0
+    for (let j = Math.max(0, i - 5); j < i; j++) peak = Math.max(peak, run.samples[j].rpm ?? 0)
+    if (peak > 0) seen.set(from, [...(seen.get(from) ?? []), peak])
   }
-  let best: number | undefined
-  let bestN = 0
-  for (const [g, n] of counts) {
-    if (n > bestN) {
-      bestN = n
-      best = g
-    }
+  const out = new Map<number, number>()
+  for (const [g, rpms] of seen) {
+    rpms.sort((a, b) => a - b)
+    out.set(g, rpms[Math.floor(rpms.length / 2)])
   }
-  return best
+  if (limiterRpm !== undefined) {
+    for (const [g, r] of out) out.set(g, Math.min(r, limiterRpm))
+  }
+  return out
+}
+
+/** Engine rpm at a road speed in a given gear. */
+export function rpmAt(model: PowertrainModel, speedMs: number, gear: number): number {
+  const ratio = model.gearEffectiveRatios[gear - 1] ?? model.gearEffectiveRatios[model.gearEffectiveRatios.length - 1]
+  return (speedMs * ratio * 60) / (2 * Math.PI * model.tireRadiusM)
 }
 
 /** Fraction of the observed rev-limit rpm above which a sample counts as "on the limiter". */
@@ -245,16 +273,29 @@ export function simulateTrace(
   const v = run.samples.map(s => s.speedMs)
   const flags = new Map<number, TraceFlags>()
   const rrN = rollingResistanceN(model.massKg, model.crr, GRAVITY_MS2)
+  const hold = gearStrategy === 'hold' && run.hasRpm
+  const gears = hold ? loggedGears(model, run) : []
+  const shiftRpm = hold ? observedShiftRpm(run, gears, limiterRpm) : new Map<number, number>()
+  const topGear = model.gearEffectiveRatios.length
 
   for (const seg of segments) {
     if (seg.kind !== 'power') continue
     const f: TraceFlags = {}
-    const heldGear = gearStrategy === 'hold' && run.hasRpm ? segmentGear(model, run, seg) : undefined
+    // Hold mode: start in the gear the log was in and upshift where the driver
+    // did — at the same rpm, not the same distance — so a faster car shifts sooner.
+    let gear = hold ? gears[seg.startIdx] : undefined
 
     for (let i = seg.startIdx; i < seg.endIdx - 1 && i < n - 1; i++) {
       const s = run.samples[i]
-      const thrust = calibration * thrustAtSpeed(model, v[i], heldGear, heldGear !== undefined ? limiterRpm : undefined)
-      if (heldGear !== undefined && thrust === 0 && f.revLimitedAtM === undefined && v[i] > 3) {
+      if (gear !== undefined) {
+        const logged = gears[i]
+        if (logged !== undefined && logged > gear) gear = logged
+        // Only upshift where the log shows the driver shifting out of this gear; a gear the
+        // driver held to the end stays held, and the limiter cut below flags the consequence.
+        while (gear < topGear && shiftRpm.has(gear) && rpmAt(model, v[i], gear) > shiftRpm.get(gear)!) gear++
+      }
+      const thrust = calibration * thrustAtSpeed(model, v[i], gear, gear !== undefined ? limiterRpm : undefined)
+      if (gear !== undefined && thrust === 0 && f.revLimitedAtM === undefined && v[i] > 3) {
         f.revLimitedAtM = s.distanceM
       }
       const drag = dragForceN(model.cd, model.frontalAreaM2, model.airDensityKgM3, v[i])
@@ -356,8 +397,11 @@ export function runWhatIf(input: WhatIfInput): WhatIfResult {
       }
     }
     const f = mod.flags.get(seg.index) ?? {}
+    let fitSq = 0
+    for (let i = seg.startIdx; i < seg.endIdx; i++) fitSq += (base.speeds[i] - measured[i]) ** 2
     return {
       segment: seg,
+      baselineFitRmsMs: seg.endIdx > seg.startIdx ? Math.sqrt(fitSq / (seg.endIdx - seg.startIdx)) : 0,
       baselineTimeS,
       modifiedTimeS,
       deltaS: modifiedTimeS - baselineTimeS,
