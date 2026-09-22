@@ -23,7 +23,7 @@ let rowKeyCounter = 0
 function nextKey() { return ++rowKeyCounter }
 
 /** Parse rows into a Nm curve; `imperial` rows are typed in lb·ft. */
-export function parseRows(rows: TorqueRow[], imperial: boolean): CurvePoint[] | undefined {
+function parseRows(rows: TorqueRow[], imperial: boolean): CurvePoint[] | undefined {
   const valid = rows
     .map(r => {
       const rpm = parseFloat(r.rpm)
