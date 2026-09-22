@@ -1,5 +1,7 @@
 import { useRef, useState } from 'react'
 import { useTelemetryStore } from '@/store/telemetryStore'
+import { useUnitStore } from '@/store/unitStore'
+import { mToFt } from '@/utils/units'
 import { CARD_CLS, LABEL_CLS } from './shared'
 
 export const SAMPLE_LOG_URL = '/samples/autocross-mx5-sample.csv'
@@ -11,6 +13,8 @@ export default function LogUploader() {
   const error = useTelemetryStore(state => state.error)
   const loadCsvText = useTelemetryStore(state => state.loadCsvText)
   const clear = useTelemetryStore(state => state.clear)
+  const units = useUnitStore(state => state.units)
+  const fmtDist = (m: number) => (units === 'imperial' ? `${mToFt(m).toFixed(0)} ft` : `${m.toFixed(0)} m`)
   const inputRef = useRef<HTMLInputElement>(null)
   const [dragging, setDragging] = useState(false)
   const [loadingSample, setLoadingSample] = useState(false)
@@ -119,11 +123,11 @@ export default function LogUploader() {
         <div className="grid grid-cols-3 gap-3 mt-4">
           <Stat label="Rows" value={String(table.rows.length)} />
           <Stat label="Rate" value={`${run.sourceRateHz.toFixed(0)} Hz`} />
-          <Stat label="Distance" value={`${run.totalDistanceM.toFixed(0)} m`} />
+          <Stat label="Distance" value={fmtDist(run.totalDistanceM)} />
           <Stat label="Duration" value={`${run.totalTimeS.toFixed(2)} s`} />
           <Stat label="Throttle" value={run.hasThrottle ? 'yes' : 'no'} />
           <Stat label="RPM" value={run.hasRpm ? 'yes' : 'no'} />
-          {run.elevationM !== undefined && <Stat label="Elevation" value={`${run.elevationM.toFixed(0)} m`} />}
+          {run.elevationM !== undefined && <Stat label="Elevation" value={fmtDist(run.elevationM)} />}
         </div>
       )}
     </div>

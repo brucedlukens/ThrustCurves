@@ -41,6 +41,8 @@ describe('TelemetryPage', () => {
     await waitFor(() => expect(screen.getByText('run.csv')).toBeInTheDocument())
     expect(screen.getByText(/select the car this run was logged in/i)).toBeInTheDocument()
     expect(screen.getByText('Rows')).toBeInTheDocument()
+    // Unit store defaults to imperial: distance reads in feet
+    expect(screen.getByText('Distance').nextSibling).toHaveTextContent(/\d+ ft/)
   })
 
   test('with a run and a car, shows the summary, chart, table and road dyno', async () => {

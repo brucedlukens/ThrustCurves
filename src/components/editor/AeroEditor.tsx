@@ -1,4 +1,6 @@
 import { useCarStore } from '@/store/carStore'
+import { useUnitStore } from '@/store/unitStore'
+import { ft2ToM2, m2ToFt2 } from '@/utils/units'
 
 const INPUT_CLS =
   'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
@@ -13,6 +15,10 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
   const cdOverride = useCarStore(state => state.modifications.cdOverride)
   const frontalAreaOverride = useCarStore(state => state.modifications.frontalAreaOverride)
   const updateModifications = useCarStore(state => state.updateModifications)
+  const units = useUnitStore(state => state.units)
+  const imperial = units === 'imperial'
+  const areaUnit = imperial ? 'ft²' : 'm²'
+  const displayArea = (m2: number) => parseFloat((imperial ? m2ToFt2(m2) : m2).toFixed(2))
 
   const handleCdChange = (rawValue: string) => {
     const val = parseFloat(rawValue)
@@ -24,7 +30,7 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
   const handleFrontalAreaChange = (rawValue: string) => {
     const val = parseFloat(rawValue)
     updateModifications({
-      frontalAreaOverride: rawValue === '' || isNaN(val) || val <= 0 ? undefined : val,
+      frontalAreaOverride: rawValue === '' || isNaN(val) || val <= 0 ? undefined : imperial ? ft2ToM2(val) : val,
     })
   }
 
@@ -47,17 +53,17 @@ export default function AeroEditor({ stockCd, stockFrontalAreaM2 }: AeroEditorPr
       </div>
       <div className="flex flex-col gap-0.5">
         <label className="font-display text-[10px] font-semibold tracking-widest uppercase text-muted-txt">
-          Frontal Area (m²)
+          Frontal Area ({areaUnit})
         </label>
         <input
           type="number"
-          value={frontalAreaOverride ?? stockFrontalAreaM2}
+          value={displayArea(frontalAreaOverride ?? stockFrontalAreaM2)}
           onChange={e => handleFrontalAreaChange(e.target.value)}
-          min={0.5}
-          max={6.0}
-          step={0.01}
+          min={imperial ? 5 : 0.5}
+          max={imperial ? 65 : 6.0}
+          step={imperial ? 0.1 : 0.01}
           className={INPUT_CLS}
-          aria-label="Frontal area in square meters"
+          aria-label={imperial ? 'Frontal area in square feet' : 'Frontal area in square meters'}
         />
       </div>
       <p className="font-data text-[10px] text-muted-txt">Clear field to revert to stock</p>

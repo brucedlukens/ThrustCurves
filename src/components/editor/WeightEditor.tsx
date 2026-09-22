@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useCarStore } from '@/store/carStore'
+import { useUnitStore } from '@/store/unitStore'
 import { DEFAULT_DRIVER_MASS_KG } from '@/data/presets'
+import { kgToLb, lbToKg } from '@/utils/units'
 
 const INPUT_CLS =
   'w-full bg-lift border border-line rounded px-2 py-1.5 text-sm text-gray-100 font-data ' +
@@ -14,36 +16,43 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
   const weightDeltaKg = useCarStore(state => state.modifications.weightDeltaKg)
   const driverMassKg = useCarStore(state => state.modifications.driverMassKg ?? DEFAULT_DRIVER_MASS_KG)
   const updateModifications = useCarStore(state => state.updateModifications)
-  const [rawDriver, setRawDriver] = useState(() => String(driverMassKg))
+  const units = useUnitStore(state => state.units)
+  const imperial = units === 'imperial'
+  const unit = imperial ? 'lb' : 'kg'
+
+  // Inputs are typed in the display unit; the store is always kg
+  const toDisplay = (kg: number) => (imperial ? kgToLb(kg) : kg)
+  const toKg = (v: number) => (imperial ? lbToKg(v) : v)
+  const fmt = (kg: number) => toDisplay(kg).toFixed(0)
+  const rawFor = (kg: number) => String(parseFloat(toDisplay(kg).toFixed(1)))
+
+  const [rawDriver, setRawDriver] = useState(() => rawFor(driverMassKg))
+  const [rawValue, setRawValue] = useState(() => rawFor(weightDeltaKg))
 
   useEffect(() => {
-    setRawDriver(String(driverMassKg))
-  }, [driverMassKg])
+    setRawDriver(rawFor(driverMassKg))
+    setRawValue(rawFor(weightDeltaKg))
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [driverMassKg, weightDeltaKg, imperial])
 
   const handleDriverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRawDriver(e.target.value)
     const val = parseFloat(e.target.value)
     if (!isNaN(val) && val >= 0) {
-      updateModifications({ driverMassKg: val })
+      updateModifications({ driverMassKg: toKg(val) })
     }
   }
-
-  const [rawValue, setRawValue] = useState(() => String(weightDeltaKg))
-
-  useEffect(() => {
-    setRawValue(String(weightDeltaKg))
-  }, [weightDeltaKg])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setRawValue(e.target.value)
     const val = parseFloat(e.target.value)
     if (!isNaN(val)) {
-      updateModifications({ weightDeltaKg: val })
+      updateModifications({ weightDeltaKg: toKg(val) })
     }
   }
 
   const handleBlur = () => {
-    setRawValue(String(weightDeltaKg))
+    setRawValue(rawFor(weightDeltaKg))
   }
 
   const effectiveWeight = stockWeightKg + driverMassKg + weightDeltaKg
@@ -58,9 +67,9 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
           onBlur={handleBlur}
           step={5}
           className={INPUT_CLS}
-          aria-label="Weight delta in kg"
+          aria-label={`Weight delta in ${unit}`}
         />
-        <span className="font-data text-xs text-label shrink-0">kg</span>
+        <span className="font-data text-xs text-label shrink-0">{unit}</span>
       </div>
       <div className="flex items-center gap-2">
         <span className="font-data text-[11px] text-label shrink-0 w-14">Driver</span>
@@ -68,16 +77,17 @@ export default function WeightEditor({ stockWeightKg }: WeightEditorProps) {
           type="number"
           value={rawDriver}
           onChange={handleDriverChange}
-          onBlur={() => setRawDriver(String(driverMassKg))}
+          onBlur={() => setRawDriver(rawFor(driverMassKg))}
           min={0}
           step={5}
           className={INPUT_CLS}
-          aria-label="Driver mass in kg"
+          aria-label={`Driver mass in ${unit}`}
         />
-        <span className="font-data text-xs text-label shrink-0">kg</span>
+        <span className="font-data text-xs text-label shrink-0">{unit}</span>
       </div>
       <p className="font-data text-[11px] text-muted-txt">
-        Stock {stockWeightKg} kg + driver {driverMassKg.toFixed(0)} kg{weightDeltaKg !== 0 ? ` ${weightDeltaKg > 0 ? '+' : '−'} ${Math.abs(weightDeltaKg)} kg` : ''} → Simulated: {effectiveWeight.toFixed(0)} kg
+        Stock {fmt(stockWeightKg)} {unit} + driver {fmt(driverMassKg)} {unit}
+        {weightDeltaKg !== 0 ? ` ${weightDeltaKg > 0 ? '+' : '−'} ${fmt(Math.abs(weightDeltaKg))} ${unit}` : ''} → Simulated: {fmt(effectiveWeight)} {unit}
       </p>
     </div>
   )
