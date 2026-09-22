@@ -80,7 +80,7 @@ export default function TowingChart({ entries, speedMs }: TowingChartProps) {
   // Stop where no truck can accelerate any further: past the last thrust/load crossing
   // the curves only show gearing ceilings nobody can reach with the trailer on.
   const cutoffMs = chartSpeedCutoffMs(entries.map((e) => e.analysis))
-  const cutoff = parseFloat((cutoffMs * speedFactor).toFixed(2))
+  const cutoff = Math.ceil(cutoffMs * speedFactor) // whole mph / km/h so the end tick reads cleanly
 
   const data = [...rowsByKey.entries()]
     .sort((a, b) => a[0] - b[0])
