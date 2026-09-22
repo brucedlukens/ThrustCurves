@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest'
 import {
+  chartSpeedCutoffMs,
   towingRoadLoadN,
   maxGradePercentAtSpeed,
   maxSustainableSpeed,
@@ -343,5 +344,40 @@ describe('enclosed-trailer calibration', () => {
   it('standard-height enclosed stays less draggy than extra tall', () => {
     const std = TRAILER_PRESETS.find((p) => p.id === 'enclosed-cargo-standard')!
     expect(trailerToLoad(std, 1).effectiveCdA).toBeLessThan(trailerToLoad(tall, 1).effectiveCdA)
+  })
+})
+
+describe('chartSpeedCutoffMs', () => {
+  const env = (maxMs: number) => [
+    { speedMs: 0, forceN: 5000, gear: 1 },
+    { speedMs: maxMs, forceN: 1000, gear: 6 },
+  ]
+
+  it('is the highest sustainable speed across trucks plus a small margin', () => {
+    const cutoff = chartSpeedCutoffMs([
+      { maxSustainable: { speedMs: 30, gear: 5, rpm: 2000 }, envelope: env(60) },
+      { maxSustainable: { speedMs: 40, gear: 5, rpm: 2000 }, envelope: env(60) },
+    ])
+    expect(cutoff).toBeCloseTo(41.2, 5)
+  })
+
+  it('never exceeds the widest envelope', () => {
+    expect(chartSpeedCutoffMs([{ maxSustainable: { speedMs: 59.5, gear: 6, rpm: 2000 }, envelope: env(60) }])).toBe(60)
+  })
+
+  it('falls back to the widest envelope when no truck can hold any speed', () => {
+    expect(chartSpeedCutoffMs([
+      { maxSustainable: null, envelope: env(55) },
+      { maxSustainable: null, envelope: env(70) },
+    ])).toBe(70)
+    expect(chartSpeedCutoffMs([])).toBe(0)
+  })
+
+  it('ignores trucks that cannot hold speed when others can', () => {
+    const cutoff = chartSpeedCutoffMs([
+      { maxSustainable: null, envelope: env(80) },
+      { maxSustainable: { speedMs: 20, gear: 3, rpm: 2500 }, envelope: env(60) },
+    ])
+    expect(cutoff).toBeCloseTo(20.6, 5)
   })
 })
