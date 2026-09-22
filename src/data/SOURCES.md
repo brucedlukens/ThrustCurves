@@ -270,6 +270,25 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 
 ---
 
+### Subaru BRZ 2018 (DST Build) — `subaru-brz-2018-dst`
+
+Owner-supplied build spec for an SCCA DST-class car, not an OEM datasheet.
+
+| Field | JSON | Source | Status |
+|-------|------|--------|--------|
+| Torque curve | 130 lb-ft @ 2500–3000 → 140 lb-ft @ 4500–5000 → 80 lb-ft @ 8000 (converted to Nm, 250 rpm steps) | Owner's chassis dyno, **wheel** torque, altitude-corrected to sea level | ✅ As supplied |
+| Power curve | Derived: P(kW) = T(Nm) · rpm / 9549; peak ≈ 129 kW (173 whp) at 6500–7000 rpm | Computed | ✅ |
+| Drivetrain loss | 0 | Curve is already at the wheels; the app's `(1 − loss)` factor must not be applied again | ✅ |
+| Weight | 1134 kg (2500 lb) | Owner | ✅ As supplied |
+| Tires | 245/40R17 | Owner | ✅ As supplied |
+| Gear ratios | [3.626, 2.188, 1.541, 1.213, 1.000, 0.767] | TL70 6MT (ZN6/ZC6), same box as GR86 entry | ✅ |
+| Final drive | 4.300 | 2017+ BRZ/86 6MT (MY2017 refresh raised the MT final drive from 4.10) | ⚠️ The owner's Solostorm log reads ~6 % more rpm per m/s in 2nd than 4.30 predicts; verify |
+| Redline | 8000 | Curve extends to 8000; stock fuel cut is ~7500 | ⚠️ Clip if the limiter is stock |
+
+**Note**: The `subaru-brz-2018` (Limited) entry above carries different gear ratios and a 3.900 final drive; those conflict with the GR86 section and with this entry, and should be audited.
+
+---
+
 ### Toyota GR86 2022 (Premium) — `toyota-gr86-2022`
 
 | Field | Old JSON | Corrected | Note |
@@ -281,6 +300,22 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 
 **Sources**: Toyota GR86 UK technical specifications PDF (media.toyota.co.uk, 220725M-GR86-Tech-Spec); Subaru 22MY/23MY BRZ spec sheets; GR86 Forum gearing thread
 **Correction (2026-09)**: An earlier audit set the final drive to 3.583 with 3.540/2.130/… gear ratios, claiming the GR86 was geared taller than the BRZ. That was wrong: the GR86 and BRZ share the same TL70 6MT and 4.100 final drive. Toyota's own tech-spec sheet lists 3.626 / 2.189 / 1.541 / 1.213 / 1.000 / 0.767 (reverse 3.438) with a 4.100 final drive, identical to Subaru's BRZ sheet. Both fields corrected. Torque and power curves (250 Nm at 3700 rpm, 170 kW at 7000 rpm) were already right and are retained.
+
+---
+
+### Toyota GR86 2022 (CST Build) — `toyota-gr86-2022-cst`
+
+Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
+
+| Field | JSON | Source | Status |
+|-------|------|--------|--------|
+| Torque curve | 150 lb-ft @ 2500 → 200 lb-ft @ 4500–5000 → 135 lb-ft @ 8000 (converted to Nm, 250 rpm steps) | Owner's chassis dyno, **wheel** torque, altitude-corrected to sea level | ✅ As supplied |
+| Power curve | Derived; peak ≈ 172 kW (231 whp) at 7000 rpm | Computed | ✅ |
+| Drivetrain loss | 0 | Wheel curve | ✅ |
+| Weight | 1134 kg (2500 lb) | Owner (same figure as the DST BRZ) | ⚠️ Verify for this car |
+| Tires | 255/40R17 | Owner | ✅ As supplied |
+| Gear ratios / final drive | TL70 [3.626, 2.189, 1.541, 1.213, 1.000, 0.767], 4.100 | Same as the stock GR86 entry | ✅ |
+| Redline | 8000 | Curve extends to 8000; stock FA24 fuel cut is ~7500 | ⚠️ Clip if the limiter is stock |
 
 ---
 
