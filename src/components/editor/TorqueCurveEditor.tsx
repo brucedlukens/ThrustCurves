@@ -1,5 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useCarStore } from '@/store/carStore'
+import { useUnitStore } from '@/store/unitStore'
+import { lbftToNm, nmToLbft } from '@/utils/units'
 import type { CurvePoint } from '@/types/car'
 
 const INPUT_CLS =
@@ -10,27 +12,42 @@ interface TorqueCurveEditorProps {
   stockTorqueCurve: CurvePoint[]
 }
 
+/** A row as typed: torque is in the active display unit (Nm or lb·ft), never stored as-is. */
 interface TorqueRow {
   key: number
   rpm: string
-  torqueNm: string
+  torque: string
 }
 
 let rowKeyCounter = 0
 function nextKey() { return ++rowKeyCounter }
 
-function parseRows(rows: TorqueRow[]): CurvePoint[] | undefined {
+/** Parse rows into a Nm curve; `imperial` rows are typed in lb·ft. */
+function parseRows(rows: TorqueRow[], imperial: boolean): CurvePoint[] | undefined {
   const valid = rows
-    .map(r => [parseFloat(r.rpm), parseFloat(r.torqueNm)] as CurvePoint)
+    .map(r => {
+      const rpm = parseFloat(r.rpm)
+      const t = parseFloat(r.torque)
+      return [rpm, imperial ? lbftToNm(t) : t] as CurvePoint
+    })
     .filter(([rpm, nm]) => !isNaN(rpm) && !isNaN(nm) && rpm > 0 && nm > 0)
     .sort((a, b) => a[0] - b[0])
   return valid.length >= 2 ? valid : undefined
+}
+
+/** Format a stored Nm value for display in the active unit. */
+function displayTorque(nm: number, imperial: boolean): string {
+  return (imperial ? nmToLbft(nm) : nm).toFixed(1)
 }
 
 export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEditorProps) {
   const torqueMultiplier = useCarStore(state => state.modifications.torqueMultiplier)
   const customTorqueCurve = useCarStore(state => state.modifications.customTorqueCurve)
   const updateModifications = useCarStore(state => state.updateModifications)
+
+  const units = useUnitStore(state => state.units)
+  const imperial = units === 'imperial'
+  const torqueUnit = imperial ? 'lb·ft' : 'Nm'
 
   const isCustom = customTorqueCurve !== undefined
 
@@ -39,20 +56,36 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
       ? customTorqueCurve.map(([rpm, nm]) => ({
           key: nextKey(),
           rpm: String(rpm),
-          torqueNm: String(nm),
+          torque: displayTorque(nm, imperial),
         }))
       : []
   )
+
+  // When the unit toggle flips, re-express the typed torque values in the new unit
+  const prevImperial = useRef(imperial)
+  useEffect(() => {
+    if (prevImperial.current === imperial) return
+    const wasImperial = prevImperial.current
+    prevImperial.current = imperial
+    setRows(prev =>
+      prev.map(r => {
+        const t = parseFloat(r.torque)
+        if (isNaN(t)) return r
+        const nm = wasImperial ? lbftToNm(t) : t
+        return { ...r, torque: displayTorque(nm, imperial) }
+      }),
+    )
+  }, [imperial])
 
   const handleEnableCustom = () => {
     const initialRows = stockTorqueCurve.map(([rpm, nm]) => ({
       key: nextKey(),
       rpm: String(rpm),
-      torqueNm: nm.toFixed(1),
+      torque: displayTorque(nm, imperial),
     }))
     setRows(initialRows)
-    const parsed = parseRows(initialRows)
-    updateModifications({ customTorqueCurve: parsed ?? stockTorqueCurve })
+    // Seed the store with the exact stock curve; the rows are a rounded display of it
+    updateModifications({ customTorqueCurve: stockTorqueCurve })
   }
 
   const handleDisableCustom = () => {
@@ -60,23 +93,23 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
     updateModifications({ customTorqueCurve: undefined })
   }
 
-  const handleRowChange = (index: number, field: 'rpm' | 'torqueNm', value: string) => {
+  const handleRowChange = (index: number, field: 'rpm' | 'torque', value: string) => {
     const updated = rows.map((r, i) => i === index ? { ...r, [field]: value } : r)
     setRows(updated)
-    const parsed = parseRows(updated)
+    const parsed = parseRows(updated, imperial)
     if (parsed) updateModifications({ customTorqueCurve: parsed })
   }
 
   const handleAddRow = () => {
     const lastRpm = rows.length > 0 ? parseFloat(rows[rows.length - 1].rpm) : 1000
     const newRpm = isNaN(lastRpm) ? 1000 : lastRpm + 500
-    setRows(prev => [...prev, { key: nextKey(), rpm: String(newRpm), torqueNm: '' }])
+    setRows(prev => [...prev, { key: nextKey(), rpm: String(newRpm), torque: '' }])
   }
 
   const handleRemoveRow = (index: number) => {
     const updated = rows.filter((_, i) => i !== index)
     setRows(updated)
-    const parsed = parseRows(updated)
+    const parsed = parseRows(updated, imperial)
     updateModifications({ customTorqueCurve: parsed })
   }
 
@@ -161,7 +194,7 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
                 <thead className="sticky top-0 bg-lift">
                   <tr className="border-b border-line">
                     <th className="text-left px-2 py-1.5 font-display font-semibold tracking-wider uppercase text-muted-txt text-[10px]">RPM</th>
-                    <th className="text-left px-2 py-1.5 font-display font-semibold tracking-wider uppercase text-muted-txt text-[10px]">Nm</th>
+                    <th className="text-left px-2 py-1.5 font-display font-semibold tracking-wider uppercase text-muted-txt text-[10px]">{torqueUnit}</th>
                     <th className="w-6" />
                   </tr>
                 </thead>
@@ -183,13 +216,13 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
                       <td className="px-1 py-1">
                         <input
                           type="number"
-                          value={row.torqueNm}
-                          onChange={e => handleRowChange(i, 'torqueNm', e.target.value)}
+                          value={row.torque}
+                          onChange={e => handleRowChange(i, 'torque', e.target.value)}
                           min={0}
                           max={5000}
                           step={1}
                           className={`${INPUT_CLS} w-full py-1`}
-                          aria-label={`Row ${i + 1} torque`}
+                          aria-label={`Row ${i + 1} torque (${torqueUnit})`}
                         />
                       </td>
                       <td className="px-1 py-1">
@@ -213,7 +246,7 @@ export default function TorqueCurveEditor({ stockTorqueCurve }: TorqueCurveEdito
               + Add row
             </button>
             <p className="font-data text-[10px] text-muted-txt">
-              Minimum 2 valid rows. Sorted by RPM automatically.
+              Torque in {torqueUnit} (follows the unit toggle). Minimum 2 valid rows. Sorted by RPM automatically.
             </p>
           </div>
         )}
