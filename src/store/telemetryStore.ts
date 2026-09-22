@@ -49,7 +49,16 @@ export const useTelemetryStore = create<TelemetryStore>((set, get) => ({
     }
     const mapping = autoDetectMapping(table.headers, table)
     const { run, error } = tryBuild(table, mapping, fileName)
-    set({ fileName, table, mapping, run, error, envelopeOverrides: {} })
+    // Autocrossers hold a gear; with an rpm channel that is the better default
+    set(state => ({
+      fileName,
+      table,
+      mapping,
+      run,
+      error,
+      envelopeOverrides: {},
+      options: { ...state.options, gearStrategy: run?.hasRpm ? 'hold' : 'optimal' },
+    }))
   },
 
   setMapping: mapping => {

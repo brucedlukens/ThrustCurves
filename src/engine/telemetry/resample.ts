@@ -180,7 +180,7 @@ export function buildRun(table: ParsedTable, mapping: ColumnMapping, opts: Build
   }
 
   // Longitudinal accel: channel or derivative of smoothed speed
-  const rawLong = pick(col('longAccel'))
+  const rawLong = mapping.deriveLongAccelFromSpeed ? undefined : pick(col('longAccel'))
   let longAccelMs2: number[]
   if (rawLong && rawLong.some(Number.isFinite)) {
     longAccelMs2 = movingAverage(

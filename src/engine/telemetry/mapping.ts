@@ -145,7 +145,7 @@ export function autoDetectMapping(headers: string[], table?: ParsedTable): Colum
     if (col) accelUnit = inferAccelUnit(numericColumn(table, col))
   }
 
-  return { columns, speedUnit, timeUnit: timeUnit ?? 's', distanceUnit, accelUnit: accelUnit ?? 'g', throttleUnit }
+  return { columns, speedUnit, timeUnit: timeUnit ?? 's', distanceUnit, accelUnit: accelUnit ?? 'g', throttleUnit, deriveLongAccelFromSpeed: true }
 }
 
 /**

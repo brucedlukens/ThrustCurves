@@ -46,6 +46,18 @@ describe('buildRun', () => {
     expect(run.samples[50].throttle).toBeCloseTo(1, 2)
   })
 
+  it('uses the mapped longitudinal channel only when derive-from-speed is off', () => {
+    // Log a bogus constant +5 m/s² long accel against a constant-speed run
+    const t = parseCsv('t,speed,LongAccel (m/s^2)\n0,10\n1,10,5\n2,10,5\n3,10,5\n4,10,5\n5,10,5\n6,10,5\n')
+    const m = autoDetectMapping(t.headers)
+    m.speedUnit = 'ms'
+    expect(m.deriveLongAccelFromSpeed).toBe(true)
+    const derived = buildRun(t, m)
+    expect(derived.samples[20].longAccelMs2).toBeCloseTo(0, 3)
+    const channel = buildRun(t, { ...m, deriveLongAccelFromSpeed: false })
+    expect(channel.samples[20].longAccelMs2).toBeCloseTo(5, 3)
+  })
+
   it('derives longitudinal accel from speed when no accel channel exists', () => {
     const t = parseCsv('t,speed\n0,0\n1,10\n2,20\n3,30\n4,40\n5,50\n')
     const m = autoDetectMapping(t.headers)

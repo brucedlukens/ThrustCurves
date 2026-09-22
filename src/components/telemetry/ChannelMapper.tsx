@@ -6,7 +6,7 @@ const CHANNELS: { key: TelemetryChannel; label: string; required?: boolean; hint
   { key: 'time', label: 'Time', required: true },
   { key: 'speed', label: 'Speed', required: true },
   { key: 'distance', label: 'Distance', hint: 'integrated from speed if absent' },
-  { key: 'longAccel', label: 'Long. accel', hint: 'derived from speed if absent' },
+  { key: 'longAccel', label: 'Long. accel', hint: 'only used when "derive from speed" is off' },
   { key: 'latAccel', label: 'Lat. accel', hint: 'derived from GPS if absent' },
   { key: 'throttle', label: 'Throttle', hint: 'makes power-limited a measurement' },
   { key: 'rpm', label: 'RPM', hint: 'needed for hold-gear mode' },
@@ -65,7 +65,23 @@ export default function ChannelMapper() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-2 pt-2 border-t border-faint">
+      <label className="flex items-start gap-2 cursor-pointer pt-2 border-t border-faint">
+        <input
+          type="checkbox"
+          checked={mapping.deriveLongAccelFromSpeed ?? false}
+          onChange={e => setMapping({ ...mapping, deriveLongAccelFromSpeed: e.target.checked })}
+          className="mt-0.5 accent-[#dc2626]"
+          aria-label="Derive longitudinal accel from speed"
+        />
+        <span className="flex flex-col">
+          <span className="font-data text-xs text-gray-200">Derive long. accel from speed</span>
+          <span className="font-data text-[10px] text-muted-txt leading-snug">
+            Recommended: accelerometer channels carry tilt, noise and filter lag
+          </span>
+        </span>
+      </label>
+
+      <div className="grid grid-cols-2 gap-2">
         <UnitSelect label="Speed unit" value={mapping.speedUnit} onChange={v => setUnit('speedUnit', v as ColumnMapping['speedUnit'])} options={[['mph', 'mph'], ['kmh', 'km/h'], ['ms', 'm/s']]} />
         <UnitSelect label="Time unit" value={mapping.timeUnit} onChange={v => setUnit('timeUnit', v as ColumnMapping['timeUnit'])} options={[['s', 's'], ['ms', 'ms']]} />
         <UnitSelect label="Distance unit" value={mapping.distanceUnit} onChange={v => setUnit('distanceUnit', v as ColumnMapping['distanceUnit'])} options={[['m', 'm'], ['ft', 'ft'], ['km', 'km'], ['mi', 'mi']]} />
