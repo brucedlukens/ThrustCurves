@@ -91,8 +91,9 @@ export interface GripEnvelope {
  * - cornering: lateral g at the measured limit
  * - braking: decelerating
  * - driver: partial throttle / coasting, not at any limit
+ * - launch: the standing start, clutch- and traction-limited whatever the engine makes
  */
-export type LimitKind = 'power' | 'grip' | 'cornering' | 'braking' | 'driver'
+export type LimitKind = 'power' | 'grip' | 'cornering' | 'braking' | 'driver' | 'launch'
 
 export interface RunSegment {
   index: number
@@ -130,6 +131,8 @@ export interface WhatIfSegmentResult {
   brakingLimitedAtM?: number
   /** Distance (m) at which the modified car first hit the rev limiter (hold-gear mode only) */
   revLimitedAtM?: number
+  /** RMS error (m/s) of the baseline model vs the log inside this stretch; large = don't trust its delta */
+  baselineFitRmsMs: number
   /** Ceiling speed on the driven line before lateral grip runs out, at the most binding sample (m/s) */
   lineHeadroomCeilingMs: number
   /** ceiling ÷ driven speed at that sample; 1 = already at the lateral limit, Infinity = straight */

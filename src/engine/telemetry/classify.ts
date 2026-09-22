@@ -11,6 +11,12 @@ export const LIMIT_FRACTION = 0.85
 export const THROTTLE_PINNED = 0.85
 /** Segments shorter than this (m) are merged into their predecessor */
 export const MIN_SEGMENT_M = 5
+/** A run starting below this speed (m/s) is a standing start */
+export const STANDING_START_MS = 3
+/** The launch lasts until the car reaches this speed (m/s, ≈27 mph)… */
+export const LAUNCH_END_MS = 12
+/** …or this far from the line, whichever comes first (m) */
+export const LAUNCH_MAX_M = 60
 
 export interface ClassifyOptions {
   hasThrottle: boolean
@@ -43,6 +49,21 @@ export function classifySamples(
  * Remove runs shorter than MIN_SEGMENT_M by absorbing them into the previous run
  * (or the next one at the very start). Keeps segment boundaries meaningful on noisy data.
  */
+/**
+ * Mark the standing-start launch. Off the line the car is clutch- and traction-limited
+ * whatever the engine makes, so those samples stay at their logged speed.
+ */
+export function markLaunch(samples: TelemetrySample[], kinds: LimitKind[]): LimitKind[] {
+  if (samples.length === 0 || samples[0].speedMs >= STANDING_START_MS) return kinds
+  const out = [...kinds]
+  for (let i = 0; i < samples.length; i++) {
+    const s = samples[i]
+    if (s.speedMs >= LAUNCH_END_MS || s.distanceM - samples[0].distanceM >= LAUNCH_MAX_M) break
+    out[i] = 'launch'
+  }
+  return out
+}
+
 export function smoothKinds(kinds: LimitKind[], stepM: number): LimitKind[] {
   const minLen = Math.max(1, Math.round(MIN_SEGMENT_M / stepM))
   const out = [...kinds]

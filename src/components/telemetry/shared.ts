@@ -14,6 +14,7 @@ export const LIMIT_COLORS: Record<LimitKind, string> = {
   cornering: '#eab308',
   braking: '#06b6d4',
   driver: '#55556a',
+  launch: '#a855f7',
 }
 
 export const LIMIT_LABELS: Record<LimitKind, string> = {
@@ -22,9 +23,10 @@ export const LIMIT_LABELS: Record<LimitKind, string> = {
   cornering: 'Cornering',
   braking: 'Braking',
   driver: 'Driver / coasting',
+  launch: 'Launch (clutch / traction)',
 }
 
-export const LIMIT_ORDER: LimitKind[] = ['power', 'grip', 'cornering', 'braking', 'driver']
+export const LIMIT_ORDER: LimitKind[] = ['launch', 'power', 'grip', 'cornering', 'braking', 'driver']
 
 export const CHART_STYLE = {
   backgroundColor: '#0f0f12',
