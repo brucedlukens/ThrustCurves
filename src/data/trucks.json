@@ -11560,7 +11560,7 @@
         "engineName": "6.6L Duramax V8 Diesel (L5P)",
         "fuel": "diesel",
         "yearStart": 2020,
-        "yearEnd": 2026,
+        "yearEnd": null,
         "torqueCurve": [
           [
             800,
@@ -11700,7 +11700,7 @@
           ],
           [
             2800,
-            1399
+            1412
           ],
           [
             3000,
@@ -11745,7 +11745,7 @@
           "aspectRatio": 70,
           "rimDiameterIn": 18
         },
-        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), replacing the 6.6L L5P. 550 hp / 1,230 lb-ft per GM's announcement; peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
+        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), 555 hp / 1,230 lb-ft per GM's announcement (2026-09); peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
       }
     ]
   },
@@ -13242,7 +13242,7 @@
         "engineName": "6.6L Duramax V8 Diesel (L5P)",
         "fuel": "diesel",
         "yearStart": 2020,
-        "yearEnd": 2026,
+        "yearEnd": null,
         "torqueCurve": [
           [
             800,
@@ -13382,7 +13382,7 @@
           ],
           [
             2800,
-            1399
+            1412
           ],
           [
             3000,
@@ -13427,7 +13427,7 @@
           "aspectRatio": 70,
           "rimDiameterIn": 18
         },
-        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), replacing the 6.6L L5P. 550 hp / 1,230 lb-ft per GM's announcement; peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
+        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), 555 hp / 1,230 lb-ft per GM's announcement (2026-09); peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
       }
     ]
   },
