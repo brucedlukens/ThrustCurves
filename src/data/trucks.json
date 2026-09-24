@@ -11560,7 +11560,7 @@
         "engineName": "6.6L Duramax V8 Diesel (L5P)",
         "fuel": "diesel",
         "yearStart": 2020,
-        "yearEnd": null,
+        "yearEnd": 2026,
         "torqueCurve": [
           [
             800,
@@ -11650,6 +11650,102 @@
           "rimDiameterIn": 18
         },
         "notes": "2024+ figures (470 hp / 975 lb-ft); 2020-2023 made 445 hp / 910 lb-ft"
+      },
+      {
+        "id": "83-duramax",
+        "engineName": "8.3L Duramax V8 Diesel (L6P)",
+        "fuel": "diesel",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            900
+          ],
+          [
+            1000,
+            1200
+          ],
+          [
+            1200,
+            1450
+          ],
+          [
+            1400,
+            1620
+          ],
+          [
+            1600,
+            1668
+          ],
+          [
+            1800,
+            1668
+          ],
+          [
+            2000,
+            1665
+          ],
+          [
+            2200,
+            1620
+          ],
+          [
+            2400,
+            1560
+          ],
+          [
+            2600,
+            1480
+          ],
+          [
+            2800,
+            1399
+          ],
+          [
+            3000,
+            1290
+          ],
+          [
+            3200,
+            1150
+          ],
+          [
+            3400,
+            990
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 8.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3571,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), replacing the 6.6L L5P. 550 hp / 1,230 lb-ft per GM's announcement; peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
       }
     ]
   },
@@ -13146,7 +13242,7 @@
         "engineName": "6.6L Duramax V8 Diesel (L5P)",
         "fuel": "diesel",
         "yearStart": 2020,
-        "yearEnd": null,
+        "yearEnd": 2026,
         "torqueCurve": [
           [
             800,
@@ -13236,6 +13332,102 @@
           "rimDiameterIn": 18
         },
         "notes": "2024+ figures (470 hp / 975 lb-ft); 2020-2023 made 445 hp / 910 lb-ft"
+      },
+      {
+        "id": "83-duramax",
+        "engineName": "8.3L Duramax V8 Diesel (L6P)",
+        "fuel": "diesel",
+        "yearStart": 2027,
+        "yearEnd": null,
+        "torqueCurve": [
+          [
+            800,
+            900
+          ],
+          [
+            1000,
+            1200
+          ],
+          [
+            1200,
+            1450
+          ],
+          [
+            1400,
+            1620
+          ],
+          [
+            1600,
+            1668
+          ],
+          [
+            1800,
+            1668
+          ],
+          [
+            2000,
+            1665
+          ],
+          [
+            2200,
+            1620
+          ],
+          [
+            2400,
+            1560
+          ],
+          [
+            2600,
+            1480
+          ],
+          [
+            2800,
+            1399
+          ],
+          [
+            3000,
+            1290
+          ],
+          [
+            3200,
+            1150
+          ],
+          [
+            3400,
+            990
+          ]
+        ],
+        "redlineRpm": 3450,
+        "idleRpm": 680,
+        "displacementL": 8.3,
+        "forcedInduction": true,
+        "transmission": {
+          "name": "Allison 10L1000 (10-speed automatic)",
+          "gearRatios": [
+            4.54,
+            2.86,
+            2.06,
+            1.72,
+            1.48,
+            1.26,
+            1.0,
+            0.85,
+            0.68,
+            0.63
+          ],
+          "type": "automatic"
+        },
+        "axleRatios": [
+          3.42
+        ],
+        "defaultAxleRatio": 3.42,
+        "curbWeightKg": 3643,
+        "tireSize": {
+          "widthMm": 275,
+          "aspectRatio": 70,
+          "rimDiameterIn": 18
+        },
+        "notes": "New for 2027 (GM calls it Megamax / 'Mongoose', RPO L6P), replacing the 6.6L L5P. 550 hp / 1,230 lb-ft per GM's announcement; peak rpm not published, so torque is modeled flat 1,600-1,800 rpm and power peaking at 2,800 rpm. Allison 10-speed ratios, 3.42 axle, 3,450 rpm governor and tires carried from the L5P; curb weight is the L5P figure plus an estimated 70 kg for the larger block."
       }
     ]
   },

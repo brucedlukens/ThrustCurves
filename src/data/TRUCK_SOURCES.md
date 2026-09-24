@@ -70,6 +70,7 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 | GM 1500 K2XX (2014–2018) | Outputs, 6L80/8L90 ratios, axles, weights — all from GM's printed 2015/2016 product-info spec sheets | Cd 0.43/3.4 m² (extrapolated from GM's "7% better" T1 claim), curves reused from the identical pre-DFM T1 engines |
 | Ram 1500 DS (2013–2018) | FCA 2013/2014 spec + towing-chart PDFs (outputs, 8HP70 ratios, per-engine axle pairings) | Cd 0.43/3.43 m² (derived), curve shapes (HEMI reuses DT curve — same rating; EcoDiesel synthesized) |
 | GM 2500/3500HD (2020+) | L5P figures, Allison/6L90 ratios | Gas & 3500 SRW weights (interpolated), Cd/area |
+| GM 2500/3500HD 2027 addition | 8.3L Duramax (L6P, "Megamax") 550 hp / 1,230 lb-ft (GM announcement, 2026-09); Allison 10-speed per the 2027 order guide | Peak rpm (GM withheld; torque plateau 1,600–1,800 and power peak 2,800 assumed), 10L1000 ratios / 3.42 axle / governor / tires carried from the L5P, curb weight (L5P + 70 kg estimate), curve shape |
 | Ram 1500 (2019+) | Official Stellantis spec/towing-chart PDFs (weights exact per config) | Curve shapes; HO Hurricane axle/gearing inferred from towing charts |
 | Ram 2500/3500 (2019+) | Official Stellantis spec + body-builder PDFs (ratios, axles, weights) | Curve shapes, Cd/area |
 | Toyota Tundra (2022+) | Toyota press-release figures; weight (Limited CrewMax spec) | AWR10L65 ratios (secondary listings), single 3.31 axle unconfirmed by order guide |
@@ -129,6 +130,9 @@ P(kW) = T(Nm)·rpm/9549 must match advertised power within ~2%).
 - **GM HD**: L8T gas ran the 6L90 6-speed 2020–2023, Allison-branded 10L1000
   from 2024 (modeled with the 10-speed); L5P Duramax has been 10L1000
   throughout, 3.42 axle only. 2024+ L5P figures (470 hp / 975 lb-ft) primary.
+  For 2027 the 8.3L L6P replaces the L5P (order guides list L6P in its
+  place), so the L5P is modeled as 2020–2026 and the L6P added to the 2020+
+  HD entries with `yearStart: 2027`.
 - **GM 1500 2.7L**: current TurboMax calibration (430 lb-ft) primary;
   2019–2021 made 348 lb-ft. It pairs with the 8-speed through 2026.
 - **Ram 1500**: 8HP75 across 5.7 HEMI and both Hurricanes; Hurricane HO is
