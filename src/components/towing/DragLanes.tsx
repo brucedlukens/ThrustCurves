@@ -16,6 +16,21 @@ export interface LaneState {
   finishTimeS: number | null
   /** Distance covered when the target speed was reached (m) */
   finishDistanceM: number | null
+  /** Gear held for this run, if any */
+  heldGear?: number
+  /** Redline speed of the held gear (m/s) */
+  heldRedlineMs?: number
+}
+
+/** Gear readout: shift in progress, bouncing off the limiter in a held gear, or the gear */
+function gearReadout(lane: LaneState): { text: string; className: string } {
+  const { sample, heldGear, heldRedlineMs } = lane
+  if (sample.shifting) return { text: 'shift', className: 'text-signal-hi' }
+  const inHeld = heldGear !== undefined && sample.gear === heldGear
+  if (inHeld && heldRedlineMs !== undefined && sample.speedMs >= heldRedlineMs * 0.995) {
+    return { text: `${gearLabel(sample.gear)} redline`, className: 'text-amber-400' }
+  }
+  return { text: inHeld ? `${gearLabel(sample.gear)} held` : gearLabel(sample.gear), className: 'text-muted-txt' }
 }
 
 interface DragLanesProps {
@@ -223,11 +238,8 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
                 </div>
                 <div className="flex items-baseline gap-2 font-data tabular-nums">
                   <span className="text-sm text-data">{fmtSpeedMs(lane.sample.speedMs, units)}</span>
-                  <span
-                    className={`text-[10px] ${lane.sample.shifting ? 'text-signal-hi' : 'text-muted-txt'}`}
-                    data-testid="lane-gear"
-                  >
-                    {lane.sample.shifting ? 'shift' : gearLabel(lane.sample.gear)}
+                  <span className={`text-[10px] ${gearReadout(lane).className}`} data-testid="lane-gear">
+                    {gearReadout(lane).text}
                   </span>
                 </div>
                 <div className="font-data text-[10px] tabular-nums text-muted-txt">

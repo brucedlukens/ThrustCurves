@@ -119,11 +119,13 @@ animations on `/compare` and `/simulator` later.
       gear, shift flash, gap to leader, finish time. Runs: 0–60 (standing start), 40–60,
       50–70 on the scenario grade. Play/pause/restart, 0.5×–4×, scrubber; speed-vs-time
       chart with playhead, click to seek.
-- [ ] **Hold a gear**: per-truck "Auto / hold Nth" for the animation. Proposed semantics:
-      upshift normally until gear N, then stay there (like a tow/haul gear limit), and
-      model the rev limiter so a held gear plateaus at redline. Needs a `maxGear` option
-      on `IntegrationParams` and a top-speed calc over gears ≤ N
-      (`interpolateGearThrust` currently clamps past redline instead of cutting thrust).
+- [x] **Hold a gear**: per-truck "Auto / Nth" on the acceleration run. The held gear is used
+      whenever it runs at or above the lugging floor (same floor as the gear table); below
+      that, lower gears shift normally and the held gear is taken the moment it's usable —
+      including rolling starts, where it may be higher or lower than the auto gear. Drops
+      back out below 90% of that speed (hysteresis). Rev limiter cuts drive force above
+      redline in the held gear. Gears over redline at the run's start speed are disabled.
+      Engine: `holdGear` / `holdGearMinRpm` on `IntegrationParams`.
 - [ ] **Hill climb**: side view tilted to the scenario grade; each rig climbs and settles at
       its max sustainable speed. Shows grade performance and lugging better than a drag.
 - [ ] **Passing a semi**: top-down highway, each rig passes a truck doing 55 mph; shows

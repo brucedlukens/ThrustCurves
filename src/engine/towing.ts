@@ -212,10 +212,16 @@ export interface TowingRun {
 /**
  * Accelerate the rig from one speed to another on the scenario grade. The run
  * ends at the target speed, or where the rig stops gaining speed if it can't
- * reach it.
+ * reach it. `holdGear` keeps the transmission in that gear whenever it can run
+ * above the lugging floor.
  */
-export function towingRun(base: IntegrationParams, fromMs: number, toMs: number): TowingRun {
-  const { trace } = runIntegration({ ...base, initialSpeedMs: fromMs, stopAtSpeedMs: toMs })
+export function towingRun(
+  base: IntegrationParams,
+  fromMs: number,
+  toMs: number,
+  holdGear?: number,
+): TowingRun {
+  const { trace } = runIntegration({ ...base, initialSpeedMs: fromMs, stopAtSpeedMs: toMs, holdGear })
   const last = trace[trace.length - 1]
   return { trace, finishTimeS: last && last.speedMs >= toMs ? last.timeS : null }
 }
@@ -331,6 +337,8 @@ export function runTowingAnalysis(
     gearEffectiveRatios,
     tireRadiusM: radiusM,
     gradePercent: scenario.gradePercent,
+    // Applies only to runs that hold a gear
+    holdGearMinRpm: minLoadRpm,
   }
   const passing = {
     from40to60S: passingTimeS(integrationBase, 40, 60),

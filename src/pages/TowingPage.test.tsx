@@ -83,4 +83,22 @@ describe('TowingPage', () => {
     expect(screen.getByText('lead')).toBeInTheDocument()
     expect(screen.getByRole('button', { name: 'Play' })).toBeInTheDocument()
   })
+
+  test('holding a gear starts a rolling run in that gear and greys out gears over redline', async () => {
+    const user = userEvent.setup()
+    render(<TowingPage />)
+    await user.selectOptions(screen.getByRole('combobox', { name: /add a truck/i }), 'ford-f-250-super-duty')
+    await user.click(screen.getByRole('button', { name: '50–70 mph' }))
+
+    const hold = screen.getByRole('combobox', { name: /hold gear/i })
+    expect(hold).toHaveValue('auto')
+    // 1st can't reach 50 mph below redline
+    expect(within(hold).getByRole('option', { name: /1st/ })).toBeDisabled()
+
+    await user.selectOptions(hold, '8')
+    expect(screen.getByTestId('lane-gear')).toHaveTextContent('8th held')
+
+    await user.selectOptions(hold, 'auto')
+    expect(screen.getByTestId('lane-gear')).not.toHaveTextContent('held')
+  })
 })
