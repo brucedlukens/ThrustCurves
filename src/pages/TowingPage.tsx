@@ -19,6 +19,7 @@ import TruckPicker from '@/components/towing/TruckPicker'
 import TowingChart from '@/components/towing/TowingChart'
 import TowingSummaryTable from '@/components/towing/TowingSummaryTable'
 import TowingGearTable from '@/components/towing/TowingGearTable'
+import DragRace from '@/components/towing/DragRace'
 
 const DEFAULT_PRESET = TRAILER_PRESETS.find(p => p.id === 'travel-trailer-mid') ?? TRAILER_PRESETS[0]
 
@@ -107,6 +108,8 @@ export default function TowingPage() {
     setSelections(prev => prev.filter(sel => sel.key !== key))
   }
 
+  const trailerPreset = TRAILER_PRESETS.find(p => p.id === scenario.trailerPresetId)
+
   const towScenario = useMemo<TowScenario | null>(() => {
     const preset = TRAILER_PRESETS.find(p => p.id === scenario.trailerPresetId)
     if (!preset) return null
@@ -194,6 +197,15 @@ export default function TowingPage() {
             <TowingChart entries={entries} speedMs={scenario.speedMs} />
           </div>
         </div>
+
+        {entries.length > 0 && trailerPreset && (
+          <div>
+            <SectionLabel hint="Every truck launches together with the trailer on the scenario grade, shifting at its best shift points. Rig lengths are to scale; the camera follows the pack. Click the chart to jump to a moment.">
+              Acceleration Run
+            </SectionLabel>
+            <DragRace entries={entries} trailerCategory={trailerPreset.category} />
+          </div>
+        )}
 
         {entries.length > 0 && (
           <div>

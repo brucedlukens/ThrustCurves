@@ -1,6 +1,6 @@
 import type { CarSpec } from '@/types/car'
 import type { FuelType, TowScenario } from '@/types/truck'
-import type { EnvelopePoint, GearThrustCurve } from '@/types/simulation'
+import type { EnvelopePoint, GearThrustCurve, TimeStep } from '@/types/simulation'
 import { DEFAULT_MODIFICATIONS } from '@/types/config'
 import { DEFAULT_CRR, GRAVITY_MS2 } from '@/data/presets'
 import { airDensityAtAltitude } from './altitude'
@@ -83,6 +83,8 @@ export interface TowingAnalysis {
   passing: { from40to60S: number | null; from50to70S: number | null }
   /** Road-load force vs speed for chart overlay (scenario grade and altitude) */
   roadLoadCurve: { speedMs: number; forceN: number }[]
+  /** Integration inputs for the truck + trailer on the scenario grade, for time-domain runs */
+  integration: IntegrationParams
 }
 
 /**
@@ -200,13 +202,26 @@ export function analyzeGearsAtSpeed(
   })
 }
 
-function passingTimeS(base: IntegrationParams, fromMph: number, toMph: number): number | null {
-  const fromMs = fromMph * MPH_TO_MS
-  const toMs = toMph * MPH_TO_MS
+/** A time-domain acceleration run with the trailer attached */
+export interface TowingRun {
+  trace: TimeStep[]
+  /** Time the target speed was reached (s), or null if the rig tops out below it */
+  finishTimeS: number | null
+}
+
+/**
+ * Accelerate the rig from one speed to another on the scenario grade. The run
+ * ends at the target speed, or where the rig stops gaining speed if it can't
+ * reach it.
+ */
+export function towingRun(base: IntegrationParams, fromMs: number, toMs: number): TowingRun {
   const { trace } = runIntegration({ ...base, initialSpeedMs: fromMs, stopAtSpeedMs: toMs })
   const last = trace[trace.length - 1]
-  if (!last || last.speedMs < toMs) return null
-  return last.timeS
+  return { trace, finishTimeS: last && last.speedMs >= toMs ? last.timeS : null }
+}
+
+function passingTimeS(base: IntegrationParams, fromMph: number, toMph: number): number | null {
+  return towingRun(base, fromMph * MPH_TO_MS, toMph * MPH_TO_MS).finishTimeS
 }
 
 /**
@@ -347,6 +362,7 @@ export function runTowingAnalysis(
     absoluteMaxGrade,
     passing,
     roadLoadCurve,
+    integration: integrationBase,
   }
 }
 
