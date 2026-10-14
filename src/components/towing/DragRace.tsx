@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { towingRun } from '@/engine/towing'
+import { towingHillRun, towingRun } from '@/engine/towing'
 import { playbackDurationS, sampleTrace } from '@/engine/playback'
 import { usePlayback } from '@/hooks/usePlayback'
 import { useUnitStore } from '@/store/unitStore'
@@ -12,20 +12,22 @@ import RaceSpeedChart from './RaceSpeedChart'
 import type { RaceSeries } from './RaceSpeedChart'
 import { fmtSpeedMs, gearLabel } from './format'
 
-interface RunPreset {
-  id: string
-  label: string
-  fromMph: number
-  toMph: number
-}
+type RunPreset =
+  | { id: string; label: string; kind: 'accel'; fromMph: number; toMph: number }
+  /** Arrive at the grade at the scenario's target speed and try to hold it */
+  | { id: string; label: string; kind: 'hill' }
 
 const RUN_PRESETS: RunPreset[] = [
-  { id: '0-60', label: '0–60 mph', fromMph: 0, toMph: 60 },
-  { id: '40-60', label: '40–60 mph', fromMph: 40, toMph: 60 },
-  { id: '50-70', label: '50–70 mph', fromMph: 50, toMph: 70 },
+  { id: '0-60', label: '0–60 mph', kind: 'accel', fromMph: 0, toMph: 60 },
+  { id: '40-60', label: '40–60 mph', kind: 'accel', fromMph: 40, toMph: 60 },
+  { id: '50-70', label: '50–70 mph', kind: 'accel', fromMph: 50, toMph: 70 },
+  { id: 'hill', label: 'Hill climb', kind: 'hill' },
 ]
 
 const RATES = [0.5, 1, 2, 4]
+
+/** Shortest hill-climb playback, so rigs that hold speed are still seen climbing (s) */
+const HILL_MIN_DURATION_S = 8
 
 /** Redline speed of each gear (m/s), index 0 = 1st */
 function gearRedlineSpeeds(entry: TowingEntry): number[] {
@@ -35,6 +37,10 @@ function gearRedlineSpeeds(entry: TowingEntry): number[] {
 interface DragRaceProps {
   entries: TowingEntry[]
   trailerCategory: TrailerCategory
+  /** Scenario target speed (m/s): where the hill climb starts */
+  targetSpeedMs: number
+  /** Scenario grade (%), for tilting the lanes */
+  gradePercent: number
 }
 
 interface ToggleProps {
@@ -66,15 +72,15 @@ const CONTROL_BTN =
   'px-3 py-1 rounded border border-line bg-lift font-display text-xs font-semibold tracking-widest uppercase text-gray-200 hover:border-signal/60 transition-colors'
 
 /**
- * Animated acceleration comparison: every truck launches together with the
- * trailer on the scenario grade, shown as side-by-side lanes plus a synced
- * speed-vs-time chart.
+ * Animated comparison on the scenario grade, shown as side-by-side lanes plus
+ * a synced speed-vs-time chart. Acceleration runs launch every truck together;
+ * the hill climb starts them at the target speed and shows who can hold it.
  */
-export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
+export default function DragRace({ entries, trailerCategory, targetSpeedMs, gradePercent }: DragRaceProps) {
   const units = useUnitStore((s) => s.units)
   const [preset, setPreset] = useState<RunPreset>(RUN_PRESETS[0])
-  const fromMs = mphToMs(preset.fromMph)
-  const toMs = mphToMs(preset.toMph)
+  const fromMs = preset.kind === 'hill' ? targetSpeedMs : mphToMs(preset.fromMph)
+  const toMs = preset.kind === 'hill' ? targetSpeedMs : mphToMs(preset.toMph)
 
   // Chosen hold gear per truck; a choice that's over redline at this run's start speed is ignored
   const [holdChoices, setHoldChoices] = useState<Record<string, number>>({})
@@ -89,16 +95,43 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
     [entries, holdChoices, fromMs],
   )
 
+  const isHill = preset.kind === 'hill'
   const runs = useMemo(
     () =>
-      entries.map((e, i) => ({
-        entry: e,
-        heldGear: heldGears[i],
-        ...towingRun(e.analysis.integration, fromMs, toMs, heldGears[i]),
-      })),
-    [entries, fromMs, toMs, heldGears],
+      entries.map((e, i) => {
+        const heldGear = heldGears[i]
+        if (isHill) {
+          const hill = towingHillRun(e.analysis.integration, fromMs, heldGear)
+          // Unheld, the settled speed is the analysis' exact max sustainable speed
+          // (the same number as the metrics table); held, it's where the run ends
+          const settledSpeedMs =
+            hill.holdsSpeed || heldGear !== undefined || !e.analysis.maxSustainable
+              ? hill.settledSpeedMs
+              : e.analysis.maxSustainable.speedMs
+          return {
+            entry: e,
+            heldGear,
+            trace: hill.trace,
+            finishTimeS: hill.trace.at(-1)?.timeS ?? 0,
+            finishDistanceM: null,
+            hill: { holdsSpeed: hill.holdsSpeed, settledSpeedMs },
+          }
+        }
+        const run = towingRun(e.analysis.integration, fromMs, toMs, heldGear)
+        return {
+          entry: e,
+          heldGear,
+          ...run,
+          finishDistanceM: run.finishTimeS !== null ? (run.trace.at(-1)?.distanceM ?? null) : null,
+          hill: null,
+        }
+      }),
+    [entries, fromMs, toMs, heldGears, isHill],
   )
-  const durationS = useMemo(() => playbackDurationS(runs), [runs])
+  const durationS = useMemo(
+    () => (isHill ? Math.max(HILL_MIN_DURATION_S, playbackDurationS(runs)) : playbackDurationS(runs)),
+    [runs, isHill],
+  )
   const series = useMemo<RaceSeries[]>(
     () => runs.map((r) => ({ key: r.entry.key, name: r.entry.name, color: r.entry.color, trace: r.trace })),
     [runs],
@@ -113,12 +146,21 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
     color: r.entry.color,
     sample: sampleTrace(r.trace, timeS),
     finishTimeS: r.finishTimeS,
-    finishDistanceM: r.finishTimeS !== null ? (r.trace.at(-1)?.distanceM ?? null) : null,
+    finishDistanceM: r.finishDistanceM,
+    finishLabel: r.hill
+      ? r.hill.holdsSpeed
+        ? `holds ${fmtSpeedMs(toMs, units)}`
+        : r.hill.settledSpeedMs > 0.5
+          ? `settles ${fmtSpeedMs(r.hill.settledSpeedMs, units)}`
+          : "can't climb"
+      : r.finishTimeS !== null
+        ? `${r.finishTimeS.toFixed(1)} s`
+        : null,
     heldGear: r.heldGear,
     heldRedlineMs: r.heldGear !== undefined ? gearRedlineSpeeds(r.entry)[r.heldGear - 1] : undefined,
   }))
 
-  const nonFinishers = runs.filter((r) => r.finishTimeS === null)
+  const nonFinishers = isHill ? [] : runs.filter((r) => r.finishTimeS === null)
 
   return (
     <div className="flex flex-col gap-3">
@@ -209,7 +251,7 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
       </div>
 
       <div className="chart-frame p-3">
-        <DragLanes lanes={lanes} timeS={timeS} trailerCategory={trailerCategory} />
+        <DragLanes lanes={lanes} timeS={timeS} trailerCategory={trailerCategory} gradePercent={gradePercent} />
       </div>
 
       {nonFinishers.length > 0 && (
@@ -218,7 +260,7 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
             <span key={r.entry.key}>
               {i > 0 && ' · '}
               <span style={{ color: r.entry.color }}>{r.entry.name}</span> can't reach{' '}
-              {preset.toMph} mph on this grade (settles at {fmtSpeedMs(r.trace.at(-1)?.speedMs ?? 0, units)})
+              {fmtSpeedMs(toMs, units)} on this grade (settles at {fmtSpeedMs(r.trace.at(-1)?.speedMs ?? 0, units)})
             </span>
           ))}
         </p>
@@ -231,6 +273,7 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
           targetMs={toMs}
           timeS={timeS}
           onSeek={playback.seek}
+          zoomSpeedAxis={isHill}
         />
       </div>
     </div>

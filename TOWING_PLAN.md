@@ -126,8 +126,15 @@ animations on `/compare` and `/simulator` later.
       back out below 90% of that speed (hysteresis). Rev limiter cuts drive force above
       redline in the held gear. Gears over redline at the run's start speed are disabled.
       Engine: `holdGear` / `holdGearMinRpm` on `IntegrationParams`.
-- [ ] **Hill climb**: side view tilted to the scenario grade; each rig climbs and settles at
-      its max sustainable speed. Shows grade performance and lugging better than a drag.
+- [x] **Hill climb**: "Hill climb" run option. Rigs reach the scenario grade at the target
+      speed; each holds it at part throttle in its cruising gear (highest gear above the
+      lugging floor with the thrust, or the held gear) or kicks down and slows at full throttle
+      to its max sustainable speed. Lanes tilt with the grade (drawn 3× steeper, capped at
+      20°) — acceleration runs on a grade tilt too. Readout adds rpm and "holds / settles".
+      Engine: `cruiseSpeedMs` on `IntegrationParams` (`holdGearMinRpm` renamed `minLoadRpm`,
+      shared by held and cruising gears); downshifts when losing speed under power (5%
+      hysteresis, no re-upshift into a gear that can't pull); a run slowing toward top speed
+      stops once the deceleration is negligible.
 - [ ] **Passing a semi**: top-down highway, each rig passes a truck doing 55 mph; shows
       passing distance and time in the oncoming lane.
 - [ ] Reuse the lanes/chart on `/compare` (cars, no trailer) once the towing version settles.

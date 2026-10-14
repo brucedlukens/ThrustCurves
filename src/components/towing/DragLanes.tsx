@@ -14,8 +14,10 @@ export interface LaneState {
   sample: PlaybackSample
   /** Time the target speed was reached, or null if this rig never reaches it */
   finishTimeS: number | null
-  /** Distance covered when the target speed was reached (m) */
+  /** Where to mark the finish in the lane (m), or null for no marker */
   finishDistanceM: number | null
+  /** Shown in the readout (and on the marker) once `finishTimeS` passes, e.g. "14.5 s" */
+  finishLabel: string | null
   /** Gear held for this run, if any */
   heldGear?: number
   /** Redline speed of the held gear (m/s) */
@@ -37,6 +39,8 @@ interface DragLanesProps {
   lanes: LaneState[]
   timeS: number
   trailerCategory: TrailerCategory
+  /** Road grade from the start line on (%); drawn steeper than life so it reads */
+  gradePercent?: number
 }
 
 const LANE_H = 52
@@ -59,6 +63,10 @@ const MAX_RIG_PX_PER_M = 9
 /** Track padding left of the last rig and right of the leader (px) */
 const PAD_L = 12
 const PAD_R = 24
+
+/** Grades are drawn this many times steeper than life, up to MAX_VISUAL_SLOPE_DEG */
+const GRADE_EXAGGERATION = 3
+const MAX_VISUAL_SLOPE_DEG = 20
 
 /** Lane-divider dash pattern: 10 ft dash, 30 ft gap (US standard) */
 const DASH_M = 3.05
@@ -182,7 +190,7 @@ function Rig({ x, y, scale, color, shape }: RigProps) {
  * scale as the rigs, and the camera zooms out as the pack spreads so everyone
  * stays in view.
  */
-export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesProps) {
+export default function DragLanes({ lanes, timeS, trailerCategory, gradePercent = 0 }: DragLanesProps) {
   const units = useUnitStore((s) => s.units)
   const imperial = units === 'imperial'
   const trackRef = useRef<HTMLDivElement>(null)
@@ -209,7 +217,22 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
   const rightM = leftM + windowM
   const toX = (d: number) => (d - leftM) * scale
 
-  const height = lanes.length * LANE_H + RULER_H
+  // Grade: the road is flat before the start line and climbs (or falls) after
+  // it at a fixed on-screen slope. `lift` is the road's height at screen x,
+  // relative to the left edge, so the camera follows the road vertically too.
+  const maxSlope = Math.tan((MAX_VISUAL_SLOPE_DEG * Math.PI) / 180)
+  const slope = Math.max(-maxSlope, Math.min(maxSlope, (gradePercent / 100) * GRADE_EXAGGERATION))
+  const x0 = toX(0)
+  const lift = (x: number) => slope * (Math.max(x, x0) - Math.max(0, x0))
+  // Constant headroom for the steepest the view can get, so the layout never jumps
+  const extraH = Math.abs(slope) * width
+  const topPad = slope > 0 ? extraH : 0
+  const laneTop = (i: number, x: number) => topPad + i * LANE_H - lift(x)
+  const lanesH = lanes.length * LANE_H
+  const height = lanesH + extraH + RULER_H
+  const rulerY = lanesH + extraH
+  // Polyline breakpoints across the view: left edge, start line, right edge
+  const xs = [0, Math.min(width, Math.max(0, x0)), width]
 
   const dashes: number[] = []
   for (let k = Math.floor(leftM / DASH_CYCLE_M); k * DASH_CYCLE_M < rightM; k++) dashes.push(k * DASH_CYCLE_M)
@@ -225,7 +248,7 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
   return (
     <div className="flex gap-3">
       {/* Per-lane readouts */}
-      <div className="w-36 sm:w-48 shrink-0" style={{ paddingBottom: RULER_H }}>
+      <div className="w-36 sm:w-48 shrink-0" style={{ paddingTop: topPad }}>
         {lanes.map((lane) => {
           const gap = lead - lane.sample.distanceM
           const finished = lane.finishTimeS !== null && timeS >= lane.finishTimeS
@@ -241,10 +264,21 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
                   <span className={`text-[10px] ${gearReadout(lane).className}`} data-testid="lane-gear">
                     {gearReadout(lane).text}
                   </span>
+                  <span className="hidden sm:inline text-[10px] text-muted-txt">
+                    {Math.round(lane.sample.rpm).toLocaleString()} rpm
+                  </span>
                 </div>
-                <div className="font-data text-[10px] tabular-nums text-muted-txt">
+                <div
+                  className="font-data text-[10px] tabular-nums text-muted-txt whitespace-nowrap overflow-hidden text-ellipsis"
+                  title={finished && lane.finishLabel ? lane.finishLabel : undefined}
+                >
                   {gap < 0.05 ? 'lead' : `−${fmtGap(gap)}`}
-                  {finished && <span className="text-emerald-400"> · {lane.finishTimeS!.toFixed(1)} s</span>}
+                  {finished && lane.finishLabel && (
+                    <span className="text-emerald-400" data-testid="lane-finish">
+                      {' '}
+                      · {lane.finishLabel}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
@@ -262,79 +296,104 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
           className="block"
         >
           {lanes.map((lane, i) => (
-            <rect
+            <polygon
               key={`bg-${lane.key}`}
-              x={0}
-              y={i * LANE_H}
-              width={width}
-              height={LANE_H}
+              points={[
+                ...xs.map((x) => `${x},${laneTop(i, x)}`),
+                ...[...xs].reverse().map((x) => `${x},${laneTop(i + 1, x)}`),
+              ].join(' ')}
               fill={i % 2 === 0 ? '#111116' : '#131319'}
             />
           ))}
 
           {/* Lane dividers scroll past as the camera moves */}
           {lanes.slice(1).map((lane, i) =>
-            dashes.map((d) => (
-              <rect
-                key={`dash-${lane.key}-${d}`}
-                x={toX(d)}
-                y={(i + 1) * LANE_H - 1}
-                width={DASH_M * scale}
-                height={2}
-                fill="#3a3a48"
-              />
-            )),
+            dashes.map((d) => {
+              const xa = toX(d)
+              const xb = toX(d + DASH_M)
+              return (
+                <line
+                  key={`dash-${lane.key}-${d}`}
+                  x1={xa}
+                  y1={laneTop(i + 1, xa)}
+                  x2={xb}
+                  y2={laneTop(i + 1, xb)}
+                  stroke="#3a3a48"
+                  strokeWidth={2}
+                />
+              )
+            }),
           )}
 
-          {/* Start line */}
-          <line x1={toX(0)} y1={0} x2={toX(0)} y2={lanes.length * LANE_H} stroke="#8888a0" strokeWidth={2} />
+          {/* Start line (where the grade begins) */}
+          <line x1={x0} y1={laneTop(0, x0)} x2={x0} y2={laneTop(lanes.length, x0)} stroke="#8888a0" strokeWidth={2} />
+          {/* Grade caption in the empty corner above the road: top-left uphill, top-right downhill */}
+          {gradePercent !== 0 && (
+            <text
+              x={slope > 0 ? 4 : width - 4}
+              y={11}
+              textAnchor={slope > 0 ? 'start' : 'end'}
+              fill="#8888a0"
+              fontSize={9}
+              fontFamily='"JetBrains Mono", monospace'
+            >
+              {gradePercent > 0 ? '+' : ''}
+              {gradePercent}% grade (drawn {GRADE_EXAGGERATION}× steeper)
+            </text>
+          )}
 
           {lanes.map((lane, i) => {
-            const y = (i + 1) * LANE_H - 6
             const finished = lane.finishTimeS !== null && timeS >= lane.finishTimeS
+            const xFront = toX(lane.sample.distanceM)
+            const yFront = laneTop(i + 1, xFront) - 6
+            // Tilt the rig along the road under it (partly on the grade while crossing the start)
+            const tiltDeg = (Math.atan2(lift(xFront) - lift(xFront - rigPx), rigPx) * 180) / Math.PI
+            const xFinish = lane.finishDistanceM !== null ? toX(lane.finishDistanceM) : 0
             return (
               <g key={lane.key}>
                 {finished && lane.finishDistanceM !== null && (
                   <g>
                     <line
-                      x1={toX(lane.finishDistanceM)}
-                      y1={i * LANE_H + 4}
-                      x2={toX(lane.finishDistanceM)}
-                      y2={(i + 1) * LANE_H - 4}
+                      x1={xFinish}
+                      y1={laneTop(i, xFinish) + 4}
+                      x2={xFinish}
+                      y2={laneTop(i + 1, xFinish) - 4}
                       stroke={lane.color}
                       strokeWidth={1.5}
                       strokeDasharray="3 2"
                     />
                     <text
-                      x={toX(lane.finishDistanceM) + 3}
-                      y={i * LANE_H + 12}
+                      x={xFinish + 3}
+                      y={laneTop(i, xFinish) + 12}
                       fill={lane.color}
                       fontSize={9}
                       fontFamily='"JetBrains Mono", monospace'
                     >
-                      {lane.finishTimeS!.toFixed(1)}s
+                      {lane.finishLabel}
                     </text>
                   </g>
                 )}
-                <Rig x={toX(lane.sample.distanceM)} y={y} scale={rigScale} color={lane.color} shape={shape} />
+                <g transform={tiltDeg !== 0 ? `rotate(${-tiltDeg} ${xFront} ${yFront})` : undefined}>
+                  <Rig x={xFront} y={yFront} scale={rigScale} color={lane.color} shape={shape} />
+                </g>
               </g>
             )
           })}
 
           {/* Distance ruler */}
-          <line x1={0} y1={lanes.length * LANE_H} x2={width} y2={lanes.length * LANE_H} stroke="#2a2a35" />
+          <line x1={0} y1={rulerY} x2={width} y2={rulerY} stroke="#2a2a35" />
           {ticks.map((d) => (
             <g key={`tick-${d}`}>
               <line
                 x1={toX(d)}
-                y1={lanes.length * LANE_H}
+                y1={rulerY}
                 x2={toX(d)}
-                y2={lanes.length * LANE_H + 4}
+                y2={rulerY + 4}
                 stroke="#2a2a35"
               />
               <text
                 x={toX(d)}
-                y={lanes.length * LANE_H + 15}
+                y={rulerY + 15}
                 textAnchor="middle"
                 fill="#55556a"
                 fontSize={9}

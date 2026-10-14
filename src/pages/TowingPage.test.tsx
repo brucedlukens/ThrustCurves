@@ -53,7 +53,7 @@ describe('TowingPage', () => {
     await user.selectOptions(addSelect, 'ford-f-250-super-duty')
     await user.selectOptions(addSelect, 'toyota-tundra')
 
-    expect(screen.getByText(/Acceleration Run/i)).toBeInTheDocument()
+    expect(screen.getByText(/Animated Runs/i)).toBeInTheDocument()
     expect(screen.getByRole('img', { name: /rigs accelerating/i })).toBeInTheDocument()
     // Everyone starts in 1st from a standstill
     expect(screen.getAllByTestId('lane-gear').map(el => el.textContent)).toEqual(['1st', '1st'])
@@ -100,5 +100,25 @@ describe('TowingPage', () => {
 
     await user.selectOptions(hold, 'auto')
     expect(screen.getByTestId('lane-gear')).not.toHaveTextContent('held')
+  })
+
+  test('the hill climb shows who holds the target speed and who settles lower', async () => {
+    const user = userEvent.setup()
+    render(<TowingPage />)
+    await user.click(screen.getByRole('button', { name: '8%' }))
+    const addSelect = screen.getByRole('combobox', { name: /add a truck/i })
+    await user.selectOptions(addSelect, 'ford-f-150') // 3.0 EcoBoost: can't hold 65 on 8% with the default trailer
+    await user.selectOptions(addSelect, 'ford-f-250-super-duty') // 6.8 V8: can
+
+    await user.click(screen.getByRole('button', { name: 'Hill climb' }))
+    // Everyone starts at the target speed
+    // (the scenario's "65 mph" speed chip is a button; the lane readouts are spans)
+    expect(screen.getAllByText('65 mph').filter(el => el.tagName === 'SPAN')).toHaveLength(2)
+
+    const scrubber = screen.getByRole('slider', { name: /playback position/i })
+    fireEvent.change(scrubber, { target: { value: scrubber.getAttribute('max') } })
+    const finishes = screen.getAllByTestId('lane-finish').map(el => el.textContent)
+    expect(finishes[0]).toMatch(/settles \d+ mph/)
+    expect(finishes[1]).toMatch(/holds 65 mph/)
   })
 })

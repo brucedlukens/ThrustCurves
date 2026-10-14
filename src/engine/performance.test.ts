@@ -291,7 +291,7 @@ describe('runIntegration with a held gear', () => {
   it('runs lower gears only until the held gear reaches its minimum rpm, then jumps to it', () => {
     // 3rd at 1500 rpm = 15 m/s, before the normal 1→2 shift at 20 m/s
     const { trace } = runIntegration(
-      params([constant(6000), constant(3500), constant(2500)], { holdGear: 3, holdGearMinRpm: 1500, stopAtSpeedMs: 30 }),
+      params([constant(6000), constant(3500), constant(2500)], { holdGear: 3, minLoadRpm: 1500, stopAtSpeedMs: 30 }),
     )
     expect(gearsInOrder(trace)).toEqual([1, 3])
     const firstInThird = trace.find((s) => s.gear === 3)!
@@ -327,7 +327,7 @@ describe('runIntegration with a held gear', () => {
     const { trace } = runIntegration(
       params([firstGear, constant(3500), constant(2500)], {
         holdGear: 3,
-        holdGearMinRpm: 2000, // 3rd usable from 20 m/s
+        minLoadRpm: 2000, // 3rd usable from 20 m/s
         initialSpeedMs: 21,
         stopAtSpeedMs: 30,
         gradePercent: 20.8,
@@ -347,5 +347,120 @@ describe('runIntegration with a held gear', () => {
     )
     expect(trace.length).toBeGreaterThan(1)
     expect(trace[trace.length - 1].speedMs).toBeLessThan(13)
+  })
+
+  describe('downshifting while losing speed', () => {
+    it('does not downshift for the speed dip during a slow upshift on a grade', () => {
+      // ~3000 N of grade; a 1.5 s shift sheds ~11% of the 20 m/s shift speed, but 2nd still pulls
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], {
+          shiftTimeMs: 1500,
+          gradePercent: 15.4,
+          stopAtSpeedMs: 30,
+        }),
+      )
+      expect(gearsInOrder(trace)).toEqual([1, 2])
+      expect(trace[trace.length - 1].speedMs).toBeGreaterThanOrEqual(30)
+    })
+
+    it('drops back once from a gear that cannot pull, without hunting', () => {
+      // ~4000 N of grade: 1st (6000 N) pulls, 2nd (3500 N) can't. Shift into 2nd at
+      // 15 m/s, below 1st's 20 m/s top speed on this grade.
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], {
+          gradePercent: 20.8,
+          stopAtSpeedMs: 30,
+          shiftPoints: [
+            { fromGear: 1, toGear: 2, speedMs: 15, rpm: 3750 },
+            { fromGear: 2, toGear: 3, speedMs: 35, rpm: 5000 },
+          ],
+        }),
+      )
+      expect(gearsInOrder(trace)).toEqual([1, 2, 1])
+      // Back in 1st it runs on past the 15 m/s shift point instead of re-entering 2nd
+      expect(trace[trace.length - 1].speedMs).toBeGreaterThan(19)
+    })
+  })
+
+  describe('cruise speed', () => {
+    it('holds the cruise speed at part throttle in the highest gear that can', () => {
+      // 3rd (2500 N) has plenty for flat ground with no drag
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], { initialSpeedMs: 25, cruiseSpeedMs: 25 }),
+      )
+      expect(trace.every((s) => s.gear === 3)).toBe(true)
+      expect(trace.every((s) => Math.abs(s.speedMs - 25) < 1e-9)).toBe(true)
+      expect(trace[0].thrustN).toBeCloseTo(0, 6) // no resistance to overcome
+      // Ends once steady rather than running to the time limit
+      expect(trace[trace.length - 1].timeS).toBeLessThan(1.5)
+    })
+
+    it('picks a lower gear when the top gear lacks the thrust on a grade', () => {
+      // ~3000 N of grade: 3rd (2500 N) can't, 2nd (3500 N) can at 25 m/s
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], {
+          initialSpeedMs: 25,
+          cruiseSpeedMs: 25,
+          gradePercent: 15.4,
+        }),
+      )
+      expect(gearsInOrder(trace)).toEqual([2])
+      expect(trace[trace.length - 1].speedMs).toBeCloseTo(25, 6)
+    })
+
+    it('kicks down and slows when no usable gear can hold the speed', () => {
+      // ~4000 N of grade: only 1st pulls, and only below 12 m/s
+      const firstGear = (rpm: number) => (rpm < 3000 ? 6000 : 3000)
+      const { trace } = runIntegration(
+        params([firstGear, constant(3500), constant(2500)], {
+          initialSpeedMs: 18,
+          cruiseSpeedMs: 18,
+          gradePercent: 20.8,
+        }),
+      )
+      expect(trace[trace.length - 1].speedMs).toBeLessThan(13)
+      expect(trace.some((s) => s.gear === 1)).toBe(true)
+    })
+
+    it('ignores gears below the minimum load rpm when choosing the cruising gear', () => {
+      // 3rd at 12 m/s = 1200 rpm; with a 1500 rpm floor it is not usable, 2nd (1714 rpm) is
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], {
+          initialSpeedMs: 12,
+          cruiseSpeedMs: 12,
+          minLoadRpm: 1500,
+        }),
+      )
+      expect(gearsInOrder(trace)).toEqual([2])
+    })
+
+    it('cruises in the held gear when it can hold the speed', () => {
+      const { trace } = runIntegration(
+        params([constant(6000), constant(3500), constant(2500)], {
+          initialSpeedMs: 25,
+          cruiseSpeedMs: 25,
+          holdGear: 2,
+        }),
+      )
+      expect(gearsInOrder(trace)).toEqual([2])
+    })
+  })
+})
+
+describe('cruising with a curve that starts at 0 rpm (EV)', () => {
+  // Single gear, speed = 0.01·rpm, thrust flat from 0 rpm
+  const ev = makeSimpleParams({
+    gearCurves: [
+      {
+        gear: 1,
+        points: Array.from({ length: 11 }, (_, i) => ({ speedMs: i * 5, forceN: 3000, rpm: i * 500 })),
+        speedRangeMs: [0, 50],
+      },
+    ],
+  })
+
+  it('can cruise (a 0 rpm start does not make the gear unusable)', () => {
+    const { trace } = runIntegration({ ...ev, initialSpeedMs: 20, cruiseSpeedMs: 20 })
+    expect(trace.every((s) => Math.abs(s.speedMs - 20) < 1e-9)).toBe(true)
   })
 })

@@ -5,6 +5,7 @@ export interface PlaybackSample {
   speedMs: number
   distanceM: number
   gear: number
+  rpm: number
   /** Gear change in progress (no drive force) */
   shifting: boolean
 }
@@ -16,11 +17,11 @@ export interface PlaybackSample {
  * out keeps rolling at its plateau speed.
  */
 export function sampleTrace(trace: TimeStep[], t: number): PlaybackSample {
-  if (trace.length === 0) return { speedMs: 0, distanceM: 0, gear: 1, shifting: false }
+  if (trace.length === 0) return { speedMs: 0, distanceM: 0, gear: 1, rpm: 0, shifting: false }
 
   const first = trace[0]
   if (t <= first.timeS) {
-    return { speedMs: first.speedMs, distanceM: first.distanceM, gear: first.gear, shifting: false }
+    return { speedMs: first.speedMs, distanceM: first.distanceM, gear: first.gear, rpm: first.rpm, shifting: false }
   }
 
   const last = trace[trace.length - 1]
@@ -29,6 +30,7 @@ export function sampleTrace(trace: TimeStep[], t: number): PlaybackSample {
       speedMs: last.speedMs,
       distanceM: last.distanceM + last.speedMs * (t - last.timeS),
       gear: last.gear,
+      rpm: last.rpm,
       shifting: false,
     }
   }
@@ -48,6 +50,8 @@ export function sampleTrace(trace: TimeStep[], t: number): PlaybackSample {
     speedMs: a.speedMs + f * (b.speedMs - a.speedMs),
     distanceM: a.distanceM + f * (b.distanceM - a.distanceM),
     gear: a.gear,
+    // Within one gear rpm tracks speed; across a shift keep the step's own value
+    rpm: a.gear === b.gear ? a.rpm + f * (b.rpm - a.rpm) : a.rpm,
     // The integrator cuts drive force to zero for the duration of a gear change
     shifting: a.thrustN === 0,
   }
