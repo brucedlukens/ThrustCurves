@@ -121,4 +121,31 @@ describe('TowingPage', () => {
     expect(finishes[0]).toMatch(/settles \d+ mph/)
     expect(finishes[1]).toMatch(/holds 65 mph/)
   })
+
+  test('passing a semi shows a top-down view and each rig\'s pass time and clear road needed', async () => {
+    const user = userEvent.setup()
+    render(<TowingPage />)
+    const addSelect = screen.getByRole('combobox', { name: /add a truck/i })
+    await user.selectOptions(addSelect, 'ford-f-250-super-duty')
+    await user.selectOptions(addSelect, 'toyota-tundra')
+
+    await user.click(screen.getByRole('button', { name: 'Pass a semi' }))
+    expect(screen.getByRole('img', { name: /rigs passing a semi/i })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Semi at 55 mph' })).toHaveAttribute('aria-pressed', 'true')
+    // Both start at the semi's speed
+    expect(screen.getAllByText('55 mph').filter(el => el.tagName === 'SPAN')).toHaveLength(2)
+
+    const scrubber = screen.getByRole('slider', { name: /playback position/i })
+    fireEvent.change(scrubber, { target: { value: scrubber.getAttribute('max') } })
+    const results = screen.getAllByTestId('lane-finish').map(el => el.textContent)
+    expect(results).toHaveLength(2)
+    for (const r of results) expect(r).toMatch(/^\d+\.\d s · [\d,]+ ft clear$/)
+
+    // A faster semi takes longer to pass
+    const before = parseFloat(results[0]!)
+    await user.click(screen.getByRole('button', { name: 'Semi at 65 mph' }))
+    const scrubber2 = screen.getByRole('slider', { name: /playback position/i })
+    fireEvent.change(scrubber2, { target: { value: scrubber2.getAttribute('max') } })
+    expect(parseFloat(screen.getAllByTestId('lane-finish')[0].textContent!)).toBeGreaterThan(before)
+  })
 })

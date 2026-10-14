@@ -135,8 +135,13 @@ animations on `/compare` and `/simulator` later.
       shared by held and cruising gears); downshifts when losing speed under power (5%
       hysteresis, no re-upshift into a gear that can't pull); a run slowing toward top speed
       stops once the deceleration is negligible.
-- [ ] **Passing a semi**: top-down highway, each rig passes a truck doing 55 mph; shows
-      passing distance and time in the oncoming lane.
+- [x] **Passing a semi**: "Pass a semi" run option, top-down with the camera riding with the
+      semi (72 ft, at 45/55/65 mph). Each rig starts at the semi's speed 100 ft behind,
+      pulls out, accelerates at full throttle up to the passing limit (70 / 80 mph / none),
+      and pulls back in 100 ft ahead of the semi's front; 2 s per lane change. Reports time
+      from pull-out to back in lane and the clear road needed (pass distance + an oncoming car
+      at the semi's speed). Engine: `towingPass()`; rig geometry moved to
+      `src/data/rigGeometry.ts`.
 - [ ] Reuse the lanes/chart on `/compare` (cars, no trailer) once the towing version settles.
 
 Known simplifications in the animation: standing starts use the 1st-gear thrust at idle

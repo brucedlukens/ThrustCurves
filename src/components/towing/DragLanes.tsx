@@ -4,7 +4,9 @@ import { useUnitStore } from '@/store/unitStore'
 import { M_TO_FT } from '@/utils/units'
 import type { PlaybackSample } from '@/engine/playback'
 import type { TrailerCategory } from '@/types/truck'
-import { fmtSpeedMs, gearLabel } from './format'
+import { HITCH_GAP_M, TRAILER_SHAPES, TRUCK_LEN_M, rigLengthM } from '@/data/rigGeometry'
+import type { TrailerShape } from '@/data/rigGeometry'
+import LaneReadout from './LaneReadout'
 
 /** One rig's lane at the current playback time */
 export interface LaneState {
@@ -24,17 +26,6 @@ export interface LaneState {
   heldRedlineMs?: number
 }
 
-/** Gear readout: shift in progress, bouncing off the limiter in a held gear, or the gear */
-function gearReadout(lane: LaneState): { text: string; className: string } {
-  const { sample, heldGear, heldRedlineMs } = lane
-  if (sample.shifting) return { text: 'shift', className: 'text-signal-hi' }
-  const inHeld = heldGear !== undefined && sample.gear === heldGear
-  if (inHeld && heldRedlineMs !== undefined && sample.speedMs >= heldRedlineMs * 0.995) {
-    return { text: `${gearLabel(sample.gear)} redline`, className: 'text-amber-400' }
-  }
-  return { text: inHeld ? `${gearLabel(sample.gear)} held` : gearLabel(sample.gear), className: 'text-muted-txt' }
-}
-
 interface DragLanesProps {
   lanes: LaneState[]
   timeS: number
@@ -46,10 +37,6 @@ interface DragLanesProps {
 const LANE_H = 52
 const RULER_H = 22
 
-/** Crew cab, short bed (m) */
-const TRUCK_LEN_M = 6.2
-/** Bumper-pull hitch gap between the truck and trailer (m) */
-const HITCH_GAP_M = 0.9
 /** Heights above the ground (m) */
 const WHEEL_R_M = 0.4
 const BODY_BOTTOM_M = 0.55
@@ -71,28 +58,6 @@ const MAX_VISUAL_SLOPE_DEG = 20
 /** Lane-divider dash pattern: 10 ft dash, 30 ft gap (US standard) */
 const DASH_M = 3.05
 const DASH_CYCLE_M = 12.19
-
-interface TrailerShape {
-  lengthM: number
-  /** Fifth wheels and goosenecks ride over the bed instead of trailing behind it */
-  overBedM: number
-  body: 'box' | 'deck'
-}
-
-const TRAILER_SHAPES: Record<TrailerCategory, TrailerShape> = {
-  flatbed: { lengthM: 6.1, overBedM: 0, body: 'deck' },
-  enclosed: { lengthM: 7.3, overBedM: 0, body: 'box' },
-  travel: { lengthM: 8.5, overBedM: 0, body: 'box' },
-  fifthwheel: { lengthM: 10.4, overBedM: 1.8, body: 'box' },
-  boat: { lengthM: 7.3, overBedM: 0, body: 'deck' },
-  gooseneck: { lengthM: 9.8, overBedM: 1.8, body: 'deck' },
-}
-
-/** Overall rig length from front bumper to trailer tail (m) */
-function rigLengthM(shape: TrailerShape): number {
-  const gap = shape.overBedM > 0 ? -shape.overBedM : HITCH_GAP_M
-  return TRUCK_LEN_M + gap + shape.lengthM
-}
 
 /** A 1/2/5 × 10ⁿ step giving roughly `targetTicks` ticks across `span` */
 function niceStep(span: number, targetTicks: number): number {
@@ -253,25 +218,17 @@ export default function DragLanes({ lanes, timeS, trailerCategory, gradePercent 
           const gap = lead - lane.sample.distanceM
           const finished = lane.finishTimeS !== null && timeS >= lane.finishTimeS
           return (
-            <div key={lane.key} className="flex gap-2 items-center" style={{ height: LANE_H }}>
-              <div className="w-1 self-stretch my-2 rounded-full" style={{ backgroundColor: lane.color }} />
-              <div className="min-w-0 flex-1">
-                <div className="font-display text-[11px] tracking-wide text-label truncate" title={lane.name}>
-                  {lane.name}
-                </div>
-                <div className="flex items-baseline gap-2 font-data tabular-nums">
-                  <span className="text-sm text-data">{fmtSpeedMs(lane.sample.speedMs, units)}</span>
-                  <span className={`text-[10px] ${gearReadout(lane).className}`} data-testid="lane-gear">
-                    {gearReadout(lane).text}
-                  </span>
-                  <span className="hidden sm:inline text-[10px] text-muted-txt">
-                    {Math.round(lane.sample.rpm).toLocaleString()} rpm
-                  </span>
-                </div>
-                <div
-                  className="font-data text-[10px] tabular-nums text-muted-txt whitespace-nowrap overflow-hidden text-ellipsis"
-                  title={finished && lane.finishLabel ? lane.finishLabel : undefined}
-                >
+            <LaneReadout
+              key={lane.key}
+              name={lane.name}
+              color={lane.color}
+              sample={lane.sample}
+              heldGear={lane.heldGear}
+              heldRedlineMs={lane.heldRedlineMs}
+              height={LANE_H}
+              detailTitle={finished && lane.finishLabel ? lane.finishLabel : undefined}
+              detail={
+                <>
                   {gap < 0.05 ? 'lead' : `−${fmtGap(gap)}`}
                   {finished && lane.finishLabel && (
                     <span className="text-emerald-400" data-testid="lane-finish">
@@ -279,9 +236,9 @@ export default function DragLanes({ lanes, timeS, trailerCategory, gradePercent 
                       · {lane.finishLabel}
                     </span>
                   )}
-                </div>
-              </div>
-            </div>
+                </>
+              }
+            />
           )
         })}
       </div>
