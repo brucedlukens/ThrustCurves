@@ -31,12 +31,19 @@ const RULER_H = 22
 const TRUCK_LEN_M = 6.2
 /** Bumper-pull hitch gap between the truck and trailer (m) */
 const HITCH_GAP_M = 0.9
-/** Pixel heights: horizontal lengths are to scale, heights stay readable at any zoom */
-const WHEEL_R = 4
-const HOOD_H = 9
-const CAB_H = 16
-const BOX_H = 20
-const DECK_H = 4
+/** Heights above the ground (m) */
+const WHEEL_R_M = 0.4
+const BODY_BOTTOM_M = 0.55
+const HOOD_TOP_M = 1.35
+const ROOF_M = 1.95
+const BOX_TOP_M = 3.0
+const DECK_TOP_M = 0.85
+
+/** Rig drawing scale cap (px/m); rigs keep true proportions at one fixed size */
+const MAX_RIG_PX_PER_M = 9
+/** Track padding left of the last rig and right of the leader (px) */
+const PAD_L = 12
+const PAD_R = 24
 
 /** Lane-divider dash pattern: 10 ft dash, 30 ft gap (US standard) */
 const DASH_M = 3.05
@@ -84,9 +91,11 @@ interface RigProps {
 }
 
 function Rig({ x, y, scale, color, shape }: RigProps) {
+  // Uniform scale in both directions so proportions never change
   const m = (metres: number) => metres * scale
-  const axleY = y - WHEEL_R
-  const bodyBottom = axleY - 1
+  const h = (metres: number) => y - metres * scale
+  const axleY = h(WHEEL_R_M)
+  const bodyBottom = h(BODY_BOTTOM_M)
 
   // Truck, facing right: hood, cab, bed
   const hoodEnd = x - m(1.7)
@@ -94,13 +103,13 @@ function Rig({ x, y, scale, color, shape }: RigProps) {
   const bedEnd = x - m(TRUCK_LEN_M)
   const truckPath = [
     `M ${x} ${bodyBottom}`,
-    `L ${x} ${bodyBottom - HOOD_H + 2}`,
-    `L ${x - m(0.3)} ${bodyBottom - HOOD_H}`,
-    `L ${hoodEnd} ${bodyBottom - HOOD_H}`,
-    `L ${hoodEnd - m(0.6)} ${bodyBottom - CAB_H}`,
-    `L ${cabEnd} ${bodyBottom - CAB_H}`,
-    `L ${cabEnd} ${bodyBottom - HOOD_H}`,
-    `L ${bedEnd} ${bodyBottom - HOOD_H}`,
+    `L ${x} ${h(HOOD_TOP_M - 0.2)}`,
+    `L ${x - m(0.3)} ${h(HOOD_TOP_M)}`,
+    `L ${hoodEnd} ${h(HOOD_TOP_M)}`,
+    `L ${hoodEnd - m(0.6)} ${h(ROOF_M)}`,
+    `L ${cabEnd} ${h(ROOF_M)}`,
+    `L ${cabEnd} ${h(HOOD_TOP_M)}`,
+    `L ${bedEnd} ${h(HOOD_TOP_M)}`,
     `L ${bedEnd} ${bodyBottom}`,
     'Z',
   ].join(' ')
@@ -108,28 +117,28 @@ function Rig({ x, y, scale, color, shape }: RigProps) {
   const trailerFront = shape.overBedM > 0 ? bedEnd + m(shape.overBedM) : bedEnd - m(HITCH_GAP_M)
   const trailerTail = trailerFront - m(shape.lengthM)
   const trailerAxle = trailerTail + m(shape.lengthM * 0.3)
-  const bodyH = shape.body === 'box' ? BOX_H : DECK_H
+  const trailerTop = h(shape.body === 'box' ? BOX_TOP_M : DECK_TOP_M)
 
   return (
     <g>
       {/* Tongue / neck */}
       {shape.overBedM === 0 ? (
-        <line x1={trailerFront} y1={bodyBottom - 2} x2={bedEnd} y2={bodyBottom - 2} stroke="#55556a" strokeWidth={1.5} />
-      ) : (
         <line
           x1={trailerFront}
-          y1={bodyBottom - bodyH}
-          x2={trailerFront}
-          y2={bodyBottom - HOOD_H}
+          y1={h(BODY_BOTTOM_M + 0.2)}
+          x2={bedEnd}
+          y2={h(BODY_BOTTOM_M + 0.2)}
           stroke="#55556a"
-          strokeWidth={2}
+          strokeWidth={1.5}
         />
+      ) : (
+        <line x1={trailerFront} y1={trailerTop} x2={trailerFront} y2={h(HOOD_TOP_M)} stroke="#55556a" strokeWidth={2} />
       )}
       <rect
         x={trailerTail}
-        y={bodyBottom - bodyH}
+        y={trailerTop}
         width={Math.max(1, trailerFront - trailerTail)}
-        height={bodyH}
+        height={Math.max(1, bodyBottom - trailerTop)}
         rx={1.5}
         fill="#2a2a35"
         stroke={color}
@@ -139,23 +148,24 @@ function Rig({ x, y, scale, color, shape }: RigProps) {
       {/* Windows */}
       <rect
         x={cabEnd + m(0.2)}
-        y={bodyBottom - CAB_H + 2.5}
+        y={h(ROOF_M - 0.12)}
         width={Math.max(0, hoodEnd - m(0.5) - cabEnd - m(0.2))}
-        height={4}
+        height={m(0.4)}
         fill="#0f0f12"
         opacity={0.7}
       />
       {[x - m(1.0), x - m(4.9), trailerAxle].map((wx, i) => (
-        <circle key={i} cx={wx} cy={axleY} r={WHEEL_R} fill="#0f0f12" stroke="#8888a0" strokeWidth={1} />
+        <circle key={i} cx={wx} cy={axleY} r={m(WHEEL_R_M)} fill="#0f0f12" stroke="#8888a0" strokeWidth={1} />
       ))}
     </g>
   )
 }
 
 /**
- * Side-by-side lanes with every rig drawn to scale lengthwise. The camera
- * follows the pack and zooms out as it spreads, so gaps read directly as
- * distance lost.
+ * Side-by-side lanes. Rigs are drawn at one fixed, true-proportion size; the
+ * road and distance ruler zoom instead. At the start the road is at the same
+ * scale as the rigs, and the camera zooms out as the pack spreads so everyone
+ * stays in view.
  */
 export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesProps) {
   const units = useUnitStore((s) => s.units)
@@ -166,17 +176,22 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
   const shape = TRAILER_SHAPES[trailerCategory]
   const rigLen = rigLengthM(shape)
 
-  // Camera: fit the pack (rear of the last rig to the front of the leader) with
-  // a minimum zoom, biased so there is more road ahead than behind
+  const rigScale = Math.min(MAX_RIG_PX_PER_M, width / (rigLen * 3))
+  const rigPx = rigLen * rigScale
+
+  // Camera: fit the pack, from the rear of the last rig to the front of the
+  // leader. The road starts at the rigs' own scale and only zooms out from there.
   const distances = lanes.map((l) => l.sample.distanceM)
   const lead = Math.max(0, ...distances)
   const tail = Math.min(lead, ...distances)
-  const packLeft = tail - rigLen
-  const span = lead - packLeft
-  const windowM = Math.max(rigLen * 3.5, span * 1.25)
-  const leftM = packLeft - (windowM - span) * 0.3
+  const roadPx = Math.max(1, width - PAD_L - PAD_R - rigPx)
+  const spreadM = lead - tail
+  const scale = Math.min(rigScale, roadPx / Math.max(spreadM, 1e-6))
+  // Spare room while the pack is tight goes mostly ahead of the leader
+  const spareM = roadPx / scale - spreadM
+  const leftM = tail - (PAD_L + rigPx) / scale - spareM * 0.3
+  const windowM = width / scale
   const rightM = leftM + windowM
-  const scale = width / windowM
   const toX = (d: number) => (d - leftM) * scale
 
   const height = lanes.length * LANE_H + RULER_H
@@ -186,7 +201,7 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
 
   const unitPerM = imperial ? M_TO_FT : 1
   const distUnit = imperial ? 'ft' : 'm'
-  const tickStepM = niceStep(windowM * unitPerM, Math.max(2, Math.floor(width / 110))) / unitPerM
+  const tickStepM = niceStep(windowM * unitPerM, Math.max(3, Math.floor(width / 110))) / unitPerM
   const ticks: number[] = []
   for (let k = Math.ceil(leftM / tickStepM); k * tickStepM <= rightM; k++) ticks.push(k * tickStepM)
 
@@ -289,7 +304,7 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
                     </text>
                   </g>
                 )}
-                <Rig x={toX(lane.sample.distanceM)} y={y} scale={scale} color={lane.color} shape={shape} />
+                <Rig x={toX(lane.sample.distanceM)} y={y} scale={rigScale} color={lane.color} shape={shape} />
               </g>
             )
           })}
@@ -313,7 +328,8 @@ export default function DragLanes({ lanes, timeS, trailerCategory }: DragLanesPr
                 fontSize={9}
                 fontFamily='"JetBrains Mono", monospace'
               >
-                {Math.round(d * unitPerM).toLocaleString()} {distUnit}
+                {/* + 0 normalizes -0 so the start tick never reads "-0" */}
+                {(Math.round(d * unitPerM) + 0).toLocaleString()} {distUnit}
               </text>
             </g>
           ))}
