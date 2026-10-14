@@ -6,6 +6,7 @@ import {
   maxSustainableSpeed,
   analyzeGearsAtSpeed,
   runTowingAnalysis,
+  towingRun,
   MIN_LOAD_RPM_DIESEL,
   MIN_LOAD_RPM_GAS,
 } from './towing'
@@ -275,6 +276,30 @@ describe('runTowingAnalysis', () => {
     const steep: TowScenario = { ...scenario, gradePercent: 30, trailer: { ...scenario.trailer, massKg: 12000 } }
     const analysis = runTowingAnalysis(truck, steep, 'gas')
     expect(analysis.passing.from40to60S).toBeNull()
+  })
+
+  it('a run from standstill starts at 0 in 1st and finishes at the target speed', () => {
+    const analysis = runTowingAnalysis(truck, scenario, 'gas')
+    const run = towingRun(analysis.integration, 0, V60)
+    expect(run.trace[0].speedMs).toBe(0)
+    expect(run.trace[0].gear).toBe(1)
+    expect(run.finishTimeS).not.toBeNull()
+    expect(run.trace.at(-1)!.speedMs).toBeGreaterThanOrEqual(V60)
+    expect(run.trace.at(-1)!.timeS).toBe(run.finishTimeS)
+  })
+
+  it('a passing run matches the summary passing time', () => {
+    const analysis = runTowingAnalysis(truck, scenario, 'gas')
+    const run = towingRun(analysis.integration, 40 * MPH_TO_MS, 60 * MPH_TO_MS)
+    expect(run.finishTimeS).toBe(analysis.passing.from40to60S)
+  })
+
+  it('a run that cannot reach the target has no finish time and ends at a plateau', () => {
+    const steep: TowScenario = { ...scenario, gradePercent: 30, trailer: { ...scenario.trailer, massKg: 12000 } }
+    const analysis = runTowingAnalysis(truck, steep, 'gas')
+    const run = towingRun(analysis.integration, 0, V60)
+    expect(run.finishTimeS).toBeNull()
+    expect(run.trace.at(-1)!.speedMs).toBeLessThan(V60)
   })
 
   it('applies the diesel lugging floor to gear usability', () => {

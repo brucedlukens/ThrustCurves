@@ -105,3 +105,30 @@ literature interference/shielding factors for truck+trailer combined drag.
 - [x] Introspection run (process docs + .claude/memory/MEMORY.md updated on this branch)
 - [ ] Manual testing by user (npm run dev in the worktree → /towing), then merge + worktree cleanup
 - [ ] (LATER, separate effort) previous-generation lookbacks to 2016
+
+## Animated comparisons (roadmap)
+
+Goal: make differences between trucks visible, not just tabulated. Built on
+`towingRun()` (`src/engine/towing.ts`), which returns the full integration trace for a
+run with the trailer attached, and `src/engine/playback.ts` / `src/hooks/usePlayback.ts`,
+which are simulator-agnostic (any `TimeStep[]` trace) so the same pieces can drive
+animations on `/compare` and `/simulator` later.
+
+- [x] **Drag lanes + synced speed chart**: side-by-side lanes, rigs drawn to scale
+      lengthwise, camera follows the pack and zooms out as it spreads; per-lane speed,
+      gear, shift flash, gap to leader, finish time. Runs: 0–60 (standing start), 40–60,
+      50–70 on the scenario grade. Play/pause/restart, 0.5×–4×, scrubber; speed-vs-time
+      chart with playhead, click to seek.
+- [ ] **Hold a gear**: per-truck "Auto / hold Nth" for the animation. Proposed semantics:
+      upshift normally until gear N, then stay there (like a tow/haul gear limit), and
+      model the rev limiter so a held gear plateaus at redline. Needs a `maxGear` option
+      on `IntegrationParams` and a top-speed calc over gears ≤ N
+      (`interpolateGearThrust` currently clamps past redline instead of cutting thrust).
+- [ ] **Hill climb**: side view tilted to the scenario grade; each rig climbs and settles at
+      its max sustainable speed. Shows grade performance and lugging better than a drag.
+- [ ] **Passing a semi**: top-down highway, each rig passes a truck doing 55 mph; shows
+      passing distance and time in the oncoming lane.
+- [ ] Reuse the lanes/chart on `/compare` (cars, no trailer) once the towing version settles.
+
+Known simplifications in the animation: standing starts use the 1st-gear thrust at idle
+speed (no torque-converter multiplication or launch slip), same as the main simulator's 0–60.
