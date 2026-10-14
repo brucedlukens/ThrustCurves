@@ -114,8 +114,8 @@ run with the trailer attached, and `src/engine/playback.ts` / `src/hooks/usePlay
 which are simulator-agnostic (any `TimeStep[]` trace) so the same pieces can drive
 animations on `/compare` and `/simulator` later.
 
-- [x] **Drag lanes + synced speed chart**: side-by-side lanes, rigs drawn to scale
-      lengthwise, camera follows the pack and zooms out as it spreads; per-lane speed,
+- [x] **Drag lanes + synced speed chart**: side-by-side lanes, rigs drawn at a fixed
+      true-proportion size, road/ruler start at the rigs' scale and zoom out as the pack spreads; per-lane speed,
       gear, shift flash, gap to leader, finish time. Runs: 0–60 (standing start), 40–60,
       50–70 on the scenario grade. Play/pause/restart, 0.5×–4×, scrubber; speed-vs-time
       chart with playhead, click to seek.

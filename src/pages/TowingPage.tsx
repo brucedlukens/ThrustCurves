@@ -200,7 +200,7 @@ export default function TowingPage() {
 
         {entries.length > 0 && trailerPreset && (
           <div>
-            <SectionLabel hint="Every truck launches together with the trailer on the scenario grade, shifting at its best shift points. Rig lengths are to scale; the camera follows the pack. Click the chart to jump to a moment.">
+            <SectionLabel hint="Every truck launches together with the trailer on the scenario grade, shifting at its best shift points. Rigs start out at the same scale as the road; the camera zooms out as they spread, so read gaps off the distance ruler. Click the chart to jump to a moment.">
               Acceleration Run
             </SectionLabel>
             <DragRace entries={entries} trailerCategory={trailerPreset.category} />
