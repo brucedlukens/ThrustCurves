@@ -30,6 +30,8 @@ interface RaceSpeedChartProps {
   onSeek: (timeS: number) => void
   /** Fit the speed axis to the data instead of starting at zero (small speed changes) */
   zoomSpeedAxis?: boolean
+  /** Label on the reference speed line */
+  targetLabel?: string
 }
 
 /** Chart sample interval (s) */
@@ -55,10 +57,18 @@ interface CurvesProps {
   targetMs: number
   onSeek: (timeS: number) => void
   zoomSpeedAxis: boolean
+  targetLabel: string
 }
 
 /** The curves alone, memoized so playback frames only move the playhead */
-const Curves = memo(function Curves({ series, durationS, targetMs, onSeek, zoomSpeedAxis }: CurvesProps) {
+const Curves = memo(function Curves({
+  series,
+  durationS,
+  targetMs,
+  onSeek,
+  zoomSpeedAxis,
+  targetLabel,
+}: CurvesProps) {
   const units = useUnitStore((s) => s.units)
   const factor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
   const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
@@ -122,7 +132,7 @@ const Curves = memo(function Curves({ series, durationS, targetMs, onSeek, zoomS
           y={parseFloat((targetMs * factor).toFixed(1))}
           stroke="#8888a0"
           strokeDasharray="4 4"
-          label={{ value: 'target', position: 'insideTopLeft', style: { fill: '#8888a0', fontSize: 10 } }}
+          label={{ value: targetLabel, position: 'insideTopLeft', style: { fill: '#8888a0', fontSize: 10 } }}
         />
         {series.map((s, j) => (
           <Line
@@ -151,13 +161,16 @@ export default function RaceSpeedChart({
   timeS,
   onSeek,
   zoomSpeedAxis = false,
+  targetLabel = 'target',
 }: RaceSpeedChartProps) {
   const frac = durationS > 0 ? timeS / durationS : 0
   const plotLeft = MARGIN.left + Y_AXIS_W
   const plotInset = plotLeft + MARGIN.right
   return (
     <div className="relative w-full h-full cursor-crosshair">
-      <Curves series={series} durationS={durationS} targetMs={targetMs} onSeek={onSeek} zoomSpeedAxis={zoomSpeedAxis} />
+      <Curves series={series} durationS={durationS} targetMs={targetMs} onSeek={onSeek} zoomSpeedAxis={zoomSpeedAxis}
+        targetLabel={targetLabel}
+      />
       <div
         aria-hidden
         className="absolute w-px bg-data/60 pointer-events-none"

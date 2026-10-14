@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
-import { towingHillRun, towingRun } from '@/engine/towing'
+import { towingHillRun, towingPass, towingRun } from '@/engine/towing'
+import { TRAILER_SHAPES, rigLengthM } from '@/data/rigGeometry'
 import { playbackDurationS, sampleTrace } from '@/engine/playback'
 import { usePlayback } from '@/hooks/usePlayback'
 import { useUnitStore } from '@/store/unitStore'
@@ -8,21 +9,33 @@ import type { TrailerCategory } from '@/types/truck'
 import type { TowingEntry } from './entry'
 import DragLanes from './DragLanes'
 import type { LaneState } from './DragLanes'
+import PassLanes from './PassLanes'
+import type { PassLaneState } from './PassLanes'
 import RaceSpeedChart from './RaceSpeedChart'
 import type { RaceSeries } from './RaceSpeedChart'
-import { fmtSpeedMs, gearLabel } from './format'
+import { fmtDistanceM, fmtSpeedMs, gearLabel } from './format'
 
 type RunPreset =
   | { id: string; label: string; kind: 'accel'; fromMph: number; toMph: number }
   /** Arrive at the grade at the scenario's target speed and try to hold it */
   | { id: string; label: string; kind: 'hill' }
+  /** Pull out from behind a semi, pass it, and pull back in */
+  | { id: string; label: string; kind: 'pass' }
 
 const RUN_PRESETS: RunPreset[] = [
   { id: '0-60', label: '0–60 mph', kind: 'accel', fromMph: 0, toMph: 60 },
   { id: '40-60', label: '40–60 mph', kind: 'accel', fromMph: 40, toMph: 60 },
   { id: '50-70', label: '50–70 mph', kind: 'accel', fromMph: 50, toMph: 70 },
   { id: 'hill', label: 'Hill climb', kind: 'hill' },
+  { id: 'pass', label: 'Pass a semi', kind: 'pass' },
 ]
+
+const SEMI_SPEEDS_MPH = [45, 55, 65]
+/** Fastest the rig will go while passing; null = no limit */
+const PASS_LIMITS_MPH: (number | null)[] = [70, 80, null]
+
+/** Playback when nobody gets past the semi (s) */
+const NO_PASS_DURATION_S = 15
 
 const RATES = [0.5, 1, 2, 4]
 
@@ -79,8 +92,14 @@ const CONTROL_BTN =
 export default function DragRace({ entries, trailerCategory, targetSpeedMs, gradePercent }: DragRaceProps) {
   const units = useUnitStore((s) => s.units)
   const [preset, setPreset] = useState<RunPreset>(RUN_PRESETS[0])
-  const fromMs = preset.kind === 'hill' ? targetSpeedMs : mphToMs(preset.fromMph)
-  const toMs = preset.kind === 'hill' ? targetSpeedMs : mphToMs(preset.toMph)
+  const [semiMph, setSemiMph] = useState(55)
+  const [passLimitMph, setPassLimitMph] = useState<number | null>(70)
+  const passLimitMs = passLimitMph !== null ? mphToMs(passLimitMph) : undefined
+  const semiSpeedMs = mphToMs(semiMph)
+  // Start speed, and the chart's reference speed
+  const fromMs =
+    preset.kind === 'hill' ? targetSpeedMs : preset.kind === 'pass' ? semiSpeedMs : mphToMs(preset.fromMph)
+  const toMs = preset.kind === 'accel' ? mphToMs(preset.toMph) : fromMs
 
   // Chosen hold gear per truck; a choice that's over redline at this run's start speed is ignored
   const [holdChoices, setHoldChoices] = useState<Record<string, number>>({})
@@ -96,10 +115,24 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
   )
 
   const isHill = preset.kind === 'hill'
+  const isPass = preset.kind === 'pass'
+  const rigLen = rigLengthM(TRAILER_SHAPES[trailerCategory])
   const runs = useMemo(
     () =>
       entries.map((e, i) => {
         const heldGear = heldGears[i]
+        if (isPass) {
+          const pass = towingPass(e.analysis.integration, fromMs, rigLen, { holdGear: heldGear, maxSpeedMs: passLimitMs })
+          return {
+            entry: e,
+            heldGear,
+            trace: pass.trace,
+            finishTimeS: pass.passTimeS,
+            finishDistanceM: null,
+            hill: null,
+            pass,
+          }
+        }
         if (isHill) {
           const hill = towingHillRun(e.analysis.integration, fromMs, heldGear)
           // Unheld, the settled speed is the analysis' exact max sustainable speed
@@ -115,6 +148,7 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
             finishTimeS: hill.trace.at(-1)?.timeS ?? 0,
             finishDistanceM: null,
             hill: { holdsSpeed: hill.holdsSpeed, settledSpeedMs },
+            pass: null,
           }
         }
         const run = towingRun(e.analysis.integration, fromMs, toMs, heldGear)
@@ -124,14 +158,20 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
           ...run,
           finishDistanceM: run.finishTimeS !== null ? (run.trace.at(-1)?.distanceM ?? null) : null,
           hill: null,
+          pass: null,
         }
       }),
-    [entries, fromMs, toMs, heldGears, isHill],
+    [entries, fromMs, toMs, heldGears, isHill, isPass, rigLen, passLimitMs],
   )
-  const durationS = useMemo(
-    () => (isHill ? Math.max(HILL_MIN_DURATION_S, playbackDurationS(runs)) : playbackDurationS(runs)),
-    [runs, isHill],
-  )
+  const durationS = useMemo(() => {
+    if (isHill) return Math.max(HILL_MIN_DURATION_S, playbackDurationS(runs))
+    if (isPass) {
+      // Pass times run past the end of the trace when a rig tops out mid-pass
+      const ends = runs.map((r) => r.finishTimeS).filter((t): t is number => t !== null)
+      return ends.length > 0 ? Math.max(...ends) + 1.5 : NO_PASS_DURATION_S
+    }
+    return playbackDurationS(runs)
+  }, [runs, isHill, isPass])
   const series = useMemo<RaceSeries[]>(
     () => runs.map((r) => ({ key: r.entry.key, name: r.entry.name, color: r.entry.color, trace: r.trace })),
     [runs],
@@ -160,6 +200,21 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
     heldRedlineMs: r.heldGear !== undefined ? gearRedlineSpeeds(r.entry)[r.heldGear - 1] : undefined,
   }))
 
+  const passLanes: PassLaneState[] = runs.map((r) => ({
+    key: r.entry.key,
+    name: r.entry.name,
+    color: r.entry.color,
+    sample: sampleTrace(r.trace, timeS),
+    heldGear: r.heldGear,
+    heldRedlineMs: r.heldGear !== undefined ? gearRedlineSpeeds(r.entry)[r.heldGear - 1] : undefined,
+    clearTimeS: r.pass?.clearTimeS ?? null,
+    passTimeS: r.pass?.passTimeS ?? null,
+    resultLabel:
+      r.pass && r.pass.passTimeS !== null && r.pass.sightDistanceM !== null
+        ? `${r.pass.passTimeS.toFixed(1)} s · ${fmtDistanceM(r.pass.sightDistanceM, units)} clear`
+        : null,
+  }))
+
   const nonFinishers = isHill ? [] : runs.filter((r) => r.finishTimeS === null)
 
   return (
@@ -173,6 +228,35 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
             </Toggle>
           ))}
         </div>
+        {isPass && (
+          <div className="flex items-center gap-1.5" role="group" aria-label="Semi speed">
+            <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+              Semi at
+            </span>
+            {SEMI_SPEEDS_MPH.map((mph) => (
+              <Toggle key={mph} active={mph === semiMph} onClick={() => setSemiMph(mph)} label={`Semi at ${mph} mph`}>
+                {mph} mph
+              </Toggle>
+            ))}
+          </div>
+        )}
+        {isPass && (
+          <div className="flex items-center gap-1.5" role="group" aria-label="Passing speed limit">
+            <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+              Pass up to
+            </span>
+            {PASS_LIMITS_MPH.map((mph) => (
+              <Toggle
+                key={mph ?? 'none'}
+                active={mph === passLimitMph}
+                onClick={() => setPassLimitMph(mph)}
+                label={mph !== null ? `Pass up to ${mph} mph` : 'No passing speed limit'}
+              >
+                {mph !== null ? `${mph} mph` : 'No limit'}
+              </Toggle>
+            ))}
+          </div>
+        )}
         <div className="flex gap-1.5">
           {playback.playing ? (
             <button type="button" className={CONTROL_BTN} onClick={playback.pause}>
@@ -225,7 +309,6 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
                 {redlines.map((redlineMs, i) => (
                   <option key={i + 1} value={i + 1} disabled={redlineMs < fromMs}>
                     {gearLabel(i + 1)}
-                    {redlineMs < fromMs ? ' (over redline)' : ''}
                   </option>
                 ))}
               </select>
@@ -251,7 +334,11 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
       </div>
 
       <div className="chart-frame p-3">
-        <DragLanes lanes={lanes} timeS={timeS} trailerCategory={trailerCategory} gradePercent={gradePercent} />
+        {isPass ? (
+          <PassLanes lanes={passLanes} timeS={timeS} semiSpeedMs={semiSpeedMs} trailerCategory={trailerCategory} />
+        ) : (
+          <DragLanes lanes={lanes} timeS={timeS} trailerCategory={trailerCategory} gradePercent={gradePercent} />
+        )}
       </div>
 
       {nonFinishers.length > 0 && (
@@ -259,8 +346,10 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
           {nonFinishers.map((r, i) => (
             <span key={r.entry.key}>
               {i > 0 && ' · '}
-              <span style={{ color: r.entry.color }}>{r.entry.name}</span> can't reach{' '}
-              {fmtSpeedMs(toMs, units)} on this grade (settles at {fmtSpeedMs(r.trace.at(-1)?.speedMs ?? 0, units)})
+              <span style={{ color: r.entry.color }}>{r.entry.name}</span>{' '}
+              {isPass
+                ? `can't get past a semi doing ${fmtSpeedMs(semiSpeedMs, units)} on this grade (tops out at ${fmtSpeedMs(r.trace.at(-1)?.speedMs ?? 0, units)})`
+                : `can't reach ${fmtSpeedMs(toMs, units)} on this grade (settles at ${fmtSpeedMs(r.trace.at(-1)?.speedMs ?? 0, units)})`}
             </span>
           ))}
         </p>
@@ -274,6 +363,7 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
           timeS={timeS}
           onSeek={playback.seek}
           zoomSpeedAxis={isHill}
+          targetLabel={isPass ? 'semi' : 'target'}
         />
       </div>
     </div>

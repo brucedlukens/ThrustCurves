@@ -38,3 +38,10 @@ export function fmtAltitude(m: number, units: UnitSystem): string {
     ? `${Math.round(mToFt(m)).toLocaleString()} ft`
     : `${Math.round(m).toLocaleString()} m`
 }
+
+/** Format a distance (m internal) in display units */
+export function fmtDistanceM(m: number, units: UnitSystem): string {
+  return units === 'imperial'
+    ? `${Math.round(mToFt(m)).toLocaleString()} ft`
+    : `${Math.round(m).toLocaleString()} m`
+}

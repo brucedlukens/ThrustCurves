@@ -8,6 +8,8 @@ import {
   runTowingAnalysis,
   towingRun,
   towingHillRun,
+  towingPass,
+  LANE_CHANGE_S,
   MIN_LOAD_RPM_DIESEL,
   MIN_LOAD_RPM_GAS,
 } from './towing'
@@ -330,6 +332,48 @@ describe('runTowingAnalysis', () => {
     // Flat torque makes the approach slow, so only check it's heading there from above
     expect(run.settledSpeedMs).toBeGreaterThan(analysis.maxSustainable!.speedMs - 0.5)
     expect(run.settledSpeedMs).toBeLessThan(analysis.maxSustainable!.speedMs + 2)
+  })
+
+  it('passes a semi: gains the needed distance, then pulls back in after the lane change', () => {
+    const analysis = runTowingAnalysis(truck, { ...scenario, gradePercent: 0 }, 'gas')
+    const semi = 55 * MPH_TO_MS
+    const pass = towingPass(analysis.integration, semi, 15)
+    expect(pass.clearTimeS).not.toBeNull()
+    expect(pass.passTimeS).toBeCloseTo(pass.clearTimeS! + LANE_CHANGE_S, 9)
+    // At the clear time the rig has gained exactly the needed distance on the semi
+    const t = pass.clearTimeS!
+    const i = pass.trace.findIndex((s) => s.timeS >= t)
+    const gained = pass.trace[i].distanceM - semi * pass.trace[i].timeS
+    expect(gained).toBeGreaterThanOrEqual(pass.gainNeededM - 0.5)
+    expect(gained).toBeLessThan(pass.gainNeededM + 0.5)
+    // Sight distance adds an oncoming car at the semi's speed
+    expect(pass.sightDistanceM!).toBeCloseTo(pass.passDistanceM! + semi * pass.passTimeS!, 6)
+  })
+
+  it('a longer rig takes longer to pass', () => {
+    const analysis = runTowingAnalysis(truck, { ...scenario, gradePercent: 0 }, 'gas')
+    const short = towingPass(analysis.integration, 55 * MPH_TO_MS, 10)
+    const long = towingPass(analysis.integration, 55 * MPH_TO_MS, 18)
+    expect(long.passTimeS!).toBeGreaterThan(short.passTimeS!)
+  })
+
+  it('a speed limit caps the pass speed and makes the pass longer', () => {
+    const analysis = runTowingAnalysis(truck, { ...scenario, gradePercent: 0 }, 'gas')
+    const semi = 55 * MPH_TO_MS
+    const cap = 65 * MPH_TO_MS
+    const free = towingPass(analysis.integration, semi, 15)
+    const capped = towingPass(analysis.integration, semi, 15, { maxSpeedMs: cap })
+    // (one integration step may overshoot by a hair before part throttle takes over)
+    expect(Math.max(...capped.trace.map((s) => s.speedMs))).toBeLessThan(cap + 0.05)
+    expect(capped.passTimeS!).toBeGreaterThan(free.passTimeS!)
+  })
+
+  it('cannot pass when it cannot outrun the semi on the grade', () => {
+    const steep: TowScenario = { ...scenario, gradePercent: 30, trailer: { ...scenario.trailer, massKg: 12000 } }
+    const analysis = runTowingAnalysis(truck, steep, 'gas')
+    const pass = towingPass(analysis.integration, 55 * MPH_TO_MS, 15)
+    expect(pass.passTimeS).toBeNull()
+    expect(pass.sightDistanceM).toBeNull()
   })
 
   it('applies the diesel lugging floor to gear usability', () => {

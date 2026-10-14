@@ -10,6 +10,7 @@ import { speedMsToRpm } from './drivetrain'
 import { computeAllGearCurves, computeEnvelope, findShiftPoints, interpolateGearThrust } from './thrust'
 import { runIntegration } from './performance'
 import type { IntegrationParams } from './performance'
+import { sampleTrace } from './playback'
 
 /**
  * Minimum engine RPM for sustained pulling with a locked torque converter.
@@ -252,6 +253,79 @@ export function towingHillRun(base: IntegrationParams, speedMs: number, holdGear
     settledSpeedMs,
     settledGear: last?.gear ?? 1,
     holdsSpeed: trace.every((s) => s.speedMs >= speedMs * 0.999),
+  }
+}
+
+/** Tractor with a 53 ft trailer, bumper to tail (m) */
+export const SEMI_LENGTH_M = 21.9
+/** Following gap before pulling out, and the gap ahead of the semi before pulling back in (100 ft) */
+export const PASS_GAP_M = 30.5
+/** Time for one lane change (s) */
+export const LANE_CHANGE_S = 2
+/** Passes that would take longer than this are reported as not possible (s) */
+const MAX_PASS_S = 90
+
+/** Passing a semi with the trailer attached */
+export interface PassRun {
+  trace: TimeStep[]
+  /** Relative distance the rig must gain on the semi to complete the pass (m) */
+  gainNeededM: number
+  /** When the rig is far enough ahead to start pulling back in (s), or null if it never is */
+  clearTimeS: number | null
+  /** Back in its lane: clear time plus the lane change (s) */
+  passTimeS: number | null
+  /** Distance covered from pulling out to being back in (m) */
+  passDistanceM: number | null
+  /** Clear road needed ahead: the pass distance plus what an oncoming car at the semi's speed covers meanwhile (m) */
+  sightDistanceM: number | null
+}
+
+/**
+ * Pass a semi doing `semiSpeedMs` on the scenario grade. The rig starts at the
+ * semi's speed, PASS_GAP_M behind it, pulls out and accelerates at full
+ * throttle up to `maxSpeedMs` (then holds it), and pulls back in once it is
+ * PASS_GAP_M ahead of the semi's front. The semi holds its speed. Oncoming
+ * traffic is assumed to match the semi.
+ */
+export function towingPass(
+  base: IntegrationParams,
+  semiSpeedMs: number,
+  rigLengthM: number,
+  options: { holdGear?: number; maxSpeedMs?: number } = {},
+): PassRun {
+  const { trace } = runIntegration({
+    ...base,
+    initialSpeedMs: semiSpeedMs,
+    holdGear: options.holdGear,
+    cruiseSpeedMs: options.maxSpeedMs,
+  })
+  const gainNeededM = PASS_GAP_M + SEMI_LENGTH_M + PASS_GAP_M + rigLengthM
+  const gainAt = (i: number) => trace[i].distanceM - semiSpeedMs * trace[i].timeS
+
+  let clearTimeS: number | null = null
+  const i = trace.findIndex((_, k) => gainAt(k) >= gainNeededM)
+  if (i > 0) {
+    const f = (gainNeededM - gainAt(i - 1)) / (gainAt(i) - gainAt(i - 1))
+    clearTimeS = trace[i - 1].timeS + f * (trace[i].timeS - trace[i - 1].timeS)
+  } else if (i === -1 && trace.length > 0) {
+    // Past the end of the trace the rig holds its last speed
+    const last = trace[trace.length - 1]
+    const closingMs = last.speedMs - semiSpeedMs
+    if (closingMs > 0.01) clearTimeS = last.timeS + (gainNeededM - gainAt(trace.length - 1)) / closingMs
+  }
+  if (clearTimeS === null || clearTimeS + LANE_CHANGE_S > MAX_PASS_S) {
+    return { trace, gainNeededM, clearTimeS: null, passTimeS: null, passDistanceM: null, sightDistanceM: null }
+  }
+
+  const passTimeS = clearTimeS + LANE_CHANGE_S
+  const passDistanceM = sampleTrace(trace, passTimeS).distanceM
+  return {
+    trace,
+    gainNeededM,
+    clearTimeS,
+    passTimeS,
+    passDistanceM,
+    sightDistanceM: passDistanceM + semiSpeedMs * passTimeS,
   }
 }
 

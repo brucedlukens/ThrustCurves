@@ -200,7 +200,7 @@ export default function TowingPage() {
 
         {entries.length > 0 && trailerPreset && (
           <div>
-            <SectionLabel hint="Acceleration runs launch every truck together; the hill climb starts them on the grade at the target speed and shows who holds it (cruising gear, part throttle) and who kicks down and settles lower. Held gears are used whenever they're above the lugging floor. Rigs start out at the same scale as the road; the camera zooms out as they spread, so read gaps off the distance ruler. Click the chart to jump to a moment.">
+            <SectionLabel hint="Acceleration runs launch every truck together; the hill climb starts them on the grade at the target speed and shows who holds it (cruising gear, part throttle) and who kicks down and settles lower. Pass a semi pulls each rig out from 100 ft behind a semi, passes at full throttle up to the passing limit, and pulls back in 100 ft ahead; the clear road it needs adds an oncoming car at the semi's speed. Held gears are used whenever they're above the lugging floor. Rigs start out at the same scale as the road; the camera zooms out as they spread, so read gaps off the distance ruler. Click the chart to jump to a moment.">
               Animated Runs
             </SectionLabel>
             <DragRace
