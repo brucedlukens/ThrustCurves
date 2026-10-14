@@ -226,6 +226,35 @@ export function towingRun(
   return { trace, finishTimeS: last && last.speedMs >= toMs ? last.timeS : null }
 }
 
+/** A hill climb: arrive at the grade at the target speed and try to hold it */
+export interface HillClimbRun {
+  trace: TimeStep[]
+  /** Speed the rig settles at on the grade (m/s) */
+  settledSpeedMs: number
+  /** Gear it settles in */
+  settledGear: number
+  /** Held the target speed the whole way */
+  holdsSpeed: boolean
+}
+
+/**
+ * Hill climb on the scenario grade, starting at `speedMs`. The driver holds
+ * that speed at part throttle in the highest gear above the lugging floor that
+ * can (or the held gear); when none can, the transmission kicks down and the
+ * rig slows at full throttle until it settles at its max sustainable speed.
+ */
+export function towingHillRun(base: IntegrationParams, speedMs: number, holdGear?: number): HillClimbRun {
+  const { trace } = runIntegration({ ...base, initialSpeedMs: speedMs, cruiseSpeedMs: speedMs, holdGear })
+  const last = trace[trace.length - 1]
+  const settledSpeedMs = last?.speedMs ?? 0
+  return {
+    trace,
+    settledSpeedMs,
+    settledGear: last?.gear ?? 1,
+    holdsSpeed: trace.every((s) => s.speedMs >= speedMs * 0.999),
+  }
+}
+
 function passingTimeS(base: IntegrationParams, fromMph: number, toMph: number): number | null {
   return towingRun(base, fromMph * MPH_TO_MS, toMph * MPH_TO_MS).finishTimeS
 }
@@ -337,8 +366,8 @@ export function runTowingAnalysis(
     gearEffectiveRatios,
     tireRadiusM: radiusM,
     gradePercent: scenario.gradePercent,
-    // Applies only to runs that hold a gear
-    holdGearMinRpm: minLoadRpm,
+    // Lugging floor for held and cruising gears
+    minLoadRpm,
   }
   const passing = {
     from40to60S: passingTimeS(integrationBase, 40, 60),

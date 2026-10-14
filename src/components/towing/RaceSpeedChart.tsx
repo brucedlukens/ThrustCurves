@@ -28,6 +28,8 @@ interface RaceSpeedChartProps {
   targetMs: number
   timeS: number
   onSeek: (timeS: number) => void
+  /** Fit the speed axis to the data instead of starting at zero (small speed changes) */
+  zoomSpeedAxis?: boolean
 }
 
 /** Chart sample interval (s) */
@@ -52,10 +54,11 @@ interface CurvesProps {
   durationS: number
   targetMs: number
   onSeek: (timeS: number) => void
+  zoomSpeedAxis: boolean
 }
 
 /** The curves alone, memoized so playback frames only move the playhead */
-const Curves = memo(function Curves({ series, durationS, targetMs, onSeek }: CurvesProps) {
+const Curves = memo(function Curves({ series, durationS, targetMs, onSeek, zoomSpeedAxis }: CurvesProps) {
   const units = useUnitStore((s) => s.units)
   const factor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
   const speedUnit = units === 'imperial' ? 'mph' : 'km/h'
@@ -65,7 +68,7 @@ const Curves = memo(function Curves({ series, durationS, targetMs, onSeek }: Cur
     const t = i * STEP_S
     const row: Record<string, number> = { t: parseFloat(t.toFixed(2)) }
     series.forEach((s, j) => {
-      row[`v${j}`] = parseFloat((sampleTrace(s.trace, t).speedMs * factor).toFixed(1))
+      row[`v${j}`] = parseFloat((sampleTrace(s.trace, t).speedMs * factor).toFixed(2))
     })
     data.push(row)
   }
@@ -95,6 +98,8 @@ const Curves = memo(function Curves({ series, durationS, targetMs, onSeek }: Cur
         />
         <YAxis
           width={Y_AXIS_W}
+          domain={zoomSpeedAxis ? [(min: number) => Math.floor(min - 3), (max: number) => Math.ceil(max + 2)] : undefined}
+          allowDecimals={false}
           label={{
             value: `SPEED (${speedUnit.toUpperCase()})`,
             angle: -90,
@@ -139,13 +144,20 @@ const Curves = memo(function Curves({ series, durationS, targetMs, onSeek }: Cur
  * Speed vs time for every rig, with a playhead synced to the lane animation.
  * Clicking the chart seeks playback to that time.
  */
-export default function RaceSpeedChart({ series, durationS, targetMs, timeS, onSeek }: RaceSpeedChartProps) {
+export default function RaceSpeedChart({
+  series,
+  durationS,
+  targetMs,
+  timeS,
+  onSeek,
+  zoomSpeedAxis = false,
+}: RaceSpeedChartProps) {
   const frac = durationS > 0 ? timeS / durationS : 0
   const plotLeft = MARGIN.left + Y_AXIS_W
   const plotInset = plotLeft + MARGIN.right
   return (
     <div className="relative w-full h-full cursor-crosshair">
-      <Curves series={series} durationS={durationS} targetMs={targetMs} onSeek={onSeek} />
+      <Curves series={series} durationS={durationS} targetMs={targetMs} onSeek={onSeek} zoomSpeedAxis={zoomSpeedAxis} />
       <div
         aria-hidden
         className="absolute w-px bg-data/60 pointer-events-none"

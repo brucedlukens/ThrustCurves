@@ -22,6 +22,15 @@ const DISTANCE_QUARTER_MILE_M = 402.336
 /** A held gear drops out below this fraction of its minimum speed (hysteresis against hunting) */
 const HOLD_DROP_FRACTION = 0.9
 
+/** Holding the cruise speed steadily this long ends the run: the rest is steady state (s) */
+const CRUISE_SETTLE_S = 1
+
+/** Slowing below this fraction of the shift into the current gear downshifts (hysteresis) */
+const DOWNSHIFT_FRACTION = 0.95
+
+/** Slowing toward top speed by less than this counts as settled (m/s²) */
+const SETTLED_DECEL_MS2 = 0.01
+
 export interface IntegrationParams {
   envelope: EnvelopePoint[]
   gearCurves: GearThrustCurve[]
@@ -43,14 +52,24 @@ export interface IntegrationParams {
   /** End the run once this speed is reached. Default: run to top speed. */
   stopAtSpeedMs?: number
   /**
-   * Stay in this gear whenever it can run at or above `holdGearMinRpm`. Below
+   * Stay in this gear whenever it can run at or above `minLoadRpm`. Below
    * that, lower gears shift normally and the held gear is taken as soon as it
    * becomes usable. In the held gear the rev limiter cuts drive force above
    * redline. Default: normal shifting through every gear.
    */
   holdGear?: number
-  /** Lowest rpm the held gear may run at (e.g. a lugging floor). Default 0: the torque curve's start. */
-  holdGearMinRpm?: number
+  /**
+   * Lowest rpm a held or cruising gear may run at (e.g. a lugging floor).
+   * Default 0: the start of the torque curve.
+   */
+  minLoadRpm?: number
+  /**
+   * Hold this speed at part throttle once at or above it, in the highest gear
+   * (or the held gear) that is above `minLoadRpm` and has the thrust to do so.
+   * When no such gear can hold it, kick down to full throttle and run normally.
+   * The run ends after holding it steadily for a moment. Default: full throttle.
+   */
+  cruiseSpeedMs?: number
 }
 
 /**
@@ -77,20 +96,43 @@ export function runIntegration(params: IntegrationParams): {
     initialSpeedMs = 0,
     stopAtSpeedMs,
     holdGear,
-    holdGearMinRpm = 0,
+    minLoadRpm = 0,
+    cruiseSpeedMs,
   } = params
 
   const gradeAngle = Math.atan(gradePercent / 100)
   const rrN = rollingResistanceN(massKg, crr, gravityMs2) * Math.cos(gradeAngle)
   const gradeForceN = massKg * gravityMs2 * Math.sin(gradeAngle)
 
-  // Held gear: the speed where it reaches its minimum rpm (rpm ∝ speed within a gear)
+  const resistanceN = (v: number) => dragForceN(cd, frontalAreaM2, airDensityKgM3, v) + rrN + gradeForceN
+
+  /** Speed where a gear reaches the minimum load rpm (rpm ∝ speed within a gear) */
+  const gearMinSpeedMs = (gc: GearThrustCurve): number => {
+    const start = gc.points[0]
+    // Any point off zero gives the gear's speed-per-rpm (EV curves start at 0 rpm)
+    const ref = gc.points.find((p) => p.rpm > 0)
+    if (!start || !ref) return Infinity
+    return (ref.speedMs / ref.rpm) * Math.max(minLoadRpm, start.rpm)
+  }
+
   const holdCurve = holdGear !== undefined ? gearCurves.find((g) => g.gear === holdGear) : undefined
-  const holdStart = holdCurve?.points[0]
-  const holdMinSpeedMs =
-    holdStart && holdStart.rpm > 0
-      ? holdStart.speedMs * (Math.max(holdGearMinRpm, holdStart.rpm) / holdStart.rpm)
-      : Infinity
+  const holdMinSpeedMs = holdCurve ? gearMinSpeedMs(holdCurve) : Infinity
+
+  /**
+   * Gear that can hold `v` at part throttle: the held gear when it's usable,
+   * otherwise the highest usable gear (below any held gear) with enough thrust.
+   */
+  const cruiseGearAt = (v: number): number | null => {
+    const candidates =
+      holdCurve && v >= holdMinSpeedMs
+        ? [holdCurve]
+        : gearCurves.filter((g) => !holdCurve || g.gear < holdCurve.gear).sort((a, b) => b.gear - a.gear)
+    const need = resistanceN(v)
+    const fit = candidates.find(
+      (gc) => v >= gearMinSpeedMs(gc) && v <= gc.speedRangeMs[1] && interpolateGearThrust(gc, v) >= need,
+    )
+    return fit ? fit.gear : null
+  }
 
   // Sort shift points by speed ascending; with a held gear only shifts below it apply
   const sortedShifts = [...shiftPoints]
@@ -113,9 +155,23 @@ export function runIntegration(params: IntegrationParams): {
   let distance = 0
   let shiftTimeRemaining = 0
 
-  // Enter the starting gear directly: the held gear if it's usable, else the normal one
+  // Enter the starting gear directly: the cruising gear when starting at the
+  // cruise speed and able to hold it, else the held gear if usable, else normal
   let { gear, shiftIndex } = shiftedGearAt(speed)
   if (holdCurve && speed >= holdMinSpeedMs) gear = holdCurve.gear
+  let cruising = false
+  let cruiseSteadyS = 0
+  // Acceleration on the last step with drive force (not mid-shift)
+  let lastPoweredAccMs2 = 0
+  // A gear just abandoned for losing speed; don't shift back into it until it can pull
+  let weakGear: number | null = null
+  if (cruiseSpeedMs !== undefined && speed >= cruiseSpeedMs) {
+    const cg = cruiseGearAt(speed)
+    if (cg !== null) {
+      gear = cg
+      cruising = true
+    }
+  }
 
   const trace: TimeStep[] = []
   const performance: PerformanceMetrics = {}
@@ -142,6 +198,7 @@ export function runIntegration(params: IntegrationParams): {
 
   while (time < MAX_TIME) {
     let thrustN = 0
+    let partThrottle = false
 
     if (shiftTimeRemaining > 0) {
       // Gear change in progress — no thrust
@@ -151,7 +208,30 @@ export function runIntegration(params: IntegrationParams): {
         shiftTimeRemaining = Math.max(0, shiftTimeMs / 1000 - DT)
       }
 
-      if (holdCurve && gear !== holdCurve.gear && speed >= holdMinSpeedMs) {
+      if (cruiseSpeedMs !== undefined && (cruising || speed >= cruiseSpeedMs)) {
+        const cg = cruiseGearAt(speed)
+        if (cg !== null) {
+          cruising = true
+          if (cg !== gear) {
+            gear = cg
+            startShift()
+          }
+        } else if (cruising) {
+          // Can't hold the speed in any usable gear: kick down to full throttle
+          cruising = false
+          const wot = shiftedGearAt(speed)
+          const wotGear = holdCurve && speed >= holdMinSpeedMs ? holdCurve.gear : wot.gear
+          shiftIndex = wot.shiftIndex
+          if (wotGear !== gear) {
+            gear = wotGear
+            startShift()
+          }
+        }
+      }
+
+      if (cruising || shiftTimeRemaining > 0) {
+        // Gear already settled for this step
+      } else if (holdCurve && gear !== holdCurve.gear && speed >= holdMinSpeedMs) {
         // The held gear just became usable: go straight to it
         gear = holdCurve.gear
         startShift()
@@ -169,10 +249,30 @@ export function runIntegration(params: IntegrationParams): {
           shiftIndex < sortedShifts.length &&
           speed >= sortedShifts[shiftIndex].speedMs
         ) {
-          gear = sortedShifts[shiftIndex].toGear
+          const next = sortedShifts[shiftIndex].toGear
+          if (next === weakGear) {
+            const nextCurve = gearCurves.find((g) => g.gear === next)
+            if (!nextCurve || interpolateGearThrust(nextCurve, speed) <= resistanceN(speed)) break
+          }
+          weakGear = null
+          gear = next
           shiftIndex++
           startShift()
           break
+        }
+        // Losing speed under power (e.g. a grade it can't hold): downshift once well
+        // below the shift into this gear. A dip while shifting doesn't count.
+        if (
+          shiftTimeRemaining <= 0 &&
+          shiftIndex > 0 &&
+          lastPoweredAccMs2 < 0 &&
+          speed < sortedShifts[shiftIndex - 1].speedMs * DOWNSHIFT_FRACTION
+        ) {
+          const lower = shiftedGearAt(speed)
+          weakGear = gear
+          gear = lower.gear
+          shiftIndex = lower.shiftIndex
+          startShift()
         }
       }
 
@@ -182,12 +282,19 @@ export function runIntegration(params: IntegrationParams): {
         const gc = gearCurves.find((g) => g.gear === gear)
         const revLimited = gc !== undefined && gc === holdCurve && speed > gc.speedRangeMs[1]
         thrustN = gc && !revLimited ? interpolateGearThrust(gc, speed) : 0
+        if (cruising && cruiseSpeedMs !== undefined) {
+          // Part throttle: just enough to hold (or regain) the cruise speed
+          const needN = resistanceN(speed) + (massKg * Math.max(0, cruiseSpeedMs - speed)) / DT
+          partThrottle = needN < thrustN
+          thrustN = Math.min(thrustN, needN)
+        }
       }
     }
 
     const dragN = dragForceN(cd, frontalAreaM2, airDensityKgM3, speed)
     const netForceN = thrustN - dragN - rrN - gradeForceN
     const acc = netForceN / massKg
+    if (thrustN > 0) lastPoweredAccMs2 = acc
 
     // Current engine RPM
     const ratioIdx = gear - 1
@@ -218,6 +325,12 @@ export function runIntegration(params: IntegrationParams): {
       performance.quarterMileSpeedMs = speed
     }
 
+    // Holding the cruise speed steadily: nothing more will change
+    cruiseSteadyS = partThrottle ? cruiseSteadyS + DT : 0
+    if (cruiseSteadyS >= CRUISE_SETTLE_S) {
+      break
+    }
+
     // Stop once the requested target speed is reached (passing-time runs)
     if (stopAtSpeedMs !== undefined && speed >= stopAtSpeedMs) {
       break
@@ -233,6 +346,17 @@ export function runIntegration(params: IntegrationParams): {
       if (stopAtSpeedMs === undefined || stopAtSpeedMs > topSpeedMs) {
         break
       }
+    }
+
+    // Slowing toward top speed from above has a long asymptotic tail; stop once negligible
+    if (
+      topSpeedMs > 0 &&
+      speed > topSpeedMs &&
+      shiftTimeRemaining <= 0 &&
+      acc < 0 &&
+      acc > -SETTLED_DECEL_MS2
+    ) {
+      break
     }
 
     // A vehicle that cannot move (or has decelerated to a stop) will never progress

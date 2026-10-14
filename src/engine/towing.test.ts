@@ -7,6 +7,7 @@ import {
   analyzeGearsAtSpeed,
   runTowingAnalysis,
   towingRun,
+  towingHillRun,
   MIN_LOAD_RPM_DIESEL,
   MIN_LOAD_RPM_GAS,
 } from './towing'
@@ -300,6 +301,35 @@ describe('runTowingAnalysis', () => {
     const run = towingRun(analysis.integration, 0, V60)
     expect(run.finishTimeS).toBeNull()
     expect(run.trace.at(-1)!.speedMs).toBeLessThan(V60)
+  })
+
+  it('a hill climb the truck can manage holds speed in its cruising gear', () => {
+    const analysis = runTowingAnalysis(truck, scenario, 'gas')
+    expect(analysis.cruisingGear).not.toBeNull()
+    const run = towingHillRun(analysis.integration, scenario.speedMs)
+    expect(run.holdsSpeed).toBe(true)
+    expect(run.settledSpeedMs).toBeCloseTo(scenario.speedMs, 3)
+    expect(run.settledGear).toBe(analysis.cruisingGear!.gear)
+    // Steady state is reached quickly; the trace stops there
+    expect(run.trace.at(-1)!.timeS).toBeLessThan(5)
+  })
+
+  it('a hill climb the truck cannot manage slows to its max sustainable speed', () => {
+    // Steepen until the truck can't hold the scenario speed, with some margin
+    let steep: TowScenario = scenario
+    let analysis = runTowingAnalysis(truck, steep, 'gas')
+    while ((analysis.maxSustainable?.speedMs ?? 0) > scenario.speedMs * 0.85) {
+      steep = { ...steep, gradePercent: steep.gradePercent + 1 }
+      analysis = runTowingAnalysis(truck, steep, 'gas')
+    }
+    expect(analysis.maxSustainable).not.toBeNull()
+    expect(analysis.maxSustainable!.speedMs).toBeLessThan(steep.speedMs)
+    const run = towingHillRun(analysis.integration, steep.speedMs)
+    expect(run.holdsSpeed).toBe(false)
+    expect(run.settledSpeedMs).toBeLessThan(steep.speedMs)
+    // Flat torque makes the approach slow, so only check it's heading there from above
+    expect(run.settledSpeedMs).toBeGreaterThan(analysis.maxSustainable!.speedMs - 0.5)
+    expect(run.settledSpeedMs).toBeLessThan(analysis.maxSustainable!.speedMs + 2)
   })
 
   it('applies the diesel lugging floor to gear usability', () => {

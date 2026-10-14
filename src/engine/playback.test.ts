@@ -15,7 +15,7 @@ const TRACE: TimeStep[] = [
 
 describe('sampleTrace', () => {
   it('returns the first step at or before the start', () => {
-    expect(sampleTrace(TRACE, -1)).toEqual({ speedMs: 0, distanceM: 0, gear: 1, shifting: false })
+    expect(sampleTrace(TRACE, -1)).toEqual({ speedMs: 0, distanceM: 0, gear: 1, rpm: 0, shifting: false })
   })
 
   it('interpolates speed and distance between steps', () => {
@@ -39,7 +39,7 @@ describe('sampleTrace', () => {
   })
 
   it('is at rest for an empty trace', () => {
-    expect(sampleTrace([], 3)).toEqual({ speedMs: 0, distanceM: 0, gear: 1, shifting: false })
+    expect(sampleTrace([], 3)).toEqual({ speedMs: 0, distanceM: 0, gear: 1, rpm: 0, shifting: false })
   })
 })
 
