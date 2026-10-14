@@ -4,7 +4,7 @@ import { TRAILER_SHAPES, rigLengthM } from '@/data/rigGeometry'
 import { playbackDurationS, sampleTrace } from '@/engine/playback'
 import { usePlayback } from '@/hooks/usePlayback'
 import { useUnitStore } from '@/store/unitStore'
-import { mphToMs } from '@/utils/units'
+import { MS_TO_KMH, MS_TO_MPH, mphToMs } from '@/utils/units'
 import type { TrailerCategory } from '@/types/truck'
 import type { TowingEntry } from './entry'
 import DragLanes from './DragLanes'
@@ -17,6 +17,8 @@ import { fmtDistanceM, fmtSpeedMs, gearLabel } from './format'
 
 type RunPreset =
   | { id: string; label: string; kind: 'accel'; fromMph: number; toMph: number }
+  /** Acceleration run between speeds the user enters */
+  | { id: string; label: string; kind: 'custom' }
   /** Arrive at the grade at the scenario's target speed and try to hold it */
   | { id: string; label: string; kind: 'hill' }
   /** Pull out from behind a semi, pass it, and pull back in */
@@ -26,11 +28,90 @@ const RUN_PRESETS: RunPreset[] = [
   { id: '0-60', label: '0–60 mph', kind: 'accel', fromMph: 0, toMph: 60 },
   { id: '40-60', label: '40–60 mph', kind: 'accel', fromMph: 40, toMph: 60 },
   { id: '50-70', label: '50–70 mph', kind: 'accel', fromMph: 50, toMph: 70 },
+  { id: 'custom', label: 'Custom', kind: 'custom' },
   { id: 'hill', label: 'Hill climb', kind: 'hill' },
   { id: 'pass', label: 'Pass a semi', kind: 'pass' },
 ]
 
 const SEMI_SPEEDS_MPH = [45, 55, 65]
+
+/** Fastest custom target accepted (m/s, ~150 mph) */
+const MAX_CUSTOM_SPEED_MS = mphToMs(150)
+
+interface SpeedRange {
+  fromMs: number
+  toMs: number
+}
+
+interface SpeedRangeInputProps {
+  range: SpeedRange
+  onChange: (range: SpeedRange) => void
+}
+
+/**
+ * From/to speed fields in the current display units. Each edit that makes a
+ * valid pair is applied straight away; an invalid pair shows why and leaves
+ * the last valid run in place. Remount on a unit change to reformat.
+ */
+function SpeedRangeInput({ range, onChange }: SpeedRangeInputProps) {
+  const units = useUnitStore((s) => s.units)
+  const factor = units === 'imperial' ? MS_TO_MPH : MS_TO_KMH
+  const unit = units === 'imperial' ? 'mph' : 'km/h'
+  const [fromText, setFromText] = useState(String(Math.round(range.fromMs * factor)))
+  const [toText, setToText] = useState(String(Math.round(range.toMs * factor)))
+
+  const problem = (from: string, to: string): string | null => {
+    const f = Number(from)
+    const t = Number(to)
+    if (from.trim() === '' || to.trim() === '' || !Number.isFinite(f) || !Number.isFinite(t)) return 'Enter both speeds'
+    if (f < 0) return 'From must be 0 or more'
+    if (t <= f) return 'To must be above From'
+    if (t / factor > MAX_CUSTOM_SPEED_MS) return `To must be ${Math.round(MAX_CUSTOM_SPEED_MS * factor)} ${unit} or less`
+    return null
+  }
+  const apply = (from: string, to: string) => {
+    if (problem(from, to) === null) onChange({ fromMs: Number(from) / factor, toMs: Number(to) / factor })
+  }
+  const error = problem(fromText, toText)
+
+  const inputClass =
+    'w-16 px-2 py-0.5 rounded border border-line bg-lift font-data text-[11px] text-data text-right tabular-nums focus:outline-none focus:border-signal/60'
+  return (
+    <div className="flex items-center gap-1.5 font-data text-[11px] text-muted-txt">
+      <input
+        type="number"
+        inputMode="decimal"
+        min={0}
+        aria-label="From speed"
+        value={fromText}
+        onChange={(e) => {
+          setFromText(e.target.value)
+          apply(e.target.value, toText)
+        }}
+        className={inputClass}
+      />
+      <span>to</span>
+      <input
+        type="number"
+        inputMode="decimal"
+        min={0}
+        aria-label="To speed"
+        value={toText}
+        onChange={(e) => {
+          setToText(e.target.value)
+          apply(fromText, e.target.value)
+        }}
+        className={inputClass}
+      />
+      <span>{unit}</span>
+      {error && (
+        <span className="text-red-400" role="alert">
+          {error}
+        </span>
+      )}
+    </div>
+  )
+}
 /** Fastest the rig will go while passing; null = no limit */
 const PASS_LIMITS_MPH: (number | null)[] = [70, 80, null]
 
@@ -70,7 +151,7 @@ function Toggle({ active, onClick, children, label }: ToggleProps) {
       aria-pressed={active}
       aria-label={label}
       onClick={onClick}
-      className={`px-2.5 py-1 rounded font-data text-[11px] transition-colors ${
+      className={`px-2.5 py-1 rounded font-data text-[11px] whitespace-nowrap transition-colors ${
         active
           ? 'bg-signal-dim text-signal-hi border border-signal/60'
           : 'bg-lift text-muted-txt border border-line hover:text-gray-300'
@@ -96,10 +177,18 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
   const [passLimitMph, setPassLimitMph] = useState<number | null>(70)
   const passLimitMs = passLimitMph !== null ? mphToMs(passLimitMph) : undefined
   const semiSpeedMs = mphToMs(semiMph)
+  const [customRange, setCustomRange] = useState<SpeedRange>({ fromMs: mphToMs(30), toMs: mphToMs(70) })
   // Start speed, and the chart's reference speed
   const fromMs =
-    preset.kind === 'hill' ? targetSpeedMs : preset.kind === 'pass' ? semiSpeedMs : mphToMs(preset.fromMph)
-  const toMs = preset.kind === 'accel' ? mphToMs(preset.toMph) : fromMs
+    preset.kind === 'hill'
+      ? targetSpeedMs
+      : preset.kind === 'pass'
+        ? semiSpeedMs
+        : preset.kind === 'custom'
+          ? customRange.fromMs
+          : mphToMs(preset.fromMph)
+  const toMs =
+    preset.kind === 'accel' ? mphToMs(preset.toMph) : preset.kind === 'custom' ? customRange.toMs : fromMs
 
   // Chosen hold gear per truck; a choice that's over redline at this run's start speed is ignored
   const [holdChoices, setHoldChoices] = useState<Record<string, number>>({})
@@ -221,13 +310,14 @@ export default function DragRace({ entries, trailerCategory, targetSpeedMs, grad
     <div className="flex flex-col gap-3">
       {/* Controls */}
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <div className="flex gap-1.5" role="group" aria-label="Run">
+        <div className="flex flex-wrap gap-1.5" role="group" aria-label="Run">
           {RUN_PRESETS.map((p) => (
             <Toggle key={p.id} active={p.id === preset.id} onClick={() => setPreset(p)}>
               {p.label}
             </Toggle>
           ))}
         </div>
+        {preset.kind === 'custom' && <SpeedRangeInput key={units} range={customRange} onChange={setCustomRange} />}
         {isPass && (
           <div className="flex items-center gap-1.5" role="group" aria-label="Semi speed">
             <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
