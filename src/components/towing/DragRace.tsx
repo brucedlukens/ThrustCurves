@@ -10,7 +10,7 @@ import DragLanes from './DragLanes'
 import type { LaneState } from './DragLanes'
 import RaceSpeedChart from './RaceSpeedChart'
 import type { RaceSeries } from './RaceSpeedChart'
-import { fmtSpeedMs } from './format'
+import { fmtSpeedMs, gearLabel } from './format'
 
 interface RunPreset {
   id: string
@@ -26,6 +26,11 @@ const RUN_PRESETS: RunPreset[] = [
 ]
 
 const RATES = [0.5, 1, 2, 4]
+
+/** Redline speed of each gear (m/s), index 0 = 1st */
+function gearRedlineSpeeds(entry: TowingEntry): number[] {
+  return entry.analysis.gearCurves.map((gc) => gc.speedRangeMs[1])
+}
 
 interface DragRaceProps {
   entries: TowingEntry[]
@@ -71,9 +76,27 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
   const fromMs = mphToMs(preset.fromMph)
   const toMs = mphToMs(preset.toMph)
 
+  // Chosen hold gear per truck; a choice that's over redline at this run's start speed is ignored
+  const [holdChoices, setHoldChoices] = useState<Record<string, number>>({})
+  const heldGears = useMemo(
+    () =>
+      entries.map((e) => {
+        const gear = holdChoices[e.key]
+        if (gear === undefined) return undefined
+        const redline = gearRedlineSpeeds(e)[gear - 1]
+        return redline !== undefined && redline >= fromMs ? gear : undefined
+      }),
+    [entries, holdChoices, fromMs],
+  )
+
   const runs = useMemo(
-    () => entries.map((e) => ({ entry: e, ...towingRun(e.analysis.integration, fromMs, toMs) })),
-    [entries, fromMs, toMs],
+    () =>
+      entries.map((e, i) => ({
+        entry: e,
+        heldGear: heldGears[i],
+        ...towingRun(e.analysis.integration, fromMs, toMs, heldGears[i]),
+      })),
+    [entries, fromMs, toMs, heldGears],
   )
   const durationS = useMemo(() => playbackDurationS(runs), [runs])
   const series = useMemo<RaceSeries[]>(
@@ -91,6 +114,8 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
     sample: sampleTrace(r.trace, timeS),
     finishTimeS: r.finishTimeS,
     finishDistanceM: r.finishTimeS !== null ? (r.trace.at(-1)?.distanceM ?? null) : null,
+    heldGear: r.heldGear,
+    heldRedlineMs: r.heldGear !== undefined ? gearRedlineSpeeds(r.entry)[r.heldGear - 1] : undefined,
   }))
 
   const nonFinishers = runs.filter((r) => r.finishTimeS === null)
@@ -127,6 +152,44 @@ export default function DragRace({ entries, trailerCategory }: DragRaceProps) {
             </Toggle>
           ))}
         </div>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase text-muted-txt">
+          Hold gear
+        </span>
+        {entries.map((e, i) => {
+          const redlines = gearRedlineSpeeds(e)
+          const held = heldGears[i]
+          return (
+            <label key={e.key} className="flex items-center gap-1.5" title={e.name}>
+              <span className="w-2 h-2 rounded-full" style={{ backgroundColor: e.color }} />
+              <span className="font-display text-[11px] tracking-wide text-label">{e.truck.model}</span>
+              <select
+                aria-label={`${e.name} hold gear`}
+                value={held ?? 'auto'}
+                onChange={(ev) => {
+                  const v = ev.target.value
+                  setHoldChoices((prev) => {
+                    const next = { ...prev }
+                    if (v === 'auto') delete next[e.key]
+                    else next[e.key] = Number(v)
+                    return next
+                  })
+                }}
+                className="px-2 py-0.5 rounded border border-line bg-lift font-data text-[11px] text-data focus:outline-none focus:border-signal/60"
+              >
+                <option value="auto">Auto</option>
+                {redlines.map((redlineMs, i) => (
+                  <option key={i + 1} value={i + 1} disabled={redlineMs < fromMs}>
+                    {gearLabel(i + 1)}
+                    {redlineMs < fromMs ? ' (over redline)' : ''}
+                  </option>
+                ))}
+              </select>
+            </label>
+          )
+        })}
       </div>
 
       <div className="flex items-center gap-3">

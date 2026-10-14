@@ -243,3 +243,109 @@ describe('runIntegration', () => {
     expect(shiftSteps.length).toBeGreaterThan(0)
   })
 })
+
+describe('runIntegration with a held gear', () => {
+  // Three gears, speed = k·rpm with rpm 1000–5000 sampled every 250 rpm:
+  //   1st 4–20 m/s, 2nd 7–35 m/s, 3rd 10–50 m/s. Normal shifts at 20 and 35 m/s.
+  const KS = [0.004, 0.007, 0.01]
+  function gearCurve(gear: number, forceAt: (rpm: number) => number): GearThrustCurve {
+    const k = KS[gear - 1]
+    const points = Array.from({ length: 17 }, (_, i) => {
+      const rpm = 1000 + i * 250
+      return { speedMs: k * rpm, forceN: forceAt(rpm), rpm }
+    })
+    return { gear, points, speedRangeMs: [points[0].speedMs, points[points.length - 1].speedMs] }
+  }
+  const shiftPoints: ShiftPoint[] = [
+    { fromGear: 1, toGear: 2, speedMs: 20, rpm: 5000 },
+    { fromGear: 2, toGear: 3, speedMs: 35, rpm: 5000 },
+  ]
+  function params(
+    forces: [(rpm: number) => number, (rpm: number) => number, (rpm: number) => number],
+    overrides: Partial<IntegrationParams> = {},
+  ): IntegrationParams {
+    const gearCurves = forces.map((f, i) => gearCurve(i + 1, f))
+    const envelope: EnvelopePoint[] = Array.from({ length: 101 }, (_, i) => {
+      const v = i * 0.5
+      let best = { forceN: 0, gear: 1 }
+      for (const gc of gearCurves) {
+        if (v < gc.speedRangeMs[0] || v > gc.speedRangeMs[1]) continue
+        const f = gc.points.reduce((a, p) => (Math.abs(p.speedMs - v) < Math.abs(a.speedMs - v) ? p : a)).forceN
+        if (f > best.forceN) best = { forceN: f, gear: gc.gear }
+      }
+      return { speedMs: v, ...best }
+    })
+    return makeSimpleParams({
+      envelope,
+      gearCurves,
+      shiftPoints,
+      massKg: 2000,
+      gearEffectiveRatios: [10, 6, 4],
+      ...overrides,
+    })
+  }
+  const constant = (n: number) => () => n
+  const gearsInOrder = (trace: { gear: number }[]) =>
+    trace.map((s) => s.gear).filter((g, i, all) => i === 0 || g !== all[i - 1])
+
+  it('runs lower gears only until the held gear reaches its minimum rpm, then jumps to it', () => {
+    // 3rd at 1500 rpm = 15 m/s, before the normal 1→2 shift at 20 m/s
+    const { trace } = runIntegration(
+      params([constant(6000), constant(3500), constant(2500)], { holdGear: 3, holdGearMinRpm: 1500, stopAtSpeedMs: 30 }),
+    )
+    expect(gearsInOrder(trace)).toEqual([1, 3])
+    const firstInThird = trace.find((s) => s.gear === 3)!
+    expect(firstInThird.speedMs).toBeGreaterThanOrEqual(15)
+    expect(firstInThird.speedMs).toBeLessThan(15.1)
+  })
+
+  it('starts in the held gear on a rolling start when it is usable there', () => {
+    // At 12 m/s normal shifting would be in 1st; 3rd is usable from 10 m/s
+    const { trace } = runIntegration(
+      params([constant(6000), constant(3500), constant(2500)], { holdGear: 3, initialSpeedMs: 12, stopAtSpeedMs: 30 }),
+    )
+    expect(trace[0].gear).toBe(3)
+    expect(gearsInOrder(trace)).toEqual([3])
+  })
+
+  it('stays in the held gear and levels off at redline instead of upshifting', () => {
+    // 2nd redlines at 35 m/s; the target is out of reach without 3rd
+    const { trace } = runIntegration(
+      params([constant(6000), constant(3500), constant(2500)], { holdGear: 2, stopAtSpeedMs: 45 }),
+    )
+    expect(trace.some((s) => s.gear === 3)).toBe(false)
+    const last = trace[trace.length - 1]
+    expect(last.speedMs).toBeGreaterThan(34)
+    expect(Math.max(...trace.map((s) => s.speedMs))).toBeLessThan(35.1)
+    // Rev limiter: no drive force above redline
+    expect(trace.filter((s) => s.speedMs > 35).every((s) => s.thrustN === 0)).toBe(true)
+  })
+
+  it('drops to a lower gear when the held gear falls below its minimum rpm', () => {
+    // ~4000 N of grade: 3rd (2500 N) can't hold speed; 1st pulls only below 3000 rpm (12 m/s)
+    const firstGear = (rpm: number) => (rpm < 3000 ? 6000 : 3000)
+    const { trace } = runIntegration(
+      params([firstGear, constant(3500), constant(2500)], {
+        holdGear: 3,
+        holdGearMinRpm: 2000, // 3rd usable from 20 m/s
+        initialSpeedMs: 21,
+        stopAtSpeedMs: 30,
+        gradePercent: 20.8,
+      }),
+    )
+    expect(trace[0].gear).toBe(3)
+    expect(gearsInOrder(trace)).toEqual([3, 1])
+    const downshift = trace.find((s) => s.gear === 1)!
+    expect(downshift.speedMs).toBeLessThan(18) // 0.9 × 20 m/s hysteresis
+  })
+
+  it('a rolling start above top speed decelerates and settles instead of stopping at once', () => {
+    // 20.8% grade: only 1st below 12 m/s can pull, so the rig slows from 21 m/s
+    const firstGear = (rpm: number) => (rpm < 3000 ? 6000 : 3000)
+    const { trace } = runIntegration(
+      params([firstGear, constant(3500), constant(2500)], { initialSpeedMs: 21, stopAtSpeedMs: 30, gradePercent: 20.8 }),
+    )
+    expect(trace.length).toBeGreaterThan(1)
+    expect(trace[trace.length - 1].speedMs).toBeLessThan(13)
+  })
+})
