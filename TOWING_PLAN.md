@@ -119,6 +119,8 @@ animations on `/compare` and `/simulator` later.
       gear, shift flash, gap to leader, finish time. Runs: 0–60 (standing start), 40–60,
       50–70 on the scenario grade. Play/pause/restart, 0.5×–4×, scrubber; speed-vs-time
       chart with playhead, click to seek.
+- [x] **Custom speeds**: "Custom" run option with From/To fields in display units; each valid
+      edit reruns, an invalid pair (To ≤ From, negative, > 150 mph) shows why and keeps the last run.
 - [x] **Hold a gear**: per-truck "Auto / Nth" on the acceleration run. The held gear is used
       whenever it runs at or above the lugging floor (same floor as the gear table); below
       that, lower gears shift normally and the held gear is taken the moment it's usable —

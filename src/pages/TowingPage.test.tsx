@@ -148,4 +148,30 @@ describe('TowingPage', () => {
     fireEvent.change(scrubber2, { target: { value: scrubber2.getAttribute('max') } })
     expect(parseFloat(screen.getAllByTestId('lane-finish')[0].textContent!)).toBeGreaterThan(before)
   })
+
+  test('a custom run uses the speeds entered and rejects an invalid pair', async () => {
+    const user = userEvent.setup()
+    render(<TowingPage />)
+    await user.selectOptions(screen.getByRole('combobox', { name: /add a truck/i }), 'ford-f-250-super-duty')
+    await user.click(screen.getByRole('button', { name: 'Custom' }))
+
+    const from = screen.getByRole('spinbutton', { name: 'From speed' })
+    const to = screen.getByRole('spinbutton', { name: 'To speed' })
+    fireEvent.change(from, { target: { value: '25' } })
+    fireEvent.change(to, { target: { value: '45' } })
+    // The rig starts at the custom From speed
+    expect(screen.getAllByText('25 mph').filter(el => el.tagName === 'SPAN')).toHaveLength(1)
+    const scrubber = screen.getByRole('slider', { name: /playback position/i })
+    const runLength = Number(scrubber.getAttribute('max'))
+
+    // To at or below From is rejected; the last valid run stays
+    fireEvent.change(to, { target: { value: '20' } })
+    expect(screen.getByRole('alert')).toHaveTextContent(/to must be above from/i)
+    expect(Number(screen.getByRole('slider', { name: /playback position/i }).getAttribute('max'))).toBe(runLength)
+
+    // A wider range takes longer
+    fireEvent.change(to, { target: { value: '65' } })
+    expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    expect(Number(screen.getByRole('slider', { name: /playback position/i }).getAttribute('max'))).toBeGreaterThan(runLength)
+  })
 })
