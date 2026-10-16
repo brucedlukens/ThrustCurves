@@ -113,6 +113,7 @@ export function runSimulation(
     gravityMs2: gravity,
     gearEffectiveRatios,
     tireRadiusM: radius,
+    thrusters: car.thrusters,
   })
 
   return { gearCurves, envelope, shiftPoints, performance, trace }

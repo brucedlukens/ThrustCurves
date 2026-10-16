@@ -63,6 +63,17 @@ describe('CarSpecTable', () => {
     expect(screen.queryByText(/Naturally Aspirated/)).not.toBeInTheDocument()
   })
 
+  test('renders thrusters when the car has them', () => {
+    render(<CarSpecTable car={{ ...mockCar, thrusters: { forceN: 41500, durationS: 1.1 } }} />)
+    expect(screen.getByText('Thrusters')).toBeInTheDocument()
+    expect(screen.getByText('41.5 kN for 1.1 s')).toBeInTheDocument()
+  })
+
+  test('omits the thrusters row for a car without them', () => {
+    render(<CarSpecTable car={mockCar} />)
+    expect(screen.queryByText('Thrusters')).not.toBeInTheDocument()
+  })
+
   test('renders redline RPM', () => {
     render(<CarSpecTable car={mockCar} />)
     expect(screen.getByText('7500 RPM')).toBeInTheDocument()

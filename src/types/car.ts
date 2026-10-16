@@ -47,6 +47,14 @@ export interface AeroSpec {
   frontalAreaM2: number
 }
 
+/** Propulsion that doesn't go through the tires (e.g. cold-gas thrusters), fired from launch */
+export interface ThrusterSpec {
+  /** Forward thrust in newtons, on top of tire thrust and not traction-limited */
+  forceN: number
+  /** Burn time from launch in seconds */
+  durationS: number
+}
+
 export interface CarSpec {
   id: string
   make: string
@@ -59,4 +67,5 @@ export interface CarSpec {
   transmission: TransmissionSpec
   tireSize: TireSize
   aero: AeroSpec
+  thrusters?: ThrusterSpec
 }

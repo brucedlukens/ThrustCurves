@@ -137,6 +137,39 @@ describe('runSimulation - modification effects', () => {
   })
 })
 
+describe('runSimulation - thrusters', () => {
+  const performance = getCarById('tesla-roadster-2026')
+  const withThrusters: CarSpec = { ...performance, thrusters: { forceN: 20000, durationS: 2 } }
+
+  it('thrusters cut the 0-60 time', () => {
+    const plain = runSimulation(performance, stockMods).performance.zeroTo60Mph!
+    const boosted = runSimulation(withThrusters, stockMods).performance.zeroTo60Mph!
+    expect(boosted).toBeLessThan(plain - 0.3)
+  })
+
+  it('Roadster trims run Performance > Thrust > Rocket, each in its claimed range', () => {
+    // Claims: <1.6 / <0.9 / <0.59 s, all net of a 1-ft rollout the sim doesn't take
+    const t = (id: string) => runSimulation(getCarById(id), stockMods).performance.zeroTo60Mph!
+    const perf = t('tesla-roadster-2026')
+    const thrust = t('tesla-roadster-thrust-2026')
+    const rocket = t('tesla-roadster-rocket-2026')
+    expect(perf).toBeGreaterThan(1.6)
+    expect(perf).toBeLessThan(2.0)
+    expect(thrust).toBeGreaterThan(0.9)
+    expect(thrust).toBeLessThan(1.1)
+    expect(rocket).toBeGreaterThan(0.59)
+    expect(rocket).toBeLessThan(0.8)
+  })
+
+  it('the traction limit caps tire thrust but not the thrusters', () => {
+    const capped = { ...stockMods, tractionCoefficientMu: 1.0 }
+    const plain = runSimulation(performance, capped).trace[0]
+    const boosted = runSimulation(withThrusters, capped).trace[0]
+    expect(boosted.thrustN).toBeCloseTo(plain.thrustN, 6)
+    expect(boosted.netForceN - plain.netForceN).toBeCloseTo(20000, 6)
+  })
+})
+
 describe('runSimulation - envelope properties', () => {
   it('envelope thrust is always positive', () => {
     const car = getCarById('toyota-supra-2020')
