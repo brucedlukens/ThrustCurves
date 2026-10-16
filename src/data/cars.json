@@ -471,7 +471,8 @@
       "redlineRpm": 20000,
       "idleRpm": 500,
       "displacementL": 0,
-      "forcedInduction": false
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],
@@ -883,7 +884,8 @@
       "redlineRpm": 18000,
       "idleRpm": 100,
       "displacementL": 0,
-      "forcedInduction": true
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],
@@ -921,7 +923,8 @@
       "redlineRpm": 18000,
       "idleRpm": 100,
       "displacementL": 0,
-      "forcedInduction": true
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],

@@ -31,6 +31,14 @@ describe('cars.json schema', () => {
     }
   })
 
+  it('every zero-displacement (EV) car is flagged electric', () => {
+    // electric skips the altitude derate; forcedInduction would apply a turbo one
+    for (const car of cars.filter(c => c.engine.displacementL === 0)) {
+      expect(car.engine.electric, car.id).toBe(true)
+      expect(car.engine.forcedInduction, car.id).toBe(false)
+    }
+  })
+
   it('every transmission has at least one gear ratio', () => {
     for (const car of cars) {
       const tx: TransmissionSpec = car.transmission

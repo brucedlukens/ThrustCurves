@@ -197,7 +197,7 @@ The remaining 12 cars are approximately correct within simulation tolerance.
 | "RPM" range | 500–20000 | Electric motor RPM range | ✅ Reasonable |
 
 **Sources**: Tesla Model 3 Performance 2023 specifications
-**Notes**: Electric vehicle modeled with a single "gear" and high-RPM range representing motor speed. Flat power band from ~6000 RPM onward reflects real EV torque-limited behavior. Combined front+rear motor torque of 660 Nm is an approximation; Tesla does not publish individual motor torque curves.
+**Notes**: Electric vehicle modeled with a single "gear" and high-RPM range representing motor speed. Flat power band from ~6000 RPM onward reflects real EV torque-limited behavior. Combined front+rear motor torque of 660 Nm is an approximation; Tesla does not publish individual motor torque curves. `electric: true` (no altitude derate); previously had neither flag set, so the sim applied the full naturally-aspirated altitude derate.
 **Status**: Approximately correct for simulation purposes.
 
 ---
@@ -367,7 +367,7 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 ### Tesla Model S Plaid 2025 — `tesla-model-s-plaid-2025`
 
-**EV modeling note**: Electric motors have maximum torque available from 0 RPM. The "RPM" axis represents motor shaft RPM. The simulation models the tri-motor AWD system as a single effective motor with a 9.73:1 combined reduction ratio (front motors ~14:1, rear ~9.05:1 — effective combined single-shaft equivalent). `gearRatios: [1.0]` with `finalDriveRatio: 9.73` encodes the full reduction. `forcedInduction: true` minimizes the sim's altitude power correction (EVs are essentially altitude-independent). `drivetrainLoss: 0.08` reflects EV efficiency (~92%).
+**EV modeling note**: Electric motors have maximum torque available from 0 RPM. The "RPM" axis represents motor shaft RPM. The simulation models the tri-motor AWD system as a single effective motor with a 9.73:1 combined reduction ratio (front motors ~14:1, rear ~9.05:1 — effective combined single-shaft equivalent). `gearRatios: [1.0]` with `finalDriveRatio: 9.73` encodes the full reduction. `electric: true` disables the sim's altitude power derate (EVs are essentially altitude-independent); this replaced an earlier `forcedInduction: true` workaround that still applied the turbo derate. `drivetrainLoss: 0.08` reflects EV efficiency (~92%).
 
 | Field | Value | Source |
 |-------|-------|--------|
@@ -388,7 +388,7 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 ### Porsche Taycan Turbo GT (Weissach Package) 2025 — `porsche-taycan-turbo-gt-weissach-2025`
 
-**EV modeling note**: The Taycan Turbo GT uses a 2-speed rear gearbox + single-speed front motor. The simulation models this as a single-speed system: `gearRatios: [1.0]` with `finalDriveRatio: 8.05` (rear high-gear total ratio). The 1,340 Nm is Porsche's published combined system torque (overboost), treated as the effective motor torque at this reduction ratio. Combined torque at the wheels in the sim ≈ 9,700 Nm, yielding ~0–60 in 2.2–2.3 s vs Porsche's 2.2 s claim.
+**EV modeling note**: The Taycan Turbo GT uses a 2-speed rear gearbox + single-speed front motor. The simulation models this as a single-speed system: `gearRatios: [1.0]` with `finalDriveRatio: 8.05` (rear high-gear total ratio). The 1,340 Nm is Porsche's published combined system torque (overboost), treated as the effective motor torque at this reduction ratio. Combined torque at the wheels in the sim ≈ 9,700 Nm, yielding ~0–60 in 2.2–2.3 s vs Porsche's 2.2 s claim. `electric: true` (no altitude derate); previously `forcedInduction: true`, which applied the turbo derate.
 
 | Field | Value | Source |
 |-------|-------|--------|
@@ -433,7 +433,7 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 **Trim choice**: Tesla's reservation page lists three configurations — **Performance** (road car, 2 seats, active aero, fan "suction" ground effect), **Thrust** (adds four rear cold-gas thrusters, 0–60 < 0.9 s) and **Rocket** (1 seat, ten thrusters, not road-legal, 0–60 < 0.59 s). Only Performance gets its acceleration entirely through the tires; the simulator has no non-tire thrust term, so Thrust/Rocket are not modeled. The 0.81 s run shown on stage used the rear thrusters.
 
-**EV modeling note**: Same single-effective-motor model as the Plaid/Taycan entries (`gearRatios: [1.0]`, full reduction in `finalDriveRatio`, flat torque to base speed then constant power). Uses `electric: true` (no altitude derate) rather than the older `forcedInduction: true` workaround.
+**EV modeling note**: Same single-effective-motor model as the Plaid/Taycan entries (`gearRatios: [1.0]`, full reduction in `finalDriveRatio`, flat torque to base speed then constant power). Uses `electric: true` (no altitude derate), as do all EV entries.
 
 | Field | Value | Source |
 |-------|-------|--------|
