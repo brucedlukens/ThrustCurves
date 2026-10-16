@@ -471,7 +471,8 @@
       "redlineRpm": 20000,
       "idleRpm": 500,
       "displacementL": 0,
-      "forcedInduction": false
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],
@@ -883,7 +884,8 @@
       "redlineRpm": 18000,
       "idleRpm": 100,
       "displacementL": 0,
-      "forcedInduction": true
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],
@@ -921,7 +923,8 @@
       "redlineRpm": 18000,
       "idleRpm": 100,
       "displacementL": 0,
-      "forcedInduction": true
+      "forcedInduction": false,
+      "electric": true
     },
     "transmission": {
       "gearRatios": [1.0],
@@ -1504,5 +1507,44 @@
     },
     "tireSize": { "widthMm": 215, "aspectRatio": 40, "rimDiameterIn": 18 },
     "aero": { "cd": 0.27, "frontalAreaM2": 1.92 }
+  },
+  {
+    "id": "tesla-roadster-2026",
+    "make": "Tesla",
+    "model": "Roadster",
+    "year": 2026,
+    "trim": "Performance (Prototype)",
+    "curbWeightKg": 1700,
+    "drivetrain": "RWD",
+    "engine": {
+      "torqueCurve": [
+        [500, 1400], [1000, 1400], [2000, 1400], [3000, 1400], [4000, 1400],
+        [5000, 1400], [6000, 1400], [6821, 1400], [8000, 1194], [9000, 1061],
+        [10000, 955], [11000, 868], [12000, 796], [13000, 735], [14000, 682],
+        [15000, 637], [16000, 597], [17000, 562], [18000, 531], [19000, 503],
+        [20000, 477]
+      ],
+      "powerCurve": [
+        [500, 73], [1000, 147], [2000, 293], [3000, 440], [4000, 586],
+        [5000, 733], [6000, 880], [6821, 1000], [8000, 1000], [9000, 1000],
+        [10000, 1000], [11000, 1000], [12000, 1000], [13000, 1000], [14000, 1000],
+        [15000, 1000], [16000, 1000], [17000, 1000], [18000, 1000], [19000, 1000],
+        [20000, 1000]
+      ],
+      "redlineRpm": 20000,
+      "idleRpm": 100,
+      "displacementL": 0,
+      "forcedInduction": false,
+      "electric": true
+    },
+    "transmission": {
+      "gearRatios": [1.0],
+      "finalDriveRatio": 7.42,
+      "shiftTimeMs": 0,
+      "drivetrainLoss": 0.08,
+      "type": "automatic"
+    },
+    "tireSize": { "widthMm": 325, "aspectRatio": 30, "rimDiameterIn": 21 },
+    "aero": { "cd": 0.30, "frontalAreaM2": 1.78 }
   }
 ]

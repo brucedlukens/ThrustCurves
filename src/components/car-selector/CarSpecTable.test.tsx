@@ -53,6 +53,16 @@ describe('CarSpecTable', () => {
     expect(screen.getByText(/Naturally Aspirated/)).toBeInTheDocument()
   })
 
+  test('renders an electric drive as Electric, not displacement', () => {
+    const ev: CarSpec = {
+      ...mockCar,
+      engine: { ...mockCar.engine, displacementL: 0, forcedInduction: false, electric: true },
+    }
+    render(<CarSpecTable car={ev} />)
+    expect(screen.getByText('Electric')).toBeInTheDocument()
+    expect(screen.queryByText(/Naturally Aspirated/)).not.toBeInTheDocument()
+  })
+
   test('renders redline RPM', () => {
     render(<CarSpecTable car={mockCar} />)
     expect(screen.getByText('7500 RPM')).toBeInTheDocument()

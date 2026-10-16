@@ -59,6 +59,16 @@ describe('CarCard', () => {
     expect(screen.getByText(/3L Turbo/)).toBeInTheDocument()
   })
 
+  test('renders an electric drive as Electric, not displacement', () => {
+    const ev: CarSpec = {
+      ...mockCar,
+      engine: { ...mockCar.engine, displacementL: 0, forcedInduction: false, electric: true },
+    }
+    render(<CarCard car={ev} isSelected={false} onSelect={vi.fn()} />)
+    expect(screen.getByText('Electric')).toBeInTheDocument()
+    expect(screen.queryByText(/0L/)).not.toBeInTheDocument()
+  })
+
   test('calls onSelect when button is clicked', async () => {
     const user = userEvent.setup()
     const onSelect = vi.fn()

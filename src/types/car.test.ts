@@ -5,8 +5,8 @@ import carsJson from '../data/cars.json'
 describe('cars.json schema', () => {
   const cars = carsJson as CarSpec[]
 
-  it('contains 39 cars', () => {
-    expect(cars).toHaveLength(39)
+  it('contains 40 cars', () => {
+    expect(cars).toHaveLength(40)
   })
 
   it('every car has required top-level fields', () => {
@@ -28,6 +28,14 @@ describe('cars.json schema', () => {
       for (const [rpm] of engine.torqueCurve) {
         expect(rpm).toBeLessThanOrEqual(engine.redlineRpm)
       }
+    }
+  })
+
+  it('every zero-displacement (EV) car is flagged electric', () => {
+    // electric skips the altitude derate; forcedInduction would apply a turbo one
+    for (const car of cars.filter(c => c.engine.displacementL === 0)) {
+      expect(car.engine.electric, car.id).toBe(true)
+      expect(car.engine.forcedInduction, car.id).toBe(false)
     }
   })
 
