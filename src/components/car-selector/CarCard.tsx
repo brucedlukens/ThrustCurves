@@ -61,7 +61,9 @@ export default function CarCard({ car, isSelected, onSelect }: CarCardProps) {
           {car.transmission.gearRatios.length}-spd {car.transmission.type}
         </span>
         <span className="font-display text-[10px] font-semibold tracking-[0.15em] uppercase px-1.5 py-0.5 rounded bg-raised text-label border border-faint">
-          {car.engine.displacementL}L {car.engine.forcedInduction ? 'Turbo' : 'NA'}
+          {car.engine.electric
+            ? 'Electric'
+            : `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbo' : 'NA'}`}
         </span>
       </div>
     </button>

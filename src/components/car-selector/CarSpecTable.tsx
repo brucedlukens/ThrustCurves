@@ -36,7 +36,9 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
     ['Drivetrain', car.drivetrain],
     [
       'Engine',
-      `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'Naturally Aspirated'}`,
+      car.engine.electric
+        ? 'Electric'
+        : `${car.engine.displacementL}L ${car.engine.forcedInduction ? 'Turbocharged' : 'Naturally Aspirated'}`,
     ],
     ['Peak Power', `${kwToHp(maxPowerKw).toFixed(0)} hp @ ${maxPowerRpm} RPM`],
     ['Peak Torque', torqueStr],

@@ -427,6 +427,35 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 ---
 
+### Tesla Roadster 2026 (Performance, Prototype) — `tesla-roadster-2026`
+
+**Prototype, not a production spec.** Revealed 2026-10-15 at SpaceX McGregor; production targeted for 2028. Tesla published only headline claims (0–60, top speed, range) — no spec sheet. Power/torque/weight below come from press coverage of the reveal and conflict between outlets; revisit when Tesla publishes production numbers.
+
+**Trim choice**: Tesla's reservation page lists three configurations — **Performance** (road car, 2 seats, active aero, fan "suction" ground effect), **Thrust** (adds four rear cold-gas thrusters, 0–60 < 0.9 s) and **Rocket** (1 seat, ten thrusters, not road-legal, 0–60 < 0.59 s). Only Performance gets its acceleration entirely through the tires; the simulator has no non-tire thrust term, so Thrust/Rocket are not modeled. The 0.81 s run shown on stage used the rear thrusters.
+
+**EV modeling note**: Same single-effective-motor model as the Plaid/Taycan entries (`gearRatios: [1.0]`, full reduction in `finalDriveRatio`, flat torque to base speed then constant power). Uses `electric: true` (no altitude derate) rather than the older `forcedInduction: true` workaround.
+
+| Field | Value | Source |
+|-------|-------|--------|
+| Drivetrain | RWD, two rear motors (torque vectoring) | InsideEVs; Top Gear |
+| Peak power | 1,000 kW (1,341 hp) | "1 MW" on-screen claim; InsideEVs/Top Gear attribute it to the higher-output trims, Top Gear names Performance. InsideEVs also cites ~1,000 kW as max pack output. A base car at ~800 kW / 885 lb-ft was also mentioned. |
+| Peak torque | 1,400 Nm (1,032 lb-ft) | InsideEVs ("over 1,032 lb-ft"); Top Gear (~1,033 lb-ft) |
+| Torque base speed | 6,821 RPM (motor) | Derived: P/τ = 1,000,000/1,400 = 714 rad/s |
+| Motor redline | 20,000 RPM | **Assumed** (Plaid-class carbon-sleeved motor); not published |
+| Combined reduction | 7.42:1 | Derived: 20,000 rpm ↔ 230 mph on 325/30R21 |
+| Top speed | > 230 mph (370 km/h) | Tesla reservation page (all trims). InsideEVs reports 214 mph "currently", 330 mph target; Top Gear lists 210 mph for the base car |
+| Curb weight | 1,700 kg (3,748 lb) | InsideEVs/Top Gear: lightest version ~1,700 kg. Performance may weigh more (fans, adaptive suspension) |
+| Cd | 0.30 | **Estimate** — not published; car has active aero |
+| Frontal area | 1.78 m² | **Estimate** — 0.85 × 1,852 mm × 1,128 mm (2017 prototype dimensions) |
+| Tire size | 325/30R21 (rear) | wheel-size.com OE listing (2017 prototype fitment; front 265/35R20); unconfirmed for the 2026 car |
+
+**Validation** (stock settings, driver aboard, no traction cap): sim 0–60 = 1.86 s, ¼ mile = 8.25 s @ 181 mph, top speed = 230 mph (gearing-limited). Tesla claims 0–60 < 1.6 s; Tesla times subtract a 1-ft rollout, worth ~0.2 s at this car's ~1.5 g launch, putting the sim at ~1.65 s — the same size of gap as the Plaid entry (sim 2.35 s vs 1.99 s claimed). With a 1.2 μ traction cap the sim gives 2.32 s; the real car's fan downforce is what lets it exceed a tire-only grip limit.
+
+**Sources**: [InsideEVs — full specs](https://insideevs.com/news/812242/tesla-roadster-2026-specs/); [Top Gear](https://www.topgear.com/car-news/electric/tesla-roadster-has-finally-landed-thrusters-0-60mph-059s-and-flight); [Electrek](https://electrek.co/2026/10/15/tesla-unveils-cyberfied-new-roadster-kickflip/); [Teslarati — configurations](https://www.teslarati.com/tesla-roadster-specs-configurations/); [TechCrunch](https://techcrunch.com/2026/10/15/tesla-reveals-spacex-powered-roadster-that-flies-and-falls-with-style/); [paultan.org](https://paultan.org/2026/10/16/tesla-roadster-revealed-flies-on-spacex-air-thrusters-0-96-km-h-in-0-81s-production-2028/); [wheel-size.com](https://www.wheel-size.com/size/tesla/roadster/2025-now/).
+**Status**: New entry (2026-10-16), prototype figures.
+
+---
+
 ## Known Remaining Approximations
 
 The following fields are understood to be approximate but are within acceptable simulation tolerance and were not corrected in this audit pass:
