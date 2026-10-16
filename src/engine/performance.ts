@@ -1,3 +1,4 @@
+import type { ThrusterSpec } from '@/types/car'
 import type { GearThrustCurve, EnvelopePoint, ShiftPoint, TimeStep, PerformanceMetrics } from '@/types/simulation'
 import { dragForceN } from './aerodynamics'
 import { rollingResistanceN } from './tires'
@@ -70,6 +71,11 @@ export interface IntegrationParams {
    * The run ends after holding it steadily for a moment. Default: full throttle.
    */
   cruiseSpeedMs?: number
+  /**
+   * Non-tire thrust added to the net force for the first `durationS` of the run.
+   * The trace's `thrustN` stays tire thrust only. Default: none.
+   */
+  thrusters?: ThrusterSpec
 }
 
 /**
@@ -98,6 +104,7 @@ export function runIntegration(params: IntegrationParams): {
     holdGear,
     minLoadRpm = 0,
     cruiseSpeedMs,
+    thrusters,
   } = params
 
   const gradeAngle = Math.atan(gradePercent / 100)
@@ -292,7 +299,8 @@ export function runIntegration(params: IntegrationParams): {
     }
 
     const dragN = dragForceN(cd, frontalAreaM2, airDensityKgM3, speed)
-    const netForceN = thrustN - dragN - rrN - gradeForceN
+    const thrusterN = thrusters && time < thrusters.durationS ? thrusters.forceN : 0
+    const netForceN = thrustN + thrusterN - dragN - rrN - gradeForceN
     const acc = netForceN / massKg
     if (thrustN > 0) lastPoweredAccMs2 = acc
 

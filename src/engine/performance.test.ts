@@ -244,6 +244,31 @@ describe('runIntegration', () => {
   })
 })
 
+describe('runIntegration with thrusters', () => {
+  it('adds the thruster force during the burn, then stops', () => {
+    // Tires 3000 N + thrusters 1500 N on 1500 kg: 3 m/s², then 2 m/s² after 1 s
+    const { trace } = runIntegration(makeSimpleParams({ thrusters: { forceN: 1500, durationS: 1 } }))
+    expect(trace.find((t) => t.timeS > 0.5)!.accelerationMs2).toBeCloseTo(3.0, 4)
+    expect(trace.find((t) => t.timeS > 1.5)!.accelerationMs2).toBeCloseTo(2.0, 4)
+  })
+
+  it('keeps tire thrust and thruster force separate in the trace', () => {
+    // thrustN stays the tire force: playback reads thrustN === 0 as a gear change
+    const { trace } = runIntegration(makeSimpleParams({ thrusters: { forceN: 1500, durationS: 1 } }))
+    const step = trace.find((t) => t.timeS > 0.5)!
+    expect(step.thrustN).toBeCloseTo(3000, 4)
+    expect(step.netForceN).toBeCloseTo(4500, 4)
+  })
+
+  it('reaches 60 mph sooner than the same car without them', () => {
+    const plain = runIntegration(makeSimpleParams()).performance.zeroTo60Mph!
+    const boosted = runIntegration(makeSimpleParams({ thrusters: { forceN: 1500, durationS: 1 } })).performance
+      .zeroTo60Mph!
+    // 1 s at +1 m/s² is 1 m/s banked: 26.82 m/s arrives 0.5 s earlier at 2 m/s²
+    expect(plain - boosted).toBeCloseTo(0.5, 1)
+  })
+})
+
 describe('runIntegration with a held gear', () => {
   // Three gears, speed = k·rpm with rpm 1000–5000 sampled every 250 rpm:
   //   1st 4–20 m/s, 2nd 7–35 m/s, 3rd 10–50 m/s. Normal shifts at 20 and 35 m/s.

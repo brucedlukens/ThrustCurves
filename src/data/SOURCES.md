@@ -431,7 +431,7 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 **Prototype, not a production spec.** Revealed 2026-10-15 at SpaceX McGregor; production targeted for 2028. Tesla published only headline claims (0–60, top speed, range) — no spec sheet. Power/torque/weight below come from press coverage of the reveal and conflict between outlets; revisit when Tesla publishes production numbers.
 
-**Trim choice**: Tesla's reservation page lists three configurations — **Performance** (road car, 2 seats, active aero, fan "suction" ground effect), **Thrust** (adds four rear cold-gas thrusters, 0–60 < 0.9 s) and **Rocket** (1 seat, ten thrusters, not road-legal, 0–60 < 0.59 s). Only Performance gets its acceleration entirely through the tires; the simulator has no non-tire thrust term, so Thrust/Rocket are not modeled. The 0.81 s run shown on stage used the rear thrusters.
+**Trim choice**: Tesla's reservation page lists three configurations — **Performance** (road car, 2 seats, active aero, fan "suction" ground effect), **Thrust** (adds four rear cold-gas thrusters, 0–60 < 0.9 s) and **Rocket** (1 seat, ten thrusters, not road-legal, 0–60 < 0.59 s). All three share this powertrain; Thrust and Rocket are separate entries below, with a `thrusters` force added on top of tire thrust. The 0.81 s run shown on stage used the rear thrusters.
 
 **EV modeling note**: Same single-effective-motor model as the Plaid/Taycan entries (`gearRatios: [1.0]`, full reduction in `finalDriveRatio`, flat torque to base speed then constant power). Uses `electric: true` (no altitude derate), as do all EV entries.
 
@@ -453,6 +453,28 @@ Owner-supplied build spec for an SCCA CST-class car, not an OEM datasheet.
 
 **Sources**: [InsideEVs — full specs](https://insideevs.com/news/812242/tesla-roadster-2026-specs/); [Top Gear](https://www.topgear.com/car-news/electric/tesla-roadster-has-finally-landed-thrusters-0-60mph-059s-and-flight); [Electrek](https://electrek.co/2026/10/15/tesla-unveils-cyberfied-new-roadster-kickflip/); [Teslarati — configurations](https://www.teslarati.com/tesla-roadster-specs-configurations/); [TechCrunch](https://techcrunch.com/2026/10/15/tesla-reveals-spacex-powered-roadster-that-flies-and-falls-with-style/); [paultan.org](https://paultan.org/2026/10/16/tesla-roadster-revealed-flies-on-spacex-air-thrusters-0-96-km-h-in-0-81s-production-2028/); [wheel-size.com](https://www.wheel-size.com/size/tesla/roadster/2025-now/).
 **Status**: New entry (2026-10-16), prototype figures.
+
+---
+
+### Tesla Roadster 2026 (Thrust / Rocket, Prototype) — `tesla-roadster-thrust-2026`, `tesla-roadster-rocket-2026`
+
+Same motors, gearing, tires and aero as the Performance entry above. The difference is cold-gas (compressed-air) thrusters, modeled by `thrusters: { forceN, durationS }`. That is a constant forward force from launch for `durationS`. It is added to tire thrust, isn't capped by the traction limit (it doesn't go through the tires), and doesn't appear in the trace's `thrustN` or the thrust-curve charts. Constant thrust is a simplification: a real blow-down tank loses thrust as pressure falls.
+
+**Tesla hasn't published thrust per trim.** It has said only "over 80 kN" (most likely all ten of the Rocket's thrusters, which also have to lift the car), plus 600 L (≈ 250 kg) of air for the Rocket. So each trim's force is **back-solved** from its claimed 0–60: the sim's 0–60 minus the 1-ft rollout equals the claim. That's the same convention used to check the Performance entry. Burn time is estimated from the stored air: t = m_air × v_e / F, with v_e ≈ 560 m/s (Isp ≈ 57 s, a short nozzle at sea level). Both burns outlast 0–60, so the burn-time estimate doesn't affect the calibration; it only shapes the rest of the run.
+
+| Field | Thrust | Rocket | Basis |
+|-------|--------|--------|-------|
+| Configuration | 2 seats, 4 rear thrusters | 1 seat, 10 thrusters (rear, front, sides); not road-legal | Tesla reservation page via Teslarati/Electrek |
+| 0–60 claim | < 0.9 s | < 0.59 s | Tesla |
+| Air stored | ≈ 83 kg (200 L) | ≈ 250 kg (600 L) | Rocket: 600 L ≈ 250 kg (EV Report, Electrek). Thrust: 200 L tank (InsideEVs), at the same density |
+| Curb weight | 1,783 kg | 1,950 kg | 1,700 kg + air. Tank and plumbing mass unpublished. The sim keeps mass constant, so it carries the air weight after burnout |
+| Thruster force | 22,500 N (≈ 1.2 g) | 51,000 N (≈ 2.6 g) | **Back-solved** from the 0–60 claim |
+| Burn time | 2.1 s | 2.7 s | **Estimated** from air mass (above) |
+
+**Validation** (stock settings): Thrust 0–60 = 1.04 s raw / 0.89 s net of rollout, ¼ mile 7.09 s @ 186 mph. Rocket 0–60 = 0.72 s / 0.59 s, ¼ mile 5.54 s @ 224 mph. Electrek's recorded run showed 1.0 s, close to the Thrust trim's raw sim time. The Rocket's rearward 51 kN is below Tesla's "over 80 kN", consistent with that figure being total thrust across all ten nozzles.
+
+**Sources**: As for the Performance entry, plus [Electrek technical look](https://electrek.co/2026/10/15/an-updated-technical-look-at-teslas-kick-flipping-0-60-in-1s-next-gen-roadster/); [The EV Report](https://theevreport.com/tesla-roadster-unveil-spacex-cold-gas-thrusters); [Motor1](https://www.motor1.com/news/812195/tesla-roadster-stunt-2028-production/).
+**Status**: New entries (2026-10-16), prototype figures with back-solved thrust.
 
 ---
 

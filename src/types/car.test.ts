@@ -5,8 +5,8 @@ import carsJson from '../data/cars.json'
 describe('cars.json schema', () => {
   const cars = carsJson as CarSpec[]
 
-  it('contains 40 cars', () => {
-    expect(cars).toHaveLength(40)
+  it('contains 42 cars', () => {
+    expect(cars).toHaveLength(42)
   })
 
   it('every car has required top-level fields', () => {
@@ -36,6 +36,13 @@ describe('cars.json schema', () => {
     for (const car of cars.filter(c => c.engine.displacementL === 0)) {
       expect(car.engine.electric, car.id).toBe(true)
       expect(car.engine.forcedInduction, car.id).toBe(false)
+    }
+  })
+
+  it('every thruster spec has positive force and burn time', () => {
+    for (const car of cars.filter(c => c.thrusters)) {
+      expect(car.thrusters!.forceN, car.id).toBeGreaterThan(0)
+      expect(car.thrusters!.durationS, car.id).toBeGreaterThan(0)
     }
   })
 

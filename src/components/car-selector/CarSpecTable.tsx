@@ -51,6 +51,12 @@ export default function CarSpecTable({ car }: CarSpecTableProps) {
     ['Drag Coefficient', car.aero.cd.toFixed(3)],
     ['Frontal Area', `${car.aero.frontalAreaM2.toFixed(2)} m²`],
   ]
+  if (car.thrusters) {
+    rows.push([
+      'Thrusters',
+      `${(car.thrusters.forceN / 1000).toFixed(1)} kN for ${car.thrusters.durationS.toFixed(1)} s`,
+    ])
+  }
 
   const isCustom = car.id.startsWith('custom-')
 
